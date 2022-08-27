@@ -7,15 +7,15 @@
         <title><?=$title?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- App favicon -->
-        <link rel="shortcut icon" href="favicon.ico">
+        <link rel="shortcut icon" href="<?=base_url()?>/favicon.ico">
         <!-- preloader css -->
-        <link rel="stylesheet" href="assets/css/preloader.min.css" type="text/css" />
+        <link rel="stylesheet" href="<?=base_url()?>/assets/css/preloader.min.css" type="text/css" />
         <!-- Bootstrap Css -->
-        <link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <link href="<?=base_url()?>/assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
         <!-- Icons Css -->
-        <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <link href="<?=base_url()?>/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
         <!-- App Css-->
-        <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+        <link href="<?=base_url()?>/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
 
     </head>
 
@@ -30,8 +30,8 @@
                             <div class="w-100">
                                 <div class="d-flex flex-column h-100">
                                     <div class="text-center">
-                                        <a href="/" class="d-block auth-logo">
-                                            <img src="assets/images/brands/logo.png" alt="" height="28"> <span class="logo-txt"><?=$system?></span>
+                                        <a href="<?=base_url()?>" class="d-block auth-logo">
+                                            <img src="<?=base_url()?>/assets/images/brands/logo.png" alt="" height="28"> <span class="logo-txt"><?=$system?></span>
                                         </a>
                                     </div>
                                     <div class="auth-content my-auto mt-5">
@@ -39,7 +39,7 @@
                                             <h5 class="mb-0">¡Bienvenido de vuelta!</h5>
                                             <p class="text-muted mt-2">Inicia sesión para continuar</p>
                                         </div>
-                                        <form class="custom-form mt-4 pt-2" action="ajax/signinForm" method="POST">
+                                        <form class="custom-form mt-4 pt-2" action="<?=base_url()?>/ajax/signinForm" method="POST">
                                             <div class="mb-3">
                                                 <label class="form-label">Nombre de usuario</label>
                                                 <input type="text" class="form-control" id="username" placeholder="Introduce tu nombre de usuario">
@@ -51,7 +51,7 @@
                                                     </div>
                                                     <div class="flex-shrink-0">
                                                         <div class="">
-                                                            <a href="app/recover" class="text-muted">¿Olvidaste tu contraseña?</a>
+                                                            <a href="<?=base_url()?>/app/recover" class="text-muted">¿Olvidaste tu contraseña?</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -67,7 +67,7 @@
                                         </form>
                                     </div>
                                     <div class="mt-4 mt-md-5 text-center">
-                                        <p class="mb-0">© <script>document.write(new Date().getFullYear())</script> <a href="/"><?=$system?></a> | Developed with <span class="fa fa-heart text-danger"></span> by <a href="https://github.com/DramaQueeen26" target="_blank"> DramaQueeen26 </a> All rights reserved.</p>
+                                        <p class="mb-0">© <script>document.write(new Date().getFullYear())</script> <a href="<?=base_url()?>"><?=$system?></a> | Developed with <span class="fa fa-heart text-danger"></span> by <a href="https://github.com/DramaQueeen26" target="_blank"> DramaQueeen26 </a> All rights reserved.</p>
                                     </div>
                                 </div>
                             </div>
@@ -116,7 +116,7 @@
                                                         <div class="mt-4 pt-3 pb-5">
                                                             <div class="d-flex align-items-start">
                                                                 <div class="flex-shrink-0">
-                                                                    <img src="assets/images/users/avatar-1.jpg" class="avatar-md img-fluid rounded-circle" alt="...">
+                                                                    <img src="<?=base_url()?>/assets/images/users/avatar-1.jpg" class="avatar-md img-fluid rounded-circle" alt="...">
                                                                 </div>
                                                                 <div class="flex-grow-1 ms-3 mb-4">
                                                                     <h5 class="font-size-18 text-white">Richard Drews
@@ -141,7 +141,7 @@
                                                         <div class="mt-4 pt-3 pb-5">
                                                             <div class="d-flex align-items-start">
                                                                 <div class="flex-shrink-0">
-                                                                    <img src="assets/images/users/avatar-2.jpg" class="avatar-md img-fluid rounded-circle" alt="...">
+                                                                    <img src="<?=base_url()?>/assets/images/users/avatar-2.jpg" class="avatar-md img-fluid rounded-circle" alt="...">
                                                                 </div>
                                                                 <div class="flex-grow-1 ms-3 mb-4">
                                                                     <h5 class="font-size-18 text-white">Rosanna French
@@ -165,7 +165,7 @@
                                                             feel.”</h4>
                                                         <div class="mt-4 pt-3 pb-5">
                                                             <div class="d-flex align-items-start">
-                                                                <img src="assets/images/users/avatar-3.jpg"
+                                                                <img src="<?=base_url()?>/assets/images/users/avatar-3.jpg"
                                                                     class="avatar-md img-fluid rounded-circle" alt="...">
                                                                 <div class="flex-1 ms-3 mb-4">
                                                                     <h5 class="font-size-18 text-white">Ilse R. Eaton</h5>
@@ -193,16 +193,16 @@
         </div>
 
         <!-- JAVASCRIPT -->
-        <script src="assets/libs/jquery/jquery.min.js"></script>
-        <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="assets/libs/metismenu/metisMenu.min.js"></script>
-        <script src="assets/libs/simplebar/simplebar.min.js"></script>
-        <script src="assets/libs/node-waves/waves.min.js"></script>
-        <script src="assets/libs/feather-icons/feather.min.js"></script>
+        <script src="<?=base_url()?>/assets/libs/jquery/jquery.min.js"></script>
+        <script src="<?=base_url()?>/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="<?=base_url()?>/assets/libs/metismenu/metisMenu.min.js"></script>
+        <script src="<?=base_url()?>/assets/libs/simplebar/simplebar.min.js"></script>
+        <script src="<?=base_url()?>/assets/libs/node-waves/waves.min.js"></script>
+        <script src="<?=base_url()?>/assets/libs/feather-icons/feather.min.js"></script>
         <!-- pace js -->
-        <script src="assets/libs/pace-js/pace.min.js"></script>
+        <script src="<?=base_url()?>/assets/libs/pace-js/pace.min.js"></script>
         <!-- password addon init -->
-        <script src="assets/js/pages/pass-addon.init.js"></script>
+        <script src="<?=base_url()?>/assets/js/pages/pass-addon.init.js"></script>
 
     </body>
 
