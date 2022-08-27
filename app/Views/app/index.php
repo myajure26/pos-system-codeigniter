@@ -34,25 +34,25 @@
                     <div class="d-flex">
                         <!-- LOGO -->
                         <div class="navbar-brand-box">
-                            <a href="/" class="logo logo-dark">
+                            <a href="app/dashboard" class="logo logo-dark">
                                 <span class="logo-sm">
                                     <img src="assets/images/brands/logo.png" alt=""
                                         height="24">
                                 </span>
                                 <span class="logo-lg">
                                     <img src="assets/images/brands/logo.png" alt=""
-                                        height="24"> <span class="logo-txt">POS System</span>
+                                        height="24"> <span class="logo-txt"><?=$system?></span>
                                 </span>
                             </a>
 
-                            <a href="index.html" class="logo logo-light">
+                            <a href="app/dashboard" class="logo logo-light">
                                 <span class="logo-sm">
                                     <img src="assets/images/brands/logo.png" alt=""
                                         height="24">
                                 </span>
                                 <span class="logo-lg">
                                     <img src="assets/images/brands/logo.png" alt=""
-                                        height="24"> <span class="logo-txt">POS System</span>
+                                        height="24"> <span class="logo-txt"><?=$system?></span>
                                 </span>
                             </a>
                         </div>
@@ -120,7 +120,7 @@
                         <ul class="metismenu list-unstyled" id="side-menu">
                             <li class="menu-title" data-key="t-menu">Panel de control</li>
                             <li>
-                                <a href="/">
+                                <a href="app/dashboard">
                                     <i data-feather="home"></i>
                                     <span data-key="t-dashboard">Inicio</span>
                                 </a>
@@ -206,11 +206,11 @@
                         <div class="col-sm-6">
                             <script>document.write(new Date().getFullYear())</script>
                             ©
-                            <a href="/">POS System</a>
+                            <a href="/"><?=$system?></a>
                         </div>
                         <div class="col-sm-6">
                             <div class="text-sm-end d-none d-sm-block">
-                                Developed with <span class="fa fa-heart text-danger"></span> by <a href="https://github.com/DramaQueeen26/pos-system-php" target="_blank"> DramaQueeen26 </a> All rights reserved.
+                                Developed with <span class="fa fa-heart text-danger"></span> by <a href="https://github.com/DramaQueeen26" target="_blank"> DramaQueeen26 </a> All rights reserved.
                             </div>
                         </div>
                     </div>
