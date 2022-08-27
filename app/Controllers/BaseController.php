@@ -28,6 +28,7 @@ class BaseController extends Controller
 	 * @var array
 	 */
 	protected $helpers = [];
+	protected $system = "POS System";
 
 	/**
 	 * Constructor.
