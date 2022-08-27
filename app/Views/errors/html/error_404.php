@@ -1,84 +1,64 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-	<meta charset="utf-8">
-	<title>404 Page Not Found</title>
 
-	<style>
-	div.logo {
-		height: 200px;
-		width: 155px;
-		display: inline-block;
-		opacity: 0.08;
-		position: absolute;
-		top: 2rem;
-		left: 50%;
-		margin-left: -73px;
-	}
-	body {
-		height: 100%;
-		background: #fafafa;
-		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-		color: #777;
-		font-weight: 300;
-	}
-	h1 {
-		font-weight: lighter;
-		letter-spacing: 0.8;
-		font-size: 3rem;
-		margin-top: 0;
-		margin-bottom: 0;
-		color: #222;
-	}
-	.wrap {
-		max-width: 1024px;
-		margin: 5rem auto;
-		padding: 2rem;
-		background: #fff;
-		text-align: center;
-		border: 1px solid #efefef;
-		border-radius: 0.5rem;
-		position: relative;
-	}
-	pre {
-		white-space: normal;
-		margin-top: 1.5rem;
-	}
-	code {
-		background: #fafafa;
-		border: 1px solid #efefef;
-		padding: 0.5rem 1rem;
-		border-radius: 5px;
-		display: block;
-	}
-	p {
-		margin-top: 1.5rem;
-	}
-	.footer {
-		margin-top: 2rem;
-		border-top: 1px solid #efefef;
-		padding: 1em 2em 0 2em;
-		font-size: 85%;
-		color: #999;
-	}
-	a:active,
-	a:link,
-	a:visited {
-		color: #dd4814;
-	}
-</style>
-</head>
-<body>
-	<div class="wrap">
-		<h1>404 - File Not Found</h1>
+    <head>
+        
+        <meta charset="utf-8" />
+        <title>Oops! Página no encontrada</title>
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="<?=base_url()?>/favicon.ico">
+        <!-- preloader css -->
+        <link rel="stylesheet" href="<?=base_url()?>/assets/css/preloader.min.css" type="text/css" />
+        <!-- Bootstrap Css -->
+        <link href="<?=base_url()?>/assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="<?=base_url()?>/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="<?=base_url()?>/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
 
-		<p>
-			<?php if (! empty($message) && $message !== '(null)') : ?>
-				<?= esc($message) ?>
-			<?php else : ?>
-				Sorry! Cannot seem to find the page you were looking for.
-			<?php endif ?>
-		</p>
-	</div>
-</body>
+    </head>
+
+    <body>
+
+    <!-- <body data-layout="horizontal"> -->
+
+        <div class="my-5 pt-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="text-center mb-5">
+                            <h1 class="display-1 fw-semibold">4<span class="text-primary mx-2">0</span>4</h1>
+                            <h4 class="text-uppercase">Lo sentimos, la página a la que intentas acceder no existe</h4>
+                            <div class="mt-5 text-center">
+                                <a class="btn btn-primary waves-effect waves-light" href="<?=base_url()?>">Regresa a Inicio</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-10 col-xl-8">
+                        <div>
+                            <img src="<?=base_url()?>/assets/images/error-img.png" alt="" class="img-fluid">
+                        </div>
+                    </div>
+                    <!-- end row -->
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container -->
+        </div>
+        <!-- end content -->
+
+        <!-- JAVASCRIPT -->
+        <script src="<?=base_url()?>/assets/libs/jquery/jquery.min.js"></script>
+        <script src="<?=base_url()?>/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="<?=base_url()?>/assets/libs/metismenu/metisMenu.min.js"></script>
+        <script src="<?=base_url()?>/assets/libs/simplebar/simplebar.min.js"></script>
+        <script src="<?=base_url()?>/assets/libs/node-waves/waves.min.js"></script>
+        <script src="<?=base_url()?>/assets/libs/feather-icons/feather.min.js"></script>
+        <!-- pace js -->
+        <script src="<?=base_url()?>/assets/libs/pace-js/pace.min.js"></script>
+        <script src="<?=base_url()?>/assets/js/app.js"></script>
+
+    </body>
 </html>
