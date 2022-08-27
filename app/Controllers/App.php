@@ -18,4 +18,19 @@ class App extends BaseController
 		}
 
 	}
+
+	public function recover()
+	{
+		if(!isset($_POST['user'])){
+			
+			$data = ["title" => "Recuperar contraseña - $this->system", "system" => $this->system];
+			return view('app/recover', $data);
+
+		}else{
+			
+			echo '<script>window.location.href="/app/dashboard"</script>';
+
+		}
+
+	}
 }
