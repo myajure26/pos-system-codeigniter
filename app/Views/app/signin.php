@@ -8,6 +8,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- App favicon -->
         <link rel="shortcut icon" href="<?=base_url()?>/favicon.ico">
+        <!-- Sweet Alert -->
+        <link href="<?=base_url()?>/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
         <!-- preloader css -->
         <link rel="stylesheet" href="<?=base_url()?>/assets/css/preloader.min.css" type="text/css" />
         <!-- Bootstrap Css -->
@@ -199,11 +201,13 @@
         <script src="<?=base_url()?>/assets/libs/simplebar/simplebar.min.js"></script>
         <script src="<?=base_url()?>/assets/libs/node-waves/waves.min.js"></script>
         <script src="<?=base_url()?>/assets/libs/feather-icons/feather.min.js"></script>
+        <!-- Sweet Alert -->
+        <script src="<?=base_url()?>/assets/libs/sweetalert2/sweetalert2.min.js"></script>
         <!-- pace js -->
         <script src="<?=base_url()?>/assets/libs/pace-js/pace.min.js"></script>
         <!-- password addon init -->
         <script src="<?=base_url()?>/assets/js/pages/pass-addon.init.js"></script>
-
+        
     </body>
 
 </html>
