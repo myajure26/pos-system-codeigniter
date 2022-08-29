@@ -64,12 +64,12 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3">
-                                                <button class="btn btn-primary w-100 waves-effect waves-light mt-2" type="submit">Iniciar sesión</button>
+                                                <button class="btn btn-primary w-100 waves-effect waves-light mt-2 sent" type="submit">Iniciar sesión</button>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="mt-4 mt-md-5 text-center">
-                                        <p class="mb-0">© <script>document.write(new Date().getFullYear())</script> <a href="<?=base_url()?>"><?=$system?></a> | Developed with <span class="fa fa-heart text-danger"></span> by <a href="https://github.com/DramaQueeen26" target="_blank"> DramaQueeen26 </a> All rights reserved.</p>
+                                        <p class="mb-0">© <script>document.write(new Date().getFullYear())</script> <a href="<?=base_url()?>"><?=$system?></a> | Desarrollado con <span class="fa fa-heart text-danger"></span> por <a href="https://github.com/DramaQueeen26" target="_blank"> DramaQueeen26 </a> Todos los derechos reservados.</p>
                                     </div>
                                 </div>
                             </div>
@@ -207,7 +207,9 @@
         <script src="<?=base_url()?>/assets/libs/pace-js/pace.min.js"></script>
         <!-- password addon init -->
         <script src="<?=base_url()?>/assets/js/pages/pass-addon.init.js"></script>
-        
+        <!-- ajax -->
+        <script src="<?=base_url()?>/assets/js/ajax.js"></script>
+
     </body>
 
 </html>
