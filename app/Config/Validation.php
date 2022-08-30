@@ -34,11 +34,30 @@ class Validation
 	 */
 	public $templates = [
 		'list'   => 'CodeIgniter\Validation\Views\list',
-		'single' => 'CodeIgniter\Validation\Views\single',
+		'single' => 'CodeIgniter\Validation\Views\single'
 	];
 
 	//--------------------------------------------------------------------
 	// Rules
 	//--------------------------------------------------------------------
+
+	public $signin = [
+		'username' => [
+			'label' => 'username',
+			'rules' => 'required|alpha_dash',
+			'errors' => [
+				'required' => 'El nombre de usuario es requerido.',
+				'alpha_dash' => 'Sólo se permiten carácteres alfanuméricos, guiones y guiones bajos.'
+			]
+		],
+		'password' => [
+			'label' => 'password',
+			'rules' => 'required',
+			'errors' => [
+				'required' => 'La contraseña es requerida.'
+			]
+		]
+	];
+	
 
 }

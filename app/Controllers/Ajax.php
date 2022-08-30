@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Controllers\UsersController;
+
 class Ajax extends BaseController
 {
 	/*====================================
@@ -15,7 +17,4 @@ class Ajax extends BaseController
 		return view('app/ajax/index', $data);
 	}
 
-	/*====================================
-				  FORMULARIOS
-	====================================*/
 }

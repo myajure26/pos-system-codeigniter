@@ -41,10 +41,11 @@
                                             <h5 class="mb-0">¡Bienvenido de vuelta!</h5>
                                             <p class="text-muted mt-2">Inicia sesión para continuar</p>
                                         </div>
-                                        <form class="custom-form mt-4 pt-2" action="<?=base_url()?>/ajax/signinForm" method="POST">
+                                        <form class="custom-form mt-4 pt-2" action="<?=base_url()?>/users/signin" method="POST">
+                                            <div class="response"></div>
                                             <div class="mb-3">
                                                 <label class="form-label">Nombre de usuario</label>
-                                                <input type="text" class="form-control" id="username" placeholder="Introduce tu nombre de usuario">
+                                                <input type="text" class="form-control" id="username" placeholder="Introduce tu nombre de usuario" name="username" >
                                             </div>
                                             <div class="mb-3">
                                                 <div class="d-flex align-items-start">
@@ -59,7 +60,8 @@
                                                 </div>
                                                 
                                                 <div class="input-group auth-pass-inputgroup">
-                                                    <input type="password" class="form-control" placeholder="Introduce tu contraseña" aria-label="Password" aria-describedby="password-addon">
+                                                    <input type="password" class="form-control" placeholder="Introduce tu contraseña" aria-label="Password" aria-describedby="password-addon" name="password" >
+                                                    
                                                     <button class="btn btn-light ms-0" type="button" id="password-addon"><i class="mdi mdi-eye-outline"></i></button>
                                                 </div>
                                             </div>
