@@ -7,17 +7,17 @@
         <title><?=$title?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- App favicon -->
-        <link rel="shortcut icon" href="<?=base_url()?>/favicon.ico">
+        <link rel="shortcut icon" href="<?=base_url('favicon.ico')?>">
         <!-- Sweet Alert -->
-        <link href="<?=base_url()?>/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+        <link href="<?=base_url('assets/libs/sweetalert2/sweetalert2.min.css')?>" rel="stylesheet" type="text/css" />
         <!-- preloader css -->
-        <link rel="stylesheet" href="<?=base_url()?>/assets/css/preloader.min.css" type="text/css" />
+        <link rel="stylesheet" href="<?=base_url('assets/css/preloader.min.css')?>" type="text/css" />
         <!-- Bootstrap Css -->
-        <link href="<?=base_url()?>/assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <link href="<?=base_url('assets/css/bootstrap.min.css')?>" id="bootstrap-style" rel="stylesheet" type="text/css" />
         <!-- Icons Css -->
-        <link href="<?=base_url()?>/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <link href="<?=base_url('assets/css/icons.min.css')?>" rel="stylesheet" type="text/css" />
         <!-- App Css-->
-        <link href="<?=base_url()?>/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+        <link href="<?=base_url('assets/css/app.min.css')?>" id="app-style" rel="stylesheet" type="text/css" />
 
     </head>
 
@@ -41,7 +41,7 @@
                                             <h5 class="mb-0">¡Bienvenido de vuelta!</h5>
                                             <p class="text-muted mt-2">Inicia sesión para continuar</p>
                                         </div>
-                                        <form class="custom-form mt-4 pt-2" action="<?=base_url()?>/app/signin" method="POST">
+                                        <form class="custom-form mt-4 pt-2" action="<?=base_url('app/signin')?>" method="POST">
                                             <div class="response"></div>
                                             <div class="mb-3">
                                                 <label class="form-label">Nombre de usuario</label>
@@ -54,7 +54,7 @@
                                                     </div>
                                                     <div class="flex-shrink-0">
                                                         <div class="">
-                                                            <a href="<?=base_url()?>/app/recover" class="text-muted">¿Olvidaste tu contraseña?</a>
+                                                            <a href="<?=base_url('app/recover')?>" class="text-muted">¿Olvidaste tu contraseña?</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -71,7 +71,7 @@
                                         </form>
                                     </div>
                                     <div class="mt-4 mt-md-5 text-center">
-                                        <p class="mb-0">© <script>document.write(new Date().getFullYear())</script> <a href="<?=base_url()?>"><?=$system?></a> | Desarrollado con <span class="fa fa-heart text-danger"></span> por <a href="https://github.com/DramaQueeen26" target="_blank"> DramaQueeen26 </a> Todos los derechos reservados.</p>
+                                        <p class="mb-0">© <script>document.write(new Date().getFullYear())</script> <a href="<?=base_url()?>"><?=$system?></a> | Desarrollado con <span class="fa fa-heart text-danger"></span> por <a href="https://github.com/DramaQueeen26" target="_blank"> DramaQueeen26 </a> | Todos los derechos reservados.</p>
                                     </div>
                                 </div>
                             </div>
@@ -197,20 +197,20 @@
         </div>
 
         <!-- JAVASCRIPT -->
-        <script src="<?=base_url()?>/assets/libs/jquery/jquery.min.js"></script>
-        <script src="<?=base_url()?>/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="<?=base_url()?>/assets/libs/metismenu/metisMenu.min.js"></script>
-        <script src="<?=base_url()?>/assets/libs/simplebar/simplebar.min.js"></script>
-        <script src="<?=base_url()?>/assets/libs/node-waves/waves.min.js"></script>
-        <script src="<?=base_url()?>/assets/libs/feather-icons/feather.min.js"></script>
+        <script src="<?=base_url('assets/libs/jquery/jquery.min.js')?>"></script>
+        <script src="<?=base_url('assets/libs/bootstrap/js/bootstrap.bundle.min.js')?>"></script>
+        <script src="<?=base_url('assets/libs/metismenu/metisMenu.min.js')?>"></script>
+        <script src="<?=base_url('assets/libs/simplebar/simplebar.min.js')?>"></script>
+        <script src="<?=base_url('assets/libs/node-waves/waves.min.js')?>"></script>
+        <script src="<?=base_url('assets/libs/feather-icons/feather.min.js')?>"></script>
         <!-- Sweet Alert -->
-        <script src="<?=base_url()?>/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+        <script src="<?=base_url('assets/libs/sweetalert2/sweetalert2.min.js')?>"></script>
         <!-- pace js -->
-        <script src="<?=base_url()?>/assets/libs/pace-js/pace.min.js"></script>
+        <script src="<?=base_url('assets/libs/pace-js/pace.min.js')?>"></script>
         <!-- password addon init -->
-        <script src="<?=base_url()?>/assets/js/pages/pass-addon.init.js"></script>
+        <script src="<?=base_url('assets/js/pages/pass-addon.init.js')?>"></script>
         <!-- ajax -->
-        <script src="<?=base_url()?>/assets/js/ajax.js"></script>
+        <script src="<?=base_url('assets/js/ajax.js')?>"></script>
 
     </body>
 

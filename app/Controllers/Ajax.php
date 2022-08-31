@@ -11,10 +11,16 @@ class Ajax extends BaseController
 	====================================*/
 	public function index()
 	{
-		$data = [
-			"title" => "Inicio - $this->system"
-		];
-		return view('app/ajax/index', $data);
+		if($this->session->has('session')){
+			$data = [
+				"title" => "Inicio - $this->system"
+			];
+			return view('app/ajax/index', $data);
+		}else{
+
+			return redirect()->to(base_url());
+		
+		}
 	}
 
 }

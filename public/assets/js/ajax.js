@@ -45,20 +45,6 @@ $(document).on("click", ".metismenu li a, .navbar-nav  li a", function(e) {
 });
 
 function call_ajax_page(page) {
-
-	// if(page === "")
-	// {
-	// 	page = "index";
-	// 	document.title = "Inicio - POS System";
-	// }
-	// else
-	// {
-	// 	page = page.replace(".php", "");
-	// 	var title = page.replace(".php", "");
-	// 	var title1 = title.replace("-", " ");
-	// 	document.title = title1.charAt(0).toUpperCase() + title1.slice(1) + " - POS System";
-	// }
-
 	$.ajax({
 		url: "ajax/" + page,
 		cache: false,

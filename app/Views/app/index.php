@@ -36,24 +36,24 @@
                     <div class="d-flex">
                         <!-- LOGO -->
                         <div class="navbar-brand-box">
-                            <a href="<?=base_url()?>/app/dashboard" class="logo logo-dark">
+                            <a href="<?=base_url('app/dashboard')?>" class="logo logo-dark">
                                 <span class="logo-sm">
-                                    <img src="<?=base_url()?>/assets/images/brands/logo.png" alt=""
+                                    <img src="<?=base_url('assets/images/brands/logo.png')?>"
                                         height="24">
                                 </span>
                                 <span class="logo-lg">
-                                    <img src="<?=base_url()?>/assets/images/brands/logo.png" alt=""
+                                    <img src="<?=base_url('assets/images/brands/logo.png')?>"
                                         height="24"> <span class="logo-txt"><?=$system?></span>
                                 </span>
                             </a>
 
-                            <a href="<?=base_url()?>/app/dashboard" class="logo logo-light">
+                            <a href="<?=base_url('app/dashboard')?>" class="logo logo-light">
                                 <span class="logo-sm">
-                                    <img src="<?=base_url()?>/assets/images/brands/logo.png" alt=""
+                                    <img src="<?=base_url('assets/images/brands/logo.png')?>"
                                         height="24">
                                 </span>
                                 <span class="logo-lg">
-                                    <img src="<?=base_url()?>/assets/images/brands/logo.png" alt=""
+                                    <img src="<?=base_url('assets/images/brands/logo.png')?>"
                                         height="24"> <span class="logo-txt"><?=$system?></span>
                                 </span>
                             </a>
@@ -85,7 +85,7 @@
                                 data-bs-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
                                 <img class="rounded-circle header-profile-user"
-                                    src="<?=base_url()?>/assets/images/users/avatar-1.jpg"
+                                    src="<?=base_url('assets/images/users/avatar-1.jpg')?>"
                                     alt="Header Avatar">
                                 <span class="d-none d-xl-inline-block ms-1
                                     fw-medium">Shawn L.</span>
@@ -101,7 +101,7 @@
                                         mdi-account-settings font-size-16
                                         align-middle me-1"></i> Opciones</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="<?=base_url()?>/app/logout"><i class="mdi
+                                <a class="dropdown-item" href="<?=base_url('app/logout')?>"><i class="mdi
                                         mdi-logout font-size-16 align-middle
                                         me-1"></i> Cerrar sesión</a>
                             </div>
@@ -122,13 +122,13 @@
                         <ul class="metismenu list-unstyled" id="side-menu">
                             <li class="menu-title" data-key="t-menu">Panel de control</li>
                             <li>
-                                <a href="<?=base_url()?>/app/dashboard">
+                                <a href="<?=base_url('app/dashboard')?>">
                                     <i data-feather="home"></i>
                                     <span data-key="t-dashboard">Inicio</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="<?=base_url()?>/app/audit">
+                                <a href="<?=base_url('app/audit')?>">
                                     <i data-feather="bar-chart-2"></i>
                                     <span data-key="t-audit">Auditoría</span>
                                 </a>
@@ -136,19 +136,19 @@
 
                             <li class="menu-title" data-key="t-menu">Administrar ventas</li>
                             <li>
-                                <a href="<?=base_url()?>/app/newSale">
+                                <a href="<?=base_url('app/newSale')?>">
                                     <i data-feather="plus"></i>
                                     <span data-key="t-newSale">Nueva Venta</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="<?=base_url()?>/app/sales">
+                                <a href="<?=base_url('app/sales')?>">
                                     <i data-feather="shopping-bag"></i>
                                     <span data-key="t-sales">Ventas</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="<?=base_url()?>/app/reports">
+                                <a href="<?=base_url('app/reports')?>">
                                     <i data-feather="pie-chart"></i>
                                     <span data-key="t-reports">Reportes</span>
                                 </a>
@@ -156,13 +156,13 @@
 
                             <li class="menu-title" data-key="t-menu">Administrar inventario</li>
                             <li>
-                                <a href="<?=base_url()?>/app/products">
+                                <a href="<?=base_url('app/products')?>">
                                     <i data-feather="shopping-cart"></i>
                                     <span data-key="t-products">Productos</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="<?=base_url()?>/app/categories">
+                                <a href="<?=base_url('app/categories')?>">
                                     <i data-feather="tag"></i>
                                     <span data-key="t-categories">Categorías</span>
                                 </a>
@@ -170,13 +170,13 @@
 
                             <li class="menu-title" data-key="t-menu">Administrar usuarios</li>
                             <li>
-                                <a href="<?=base_url()?>/app/customers">
+                                <a href="<?=base_url('app/customers')?>">
                                     <i data-feather="user"></i>
                                     <span data-key="t-customers">Clientes</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="<?=base_url()?>/app/users">
+                                <a href="<?=base_url('app/users')?>">
                                     <i data-feather="users"></i>
                                     <span data-key="t-users">Usuarios</span>
                                 </a>
@@ -184,7 +184,7 @@
 
                             <li class="menu-title" data-key="t-menu">Cofiguraciones del sistema</li>
                             <li>
-                                <a href="<?=base_url()?>/app/settings">
+                                <a href="<?=base_url('app/settings')?>">
                                     <i data-feather="settings"></i>
                                     <span data-key="t-settings">Configuración general</span>
                                 </a>
@@ -212,7 +212,7 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="text-sm-end d-none d-sm-block">
-                                Developed with <span class="fa fa-heart text-danger"></span> by <a href="https://github.com/DramaQueeen26" target="_blank"> DramaQueeen26 </a> All rights reserved.
+                                Desarrollado con <span class="fa fa-heart text-danger"></span> por <a href="https://github.com/DramaQueeen26" target="_blank"> DramaQueeen26 </a> | Todos los derechos reservados
                             </div>
                         </div>
                     </div>
@@ -225,19 +225,19 @@
         <!-- END layout-wrapper -->
 
         <!-- JAVASCRIPT -->
-        <script src="<?=base_url()?>/assets/libs/jquery/jquery.min.js"></script>
-        <script src="<?=base_url()?>/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="<?=base_url()?>/assets/libs/metismenu/metisMenu.min.js"></script>
-        <script src="<?=base_url()?>/assets/libs/simplebar/simplebar.min.js"></script>
-        <script src="<?=base_url()?>/assets/libs/node-waves/waves.min.js"></script>
-        <script src="<?=base_url()?>/assets/libs/feather-icons/feather.min.js"></script>
+        <script src="<?=base_url('assets/libs/jquery/jquery.min.js')?>"></script>
+        <script src="<?=base_url('assets/libs/bootstrap/js/bootstrap.bundle.min.js')?>"></script>
+        <script src="<?=base_url('assets/libs/metismenu/metisMenu.min.js')?>"></script>
+        <script src="<?=base_url('assets/libs/simplebar/simplebar.min.js')?>"></script>
+        <script src="<?=base_url('assets/libs/node-waves/waves.min.js')?>"></script>
+        <script src="<?=base_url('assets/libs/feather-icons/feather.min.js')?>"></script>
         <!-- Sweet Alert -->
-        <script src="<?=base_url()?>/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+        <script src="<?=base_url('assets/libs/sweetalert2/sweetalert2.min.js')?>"></script>
         <!-- pace js -->
-        <script src="<?=base_url()?>/assets/libs/pace-js/pace.min.js"></script>
+        <script src="<?=base_url('assets/libs/pace-js/pace.min.js')?>"></script>
         <!-- DOCUMENT -->
-        <script src="<?=base_url()?>/assets/js/app.js"></script>
-        <script src="<?=base_url()?>/assets/js/ajax.js"></script>
+        <script src="<?=base_url('assets/js/app.js')?>"></script>
+        <script src="<?=base_url('assets/js/ajax.js')?>"></script>
 
     </body>
 </html>
