@@ -38,7 +38,12 @@ class App extends BaseController
 	{
 		if($this->session->has('session')){
 			
-			$data = ["title" => "Inicio - $this->system", "system" => $this->system];
+			$data = [
+				"title" => "Inicio - $this->system", 
+				"system" => $this->system,
+				"name" => $this->session->get('name'),
+				"photo" => $this->session->get('photo')
+			];
 			return view('app/index', $data);
 
 		}else{

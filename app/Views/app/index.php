@@ -85,10 +85,15 @@
                                 data-bs-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
                                 <img class="rounded-circle header-profile-user"
-                                    src="<?=base_url('assets/images/users/avatar-1.jpg')?>"
+                                    src="<?php if($photo != ''){
+                                        echo $photo;
+                                    }else{
+                                        echo base_url('assets/images/users/anonymous.png');
+                                    }
+                                    ?>"
                                     alt="Header Avatar">
                                 <span class="d-none d-xl-inline-block ms-1
-                                    fw-medium">Shawn L.</span>
+                                    fw-medium"><?=$name?></span>
                                 <i class="mdi mdi-chevron-down d-none
                                     d-xl-inline-block"></i>
                             </button>
