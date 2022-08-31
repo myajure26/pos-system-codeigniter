@@ -37,7 +37,7 @@ class UsersController extends BaseController
 						"type" => "success",
 						"title" => "Bienvenido/a!",
 						"text" => $user[0]['name'],
-						"url" => base_url('app/dashboard')
+						"url" => base_url()
 					];
 					
 

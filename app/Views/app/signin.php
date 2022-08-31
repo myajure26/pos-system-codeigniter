@@ -54,7 +54,7 @@
                                                     </div>
                                                     <div class="flex-shrink-0">
                                                         <div class="">
-                                                            <a href="<?=base_url('app/recover')?>" class="text-muted">¿Olvidaste tu contraseña?</a>
+                                                            <a href="<?=base_url('recover')?>" class="text-muted">¿Olvidaste tu contraseña?</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -210,7 +210,7 @@
         <!-- password addon init -->
         <script src="<?=base_url('assets/js/pages/pass-addon.init.js')?>"></script>
         <!-- ajax -->
-        <script src="<?=base_url('assets/js/ajax.js')?>"></script>
+        <script src="<?=base_url('assets/js/signin.js')?>"></script>
 
     </body>
 

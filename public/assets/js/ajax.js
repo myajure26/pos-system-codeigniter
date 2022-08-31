@@ -1,7 +1,7 @@
 $(document).on("click", ".metismenu li a, .navbar-nav  li a", function(e) {
 	e.preventDefault();
 
-	var page = $(this).attr("href");
+	var page = $(this).attr("href").split('/')[3];
 	
 	if ($(this).attr("target") == "_self") {window.location.href= page; return true};
 	if ($(this).attr("target") == "_blank") window.open(page, "_blank");
@@ -45,8 +45,12 @@ $(document).on("click", ".metismenu li a, .navbar-nav  li a", function(e) {
 });
 
 function call_ajax_page(page) {
+	page = page.split('#')[1];
+	var origin = $(location).attr('origin');
+	var path = origin + "/app/" + page;
+	
 	$.ajax({
-		url: "ajax/" + page,
+		url: path,
 		cache: false,
 		dataType: "html",
 		type: "GET",
@@ -60,12 +64,12 @@ function call_ajax_page(page) {
 }
 
 $(document).ready(function() {
-	
-	var path = window.location.hash.substr(1);
-	if (path == "") {
-		call_ajax_page("");
-	} else {
-		call_ajax_page("");
+
+	var path = window.location.hash.substr(0);
+	if(path == ""){
+		call_ajax_page("#dashboard");
+	}else{
+		call_ajax_page(path);
 	}
 
 	// AJAX GENERAL FORM

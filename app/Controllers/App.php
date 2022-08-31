@@ -13,7 +13,14 @@ class App extends BaseController
 
 		}else{
 			
-			return redirect()->to(base_url('app/dashboard'));
+			$data = [
+				"title" => $this->system, 
+				"system" => $this->system,
+				"name" => $this->session->get('name'),
+				"photo" => $this->session->get('photo')
+			];
+			return view('app/dashboard', $data);
+
 
 		}
 
@@ -23,12 +30,15 @@ class App extends BaseController
 	{
 		if(!$this->session->has('session')){
 			
-			$data = ["title" => "Recuperar contraseña - $this->system", "system" => $this->system];
+			$data = [
+				"title" => "Recuperar contraseña - $this->system", 
+				"system" => $this->system
+			];
 			return view('app/recover', $data);
 
 		}else{
 			
-			return redirect()->to(base_url('app/dashboard'));
+			return redirect()->to(base_url('#dashboard'));
 
 		}
 
@@ -37,21 +47,29 @@ class App extends BaseController
 	public function dashboard()
 	{
 		if($this->session->has('session')){
-			
 			$data = [
-				"title" => "Inicio - $this->system", 
-				"system" => $this->system,
-				"name" => $this->session->get('name'),
-				"photo" => $this->session->get('photo')
+				"title" => "Inicio - $this->system"
 			];
-			return view('app/index', $data);
-
+			return view('app/ajax/dashboard', $data);
 		}else{
-			
+
 			return redirect()->to(base_url());
-
+		
 		}
+	}
 
+	public function users()
+	{
+		if($this->session->has('session')){
+			$data = [
+				"title" => "Usuarios - $this->system"
+			];
+			return view('app/ajax/users', $data);
+		}else{
+
+			return redirect()->to(base_url());
+		
+		}
 	}
 
 	public function logout()

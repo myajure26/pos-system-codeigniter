@@ -198,7 +198,7 @@
         <!-- pace js -->
         <script src="<?=base_url('assets/libs/pace-js/pace.min.js')?>"></script>
         <!-- ajax -->
-        <script src="<?=base_url('assets/js/ajax.js')?>"></script>
+        <script src="<?=base_url('assets/js/signin.js')?>"></script>
 
     </body>
 

@@ -36,7 +36,7 @@
                     <div class="d-flex">
                         <!-- LOGO -->
                         <div class="navbar-brand-box">
-                            <a href="<?=base_url('app/dashboard')?>" class="logo logo-dark">
+                            <a href="<?=base_url('#dashboard')?>" class="logo logo-dark">
                                 <span class="logo-sm">
                                     <img src="<?=base_url('assets/images/brands/logo.png')?>"
                                         height="24">
@@ -47,7 +47,7 @@
                                 </span>
                             </a>
 
-                            <a href="<?=base_url('app/dashboard')?>" class="logo logo-light">
+                            <a href="<?=base_url('#dashboard')?>" class="logo logo-light">
                                 <span class="logo-sm">
                                     <img src="<?=base_url('assets/images/brands/logo.png')?>"
                                         height="24">
@@ -106,7 +106,7 @@
                                         mdi-account-settings font-size-16
                                         align-middle me-1"></i> Opciones</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="<?=base_url('app/logout')?>"><i class="mdi
+                                <a class="dropdown-item" href="<?=base_url('#logout')?>"><i class="mdi
                                         mdi-logout font-size-16 align-middle
                                         me-1"></i> Cerrar sesión</a>
                             </div>
@@ -127,13 +127,13 @@
                         <ul class="metismenu list-unstyled" id="side-menu">
                             <li class="menu-title" data-key="t-menu">Panel de control</li>
                             <li>
-                                <a href="<?=base_url('app/dashboard')?>">
+                                <a href="<?=base_url('#dashboard')?>">
                                     <i data-feather="home"></i>
                                     <span data-key="t-dashboard">Inicio</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="<?=base_url('app/audit')?>">
+                                <a href="<?=base_url('#audit')?>">
                                     <i data-feather="bar-chart-2"></i>
                                     <span data-key="t-audit">Auditoría</span>
                                 </a>
@@ -141,19 +141,19 @@
 
                             <li class="menu-title" data-key="t-menu">Administrar ventas</li>
                             <li>
-                                <a href="<?=base_url('app/newSale')?>">
+                                <a href="<?=base_url('#newSale')?>">
                                     <i data-feather="plus"></i>
                                     <span data-key="t-newSale">Nueva Venta</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="<?=base_url('app/sales')?>">
+                                <a href="<?=base_url('#sales')?>">
                                     <i data-feather="shopping-bag"></i>
                                     <span data-key="t-sales">Ventas</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="<?=base_url('app/reports')?>">
+                                <a href="<?=base_url('#reports')?>">
                                     <i data-feather="pie-chart"></i>
                                     <span data-key="t-reports">Reportes</span>
                                 </a>
@@ -161,13 +161,13 @@
 
                             <li class="menu-title" data-key="t-menu">Administrar inventario</li>
                             <li>
-                                <a href="<?=base_url('app/products')?>">
+                                <a href="<?=base_url('#products')?>">
                                     <i data-feather="shopping-cart"></i>
                                     <span data-key="t-products">Productos</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="<?=base_url('app/categories')?>">
+                                <a href="<?=base_url('#categories')?>">
                                     <i data-feather="tag"></i>
                                     <span data-key="t-categories">Categorías</span>
                                 </a>
@@ -175,13 +175,13 @@
 
                             <li class="menu-title" data-key="t-menu">Administrar usuarios</li>
                             <li>
-                                <a href="<?=base_url('app/customers')?>">
+                                <a href="<?=base_url('#customers')?>">
                                     <i data-feather="user"></i>
                                     <span data-key="t-customers">Clientes</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="<?=base_url('app/users')?>">
+                                <a href="<?=base_url('#users')?>">
                                     <i data-feather="users"></i>
                                     <span data-key="t-users">Usuarios</span>
                                 </a>
@@ -189,7 +189,7 @@
 
                             <li class="menu-title" data-key="t-menu">Cofiguraciones del sistema</li>
                             <li>
-                                <a href="<?=base_url('app/settings')?>">
+                                <a href="<?=base_url('#settings')?>">
                                     <i data-feather="settings"></i>
                                     <span data-key="t-settings">Configuración general</span>
                                 </a>
