@@ -6,14 +6,14 @@ class App extends BaseController
 {
 	public function index()
 	{
-		if(!isset($_POST['user'])){
+		if(!$this->session->has('session')){
 			
 			$data = ["title" => "Iniciar sesión - $this->system", "system" => $this->system];
 			return view('app/signin', $data);
 
 		}else{
 			
-			echo '<script>window.location.href="/app/dashboard"</script>';
+			return redirect()->to(base_url('app/dashboard'));
 
 		}
 
@@ -21,16 +21,38 @@ class App extends BaseController
 
 	public function recover()
 	{
-		if(!isset($_POST['user'])){
+		if(!$this->session->has('session')){
 			
 			$data = ["title" => "Recuperar contraseña - $this->system", "system" => $this->system];
 			return view('app/recover', $data);
 
 		}else{
 			
-			echo '<script>window.location.href="/app/dashboard"</script>';
+			return redirect()->to(base_url('app/dashboard'));
 
 		}
 
 	}
+
+	public function dashboard()
+	{
+		if($this->session->has('session')){
+			
+			$data = ["title" => "Inicio - $this->system", "system" => $this->system];
+			return view('app/index', $data);
+
+		}else{
+			
+			return redirect()->to(base_url());
+
+		}
+
+	}
+
+	public function logout()
+	{
+		$this->session->destroy();
+		return redirect()->to(base_url());
+	}
+
 }

@@ -62,7 +62,7 @@ function sweetAlert($data)
 					timerProgressBar: true,
                     showConfirmButton: false
                     }).then(function(){
-                        document.location.reload();
+                        window.location.href = '".$data['url']."'
                     });
             </script>
         ";
@@ -91,7 +91,7 @@ function sweetAlert($data)
                     icon: '".$data['type']."',
                     title: '".$data['title']."',
                     text: '".$data['text']."',
-                    confirmButtonText: 'OK'
+                    confirmButtonText: 'IR'
                     }).then(function(){
                         window.location.href = '/'
                     });
