@@ -201,3 +201,29 @@ tr:first-child>td>.fc-day-grid-event {
 .ct-series-b .ct-area, .ct-series-b .ct-slice-pie {
     fill: #f8b425 !important;
 }
+
+/*Float button*/
+.float-btn{
+  width:60px;
+  height:60px;
+  border-radius:100%;
+  background:#7A7FDC;
+  right:0;
+  bottom:0;
+  position:fixed;
+  margin-right:16px;
+  margin-bottom:65px;
+  border:none;
+  outline:none;
+  color:#FFF;
+  font-size:36px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  transition:.3s;
+  z-index: 999;  
+}
+
+@media (max-width: 991.98px){
+    .float-btn{
+        position: absolute;
+    }
+}

@@ -8,21 +8,22 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- App favicon -->
         <link rel="shortcut icon" href="<?=base_url()?>/favicon.ico">
+        <!-- Datatables -->
+        <link href="<?=base_url('assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css')?>" rel="stylesheet" type="text/css" />
+        <link href="<?=base_url('assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css')?>" rel="stylesheet" type="text/css" />
+
         <!-- Sweet Alert -->
-        <link href="<?=base_url()?>/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+        <link href="<?=base_url('assets/libs/sweetalert2/sweetalert2.min.css')?>" rel="stylesheet" type="text/css" />
         <!-- preloader css -->
-        <link rel="stylesheet" href="<?=base_url()?>/assets/css/preloader.min.css"
-            type="text/css" />
+        <link href="<?=base_url('assets/css/preloader.min.css')?>" rel="stylesheet" type="text/css" />
         <!-- Bootstrap Css -->
-        <link href="<?=base_url()?>/assets/css/bootstrap.min.css" id="bootstrap-style"
-            rel="stylesheet" type="text/css" />
+        <link href="<?=base_url('assets/css/bootstrap.min.css')?>" rel="stylesheet" type="text/css" />
         <!-- Icons Css -->
-        <link href="<?=base_url()?>/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <link href="<?=base_url('assets/css/icons.min.css')?>" rel="stylesheet" type="text/css" />
         <!-- App Css-->
-        <link href="<?=base_url()?>/assets/css/app.min.css" id="app-style" rel="stylesheet"
-            type="text/css" />
+        <link href="<?=base_url('assets/css/app.min.css')?>" rel="stylesheet" type="text/css" />
         <!-- Custom Css -->
-        <link href="<?=base_url()?>/assets/css/custom.css" rel="stylesheet" type="text/css" />
+        <link href="<?=base_url('assets/css/custom.css')?>" rel="stylesheet" type="text/css" />
     
     </head>
 
@@ -106,7 +107,7 @@
                                         mdi-account-settings font-size-16
                                         align-middle me-1"></i> Opciones</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="<?=base_url('#logout')?>"><i class="mdi
+                                <a class="dropdown-item" href="<?=base_url('app/logout')?>"><i class="mdi
                                         mdi-logout font-size-16 align-middle
                                         me-1"></i> Cerrar sesión</a>
                             </div>
@@ -143,7 +144,7 @@
                             <li>
                                 <a href="<?=base_url('#newSale')?>">
                                     <i data-feather="plus"></i>
-                                    <span data-key="t-newSale">Nueva Venta</span>
+                                    <span data-key="t-newSale">Nueva venta</span>
                                 </a>
                             </li>
                             <li>
@@ -240,6 +241,10 @@
         <script src="<?=base_url('assets/libs/sweetalert2/sweetalert2.min.js')?>"></script>
         <!-- pace js -->
         <script src="<?=base_url('assets/libs/pace-js/pace.min.js')?>"></script>
+        <!-- datatables -->
+        <!-- Required datatable js -->
+        <script src="<?=base_url('assets/libs/datatables.net/js/jquery.dataTables.min.js')?>"></script>
+        <script src="<?=base_url('assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js')?>"></script>
         <!-- DOCUMENT -->
         <script src="<?=base_url('assets/js/app.js')?>"></script>
         <script src="<?=base_url('assets/js/ajax.js')?>"></script>
