@@ -37,7 +37,7 @@
                     </div>
                     <div class="card-body">
 
-                        <table class="table text-nowrap table-striped nowrap w-100" id="usersTable">
+                        <table class="table text-nowrap table-striped nowrap w-100" id="datatable">
                             <thead>
                                 <tr>
                                     <tr>
@@ -52,27 +52,6 @@
                                     </tr>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr data-id="1">
-                                    <td style="width: 30px">1</td>
-                                    <td>David McHenry</td>
-                                    <td>David</td>
-                                    <td><img src="http://localhost/pos-system-php/assets/images/users/anonymous.png" class="rounded-circle header-profile-user"></td>
-                                    <td>Rol</td>
-                                    <td><div class="mt-sm-1 d-block"><a href="javascript:void(0)" class="badge bg-soft-success text-success p-2 px-3 editStatus" user-id="1" status="1">Activado</a></div></td>
-                                    <td>Ultima sesion</td>
-                                    <td style="width: 100px">
-                                        <div class="btn-list"> 
-                                            <button type="button" class="btnEditUser btn btn-sm btn-primary" user-id="1" data-bs-effect="effect-scale" data-bs-toggle="modal" data-bs-target="#modalEditUser">
-                                                <i class="fas fa-pencil-alt"></i>
-                                            </button>
-                                            <button id="bDel" type="button" class="btnDeleteUser btn  btn-sm btn-danger" username="admin" photo="">
-                                                <i class="fas fa-times-circle"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>        
-                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -83,5 +62,8 @@
 </div>
 <!-- End Page-content -->
 
-<!-- users page -->
-<script src="<?=base_url('assets/js/users.js')?>"></script>
+<!-- table config -->
+<script src="<?=base_url('assets/js/tableConfig.js')?>"></script>
+<script>
+    tableConfig('/users/get');
+</script>

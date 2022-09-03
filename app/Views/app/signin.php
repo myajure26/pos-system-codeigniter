@@ -41,7 +41,7 @@
                                             <h5 class="mb-0">¡Bienvenido de vuelta!</h5>
                                             <p class="text-muted mt-2">Inicia sesión para continuar</p>
                                         </div>
-                                        <form class="custom-form mt-4 pt-2" action="<?=base_url('app/signin')?>" method="POST">
+                                        <form class="custom-form mt-4 pt-2" action="<?=base_url('users/signin')?>" method="POST">
                                             <div class="response"></div>
                                             <div class="mb-3">
                                                 <label class="form-label">Nombre de usuario</label>

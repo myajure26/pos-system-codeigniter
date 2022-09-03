@@ -34,7 +34,11 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'App::index');
 $routes->get('/recover', 'App::recover');
-$routes->post('/app/signin', 'UsersController::signinController');
+// $routes->post('/app/signin', 'UsersController::signinController');
+$routes->group('users', static function ($routes) {
+    $routes->post('signin', 'UsersController::signinController');
+    $routes->get('get', 'UsersController::getUsersController');
+});
 
 /*
  * --------------------------------------------------------------------
