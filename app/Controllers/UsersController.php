@@ -7,8 +7,8 @@ class UsersController extends BaseController
 {
 	public function signinController()
 	{
-		$message = null;
-		$response = null;
+		$message = NULL;
+		$response = NULL;
 
 		if($this->validate('signin')){
 			

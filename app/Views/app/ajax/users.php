@@ -46,7 +46,6 @@
                                         <th>Usuario</th>
                                         <th>Foto</th>
                                         <th>Rol</th>
-                                        <th>Estado</th>
                                         <th>Última sesión</th>
                                         <th>Acciones</th>
                                     </tr>

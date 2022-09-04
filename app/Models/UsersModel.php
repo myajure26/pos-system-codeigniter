@@ -14,7 +14,7 @@ class UsersModel extends Model
 	protected $returnType           = 'array';
 	protected $useSoftDelete        = false;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["name", "username", "password", "role", "photo", "status", "last_session", "created_at"];
+	protected $allowedFields        = ["name", "username", "password", "role", "photo", "last_session", "created_at"];
 
 	// Dates
 	// protected $useTimestamps        = false;
@@ -48,7 +48,7 @@ class UsersModel extends Model
 
 	public function getUsersModel()
 	{
-		$query = $this->select('id, name, username, photo, role, status, last_session');
+		$query = $this->select('id, name, username, photo, role, last_session')->where('deleted_at', NULL);
 		return $query;
 	}
 }
