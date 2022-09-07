@@ -36,8 +36,9 @@ $routes->get('/', 'App::index');
 $routes->get('/recover', 'App::recover');
 // $routes->post('/app/signin', 'UsersController::signinController');
 $routes->group('users', static function ($routes) {
-    $routes->post('signin', 'UsersController::signinController');
-    $routes->get('get', 'UsersController::getUsersController');
+    $routes->post('signin', 'UsersController::signin');
+    $routes->get('get', 'UsersController::getUsers');
+    $routes->post('create', 'UsersController::createUser');
 });
 
 /*

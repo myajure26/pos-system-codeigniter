@@ -6,9 +6,12 @@ class App extends BaseController
 {
 	public function index()
 	{
-		if(!$this->session->has('session')){
+		if(!$this->session->has('name')){
 			
-			$data = ["title" => "Iniciar sesión - $this->system", "system" => $this->system];
+			$data = [
+				"title" => "Iniciar sesión - $this->system", 
+				"system" => $this->system
+			];
 			return view('app/signin', $data);
 
 		}else{
@@ -28,7 +31,7 @@ class App extends BaseController
 
 	public function recover()
 	{
-		if(!$this->session->has('session')){
+		if(!$this->session->has('name')){
 			
 			$data = [
 				"title" => "Recuperar contraseña - $this->system", 
@@ -46,11 +49,13 @@ class App extends BaseController
 
 	public function dashboard()
 	{
-		if($this->session->has('session')){
+		if($this->session->has('name')){
+			
 			$data = [
 				"title" => "Inicio - $this->system"
 			];
 			return view('app/ajax/dashboard', $data);
+		
 		}else{
 
 			return redirect()->to(base_url());
@@ -60,11 +65,13 @@ class App extends BaseController
 
 	public function users()
 	{
-		if($this->session->has('session')){
+		if($this->session->has('name')){
+		
 			$data = [
 				"title" => "Usuarios - $this->system"
 			];
 			return view('app/ajax/users', $data);
+		
 		}else{
 
 			return redirect()->to(base_url());

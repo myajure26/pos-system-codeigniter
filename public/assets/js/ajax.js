@@ -45,6 +45,7 @@ $(document).on("click", ".metismenu li a, .navbar-nav  li a", function(e) {
 });
 
 function call_ajax_page(page) {
+
 	page = page.split('#')[1];
 	var origin = $(location).attr('origin');
 	var path = origin + "/app/" + page;
@@ -57,6 +58,9 @@ function call_ajax_page(page) {
 		success: function(data) {
 			$("#miniaresult").empty();
 			$("#miniaresult").html(data);
+			if($('body').attr('data-layout-mode') == 'dark'){
+		        $('.page-content').css("background", "#313533");
+			}
 			window.location.hash = page;
 			$(window).scrollTop(0);
 		}

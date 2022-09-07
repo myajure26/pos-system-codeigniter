@@ -14,7 +14,7 @@ class UsersModel extends Model
 	protected $returnType           = 'array';
 	protected $useSoftDelete        = false;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["name", "username", "password", "role", "photo", "last_session", "created_at"];
+	protected $allowedFields        = ["name", "username", "email", "password", "role", "photo", "last_session", "created_at"];
 
 	// Dates
 	// protected $useTimestamps        = false;
@@ -40,15 +40,17 @@ class UsersModel extends Model
 	// protected $beforeDelete         = [];
 	// protected $afterDelete          = [];
 
-	public function signinModel($data)
+	public function signin($data)
 	{
 		$query = $this->where($data);
 		return $query->get()->getResultArray();
 	}
 
-	public function getUsersModel()
+	public function getUsers()
 	{
-		$query = $this->select('id, name, username, photo, role, last_session')->where('deleted_at', NULL);
+		$query = $this
+			->select('id, name, username, email, photo, role, last_session')
+			->where('deleted_at', NULL);
 		return $query;
 	}
 }

@@ -5,7 +5,7 @@ use \Hermawan\DataTables\DataTable;
 
 class UsersController extends BaseController
 {
-	public function signinController()
+	public function signin()
 	{
 		$message = NULL;
 		$response = NULL;
@@ -16,22 +16,22 @@ class UsersController extends BaseController
 			$password = cleanString($this->request->getPost('password'), 'string');
 			$password = crypt($password, '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
 
-			$model = new UsersModel();
+			$usersModel = new UsersModel();
 			
-			$user = $model->signinModel(['username' => $username]);
+			$user = $usersModel->signin(['username' => $username]);
 
 			if(count($user) > 0){
 			
 				if($password == $user[0]['password']){
 
-					$data = [
+					$userData = [
 						"name" => $user[0]["name"],
-						"username" => $user[0]["username"],
-						"session" => $user[0]["role"],
+						"email" => $user[0]["username"],
+						"role" => $user[0]["role"],
 						"photo" => $user[0]["photo"]
 					];
 
-					$this->session->set($data);
+					$this->session->set($userData);
 
 					$response = [
 						"alert" => "reload",
@@ -74,11 +74,16 @@ class UsersController extends BaseController
 
 	}
 
-	public function getUsersController()
+	public function createUser()
 	{
-		$model = new UsersModel();
+		
+	}
+
+	public function getUsers()
+	{
+		$usersModel = new UsersModel();
 				
-		return DataTable::of($model->getUsersModel())
+		return DataTable::of($usersModel->getUsers())
 			->edit('photo', function($row){
 
 				if($row->photo == ''){
