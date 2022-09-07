@@ -69,8 +69,8 @@
                 <h5 class="modal-title" id="myLargeModalLabel">Nuevo usuario</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <form class="custom-form" action="<?=base_url('users/create')?>" method="POST">
+            <form class="custom-form" action="<?=base_url('users/create')?>" method="POST">
+                <div class="modal-body">
                     <div class="response"></div>
                     <div class="mb-3">
                         <label class="form-label">Nombre</label>
@@ -108,12 +108,12 @@
                             <img src="<?=base_url('assets/images/users/anonymous.png')?>" class="rounded-circle img" width="100px">
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Cerrar</button>
-                <button type="submit" class="btn btn-primary waves-effect waves-light">Guardar</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary waves-effect waves-light sent">Guardar</button>
+                </div>
+            </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -127,3 +127,5 @@
 <script>
     tableConfig('/users/get');
 </script>
+<!-- ajax form -->
+<script src="<?=base_url('assets/js/ajaxForm.js')?>"></script>

@@ -5,11 +5,11 @@ use \Hermawan\DataTables\DataTable;
 
 class UsersController extends BaseController
 {
+	protected $message;
+	protected $response;
+
 	public function signin()
 	{
-		$message = NULL;
-		$response = NULL;
-
 		if($this->validate('signin')){
 			
 			$username = cleanString($this->request->getPost('username'), 'string');
@@ -33,7 +33,7 @@ class UsersController extends BaseController
 
 					$this->session->set($userData);
 
-					$response = [
+					$this->response = [
 						"alert" => "reload",
 						"type" => "success",
 						"title" => "¡Bienvenido/a!",
@@ -43,40 +43,70 @@ class UsersController extends BaseController
 					
 
 				}else{
-					$message = "Contraseña incorrecta";
+					$this->message = "Contraseña incorrecta";
 				}
 			
 			}else{
-				$message = "El usuario no existe";
+				$this->message = "El usuario no existe";
 			}
 		
 		}else{
 
 			// Mostrar errores de validación
-			if($this->validator->getError('username')){
-				$message = esc($this->validator->getError('username'));
-			}else{
-				$message = esc($this->validator->getError('password'));
+			$errors = $this->validator->getErrors();
+			foreach ($errors as $error) {
+				$this->message = esc($error);
+				break;
 			}
 			
 		}
 
 		//Definir el sweet alert una sola vez
-		if($message != null){
-			$response = [
+		if($this->message != null){
+			$this->response = [
 				"alert" => "simple",
 				"type" => "error",
 				"title" => "Oops!",
-				"text" => $message
+				"text" => $this->message
 			];
 		}
-		return sweetAlert($response);
+		return sweetAlert($this->response);
 
 	}
 
 	public function createUser()
 	{
+		if($this->validate('users')){
+
+			$this->response = [
+				"alert" => "simple",
+				"type" => "success",
+				"title" => "¡Bienvenido/a!",
+				"text" => $this->request->getPost('role')
+			];
+			
 		
+		}else{
+
+			// Mostrar errores de validación
+			$errors = $this->validator->getErrors();
+			foreach ($errors as $error) {
+				$this->message = esc($error);
+				break;
+			}
+			
+		}
+
+		//Definir el sweet alert una sola vez
+		if($this->message != null){
+			$this->response = [
+				"alert" => "simple",
+				"type" => "error",
+				"title" => "Oops!",
+				"text" => $this->message
+			];
+		}
+		return sweetAlert($this->response);
 	}
 
 	public function getUsers()
