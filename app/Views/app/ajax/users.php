@@ -127,5 +127,6 @@
 <script>
     tableConfig('/users/get');
 </script>
-<!-- ajax form -->
+<!-- ajax -->
 <script src="<?=base_url('assets/js/ajaxForm.js')?>"></script>
+<script src="<?=base_url('assets/js/ajaxReload.js')?>"></script>

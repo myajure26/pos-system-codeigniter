@@ -53,4 +53,11 @@ class UsersModel extends Model
 			->where('deleted_at', NULL);
 		return $query;
 	}
+
+	public function createUser($data)
+	{
+		$query = $this
+			->insert($data);
+		return $query;
+	}
 }

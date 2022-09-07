@@ -12,8 +12,8 @@ class UsersController extends BaseController
 	{
 		if($this->validate('signin')){
 			
-			$username = cleanString($this->request->getPost('username'), 'string');
-			$password = cleanString($this->request->getPost('password'), 'string');
+			$username = $this->request->getPost('username');
+			$password = $this->request->getPost('password');
 			$password = crypt($password, '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
 
 			$usersModel = new UsersModel();
@@ -78,12 +78,58 @@ class UsersController extends BaseController
 	{
 		if($this->validate('users')){
 
-			$this->response = [
-				"alert" => "simple",
-				"type" => "success",
-				"title" => "¡Bienvenido/a!",
-				"text" => $this->request->getPost('role')
-			];
+			$username = $this->request->getPost('username');
+			$password = $this->request->getPost('password');
+			$password = crypt($password, '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
+
+			$data = [
+				"name" => $this->request->getPost('name'),
+				"username" => $this->request->getPost('username'),
+				"email" => $this->request->getPost('email'),
+				"password" => $password,
+				"role" => $this->request->getPost('role'),
+				"photo" => NULL
+			];	
+			
+			// Subir foto al servidor
+			if($this->request->getFile('photo') != ''){
+				$photo = $this->request->getFile('photo');
+				$photoName = $username.'.'.explode('/', $photo->getMimeType())[1];
+
+				if ($photo->isValid() && ! $photo->hasMoved()) {
+				    $photo->move(ROOTPATH . 'public/uploads', $photoName);
+
+				    // Redimensionar la foto
+				    $photo = \Config\Services::image()
+					    ->withFile(ROOTPATH.'public/uploads/'.$photoName)
+					    ->fit(500, 500, 'center')
+					    ->save(ROOTPATH.'public/uploads/users/'.$photoName);
+					unlink(ROOTPATH.'public/uploads/'.$photoName);
+
+					$photo = base_url('uploads/users/'.$photoName);
+					$data['photo'] = $photo;
+				}else{
+					$this->message = "Ocurrió un error al subir la foto";
+				}
+
+				
+			}
+
+			$usersModel = new UsersModel();
+
+			$user = $usersModel->createUser($data);
+
+			if($user){
+				$this->response = [
+					"alert" => "clean",
+					"type" => "success",
+					"title" => "!",
+					"text" => "Usuario creado con éxito",
+					"ajaxReload" => "users"
+				];
+			}else{
+				$this->message = "Ocurrió un error al guardar el usuario en la base de datos";
+			}
 			
 		
 		}else{
