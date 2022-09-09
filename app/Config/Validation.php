@@ -44,10 +44,11 @@ class Validation
 	public $signin = [
 		'username' => [
 			'label' => 'username',
-			'rules' => 'required|alpha_dash',
+			'rules' => 'required|alpha_dash|is_not_unique[users.username]',
 			'errors' => [
 				'required' => 'El nombre de usuario es requerido.',
-				'alpha_dash' => 'Para el nombre de usuario sólo se permiten carácteres alfanuméricos, guiones y guiones bajos.'
+				'alpha_dash' => 'Para el nombre de usuario sólo se permiten carácteres alfanuméricos, guiones y guiones bajos.',
+				'is_not_unique' => 'El nombre de usuario no existe'
 			]
 		],
 		'password' => [

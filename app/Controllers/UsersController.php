@@ -5,154 +5,109 @@ use \Hermawan\DataTables\DataTable;
 
 class UsersController extends BaseController
 {
-	protected $message;
-	protected $response;
+	protected $errorMessage = [
+		"alert" => "simple",
+		"type" => "error",
+		"title" => "¡Oops!",
+		"text" => ""
+
+	];
+
+	protected $successMessage = [
+		"alert" => "simple",
+		"type" => "success",
+		"title" => "¡Éxito!",
+		"text" => ""
+
+	];
 
 	public function signin()
 	{
-		if($this->validate('signin')){
+		if(!$this->validate('signin')){
 			
-			$username = $this->request->getPost('username');
-			$password = $this->request->getPost('password');
-			$password = crypt($password, '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
-
-			$usersModel = new UsersModel();
-			
-			$user = $usersModel->signin(['username' => $username]);
-
-			if(count($user) > 0){
-			
-				if($password == $user[0]['password']){
-
-					$userData = [
-						"name" => $user[0]["name"],
-						"email" => $user[0]["username"],
-						"role" => $user[0]["role"],
-						"photo" => $user[0]["photo"]
-					];
-
-					$this->session->set($userData);
-
-					$this->response = [
-						"alert" => "reload",
-						"type" => "success",
-						"title" => "¡Bienvenido/a!",
-						"text" => $user[0]['name'],
-						"url" => base_url()
-					];
-					
-
-				}else{
-					$this->message = "Contraseña incorrecta";
-				}
-			
-			}else{
-				$this->message = "El usuario no existe";
-			}
-		
-		}else{
-
 			// Mostrar errores de validación
 			$errors = $this->validator->getErrors();
 			foreach ($errors as $error) {
-				$this->message = esc($error);
-				break;
+				$this->errorMessage['text'] = esc($error);
+				return sweetAlert($this->errorMessage);
 			}
-			
+
 		}
 
-		//Definir el sweet alert una sola vez
-		if($this->message != null){
-			$this->response = [
-				"alert" => "simple",
-				"type" => "error",
-				"title" => "Oops!",
-				"text" => $this->message
-			];
+		$username = $this->request->getPost('username');
+		$password = crypt($this->request->getPost('password'), '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
+
+		$usersModel = new UsersModel();
+		$user = $usersModel->signin(['username' => $username]);
+
+		if($user[0]['password'] != $password){
+			$this->errorMessage['text'] = "La contraseña es incorrecta";
+			return sweetAlert($this->errorMessage);
 		}
-		return sweetAlert($this->response);
+
+		$userData = [
+			"name" => $user[0]["name"],
+			"email" => $user[0]["username"],
+			"role" => $user[0]["role"],
+			"photo" => $user[0]["photo"]
+		];
+
+		$this->session->set($userData);
+
+		$this->successMessage['alert'] = "reload";
+		$this->successMessage['title'] = "¡Bienvenido/a";
+		$this->successMessage['text'] = $user[0]["name"];
+		$this->successMessage['url'] = base_url();
+		return sweetAlert($this->successMessage);
 
 	}
 
 	public function createUser()
 	{
-		if($this->validate('users')){
-
-			$username = $this->request->getPost('username');
-			$password = $this->request->getPost('password');
-			$password = crypt($password, '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
-
-			$data = [
-				"name" => $this->request->getPost('name'),
-				"username" => $this->request->getPost('username'),
-				"email" => $this->request->getPost('email'),
-				"password" => $password,
-				"role" => $this->request->getPost('role'),
-				"photo" => NULL
-			];	
+		if(!$this->validate('users')){
 			
-			// Subir foto al servidor
-			if($this->request->getFile('photo') != ''){
-				$photo = $this->request->getFile('photo');
-				$photoName = $username.'.'.explode('/', $photo->getMimeType())[1];
-
-				if ($photo->isValid() && ! $photo->hasMoved()) {
-				    $photo->move(ROOTPATH . 'public/uploads', $photoName);
-
-				    // Redimensionar la foto
-				    $photo = \Config\Services::image()
-					    ->withFile(ROOTPATH.'public/uploads/'.$photoName)
-					    ->fit(500, 500, 'center')
-					    ->save(ROOTPATH.'public/uploads/users/'.$photoName);
-					unlink(ROOTPATH.'public/uploads/'.$photoName);
-
-					$photo = base_url('uploads/users/'.$photoName);
-					$data['photo'] = $photo;
-				}else{
-					$this->message = "Ocurrió un error al subir la foto";
-				}
-
-				
-			}
-
-			$usersModel = new UsersModel();
-
-			$user = $usersModel->createUser($data);
-
-			if($user){
-				$this->response = [
-					"alert" => "clean",
-					"type" => "success",
-					"title" => "!",
-					"text" => "Usuario creado con éxito",
-					"ajaxReload" => "users"
-				];
-			}else{
-				$this->message = "Ocurrió un error al guardar el usuario en la base de datos";
-			}
-			
-		
-		}else{
-
 			// Mostrar errores de validación
 			$errors = $this->validator->getErrors();
 			foreach ($errors as $error) {
-				$this->message = esc($error);
-				break;
+				$this->errorMessage['text'] = esc($error);
+				return sweetAlert($this->errorMessage);
 			}
-			
 		}
 
-		//Definir el sweet alert una sola vez
-		if($this->message != null){
-			$this->response = [
-				"alert" => "simple",
-				"type" => "error",
-				"title" => "Oops!",
-				"text" => $this->message
-			];
+		$username = $this->request->getPost('username');
+		$password = crypt($this->request->getPost('password'), '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
+
+		$userData = [
+			"name" => $this->request->getPost('name'),
+			"username" => $this->request->getPost('username'),
+			"email" => $this->request->getPost('email'),
+			"password" => $password,
+			"role" => $this->request->getPost('role'),
+			"photo" => NULL
+		];
+
+		if($this->request->getFile('photo') != ''){
+			$photoUpload = self::photoUpload($this->request->getFile('photo'), $username);
+			if(!$photoUpload){
+				$this->errorMessage['text'] = "Ha ocurrido un error al subir la foto";
+				return sweetAlert($this->errorMessage);
+			}
+
+			$userData["photo"] = $photoUpload;
 		}
-		return sweetAlert($this->response);
+
+		$usersModel = new UsersModel();
+		$user = $usersModel->createUser($userData);
+
+		if(!$user){
+			$this->errorMessage['text'] = "Ha ocurrido un error al guardar los datos";
+			return sweetAlert($this->errorMessage);
+		}
+		
+		$this->successMessage['alert'] = "clean";
+		$this->successMessage['text'] = "El usuario se ha creado correctamente";
+		$this->successMessage['ajaxReload'] = "users";
+		return sweetAlert($this->successMessage);
 	}
 
 	public function getUsers()
@@ -187,5 +142,31 @@ class UsersController extends BaseController
                         </div>';
 			}, 'last') 
 			->toJson();
+	}
+
+	// Funciones parciales
+	public function photoUpload($photo, $username, $delete = false)
+	{
+		$photoName = $username.'.'.explode('/', $photo->getMimeType())[1];
+		
+		if($delete){
+			unlink(ROOTPATH.'public/uploads/users/'.$photoName);
+		}
+
+		if ($photo->isValid() && ! $photo->hasMoved()) {
+		    $photo->move(ROOTPATH . 'public/uploads', $photoName);
+
+		    // Redimensionar la foto
+		    $editPhoto = \Config\Services::image()
+			    ->withFile(ROOTPATH.'public/uploads/'.$photoName)
+			    ->fit(500, 500, 'center')
+			    ->save(ROOTPATH.'public/uploads/users/'.$photoName);
+			unlink(ROOTPATH.'public/uploads/'.$photoName);
+
+			$photo = base_url('uploads/users/'.$photoName);
+			return $photo;
+		}
+
+		return false;
 	}
 }
