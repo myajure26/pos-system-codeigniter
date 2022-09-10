@@ -55,7 +55,7 @@ class UsersController extends BaseController
 		$this->session->set($userData);
 
 		$this->successMessage['alert'] 	= "reload";
-		$this->successMessage['title'] 	= "¡Bienvenido/a";
+		$this->successMessage['title'] 	= "¡Bienvenido/a!";
 		$this->successMessage['text'] 	= $user[0]["name"];
 		$this->successMessage['url'] 	= base_url();
 		return sweetAlert($this->successMessage);
@@ -202,6 +202,32 @@ class UsersController extends BaseController
 		
 		$this->successMessage['alert'] 		= "clean";
 		$this->successMessage['text'] 		= "El usuario se ha actualizado correctamente";
+		$this->successMessage['ajaxReload'] = "users";
+		return sweetAlert($this->successMessage);
+	}
+
+	public function deleteUser()
+	{
+		$id = $this->request->getPost('id');
+		$photo = $this->request->getPost('photo');
+
+		$dataUser = [
+			"photo" 		=> NULL,
+			"deleted_at" 	=> date("Y-m-d H:i:s")
+		];
+
+		$usersModel = new UsersModel();
+		$deleteUser = $usersModel->deleteUser($dataUser, $id);
+
+		if(!$deleteUser){
+			$this->errorMessage['text'] = "El usuario no existe";
+			return sweetAlert($this->errorMessage);
+		}
+
+		self::deletePhoto($photo);
+		$this->successMessage['alert'] 		= "clean";
+		$this->successMessage['title'] 		= "Usuario eliminado";
+		$this->successMessage['text'] 		= "Puede recuperarlo desde la papelera";
 		$this->successMessage['ajaxReload'] = "users";
 		return sweetAlert($this->successMessage);
 	}

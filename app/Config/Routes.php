@@ -41,6 +41,7 @@ $routes->group('users', static function ($routes) {
     $routes->get('get', 'UsersController::getUsers');
     $routes->get('getById/(:num)', 'UsersController::getUserById/$1');
     $routes->post('update', 'UsersController::updateUser');
+    $routes->post('delete', 'UsersController::deleteUser');
 });
 
 /*

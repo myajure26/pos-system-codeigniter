@@ -46,5 +46,64 @@ $(document).ready(function(){
         return false;
     });
 
+    // AJAX DELETE USER
+    $(document).on('click', '.btnDeleteUser', function(){ 
+        
+        var response = $('.response');
+        var id = $(this).attr('user-id');
+        var photo = $(this).attr('photo');
+        var data = new FormData();
+        data.append('id', id);
+        data.append('photo', photo); 
+        
+        Swal.fire({
+           
+           title: '¿Está seguro de eliminar el usuario?',
+           text: 'Si no lo está puede cancelar',
+           icon: 'warning',
+           showCancelButton: true,
+           cancelButtonColor: '#D33',
+           confirmButtonText: 'Sí',
+           cancelButtonText: 'Cancelar'
+
+        }).then((result) => {
+            if(result.value){
+
+                //AJAX
+                $.ajax({
+                    url: path + '/users/delete',
+                    method: "POST",
+                    data: data,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function() {
+                        Swal.fire({
+                            title: '<h5>Procesando...</h5>',
+                            text: 'Por favor, espera unos segundos',
+                            showConfirmButton: false,
+                            onRender: function() {
+                                 // there will only ever be one sweet alert open.
+                                 $('.swal2-content').prepend(sweet_loader);
+                            }
+                        });
+                    },
+                    success: function (data) {
+                        response.html(data);
+                    },
+                    error: function (data) {
+                        
+                        console.log(data);
+                        Swal.fire({
+                           title: 'Ha ocurrido un error',
+                           text: 'Intente nuevamente',
+                           icon: 'error'
+                        });
+
+                    }
+                });
+            }
+        });
+    });
 
 });

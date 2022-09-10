@@ -12,16 +12,16 @@ class UsersModel extends Model
 	protected $useAutoIncrement     = true;
 	protected $insertID             = 0;
 	protected $returnType           = 'array';
-	protected $useSoftDelete        = false;
+	protected $useSoftDeletes       = true;
 	protected $protectFields        = true;
 	protected $allowedFields        = ["ci","name", "email", "password", "privilege", "photo", "updated_at", "deleted_at", "created_at","last_session"];
 
 	// Dates
-	// protected $useTimestamps        = false;
-	// protected $dateFormat           = 'datetime';
-	// protected $createdField         = 'created_at';
-	// protected $updatedField         = 'updated_at';
-	// protected $deletedField         = 'deleted_at';
+	protected $useTimestamps        = true;
+	protected $dateFormat           = 'datetime';
+	protected $createdField         = 'created_at';
+	protected $updatedField         = 'updated_at';
+	protected $deletedField         = 'deleted_at';
 
 	// // Validation
 	// protected $validationRules      = [];
@@ -75,5 +75,12 @@ class UsersModel extends Model
 				->update();
 		return $query;
 		
+	}
+
+	public function deleteUser($data, $id)
+	{
+		$query = $this
+				->delete($id);
+		return $query;
 	}
 }
