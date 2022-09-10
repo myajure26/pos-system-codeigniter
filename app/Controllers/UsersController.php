@@ -51,6 +51,8 @@ class UsersController extends BaseController
 			"privilege" => $user[0]["privilege"],
 			"photo" 	=> $user[0]["photo"]
 		];
+		$date = date("Y-m-d H:i:s");
+		$usersModel->updateUser(["last_session" => $date], $ci);
 
 		$this->session->set($userData);
 
@@ -177,8 +179,7 @@ class UsersController extends BaseController
 			"email" 		=> $this->request->getPost('email'),
 			"password" 		=> $password,
 			"privilege" 	=> $this->request->getPost('privilege'),
-			"photo" 		=> $this->request->getPost('updatePhotoPreview'),
-			"updated_at" 	=> date("Y-m-d H:i:s")
+			"photo" 		=> $this->request->getPost('updatePhotoPreview')
 		];
 
 		if($this->request->getFile('photo') != ''){

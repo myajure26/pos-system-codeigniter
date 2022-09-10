@@ -59,7 +59,7 @@ $(document).ready(function(){
         Swal.fire({
            
            title: '¿Está seguro de eliminar el usuario?',
-           text: 'Si no lo está puede cancelar',
+           text: 'Si no lo está, puede cancelar la operación',
            icon: 'warning',
            showCancelButton: true,
            cancelButtonColor: '#D33',
