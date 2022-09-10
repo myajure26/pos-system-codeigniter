@@ -58,7 +58,7 @@ function sweetAlert($data)
                     icon: '".$data['type']."',
                     title: '".$data['title']."',
                     text: '".$data['text']."',
-					timer: 2500,
+					timer: 3000,
 					timerProgressBar: true,
                     showConfirmButton: false
                     }).then(function(){

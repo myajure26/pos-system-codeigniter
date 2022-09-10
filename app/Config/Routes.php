@@ -37,8 +37,10 @@ $routes->get('/recover', 'App::recover');
 // $routes->post('/app/signin', 'UsersController::signinController');
 $routes->group('users', static function ($routes) {
     $routes->post('signin', 'UsersController::signin');
-    $routes->get('get', 'UsersController::getUsers');
     $routes->post('create', 'UsersController::createUser');
+    $routes->get('get', 'UsersController::getUsers');
+    $routes->get('getById/(:num)', 'UsersController::getUserById/$1');
+    $routes->post('update', 'UsersController::updateUser');
 });
 
 /*

@@ -74,20 +74,20 @@
                     <div class="response"></div>
                     <div class="mb-3">
                         <label class="form-label">Cédula</label>
-                        <input type="text" class="form-control" id="ci" placeholder="Introduce el número de cédula" name="ci" minlength="7" maxlength="8">
+                        <input type="text" class="form-control" id="ci" placeholder="Introduce el número de cédula" name="ci" minlength="7" maxlength="8" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="name" placeholder="Introduce el nombre del usuario" name="name">
+                        <input type="text" class="form-control" id="name" placeholder="Introduce el nombre del usuario" name="name" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Correo electrónico</label>
-                        <input type="email" class="form-control" id="email" placeholder="Introduce el correo electrónico" name="email">
+                        <input type="email" class="form-control" id="email" placeholder="Introduce el correo electrónico" name="email" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Introduce la contraseña</label>
                         <div class="input-group auth-pass-inputgroup">
-                            <input type="password" class="form-control" placeholder="Introduce la contraseña" aria-label="Password" aria-describedby="password-addon" name="password" >
+                            <input type="password" class="form-control" placeholder="Introduce la contraseña" aria-label="Password" aria-describedby="password-addon" name="password" required>
                             <button class="btn btn-light ms-0" type="button" id="password-addon"><i class="mdi mdi-eye-outline"></i></button>
                         </div>
                     </div>
@@ -124,34 +124,36 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel">Nuevo usuario</h5>
+                <h5 class="modal-title" id="myLargeModalLabel">Actualizar usuario</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="custom-form" action="<?=base_url('users/create')?>" method="POST">
+            <form class="custom-form" action="<?=base_url('users/update')?>" method="POST">
                 <div class="modal-body">
                     <div class="response"></div>
                     <div class="mb-3">
                         <label class="form-label">Cédula</label>
-                        <input type="text" class="form-control" id="ci" placeholder="Introduce el número de cédula" name="ci" minlength="7" maxlength="8">
+                        <input type="text" class="form-control" id="updateCi" placeholder="Introduce el número de cédula" name="ci" minlength="7" maxlength="8" readonly required>
+                        <small class="w-100 text-info mt-1">La cédula no se puede cambiar</small>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="updateName" placeholder="Introduce el nombre del usuario" name="name">
+                        <input type="text" class="form-control" id="updateName" placeholder="Introduce el nombre del usuario" name="name" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Correo electrónico</label>
-                        <input type="email" class="form-control" id="email" placeholder="Introduce el correo electrónico" name="email">
+                        <input type="email" class="form-control" id="updateEmail" placeholder="Introduce el correo electrónico" name="email" required>
                     </div>
+                    <input type="hidden" id="updatePasswordPreview" name="updatePasswordPreview" value="">
                     <div class="mb-3">
-                        <label class="form-label">Introduce la contraseña</label>
+                        <label class="form-label">Contraseña</label>
                         <div class="input-group auth-pass-inputgroup">
-                            <input type="password" class="form-control" placeholder="Introduce la contraseña" aria-label="Password" aria-describedby="password-addon" name="password" >
-                            <button class="btn btn-light ms-0" type="button" id="password-addon"><i class="mdi mdi-eye-outline"></i></button>
+                            <input type="password" class="form-control" placeholder="Introduce la contraseña" aria-label="Password" aria-describedby="password-addon" name="password" id="updatePassword">
+                            <button class="btn btn-light ms-0" type="button" id="password-addon2"><i class="mdi mdi-eye-outline"></i></button>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Privilegio</label>
-                        <select class="form-select" name="privilege" required>
+                        <select class="form-select" name="privilege" id="updatePrivilege" required>
                             <option value="">Selecciona el perfil</option>
                             <option value="admin">Administrador</option>
                             <option value="special">Especial</option>
@@ -160,10 +162,11 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Selecciona una foto de perfil</label>
+                        <input type="hidden" name="updatePhotoPreview" id="updatePhotoPreview" value="">
                         <input class="form-control photo" type="file" name="photo">
                         <div class="d-flex align-items-center justify-content-around mt-3">
                             <span class="badge text-info mt-2">Tamaño máximo: 3MB</span>
-                            <img src="<?=base_url('assets/images/users/anonymous.png')?>" class="rounded-circle img" width="100px">
+                            <img src="<?=base_url('assets/images/users/anonymous.png')?>" class="rounded-circle img" width="100px" id="updatePhoto">
                         </div>
                     </div>
                 </div>
@@ -188,4 +191,4 @@
 <!-- ajax -->
 <script src="<?=base_url('assets/js/ajaxForm.js')?>"></script>
 <script src="<?=base_url('assets/js/ajaxReload.js')?>"></script>
-<script src="<?=base_url('assets/js/users.js')?>"></script>
+<script src="<?=base_url('assets/js/system-pages/users.js')?>"></script>

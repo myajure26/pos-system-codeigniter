@@ -14,7 +14,7 @@ class UsersModel extends Model
 	protected $returnType           = 'array';
 	protected $useSoftDelete        = false;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["ci","name", "email", "password", "privilege", "photo", "last_session", "created_at"];
+	protected $allowedFields        = ["ci","name", "email", "password", "privilege", "photo", "updated_at", "deleted_at", "created_at","last_session"];
 
 	// Dates
 	// protected $useTimestamps        = false;
@@ -59,5 +59,21 @@ class UsersModel extends Model
 		$query = $this
 			->insert($data);
 		return $query;
+	}
+
+	public function getUserById($data)
+	{
+		$query = $this->where($data);
+		return $query->get()->getResultArray();
+	}
+
+	public function updateUser($data, $ci)
+	{
+		$query = $this
+				->where('ci', $ci)
+				->set($data)
+				->update();
+		return $query;
+		
 	}
 }

@@ -38,7 +38,7 @@ class UsersController extends BaseController
 		$password = crypt($this->request->getPost('password'), '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
 
 		$usersModel = new UsersModel();
-		$user = $usersModel->signin(['ci' => $ci]);
+		$user = $usersModel->getUserById(['ci' => $ci]);
 
 		if($user[0]['password'] != $password){
 			$this->errorMessage['text'] = "La contraseña es incorrecta";
@@ -46,18 +46,18 @@ class UsersController extends BaseController
 		}
 
 		$userData = [
-			"ci" => $user[0]["ci"],
-			"name" => $user[0]["name"],
+			"ci" 		=> $user[0]["ci"],
+			"name" 		=> $user[0]["name"],
 			"privilege" => $user[0]["privilege"],
-			"photo" => $user[0]["photo"]
+			"photo" 	=> $user[0]["photo"]
 		];
 
 		$this->session->set($userData);
 
-		$this->successMessage['alert'] = "reload";
-		$this->successMessage['title'] = "¡Bienvenido/a";
-		$this->successMessage['text'] = $user[0]["name"];
-		$this->successMessage['url'] = base_url();
+		$this->successMessage['alert'] 	= "reload";
+		$this->successMessage['title'] 	= "¡Bienvenido/a";
+		$this->successMessage['text'] 	= $user[0]["name"];
+		$this->successMessage['url'] 	= base_url();
 		return sweetAlert($this->successMessage);
 
 	}
@@ -78,12 +78,12 @@ class UsersController extends BaseController
 		$password = crypt($this->request->getPost('password'), '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
 
 		$userData = [
-			"ci" => $this->request->getPost('ci'),
-			"name" => $this->request->getPost('name'),
-			"email" => $this->request->getPost('email'),
-			"password" => $password,
+			"ci" 		=> $this->request->getPost('ci'),
+			"name" 		=> $this->request->getPost('name'),
+			"email" 	=> $this->request->getPost('email'),
+			"password" 	=> $password,
 			"privilege" => $this->request->getPost('privilege'),
-			"photo" => NULL
+			"photo" 	=> NULL
 		];
 
 		if($this->request->getFile('photo') != ''){
@@ -104,8 +104,8 @@ class UsersController extends BaseController
 			return sweetAlert($this->errorMessage);
 		}
 		
-		$this->successMessage['alert'] = "clean";
-		$this->successMessage['text'] = "El usuario se ha creado correctamente";
+		$this->successMessage['alert'] 		= "clean";
+		$this->successMessage['text'] 		= "El usuario se ha creado correctamente";
 		$this->successMessage['ajaxReload'] = "users";
 		return sweetAlert($this->successMessage);
 	}
@@ -144,12 +144,74 @@ class UsersController extends BaseController
 			->toJson();
 	}
 
+	public function getUserById($id)
+	{
+		$usersModel = new UsersModel();
+		$user = $usersModel->getUserById(['id' => $id]);
+		if(!$user){
+			return false;
+		}
+		return json_encode($user);
+	}
+
+	public function updateUser()
+	{
+		if(!$this->validate('updateUser')){
+			
+			// Mostrar errores de validación
+			$errors = $this->validator->getErrors();
+			foreach ($errors as $error) {
+				$this->errorMessage['text'] = esc($error);
+				return sweetAlert($this->errorMessage);
+			}
+		}
+
+		$ci = $this->request->getPost('ci');
+		(empty($this->request->getPost('password')))
+		?$password = $this->request->getPost('updatePasswordPreview')
+		:$password = crypt($this->request->getPost('password'), '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
+
+		$userData = [
+			"ci" 			=> $ci,
+			"name" 			=> $this->request->getPost('name'),
+			"email" 		=> $this->request->getPost('email'),
+			"password" 		=> $password,
+			"privilege" 	=> $this->request->getPost('privilege'),
+			"photo" 		=> $this->request->getPost('updatePhotoPreview'),
+			"updated_at" 	=> date("Y-m-d H:i:s")
+		];
+
+		if($this->request->getFile('photo') != ''){
+			self::deletePhoto($userData['photo']);
+			$photoUpload = self::photoUpload($this->request->getFile('photo'), $ci);
+			if(!$photoUpload){
+				$this->errorMessage['text'] = "Ha ocurrido un error al subir la foto";
+				return sweetAlert($this->errorMessage);
+			}
+
+			$userData["photo"] = $photoUpload;
+		}
+
+		$usersModel = new UsersModel();
+		$user = $usersModel->updateUser($userData, $ci);
+
+		if(!$user){
+			$this->errorMessage['text'] = "Ha ocurrido un error al guardar los datos";
+			return sweetAlert($this->errorMessage);
+		}
+		
+		$this->successMessage['alert'] 		= "clean";
+		$this->successMessage['text'] 		= "El usuario se ha actualizado correctamente";
+		$this->successMessage['ajaxReload'] = "users";
+		return sweetAlert($this->successMessage);
+	}
+
 	// Funciones parciales
-	public function photoUpload($photo, $ci, $delete = false)
+	public function photoUpload($photo, $ci)
 	{
 		$photoName = $ci.'.'.explode('/', $photo->getMimeType())[1];
 		
-		if($delete){
+		if(file_exists(ROOTPATH.'public/uploads/users/'.$photoName)){
 			unlink(ROOTPATH.'public/uploads/users/'.$photoName);
 		}
 
@@ -167,6 +229,18 @@ class UsersController extends BaseController
 			return $photo;
 		}
 
+		return false;
+	}
+
+	public function deletePhoto($src){
+		if(!empty($src)){
+			$img = explode('/', $src);
+			$img = end($img);
+			if(file_exists(ROOTPATH.'public/uploads/users/'.$img)){
+				unlink(ROOTPATH.'public/uploads/users/'.$img);
+			}
+			return true;
+		}
 		return false;
 	}
 }
