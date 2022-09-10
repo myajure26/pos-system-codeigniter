@@ -7,7 +7,6 @@ $(document).ready(function(){
         var action = form.attr('action');
         var method = form.attr('method');
         var formdata = new FormData(this);
-        var text = $('.sent').text();
         var loader = '<span class="spinner-border spinner-border-sm loader" role="status"></span>';
         
         $('.sent').attr('disabled', 'true').html(loader);
@@ -20,11 +19,11 @@ $(document).ready(function(){
             contentType: false,
             processData: false,
             success: function (data) {
-        		$('.sent').removeAttr('disabled').html(text);
+        		$('.sent').removeAttr('disabled').html('Guardar');
                 response.html(data);
             },
             error: function (data) {
-                $('.sent').removeAttr('disabled').html(text);
+                $('.sent').removeAttr('disabled').html('Guardar');
                 response.html(data);
             }
         });

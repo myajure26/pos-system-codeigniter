@@ -4,7 +4,7 @@
 <div class="page-content">
     <div class="container-fluid">
 
-        <button class="float-btn waves-effect" data-bs-toggle="modal"data-bs-target="#newUserModal" >
+        <button class="float-btn waves-effect" data-bs-toggle="modal" data-bs-target="#newUserModal" >
           <span>+</span>
         </button>
 
@@ -41,11 +41,11 @@
                                 <tr>
                                     <tr>
                                         <th>#</th>
+                                        <th>Cédula</th>
                                         <th>Nombre</th>
-                                        <th>Usuario</th>
                                         <th>Email</th>
                                         <th>Foto</th>
-                                        <th>Rol</th>
+                                        <th>Privilegio</th>
                                         <th>Última sesión</th>
                                         <th>Acciones</th>
                                     </tr>
@@ -73,12 +73,12 @@
                 <div class="modal-body">
                     <div class="response"></div>
                     <div class="mb-3">
-                        <label class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="name" placeholder="Introduce el nombre del usuario" name="name">
+                        <label class="form-label">Cédula</label>
+                        <input type="text" class="form-control" id="ci" placeholder="Introduce el número de cédula" name="ci" minlength="7" maxlength="8">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Nombre de usuario</label>
-                        <input type="text" class="form-control" id="username" placeholder="Introduce el nombre de usuario" name="username">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="name" placeholder="Introduce el nombre del usuario" name="name">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Correo electrónico</label>
@@ -92,8 +92,66 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Role</label>
-                        <select class="form-select" name="role" required>
+                        <label class="form-label">Privilegio</label>
+                        <select class="form-select" name="privilege" required>
+                            <option value="">Selecciona el perfil</option>
+                            <option value="admin">Administrador</option>
+                            <option value="special">Especial</option>
+                            <option value="seller">Vendedor</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Selecciona una foto de perfil</label>
+                        <input class="form-control photo" type="file" name="photo">
+                        <div class="d-flex align-items-center justify-content-around mt-3">
+                            <span class="badge text-info mt-2">Tamaño máximo: 3MB</span>
+                            <img src="<?=base_url('assets/images/users/anonymous.png')?>" class="rounded-circle img" width="100px">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary waves-effect waves-light sent">Guardar</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- update user -->
+<div class="modal fade" id="updateUserModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel">Nuevo usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form class="custom-form" action="<?=base_url('users/create')?>" method="POST">
+                <div class="modal-body">
+                    <div class="response"></div>
+                    <div class="mb-3">
+                        <label class="form-label">Cédula</label>
+                        <input type="text" class="form-control" id="ci" placeholder="Introduce el número de cédula" name="ci" minlength="7" maxlength="8">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="updateName" placeholder="Introduce el nombre del usuario" name="name">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Correo electrónico</label>
+                        <input type="email" class="form-control" id="email" placeholder="Introduce el correo electrónico" name="email">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Introduce la contraseña</label>
+                        <div class="input-group auth-pass-inputgroup">
+                            <input type="password" class="form-control" placeholder="Introduce la contraseña" aria-label="Password" aria-describedby="password-addon" name="password" >
+                            <button class="btn btn-light ms-0" type="button" id="password-addon"><i class="mdi mdi-eye-outline"></i></button>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Privilegio</label>
+                        <select class="form-select" name="privilege" required>
                             <option value="">Selecciona el perfil</option>
                             <option value="admin">Administrador</option>
                             <option value="special">Especial</option>
@@ -130,3 +188,4 @@
 <!-- ajax -->
 <script src="<?=base_url('assets/js/ajaxForm.js')?>"></script>
 <script src="<?=base_url('assets/js/ajaxReload.js')?>"></script>
+<script src="<?=base_url('assets/js/users.js')?>"></script>

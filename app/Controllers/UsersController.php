@@ -34,11 +34,11 @@ class UsersController extends BaseController
 
 		}
 
-		$username = $this->request->getPost('username');
+		$ci = $this->request->getPost('ci');
 		$password = crypt($this->request->getPost('password'), '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
 
 		$usersModel = new UsersModel();
-		$user = $usersModel->signin(['username' => $username]);
+		$user = $usersModel->signin(['ci' => $ci]);
 
 		if($user[0]['password'] != $password){
 			$this->errorMessage['text'] = "La contraseña es incorrecta";
@@ -46,9 +46,9 @@ class UsersController extends BaseController
 		}
 
 		$userData = [
+			"ci" => $user[0]["ci"],
 			"name" => $user[0]["name"],
-			"email" => $user[0]["username"],
-			"role" => $user[0]["role"],
+			"privilege" => $user[0]["privilege"],
 			"photo" => $user[0]["photo"]
 		];
 
@@ -74,20 +74,20 @@ class UsersController extends BaseController
 			}
 		}
 
-		$username = $this->request->getPost('username');
+		$ci = $this->request->getPost('ci');
 		$password = crypt($this->request->getPost('password'), '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
 
 		$userData = [
+			"ci" => $this->request->getPost('ci'),
 			"name" => $this->request->getPost('name'),
-			"username" => $this->request->getPost('username'),
 			"email" => $this->request->getPost('email'),
 			"password" => $password,
-			"role" => $this->request->getPost('role'),
+			"privilege" => $this->request->getPost('privilege'),
 			"photo" => NULL
 		];
 
 		if($this->request->getFile('photo') != ''){
-			$photoUpload = self::photoUpload($this->request->getFile('photo'), $username);
+			$photoUpload = self::photoUpload($this->request->getFile('photo'), $ci);
 			if(!$photoUpload){
 				$this->errorMessage['text'] = "Ha ocurrido un error al subir la foto";
 				return sweetAlert($this->errorMessage);
@@ -133,10 +133,10 @@ class UsersController extends BaseController
 			})
 			->add('Acciones', function($row){
 				return '<div class="btn-list"> 
-                            <button type="button" class="btnEditUser btn btn-sm btn-primary" username="'.$row->username.'" data-bs-effect="effect-scale" data-bs-toggle="modal" data-bs-target="#modalEditUser">
+                            <button type="button" class="btnUpdateUser btn btn-sm btn-primary waves-effect" user-id="'.$row->id.'" data-bs-toggle="modal" data-bs-target="#updateUserModal">
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
-                            <button id="bDel" type="button" class="btnDeleteUser btn  btn-sm btn-danger" username="'.$row->username.'" photo="'.$row->photo.'">
+                            <button type="button" class="btnDeleteUser btn btn-sm btn-danger waves-effect" user-id="'.$row->id.'" photo="'.$row->photo.'">
                                 <i class="fas fa-times-circle"></i>
                             </button>
                         </div>';
@@ -145,9 +145,9 @@ class UsersController extends BaseController
 	}
 
 	// Funciones parciales
-	public function photoUpload($photo, $username, $delete = false)
+	public function photoUpload($photo, $ci, $delete = false)
 	{
-		$photoName = $username.'.'.explode('/', $photo->getMimeType())[1];
+		$photoName = $ci.'.'.explode('/', $photo->getMimeType())[1];
 		
 		if($delete){
 			unlink(ROOTPATH.'public/uploads/users/'.$photoName);

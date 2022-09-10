@@ -44,8 +44,8 @@
                                         <form class="custom-form mt-4 pt-2" action="<?=base_url('users/signin')?>" method="POST">
                                             <div class="response"></div>
                                             <div class="mb-3">
-                                                <label class="form-label">Nombre de usuario</label>
-                                                <input type="text" class="form-control" id="username" placeholder="Introduce tu nombre de usuario" name="username" >
+                                                <label class="form-label">Cédula</label>
+                                                <input type="text" minlength="7" maxlength="8" class="form-control" id="ci" placeholder="Introduce tu cédula" name="ci" >
                                             </div>
                                             <div class="mb-3">
                                                 <div class="d-flex align-items-start">

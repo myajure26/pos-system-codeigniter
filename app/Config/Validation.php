@@ -42,41 +42,45 @@ class Validation
 	//--------------------------------------------------------------------
 
 	public $signin = [
-		'username' => [
-			'label' => 'username',
-			'rules' => 'required|alpha_dash|is_not_unique[users.username]',
+		'ci' => [
+			'label' => 'ci',
+			'rules' => 'required|numeric|min_length[7]|max_length[8]|is_not_unique[users.ci]',
 			'errors' => [
-				'required' => 'El nombre de usuario es requerido.',
-				'alpha_dash' => 'Para el nombre de usuario sólo se permiten carácteres alfanuméricos, guiones y guiones bajos.',
-				'is_not_unique' => 'El nombre de usuario no existe'
+				'required' => 'La cédula es requerida.',
+				'numeric' => 'Para la cédula sólo se permiten números',
+				'min_length' => 'Introduce una cédula válida',
+				'max_length' => 'Introduce una cédula válida',
+				'is_not_unique' => 'La cédula no existe'
 			]
 		],
 		'password' => [
 			'label' => 'password',
 			'rules' => 'required|min_length[8]',
 			'errors' => [
-				'required' => 'La contraseña es requerida.',
+				'required' => 'La contraseña es requerida',
 				'min_length' => 'La contraseña debe tener una longitud mínima de 8 carácteres'
 			]
 		]
 	];
 
 	public $users = [
+		'ci' => [
+			'label' => 'ci',
+			'rules' => 'required|numeric|min_length[7]|max_length[8]|is_unique[users.ci]',
+			'errors' => [
+				'required' => 'La cédula es requerida',
+				'numeric' => 'Para la cédula sólo se permiten números',
+				'min_length' => 'Introduce una cédula válida',
+				'max_length' => 'Introduce una cédula válida',
+				'is_unique' => 'La cédula ya se encuentra registrada'
+			]
+		],
 		'name' => [
 			'label' => 'name',
 			'rules' => 'required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ ,.]*$/u]',
 			'errors' => [
 				'required' => 'El nombre es requerido.',
 				'regex_match' => 'Para el nombre sólo se permiten carácteres alfabéticos.'
-			]
-		],
-		'username' => [
-			'label' => 'username',
-			'rules' => 'required|alpha_dash|is_unique[users.username]',
-			'errors' => [
-				'required' => 'El nombre de usuario es requerido.',
-				'alpha_dash' => 'Para el nombre de usuario sólo se permiten carácteres alfanuméricos, guiones y guiones bajos.',
-				'is_unique' => 'El nombre de usuario ya se encuentra registrado en la base de datos'
 			]
 		],
 		'email' => [
@@ -96,12 +100,12 @@ class Validation
 				'min_length' => 'La contraseña debe tener una longitud mínima de 8 carácteres'
 			]
 		],
-		'role' => [
-			'label' => 'role',
+		'privilege' => [
+			'label' => 'privilege',
 			'rules' => 'required|in_list[admin, special, seller]',
 			'errors' => [
-				'required' => 'El rol es requerido.',
-				'in_list' => 'Por favor, elige un rol válido'
+				'required' => 'El privilegio es requerido.',
+				'in_list' => 'Por favor, elige un privilegio de la lista'
 			]
 		],
 		'photo' => [
