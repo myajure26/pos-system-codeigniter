@@ -237,7 +237,7 @@ File: Main Js File
     function initPreloader() {
         $(window).on('load', function () {
             $('#status').fadeOut();
-            $('#preloader').delay(350).fadeOut('slow');
+            $('#preloader').delay(100).fadeOut('slow');
         });
     }
 

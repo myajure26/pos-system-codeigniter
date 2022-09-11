@@ -138,7 +138,6 @@ class UserController extends BaseController
 		//SWEET ALERT
 		$this->successMessage['alert'] 		= "clean";
 		$this->successMessage['text'] 		= "El usuario se ha creado correctamente";
-		$this->successMessage['ajaxReload'] = "users";
 		return sweetAlert($this->successMessage);
 	}
 
@@ -247,7 +246,6 @@ class UserController extends BaseController
 		//SWEET ALERT
 		$this->successMessage['alert'] 		= "clean";
 		$this->successMessage['text'] 		= "El usuario se ha actualizado correctamente";
-		$this->successMessage['ajaxReload'] = "users";
 		return sweetAlert($this->successMessage);
 	}
 
@@ -282,7 +280,6 @@ class UserController extends BaseController
 		$this->successMessage['alert'] 		= "clean";
 		$this->successMessage['title'] 		= "Usuario eliminado";
 		$this->successMessage['text'] 		= "Puede recuperarlo desde la papelera";
-		$this->successMessage['ajaxReload'] = "users";
 		return sweetAlert($this->successMessage);
 	}
 

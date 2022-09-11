@@ -63,7 +63,6 @@ class CategoryController extends BaseController
 		//SWEET ALERT
 		$this->successMessage['alert'] 		= "clean";
 		$this->successMessage['text'] 		= "La categoría se ha creado correctamente";
-		$this->successMessage['ajaxReload'] = "categories";
 		return sweetAlert($this->successMessage);
 	}
 
@@ -138,7 +137,6 @@ class CategoryController extends BaseController
 		//SWEET ALERT
 		$this->successMessage['alert'] 		= "clean";
 		$this->successMessage['text'] 		= "La categoría se ha actualizado correctamente";
-		$this->successMessage['ajaxReload'] = "categories";
 		return sweetAlert($this->successMessage);
 	}
 
@@ -170,7 +168,6 @@ class CategoryController extends BaseController
 		$this->successMessage['alert'] 		= "clean";
 		$this->successMessage['title'] 		= "Categoría eliminada";
 		$this->successMessage['text'] 		= "Puede recuperarla desde la papelera";
-		$this->successMessage['ajaxReload'] = "categories";
 		return sweetAlert($this->successMessage);
 	}
 }

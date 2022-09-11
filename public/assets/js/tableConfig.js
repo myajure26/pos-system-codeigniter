@@ -38,3 +38,7 @@ function tableConfig(ajaxUrl){
         ]
     });
 }
+
+function reloadTable(){
+     $('#datatable').DataTable().ajax.reload();
+}

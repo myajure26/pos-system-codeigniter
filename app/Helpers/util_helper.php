@@ -80,7 +80,7 @@ function sweetAlert($data)
 	                    $('form')[0].reset();
 	                    $('.img').attr('src', '../../assets/images/users/anonymous.png');
                         $('.modal').modal('hide');
-                        ajaxReload('".$data['ajaxReload']."');
+                        reloadTable();
                     });
             </script>
         ";
