@@ -33,7 +33,7 @@ class UserController extends BaseController
 	{
 		if(!$this->validate('signin')){
 			
-			// Mostrar errores de validación
+			//Mostrar errores de validación
 			$errors = $this->validator->getErrors();
 			foreach ($errors as $error) {
 				$this->errorMessage['text'] = esc($error);
@@ -65,14 +65,14 @@ class UserController extends BaseController
 
 		$this->session->set($userData);
 
-		// PARA LA AUDITORÍA
+		//PARA LA AUDITORÍA
 		$this->auditContent['user_id'] = $user[0]["id"];
 		$this->auditContent['action'] = "Inicio de sesión";
 		$this->auditContent['description'] = "El usuario ha iniciado sesión exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 
-		// SWEET ALERT
+		//SWEET ALERT
 		$this->successMessage['alert'] 	= "reload";
 		$this->successMessage['title'] 	= "¡Bienvenido/a!";
 		$this->successMessage['text'] 	= $user[0]["name"];
@@ -89,7 +89,7 @@ class UserController extends BaseController
 
 		if(!$this->validate('users')){
 			
-			// Mostrar errores de validación
+			//Mostrar errores de validación
 			$errors = $this->validator->getErrors();
 			foreach ($errors as $error) {
 				$this->errorMessage['text'] = esc($error);
@@ -127,7 +127,7 @@ class UserController extends BaseController
 			return sweetAlert($this->errorMessage);
 		}
 
-		// PARA LA AUDITORÍA
+		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
 		$this->auditContent['user_id'] = $auditUserId;
 		$this->auditContent['action'] = "Crear usuario";
@@ -153,19 +153,11 @@ class UserController extends BaseController
 		return DataTable::of($UserModel->getUsers())
 			->edit('photo', function($row){
 
-				if($row->photo == ''){
+				if($row->photo == NULL){
 					return '<img src="'.base_url('assets/images/users/anonymous.png').'" class="rounded-circle header-profile-user">';
 				}
 
 				return '<img src="'.$row->photo.'" class="rounded-circle header-profile-user">';
-			})
-			->edit('status', function($row){
-
-				if($row->status == 0){
-					return '<div class="mt-sm-1 d-block"><a href="javascript:void(0)" class="badge bg-soft-danger text-danger p-2 px-3">Desactivado</a></div>';
-				}
-
-				return '<div class="mt-sm-1 d-block"><a href="javascript:void(0)" class="badge bg-soft-success text-success p-2 px-3">Activado</a></div>';
 			})
 			->add('Acciones', function($row){
 				return '<div class="btn-list"> 
@@ -202,7 +194,7 @@ class UserController extends BaseController
 
 		if(!$this->validate('updateUser')){
 			
-			// Mostrar errores de validación
+			//Mostrar errores de validación
 			$errors = $this->validator->getErrors();
 			foreach ($errors as $error) {
 				$this->errorMessage['text'] = esc($error);
@@ -243,7 +235,7 @@ class UserController extends BaseController
 			return sweetAlert($this->errorMessage);
 		}
 		
-		// PARA LA AUDITORÍA
+		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
 		$this->auditContent['user_id'] = $auditUserId;
 		$this->auditContent['action'] = "Actualizar usuario";
@@ -283,7 +275,7 @@ class UserController extends BaseController
 
 		self::deletePhoto($photo);
 
-		// PARA LA AUDITORÍA
+		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
 		$this->auditContent['user_id'] = $auditUserId;
 		$this->auditContent['action'] = "Eliminar usuario";
@@ -299,7 +291,7 @@ class UserController extends BaseController
 		return sweetAlert($this->successMessage);
 	}
 
-	// Funciones parciales
+	//Funciones parciales
 	public function photoUpload($photo, $ci)
 	{
 		$photoName = $ci.'.'.explode('/', $photo->getMimeType())[1];
@@ -311,7 +303,7 @@ class UserController extends BaseController
 		if ($photo->isValid() && ! $photo->hasMoved()) {
 		    $photo->move(ROOTPATH . 'public/uploads', $photoName);
 
-		    // Redimensionar la foto
+		    //Redimensionar la foto
 		    $editPhoto = \Config\Services::image()
 			    ->withFile(ROOTPATH.'public/uploads/'.$photoName)
 			    ->fit(500, 500, 'center')

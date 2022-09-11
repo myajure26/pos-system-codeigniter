@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-	const path = $(location).attr('origin');
+	var path = $(location).attr('origin');
 
 	// AJAX UPDATE USER
 	$(document).on('click', '.btnUpdateUser', function(){ //De esta manera se ejecutará así la clase no se haya cargado aún
@@ -26,7 +26,7 @@ $(document).ready(function(){
                 $('#updatePrivilege').val(data[0].privilege);
                 $('#updatePhotoPreview').val(data[0].photo);
                 $('#updatePhoto').attr('src', path + "/assets/images/users/anonymous.png");
-                if(data[0].photo != ''){
+                if(data[0].photo != null){
                     $('#updatePhoto').attr('src', data[0].photo);
                 }
 

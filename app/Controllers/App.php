@@ -79,6 +79,22 @@ class App extends BaseController
 		}
 	}
 
+	public function categories()
+	{
+		if($this->session->has('name')){
+			
+			$data = [
+				"title" => "Categorías - $this->system"
+			];
+			return view('app/ajax/categories', $data);
+		
+		}else{
+
+			return redirect()->to(base_url());
+		
+		}
+	}
+
 	public function users()
 	{
 		if($this->session->has('name')){
