@@ -34,14 +34,14 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'App::index');
 $routes->get('/recover', 'App::recover');
-// $routes->post('/app/signin', 'UsersController::signinController');
+$routes->get('/audits/get', 'AuditController::getAudits');
 $routes->group('users', static function ($routes) {
-    $routes->post('signin', 'UsersController::signin');
-    $routes->post('create', 'UsersController::createUser');
-    $routes->get('get', 'UsersController::getUsers');
-    $routes->get('getById/(:num)', 'UsersController::getUserById/$1');
-    $routes->post('update', 'UsersController::updateUser');
-    $routes->post('delete', 'UsersController::deleteUser');
+    $routes->post('signin', 'UserController::signin');
+    $routes->post('create', 'UserController::createUser');
+    $routes->get('get', 'UserController::getUsers');
+    $routes->get('getById/(:num)', 'UserController::getUserById/$1');
+    $routes->post('update', 'UserController::updateUser');
+    $routes->post('delete', 'UserController::deleteUser');
 });
 
 /*

@@ -1,9 +1,10 @@
 <?php 
 namespace App\Controllers;
-use App\Models\UsersModel;
+use App\Models\UserModel;
+use App\Models\AuditModel;
 use \Hermawan\DataTables\DataTable;
 
-class UsersController extends BaseController
+class UserController extends BaseController
 {
 	protected $errorMessage = [
 		"alert" => "simple",
@@ -19,6 +20,13 @@ class UsersController extends BaseController
 		"title" => "¡Éxito!",
 		"text" => ""
 
+	];
+
+	protected $auditContent = [
+		"user"			=> "",
+		"module"		=> "Usuarios",
+		"action"		=> "",
+		"description"	=> ""
 	];
 
 	public function signin()
@@ -37,8 +45,8 @@ class UsersController extends BaseController
 		$ci = $this->request->getPost('ci');
 		$password = crypt($this->request->getPost('password'), '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
 
-		$usersModel = new UsersModel();
-		$user = $usersModel->getUserById(['ci' => $ci]);
+		$UserModel = new UserModel();
+		$user = $UserModel->getUserById(['ci' => $ci]);
 
 		if($user[0]['password'] != $password){
 			$this->errorMessage['text'] = "La contraseña es incorrecta";
@@ -46,16 +54,25 @@ class UsersController extends BaseController
 		}
 
 		$userData = [
+			"id"		=> $user[0]["id"],
 			"ci" 		=> $user[0]["ci"],
 			"name" 		=> $user[0]["name"],
 			"privilege" => $user[0]["privilege"],
 			"photo" 	=> $user[0]["photo"]
 		];
 		$date = date("Y-m-d H:i:s");
-		$usersModel->updateUser(["last_session" => $date], $ci);
+		$UserModel->updateUser(["last_session" => $date], $ci);
 
 		$this->session->set($userData);
 
+		// PARA LA AUDITORÍA
+		$this->auditContent['user_id'] = $user[0]["id"];
+		$this->auditContent['action'] = "Inicio de sesión";
+		$this->auditContent['description'] = "El usuario ha iniciado sesión exitosamente.";
+		$AuditModel = new AuditModel();
+		$AuditModel->createAudit($this->auditContent);
+
+		// SWEET ALERT
 		$this->successMessage['alert'] 	= "reload";
 		$this->successMessage['title'] 	= "¡Bienvenido/a!";
 		$this->successMessage['text'] 	= $user[0]["name"];
@@ -66,6 +83,10 @@ class UsersController extends BaseController
 
 	public function createUser()
 	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
 		if(!$this->validate('users')){
 			
 			// Mostrar errores de validación
@@ -98,14 +119,23 @@ class UsersController extends BaseController
 			$userData["photo"] = $photoUpload;
 		}
 
-		$usersModel = new UsersModel();
-		$user = $usersModel->createUser($userData);
+		$UserModel = new UserModel();
+		$user = $UserModel->createUser($userData);
 
 		if(!$user){
 			$this->errorMessage['text'] = "Ha ocurrido un error al guardar los datos";
 			return sweetAlert($this->errorMessage);
 		}
+
+		// PARA LA AUDITORÍA
+		$auditUserId = $this->session->get('id');
+		$this->auditContent['user_id'] = $auditUserId;
+		$this->auditContent['action'] = "Crear usuario";
+		$this->auditContent['description'] = "Se ha creado al usuario con cédula " . $ci . " exitosamente.";
+		$AuditModel = new AuditModel();
+		$AuditModel->createAudit($this->auditContent);
 		
+		//SWEET ALERT
 		$this->successMessage['alert'] 		= "clean";
 		$this->successMessage['text'] 		= "El usuario se ha creado correctamente";
 		$this->successMessage['ajaxReload'] = "users";
@@ -114,9 +144,13 @@ class UsersController extends BaseController
 
 	public function getUsers()
 	{
-		$usersModel = new UsersModel();
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$UserModel = new UserModel();
 				
-		return DataTable::of($usersModel->getUsers())
+		return DataTable::of($UserModel->getUsers())
 			->edit('photo', function($row){
 
 				if($row->photo == ''){
@@ -138,7 +172,7 @@ class UsersController extends BaseController
                             <button type="button" class="btnUpdateUser btn btn-sm btn-primary waves-effect" user-id="'.$row->id.'" data-bs-toggle="modal" data-bs-target="#updateUserModal">
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
-                            <button type="button" class="btnDeleteUser btn btn-sm btn-danger waves-effect" user-id="'.$row->id.'" photo="'.$row->photo.'">
+                            <button type="button" class="btnDeleteUser btn btn-sm btn-danger waves-effect" user-id="'.$row->id.'" photo="'.$row->photo.'" ci="'.$row->ci.'">
                                 <i class="fas fa-times-circle"></i>
                             </button>
                         </div>';
@@ -148,8 +182,12 @@ class UsersController extends BaseController
 
 	public function getUserById($id)
 	{
-		$usersModel = new UsersModel();
-		$user = $usersModel->getUserById(['id' => $id]);
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$UserModel = new UserModel();
+		$user = $UserModel->getUserById(['id' => $id]);
 		if(!$user){
 			return false;
 		}
@@ -158,6 +196,10 @@ class UsersController extends BaseController
 
 	public function updateUser()
 	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
 		if(!$this->validate('updateUser')){
 			
 			// Mostrar errores de validación
@@ -193,14 +235,23 @@ class UsersController extends BaseController
 			$userData["photo"] = $photoUpload;
 		}
 
-		$usersModel = new UsersModel();
-		$user = $usersModel->updateUser($userData, $ci);
+		$UserModel = new UserModel();
+		$user = $UserModel->updateUser($userData, $ci);
 
 		if(!$user){
 			$this->errorMessage['text'] = "Ha ocurrido un error al guardar los datos";
 			return sweetAlert($this->errorMessage);
 		}
 		
+		// PARA LA AUDITORÍA
+		$auditUserId = $this->session->get('id');
+		$this->auditContent['user_id'] = $auditUserId;
+		$this->auditContent['action'] = "Actualizar usuario";
+		$this->auditContent['description'] = "Se ha actualizado al usuario con cédula " . $ci . " exitosamente.";
+		$AuditModel = new AuditModel();
+		$AuditModel->createAudit($this->auditContent);
+		
+		//SWEET ALERT
 		$this->successMessage['alert'] 		= "clean";
 		$this->successMessage['text'] 		= "El usuario se ha actualizado correctamente";
 		$this->successMessage['ajaxReload'] = "users";
@@ -209,7 +260,12 @@ class UsersController extends BaseController
 
 	public function deleteUser()
 	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
 		$id = $this->request->getPost('id');
+		$ci = $this->request->getPost('ci');
 		$photo = $this->request->getPost('photo');
 
 		$dataUser = [
@@ -217,8 +273,8 @@ class UsersController extends BaseController
 			"deleted_at" 	=> date("Y-m-d H:i:s")
 		];
 
-		$usersModel = new UsersModel();
-		$deleteUser = $usersModel->deleteUser($dataUser, $id);
+		$UserModel = new UserModel();
+		$deleteUser = $UserModel->deleteUser($dataUser, $id);
 
 		if(!$deleteUser){
 			$this->errorMessage['text'] = "El usuario no existe";
@@ -226,6 +282,16 @@ class UsersController extends BaseController
 		}
 
 		self::deletePhoto($photo);
+
+		// PARA LA AUDITORÍA
+		$auditUserId = $this->session->get('id');
+		$this->auditContent['user_id'] = $auditUserId;
+		$this->auditContent['action'] = "Eliminar usuario";
+		$this->auditContent['description'] = "Se ha eliminado al usuario con cédula " . $ci . " exitosamente.";
+		$AuditModel = new AuditModel();
+		$AuditModel->createAudit($this->auditContent);
+		
+		//SWEET ALERT
 		$this->successMessage['alert'] 		= "clean";
 		$this->successMessage['title'] 		= "Usuario eliminado";
 		$this->successMessage['text'] 		= "Puede recuperarlo desde la papelera";

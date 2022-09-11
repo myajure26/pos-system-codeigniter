@@ -31,6 +31,7 @@ function tableConfig(ajaxUrl){
         processing: true,
         serverSide: true,
         ajax: path,
+        search: 1000,
         order: [[0, "desc"]],
         columnDefs: [
             { targets: -1, orderable: false}, //target -1 means last column

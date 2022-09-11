@@ -52,9 +52,11 @@ $(document).ready(function(){
         var response = $('.response');
         var id = $(this).attr('user-id');
         var photo = $(this).attr('photo');
+        var ci = $(this).attr('ci');
         var data = new FormData();
         data.append('id', id);
-        data.append('photo', photo); 
+        data.append('photo', photo);
+        data.append('ci', ci);
         
         Swal.fire({
            
@@ -79,9 +81,12 @@ $(document).ready(function(){
                     processData: false,
                     beforeSend: function() {
                         Swal.fire({
-                            title: '<h5>Procesando...</h5>',
+                            title: 'Procesando...',
                             text: 'Por favor, espera unos segundos',
                             showConfirmButton: false,
+                            didOpen: function() {
+                                Swal.showLoading();
+                            },
                             onRender: function() {
                                  // there will only ever be one sweet alert open.
                                  $('.swal2-content').prepend(sweet_loader);

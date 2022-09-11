@@ -63,6 +63,22 @@ class App extends BaseController
 		}
 	}
 
+	public function audit()
+	{
+		if($this->session->has('name')){
+			
+			$data = [
+				"title" => "Auditoría - $this->system"
+			];
+			return view('app/ajax/audit', $data);
+		
+		}else{
+
+			return redirect()->to(base_url());
+		
+		}
+	}
+
 	public function users()
 	{
 		if($this->session->has('name')){
