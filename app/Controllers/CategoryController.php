@@ -88,4 +88,57 @@ class CategoryController extends BaseController
 			}, 'last') 
 			->toJson();
 	}
+
+	public function getCategoryById($id)
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$CategoryModel = new CategoryModel();
+		$category = $CategoryModel->getCategoryById(['id' => $id]);
+		if(!$category){
+			return false;
+		}
+		return json_encode($category);
+	}
+
+	public function updateCategory()
+	{
+		if(!$this->validate('updateCategory')){
+
+			//Mostrar errores de validación
+			$errors = $this->validator->getErrors();
+			foreach ($errors as $error) {
+				$this->errorMessage['text'] = esc($error);
+				return sweetAlert($this->errorMessage);
+			}
+
+		}
+
+		$id = $this->request->getPost('id');
+		$name = $this->request->getPost('name');
+
+		$CategoryModel = new CategoryModel();
+		$category = $CategoryModel->updateCategory($name, $id);
+
+		if(!$category){
+			$this->errorMessage['text'] = "Error actualizar la categoría en la base de datos";
+			return sweetAlert($this->errorMessage);
+		}
+
+		//PARA LA AUDITORÍA
+		$auditUserId = $this->session->get('id');
+		$this->auditContent['user_id'] = $auditUserId;
+		$this->auditContent['action'] = "Actualizar categoría";
+		$this->auditContent['description'] = "Se ha actualizado la categoría con ID #" . $id . " exitosamente.";
+		$AuditModel = new AuditModel();
+		$AuditModel->createAudit($this->auditContent);
+		
+		//SWEET ALERT
+		$this->successMessage['alert'] 		= "clean";
+		$this->successMessage['text'] 		= "La categoría se ha actualizado correctamente";
+		$this->successMessage['ajaxReload'] = "categories";
+		return sweetAlert($this->successMessage);
+	}
 }

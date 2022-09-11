@@ -229,7 +229,7 @@ class UserController extends BaseController
 		}
 
 		$UserModel = new UserModel();
-		$user = $UserModel->updateUser($userData, $ci);
+		$user = $UserModel->updateUser($userData, $id);
 
 		if(!$user){
 			$this->errorMessage['text'] = "Ha ocurrido un error al guardar los datos";

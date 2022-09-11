@@ -94,7 +94,7 @@
             <form class="custom-form" action="<?=base_url('categories/update')?>" method="POST">
                 <div class="modal-body">
                     <div class="response"></div>
-                    <input type="hidden" name="id" value="">
+                    <input type="hidden" id="updateId" name="id" value="">
                     <div class="mb-3">
                         <label class="form-label">Nombre</label>
                         <input type="text" class="form-control" id="updateName" name="name" required>

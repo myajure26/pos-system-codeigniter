@@ -55,10 +55,10 @@ class UserModel extends Model
 		return $this->insertID();
 	}
 
-	public function updateUser($data, $ci)
+	public function updateUser($data, $id)
 	{
 		$query = $this
-				->where('ci', $ci)
+				->where('id', $id)
 				->set($data)
 				->update();
 		return $query;

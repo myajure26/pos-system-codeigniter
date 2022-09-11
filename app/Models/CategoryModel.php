@@ -38,8 +38,24 @@ class CategoryModel extends Model
 		return $query;
 	}
 
+	public function getCategoryById($data)
+	{
+		$query = $this->where($data);
+		return $query->get()->getResultArray();
+	}
+
 	public function getLastId()
 	{
 		return $this->insertID();
+	}
+
+	public function updateCategory($name, $id)
+	{
+		$query = $this
+				->where('id', $id)
+				->set(["category" => $name])
+				->update();
+		return $query;
+		
 	}
 }

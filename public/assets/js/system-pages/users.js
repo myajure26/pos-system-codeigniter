@@ -11,7 +11,6 @@ $(document).ready(function(){
         $('form')[1].reset();
 
         var id = $(this).attr('user-id');
-        var action = $('form').attr('action');
 
         $.ajax({
             url: path + '/users/getById/' + id,
