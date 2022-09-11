@@ -139,7 +139,12 @@
                                     <span data-key="t-audit">Auditoría</span>
                                 </a>
                             </li>
-
+                            <li>
+                                <a href="<?=base_url('#control')?>">
+                                    <i data-feather="tool"></i>
+                                    <span data-key="t-control">Centro de control</span>
+                                </a>
+                            </li>
                             <li class="menu-title" data-key="t-menu">Administrar ventas</li>
                             <li>
                                 <a href="<?=base_url('#newSale')?>">
@@ -160,7 +165,27 @@
                                 </a>
                             </li>
 
+                            <li class="menu-title" data-key="t-menu">Administrar compras</li>
+                            <li>
+                                <a href="<?=base_url('#newPurchase')?>">
+                                    <i data-feather="plus"></i>
+                                    <span data-key="t-newPurchase">Nueva compra</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?=base_url('#purchases')?>">
+                                    <i data-feather="credit-card"></i>
+                                    <span data-key="t-purchases">Compras</span>
+                                </a>
+                            </li>>
+
                             <li class="menu-title" data-key="t-menu">Administrar inventario</li>
+                            <li>
+                                <a href="<?=base_url('#store')?>">
+                                    <i data-feather="database"></i>
+                                    <span data-key="t-store">Almacén</span>
+                                </a>
+                            </li>
                             <li>
                                 <a href="<?=base_url('#products')?>">
                                     <i data-feather="shopping-cart"></i>
