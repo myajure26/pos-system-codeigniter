@@ -188,7 +188,7 @@
                                 </a>
                             </li>
 
-                            <li class="menu-title" data-key="t-menu">Cofiguraciones del sistema</li>
+                            <li class="menu-title" data-key="t-menu">Configuraciones del sistema</li>
                             <li>
                                 <a href="<?=base_url('#settings')?>">
                                     <i data-feather="settings"></i>

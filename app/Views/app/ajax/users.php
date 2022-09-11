@@ -130,6 +130,7 @@
             <form class="custom-form" action="<?=base_url('users/update')?>" method="POST">
                 <div class="modal-body">
                     <div class="response"></div>
+                    <input type="hidden" id="updateId" name="id" value="">
                     <div class="mb-3">
                         <label class="form-label">Cédula</label>
                         <input type="text" class="form-control" id="updateCi" placeholder="Introduce el número de cédula" name="ci" minlength="7" maxlength="8" readonly required>

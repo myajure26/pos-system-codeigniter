@@ -7,9 +7,6 @@ $(document).ready(function(){
         var action = form.attr('action');
         var method = form.attr('method');
         var formdata = new FormData(this);
-        var loader = '<span class="spinner-border spinner-border-sm loader" role="status"></span>';
-        
-        $('.sent').attr('disabled', 'true').html(loader);
    
         $.ajax({
             type: method,
@@ -18,12 +15,21 @@ $(document).ready(function(){
             cache: false,
             contentType: false,
             processData: false,
+            beforeSend: function() {
+                Swal.fire({
+                    icon: 'info',
+                    title: '<strong>Procesando...</strong>',
+                    text: 'Por favor, espera unos segundos',
+                    showConfirmButton: false,
+                    didOpen: function() {
+                        Swal.showLoading();
+                    }
+                });
+            },
             success: function (data) {
-        		$('.sent').removeAttr('disabled').html('Guardar');
                 response.html(data);
             },
             error: function (data) {
-                $('.sent').removeAttr('disabled').html('Guardar');
                 response.html(data);
             }
         });

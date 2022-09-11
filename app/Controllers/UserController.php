@@ -131,7 +131,7 @@ class UserController extends BaseController
 		$auditUserId = $this->session->get('id');
 		$this->auditContent['user_id'] = $auditUserId;
 		$this->auditContent['action'] = "Crear usuario";
-		$this->auditContent['description'] = "Se ha creado al usuario con cédula " . $ci . " exitosamente.";
+		$this->auditContent['description'] = "Se ha creado al usuario con ID #" . $UserModel->getLastId() . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -201,7 +201,8 @@ class UserController extends BaseController
 				return sweetAlert($this->errorMessage);
 			}
 		}
-
+		
+		$id = $this->request->getPost('id');
 		$ci = $this->request->getPost('ci');
 		(empty($this->request->getPost('password')))
 		?$password = $this->request->getPost('updatePasswordPreview')
@@ -239,7 +240,7 @@ class UserController extends BaseController
 		$auditUserId = $this->session->get('id');
 		$this->auditContent['user_id'] = $auditUserId;
 		$this->auditContent['action'] = "Actualizar usuario";
-		$this->auditContent['description'] = "Se ha actualizado al usuario con cédula " . $ci . " exitosamente.";
+		$this->auditContent['description'] = "Se ha actualizado al usuario con ID #" . $id . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -260,13 +261,8 @@ class UserController extends BaseController
 		$ci = $this->request->getPost('ci');
 		$photo = $this->request->getPost('photo');
 
-		$dataUser = [
-			"photo" 		=> NULL,
-			"deleted_at" 	=> date("Y-m-d H:i:s")
-		];
-
 		$UserModel = new UserModel();
-		$deleteUser = $UserModel->deleteUser($dataUser, $id);
+		$deleteUser = $UserModel->deleteUser($id);
 
 		if(!$deleteUser){
 			$this->errorMessage['text'] = "El usuario no existe";
@@ -279,7 +275,7 @@ class UserController extends BaseController
 		$auditUserId = $this->session->get('id');
 		$this->auditContent['user_id'] = $auditUserId;
 		$this->auditContent['action'] = "Eliminar usuario";
-		$this->auditContent['description'] = "Se ha eliminado al usuario con cédula " . $ci . " exitosamente.";
+		$this->auditContent['description'] = "Se ha eliminado al usuario con ID #" . $id . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		

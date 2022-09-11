@@ -29,6 +29,13 @@ class UserModel extends Model
 		return $query->get()->getResultArray();
 	}
 
+	public function createUser($data)
+	{
+		$query = $this
+			->insert($data);
+		return $query;
+	}
+
 	public function getUsers()
 	{
 		$query = $this
@@ -37,17 +44,15 @@ class UserModel extends Model
 		return $query;
 	}
 
-	public function createUser($data)
-	{
-		$query = $this
-			->insert($data);
-		return $query;
-	}
-
 	public function getUserById($data)
 	{
 		$query = $this->where($data);
 		return $query->get()->getResultArray();
+	}
+
+	public function getLastId()
+	{
+		return $this->insertID();
 	}
 
 	public function updateUser($data, $ci)
@@ -60,7 +65,7 @@ class UserModel extends Model
 		
 	}
 
-	public function deleteUser($data, $id)
+	public function deleteUser($id)
 	{
 		$query = $this
 				->delete($id);

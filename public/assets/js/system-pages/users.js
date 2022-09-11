@@ -17,8 +17,19 @@ $(document).ready(function(){
             url: path + '/users/getById/' + id,
             method: "GET",
             dataType: "json",
+            beforeSend: function() {
+                Swal.fire({
+                    icon: 'info',
+                    title: '<strong>Procesando...</strong>',
+                    text: 'Por favor, espera unos segundos',
+                    showConfirmButton: false,
+                    didOpen: function() {
+                        Swal.showLoading();
+                    }
+                });
+            },
             success: function (data) {
-                
+                $('#updateId').val(data[0].id);
                 $('#updateCi').val(data[0].ci);
                 $('#updateName').val(data[0].name);
                 $('#updateEmail').val(data[0].email);
@@ -26,14 +37,15 @@ $(document).ready(function(){
                 $('#updatePrivilege').val(data[0].privilege);
                 $('#updatePhotoPreview').val(data[0].photo);
                 $('#updatePhoto').attr('src', path + "/assets/images/users/anonymous.png");
-                if(data[0].photo != null){
+                if(data[0].photo != null && data[0].photo != ''){
                     $('#updatePhoto').attr('src', data[0].photo);
                 }
+                Swal.close();
 
             },
             error: function (data) {
-                
                 console.log(data);
+                Swal.close();
                 $('#updateUserModal').modal('hide');
                 
                 Swal.fire({
@@ -81,15 +93,12 @@ $(document).ready(function(){
                     processData: false,
                     beforeSend: function() {
                         Swal.fire({
-                            title: 'Procesando...',
+                            icon: 'info',
+                            title: '<strong>Procesando...</strong>',
                             text: 'Por favor, espera unos segundos',
                             showConfirmButton: false,
                             didOpen: function() {
                                 Swal.showLoading();
-                            },
-                            onRender: function() {
-                                 // there will only ever be one sweet alert open.
-                                 $('.swal2-content').prepend(sweet_loader);
                             }
                         });
                     },

@@ -35,6 +35,8 @@ $routes->setAutoRoute(true);
 $routes->get('/', 'App::index');
 $routes->get('/recover', 'App::recover');
 $routes->get('/audits/get', 'AuditController::getAudits');
+
+//USERS MODULE
 $routes->group('users', static function ($routes) {
     $routes->post('signin', 'UserController::signin');
     $routes->post('create', 'UserController::createUser');
@@ -42,6 +44,15 @@ $routes->group('users', static function ($routes) {
     $routes->get('getById/(:num)', 'UserController::getUserById/$1');
     $routes->post('update', 'UserController::updateUser');
     $routes->post('delete', 'UserController::deleteUser');
+});
+
+//CATEGORIES MODULE
+$routes->group('categories', static function ($routes) {
+    $routes->post('create', 'CategoryController::createCategory');
+    $routes->get('get', 'CategoryController::getCategories');
+    $routes->get('getById/(:num)', 'CategoryController::getCategoryById/$1');
+    $routes->post('update', 'CategoryController::updateCategory');
+    $routes->post('delete', 'CategoryController::deleteCategory');
 });
 
 /*
