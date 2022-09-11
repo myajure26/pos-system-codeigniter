@@ -134,7 +134,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="<?=base_url('#audit')?>">
+                                <a href="<?=base_url('#audits')?>">
                                     <i data-feather="bar-chart-2"></i>
                                     <span data-key="t-audit">Auditoría</span>
                                 </a>

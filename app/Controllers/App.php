@@ -63,14 +63,14 @@ class App extends BaseController
 		}
 	}
 
-	public function audit()
+	public function audits()
 	{
 		if($this->session->has('name')){
 			
 			$data = [
 				"title" => "Auditoría - $this->system"
 			];
-			return view('app/ajax/audit', $data);
+			return view('app/ajax/audits', $data);
 		
 		}else{
 

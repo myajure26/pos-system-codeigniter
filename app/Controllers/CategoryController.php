@@ -66,4 +66,26 @@ class CategoryController extends BaseController
 		$this->successMessage['ajaxReload'] = "categories";
 		return sweetAlert($this->successMessage);
 	}
+
+	public function getCategories()
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$CategoryModel = new CategoryModel();
+				
+		return DataTable::of($CategoryModel->getCategories())
+			->add('Acciones', function($row){
+				return '<div class="btn-list"> 
+                            <button type="button" class="btnUpdateCategory btn btn-sm btn-primary waves-effect" category-id="'.$row->id.'" data-bs-toggle="modal" data-bs-target="#updateCategoryModal">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                            <button type="button" class="btnDeleteCategory btn btn-sm btn-danger waves-effect" category-id="'.$row->id.'">
+                                <i class="fas fa-times-circle"></i>
+                            </button>
+                        </div>';
+			}, 'last') 
+			->toJson();
+	}
 }

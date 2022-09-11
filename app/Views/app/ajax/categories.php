@@ -42,6 +42,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Nombre</th>
+                                        <th>Fecha de creación</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </tr>
@@ -82,55 +83,21 @@
 </div><!-- /.modal -->
 
 <!-- update category -->
-<div class="modal fade" id="updateUserModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+<div class="modal fade" id="updateCategoryModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel">Actualizar usuario</h5>
+                <h5 class="modal-title" id="myLargeModalLabel">Actualizar categoría</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="custom-form" action="<?=base_url('users/update')?>" method="POST">
+            <form class="custom-form" action="<?=base_url('categories/update')?>" method="POST">
                 <div class="modal-body">
                     <div class="response"></div>
-                    <div class="mb-3">
-                        <label class="form-label">Cédula</label>
-                        <input type="text" class="form-control" id="updateCi" placeholder="Introduce el número de cédula" name="ci" minlength="7" maxlength="8" readonly required>
-                        <small class="w-100 text-info mt-1">La cédula no se puede cambiar</small>
-                    </div>
+                    <input type="hidden" name="id" value="">
                     <div class="mb-3">
                         <label class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="updateName" placeholder="Introduce el nombre del usuario" name="name" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Correo electrónico</label>
-                        <input type="email" class="form-control" id="updateEmail" placeholder="Introduce el correo electrónico" name="email" required>
-                    </div>
-                    <input type="hidden" id="updatePasswordPreview" name="updatePasswordPreview" value="">
-                    <div class="mb-3">
-                        <label class="form-label">Contraseña</label>
-                        <div class="input-group auth-pass-inputgroup">
-                            <input type="password" class="form-control" placeholder="Introduce la contraseña" aria-label="Password" aria-describedby="password-addon" name="password" id="updatePassword">
-                            <button class="btn btn-light ms-0" type="button" id="password-addon2"><i class="mdi mdi-eye-outline"></i></button>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Privilegio</label>
-                        <select class="form-select" name="privilege" id="updatePrivilege" required>
-                            <option value="">Selecciona el perfil</option>
-                            <option value="admin">Administrador</option>
-                            <option value="special">Especial</option>
-                            <option value="seller">Vendedor</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Selecciona una foto de perfil</label>
-                        <input type="hidden" name="updatePhotoPreview" id="updatePhotoPreview" value="">
-                        <input class="form-control photo" type="file" name="photo">
-                        <div class="d-flex align-items-center justify-content-around mt-3">
-                            <span class="badge text-info mt-2">Tamaño máximo: 3MB</span>
-                            <img src="<?=base_url('assets/images/users/anonymous.png')?>" class="rounded-circle img" width="100px" id="updatePhoto">
-                        </div>
+                        <input type="text" class="form-control" id="updateName" name="name" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -145,7 +112,7 @@
 <!-- table config -->
 <script src="<?=base_url('assets/js/tableConfig.js')?>"></script>
 <script>
-    tableConfig('/users/get');
+    tableConfig('/categories/get');
 </script>
 <!-- ajax -->
 <script src="<?=base_url('assets/js/ajaxForm.js')?>"></script>

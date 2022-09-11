@@ -30,6 +30,14 @@ class CategoryModel extends Model
 		return $query;
 	}
 
+	public function getCategories()
+	{
+		$query = $this
+			->select('id, category, created_at')
+			->where('deleted_at', NULL);
+		return $query;
+	}
+
 	public function getLastId()
 	{
 		return $this->insertID();
