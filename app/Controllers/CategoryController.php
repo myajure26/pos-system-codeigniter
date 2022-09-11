@@ -141,4 +141,36 @@ class CategoryController extends BaseController
 		$this->successMessage['ajaxReload'] = "categories";
 		return sweetAlert($this->successMessage);
 	}
+
+	public function deleteCategory()
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$id = $this->request->getPost('id');
+
+		$CategoryModel = new CategoryModel();
+		$deleteCategory = $CategoryModel->deleteCategory($id);
+
+		if(!$deleteCategory){
+			$this->errorMessage['text'] = "La categoría no existe";
+			return sweetAlert($this->errorMessage);
+		}
+
+		//PARA LA AUDITORÍA
+		$auditUserId = $this->session->get('id');
+		$this->auditContent['user_id'] = $auditUserId;
+		$this->auditContent['action'] = "Eliminar categoía";
+		$this->auditContent['description'] = "Se ha eliminado la categoía con ID #" . $id . " exitosamente.";
+		$AuditModel = new AuditModel();
+		$AuditModel->createAudit($this->auditContent);
+		
+		//SWEET ALERT
+		$this->successMessage['alert'] 		= "clean";
+		$this->successMessage['title'] 		= "Categoría eliminada";
+		$this->successMessage['text'] 		= "Puede recuperarla desde la papelera";
+		$this->successMessage['ajaxReload'] = "categories";
+		return sweetAlert($this->successMessage);
+	}
 }

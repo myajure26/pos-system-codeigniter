@@ -63,16 +63,14 @@ $(document).ready(function(){
         var response = $('.response');
         var id = $(this).attr('user-id');
         var photo = $(this).attr('photo');
-        var ci = $(this).attr('ci');
         var data = new FormData();
         data.append('id', id);
-        data.append('photo', photo);
         data.append('ci', ci);
         
         Swal.fire({
            
-           title: '¿Está seguro de eliminar el usuario?',
-           text: 'Si no lo está, puede cancelar la operación',
+           title: '¿Está seguro de eliminar el usuario #'+id+'?',
+           text: 'Si no está seguro, puede cancelar la operación',
            icon: 'warning',
            showCancelButton: true,
            cancelButtonColor: '#D33',

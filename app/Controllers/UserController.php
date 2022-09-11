@@ -164,7 +164,7 @@ class UserController extends BaseController
                             <button type="button" class="btnUpdateUser btn btn-sm btn-primary waves-effect" user-id="'.$row->id.'" data-bs-toggle="modal" data-bs-target="#updateUserModal">
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
-                            <button type="button" class="btnDeleteUser btn btn-sm btn-danger waves-effect" user-id="'.$row->id.'" photo="'.$row->photo.'" ci="'.$row->ci.'">
+                            <button type="button" class="btnDeleteUser btn btn-sm btn-danger waves-effect" user-id="'.$row->id.'" photo="'.$row->photo.'">
                                 <i class="fas fa-times-circle"></i>
                             </button>
                         </div>';
@@ -258,7 +258,6 @@ class UserController extends BaseController
 		}
 
 		$id = $this->request->getPost('id');
-		$ci = $this->request->getPost('ci');
 		$photo = $this->request->getPost('photo');
 
 		$UserModel = new UserModel();

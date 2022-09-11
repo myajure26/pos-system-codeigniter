@@ -55,7 +55,13 @@ class CategoryModel extends Model
 				->where('id', $id)
 				->set(["category" => $name])
 				->update();
+		return $query;	
+	}
+
+	public function deleteCategory($id)
+	{
+		$query = $this
+				->delete($id);
 		return $query;
-		
 	}
 }

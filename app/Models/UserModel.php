@@ -62,7 +62,6 @@ class UserModel extends Model
 				->set($data)
 				->update();
 		return $query;
-		
 	}
 
 	public function deleteUser($id)

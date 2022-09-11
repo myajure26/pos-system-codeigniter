@@ -2,7 +2,7 @@ $(document).ready(function(){
 
 	var path = $(location).attr('origin');
 
-	// AJAX UPDATE USER
+	// AJAX UPDATE CATEGORY
 	$(document).on('click', '.btnUpdateCategory', function(){ 
 
         //Vaciar form
@@ -46,22 +46,18 @@ $(document).ready(function(){
         return false;
     });
 
-    // AJAX DELETE USER
-    $(document).on('click', '.btnDeleteUser', function(){ 
+    // AJAX DELETE CATEGORY
+    $(document).on('click', '.btnDeleteCategory', function(){ 
         
         var response = $('.response');
-        var id = $(this).attr('user-id');
-        var photo = $(this).attr('photo');
-        var ci = $(this).attr('ci');
+        var id = $(this).attr('category-id');
         var data = new FormData();
         data.append('id', id);
-        data.append('photo', photo);
-        data.append('ci', ci);
         
         Swal.fire({
            
-           title: '¿Está seguro de eliminar el usuario?',
-           text: 'Si no lo está, puede cancelar la operación',
+           title: '¿Está seguro de eliminar la categoría #'+id+'?',
+           text: 'Si no está seguro, puede cancelar la operación',
            icon: 'warning',
            showCancelButton: true,
            cancelButtonColor: '#D33',
@@ -73,7 +69,7 @@ $(document).ready(function(){
 
                 //AJAX
                 $.ajax({
-                    url: path + '/users/delete',
+                    url: path + '/categories/delete',
                     method: "POST",
                     data: data,
                     cache: false,
