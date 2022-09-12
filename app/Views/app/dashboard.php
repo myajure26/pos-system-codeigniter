@@ -177,7 +177,13 @@
                                     <i data-feather="credit-card"></i>
                                     <span data-key="t-purchases">Compras</span>
                                 </a>
-                            </li>>
+                            </li>
+                            <li>
+                                <a href="<?=base_url('#providers')?>">
+                                    <i data-feather="credit-card"></i>
+                                    <span data-key="t-providers">Proveedores</span>
+                                </a>
+                            </li>
 
                             <li class="menu-title" data-key="t-menu">Administrar inventario</li>
                             <li>
@@ -189,13 +195,19 @@
                             <li>
                                 <a href="<?=base_url('#products')?>">
                                     <i data-feather="shopping-cart"></i>
-                                    <span data-key="t-products">Productos</span>
+                                    <span data-key="t-products">Artículos</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="<?=base_url('#categories')?>">
                                     <i data-feather="tag"></i>
                                     <span data-key="t-categories">Categorías</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?=base_url('#brands')?>">
+                                    <i data-feather="hash"></i>
+                                    <span data-key="t-brand">Marcas</span>
                                 </a>
                             </li>
 

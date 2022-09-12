@@ -4,7 +4,7 @@
 <div class="page-content">
     <div class="container-fluid">
 
-        <button class="float-btn waves-effect" data-bs-toggle="modal" data-bs-target="#newCategoryModal" >
+        <button class="float-btn waves-effect" data-bs-toggle="modal" data-bs-target="#newProductModal" >
           <span>+</span>
         </button>
 
@@ -13,13 +13,13 @@
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center
                     justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">Categorías</h4>
+                    <h4 class="mb-sm-0 font-size-18">Productos</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript:
                                     void(0);">Administrar inventario</a></li>
-                            <li class="breadcrumb-item active">Categorías</li>
+                            <li class="breadcrumb-item active">Productos</li>
                         </ol>
                     </div>
 
@@ -32,8 +32,8 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Administrar categorías</h4>
-                        <p class="card-title-desc">En este módulo podrás ver, agregar, actualizar y eliminar categorías.</p>
+                        <h4 class="card-title">Administrar productos</h4>
+                        <p class="card-title-desc">En este módulo podrás ver, agregar, actualizar y eliminar productos.</p>
                     </div>
                     <div class="card-body">
                         <table class="table text-nowrap table-striped nowrap w-100" id="datatable">
@@ -42,7 +42,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Nombre</th>
-                                        <th>Creada en</th>
+                                        <th>Fecha de creación</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </tr>
@@ -57,7 +57,7 @@
 <!-- End Page-content -->
 
 <!--  add category -->
-<div class="modal fade" id="newCategoryModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+<div class="modal fade" id="newProductModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -83,7 +83,7 @@
 </div><!-- /.modal -->
 
 <!-- update category -->
-<div class="modal fade" id="updateCategoryModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+<div class="modal fade" id="updateProductModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">

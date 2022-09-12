@@ -191,5 +191,4 @@
 </script>
 <!-- ajax -->
 <script src="<?=base_url('assets/js/ajaxForm.js')?>"></script>
-<script src="<?=base_url('assets/js/ajaxReload.js')?>"></script>
 <script src="<?=base_url('assets/js/system-pages/users.js')?>"></script>

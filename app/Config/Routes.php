@@ -55,6 +55,24 @@ $routes->group('categories', static function ($routes) {
     $routes->post('delete', 'CategoryController::deleteCategory');
 });
 
+//BRANDS MODULE
+$routes->group('brands', static function ($routes) {
+    $routes->post('create', 'BrandController::createBrand');
+    $routes->get('get', 'BrandController::getBrands');
+    $routes->get('getById/(:num)', 'BrandController::getBrandById/$1');
+    $routes->post('update', 'BrandController::updateBrand');
+    $routes->post('delete', 'BrandController::deleteBrand');
+});
+
+//PRODUCTS MODULE
+$routes->group('products', static function ($routes) {
+    $routes->post('create', 'CategoryController::createCategory');
+    $routes->get('get', 'CategoryController::getCategories');
+    $routes->get('getById/(:num)', 'CategoryController::getCategoryById/$1');
+    $routes->post('update', 'CategoryController::updateCategory');
+    $routes->post('delete', 'CategoryController::deleteCategory');
+});
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

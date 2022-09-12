@@ -1,10 +1,10 @@
 <?php 
 namespace App\Controllers;
-use App\Models\CategoryModel;
+use App\Models\BrandModel;
 use App\Models\AuditModel;
 use \Hermawan\DataTables\DataTable;
 
-class CategoryController extends BaseController
+class BrandController extends BaseController
 {
 	protected $errorMessage = [
 		"alert" => "simple",
@@ -24,14 +24,14 @@ class CategoryController extends BaseController
 
 	protected $auditContent = [
 		"user"			=> "",
-		"module"		=> "Categorías",
+		"module"		=> "Marcas",
 		"action"		=> "",
 		"description"	=> ""
 	];
 
-	public function createCategory()
+	public function createBrand()
 	{
-		if(!$this->validate('categories')){
+		if(!$this->validate('brands')){
 
 			//Mostrar errores de validación
 			$errors = $this->validator->getErrors();
@@ -44,43 +44,43 @@ class CategoryController extends BaseController
 
 		$name = $this->request->getPost('name');
 
-		$CategoryModel = new CategoryModel();
-		$category = $CategoryModel->createCategory(['category' => $name]);
+		$BrandModel = new BrandModel();
+		$brand = $BrandModel->createBrand(['brand' => $name]);
 
-		if(!$category){
-			$this->errorMessage['text'] = "Error al guardar la categoría en la base de datos";
+		if(!$brand){
+			$this->errorMessage['text'] = "Error al guardar la marca en la base de datos";
 			return sweetAlert($this->errorMessage);
 		}
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
 		$this->auditContent['user_id'] = $auditUserId;
-		$this->auditContent['action'] = "Crear categoría";
-		$this->auditContent['description'] = "Se ha creado la categoría con ID #" . $CategoryModel->getLastId() . " exitosamente.";
+		$this->auditContent['action'] = "Crear marca";
+		$this->auditContent['description'] = "Se ha creado la marca con ID #" . $BrandModel->getLastId() . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
 		//SWEET ALERT
 		$this->successMessage['alert'] 		= "clean";
-		$this->successMessage['text'] 		= "La categoría se ha creado correctamente";
+		$this->successMessage['text'] 		= "La marca se ha creado correctamente";
 		return sweetAlert($this->successMessage);
 	}
 
-	public function getCategories()
+	public function getBrands()
 	{
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
 		}
 
-		$CategoryModel = new CategoryModel();
+		$BrandModel = new BrandModel();
 				
-		return DataTable::of($CategoryModel->getCategories())
+		return DataTable::of($BrandModel->getBrands())
 			->add('Acciones', function($row){
 				return '<div class="btn-list"> 
-                            <button type="button" class="btnUpdateCategory btn btn-sm btn-primary waves-effect" category-id="'.$row->id.'" data-bs-toggle="modal" data-bs-target="#updateCategoryModal">
+                            <button type="button" class="btnUpdateBrand btn btn-sm btn-primary waves-effect" brand-id="'.$row->id.'" data-bs-toggle="modal" data-bs-target="#updateBrandModal">
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
-                            <button type="button" class="btnDeleteCategory btn btn-sm btn-danger waves-effect" category-id="'.$row->id.'">
+                            <button type="button" class="btnDeleteBrand btn btn-sm btn-danger waves-effect" brand-id="'.$row->id.'">
                                 <i class="fas fa-times-circle"></i>
                             </button>
                         </div>';
@@ -88,23 +88,23 @@ class CategoryController extends BaseController
 			->toJson();
 	}
 
-	public function getCategoryById($id)
+	public function getBrandById($id)
 	{
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
 		}
 
-		$CategoryModel = new CategoryModel();
-		$category = $CategoryModel->getCategoryById(['id' => $id]);
-		if(!$category){
+		$BrandModel = new BrandModel();
+		$brand = $BrandModel->getBrandById(['id' => $id]);
+		if(!$brand){
 			return false;
 		}
-		return json_encode($category);
+		return json_encode($brand);
 	}
 
-	public function updateCategory()
+	public function updateBrand()
 	{
-		if(!$this->validate('updateCategory')){
+		if(!$this->validate('updateBrand')){
 
 			//Mostrar errores de validación
 			$errors = $this->validator->getErrors();
@@ -118,29 +118,29 @@ class CategoryController extends BaseController
 		$id = $this->request->getPost('id');
 		$name = $this->request->getPost('name');
 
-		$CategoryModel = new CategoryModel();
-		$category = $CategoryModel->updateCategory($name, $id);
+		$BrandModel = new BrandModel();
+		$brand = $BrandModel->updateBrand($name, $id);
 
-		if(!$category){
-			$this->errorMessage['text'] = "Error actualizar la categoría en la base de datos";
+		if(!$brand){
+			$this->errorMessage['text'] = "Error actualizar la marca en la base de datos";
 			return sweetAlert($this->errorMessage);
 		}
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
 		$this->auditContent['user_id'] = $auditUserId;
-		$this->auditContent['action'] = "Actualizar categoría";
-		$this->auditContent['description'] = "Se ha actualizado la categoría con ID #" . $id . " exitosamente.";
+		$this->auditContent['action'] = "Actualizar marca";
+		$this->auditContent['description'] = "Se ha actualizado la marca con ID #" . $id . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
 		//SWEET ALERT
 		$this->successMessage['alert'] 		= "clean";
-		$this->successMessage['text'] 		= "La categoría se ha actualizado correctamente";
+		$this->successMessage['text'] 		= "La marca se ha actualizado correctamente";
 		return sweetAlert($this->successMessage);
 	}
 
-	public function deleteCategory()
+	public function deleteBrand()
 	{
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
@@ -148,25 +148,25 @@ class CategoryController extends BaseController
 
 		$id = $this->request->getPost('id');
 
-		$CategoryModel = new CategoryModel();
-		$deleteCategory = $CategoryModel->deleteCategory($id);
+		$BrandModel = new BrandModel();
+		$deleteBrand = $BrandModel->deleteBrand($id);
 
-		if(!$deleteCategory){
-			$this->errorMessage['text'] = "La categoría no existe";
+		if(!$deleteBrand){
+			$this->errorMessage['text'] = "La marca no existe";
 			return sweetAlert($this->errorMessage);
 		}
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
 		$this->auditContent['user_id'] = $auditUserId;
-		$this->auditContent['action'] = "Eliminar categoría";
-		$this->auditContent['description'] = "Se ha eliminado la categoría con ID #" . $id . " exitosamente.";
+		$this->auditContent['action'] = "Eliminar marca";
+		$this->auditContent['description'] = "Se ha eliminado la marca con ID #" . $id . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
 		//SWEET ALERT
 		$this->successMessage['alert'] 		= "clean";
-		$this->successMessage['title'] 		= "Categoría eliminada";
+		$this->successMessage['title'] 		= "Marca eliminada";
 		$this->successMessage['text'] 		= "Puede recuperarla desde la papelera";
 		return sweetAlert($this->successMessage);
 	}

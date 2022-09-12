@@ -79,6 +79,22 @@ class App extends BaseController
 		}
 	}
 
+	public function products()
+	{
+		if($this->session->has('name')){
+			
+			$data = [
+				"title" => "Productos - $this->system"
+			];
+			return view('app/ajax/products', $data);
+		
+		}else{
+
+			return redirect()->to(base_url());
+		
+		}
+	}
+
 	public function categories()
 	{
 		if($this->session->has('name')){
@@ -87,6 +103,22 @@ class App extends BaseController
 				"title" => "Categorías - $this->system"
 			];
 			return view('app/ajax/categories', $data);
+		
+		}else{
+
+			return redirect()->to(base_url());
+		
+		}
+	}
+
+	public function brands()
+	{
+		if($this->session->has('name')){
+			
+			$data = [
+				"title" => "Marcas - $this->system"
+			];
+			return view('app/ajax/brands', $data);
 		
 		}else{
 
