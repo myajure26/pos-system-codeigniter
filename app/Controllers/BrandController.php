@@ -83,10 +83,10 @@ class BrandController extends BaseController
 		return DataTable::of($BrandModel->getBrands())
 			->add('Acciones', function($row){
 				return '<div class="btn-list"> 
-                            <button type="button" class="btnUpdateBrand btn btn-sm btn-primary waves-effect" brand-id="'.$row->id.'" data-bs-toggle="modal" data-bs-target="#updateBrandModal">
+                            <button type="button" class="btnUpdate btn btn-sm btn-primary waves-effect" data-id="'.$row->id.'" data-type="brands" data-bs-toggle="modal" data-bs-target="#updateModal">
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
-                            <button type="button" class="btnDeleteBrand btn btn-sm btn-danger waves-effect" brand-id="'.$row->id.'">
+                            <button type="button" class="btnDelete btn btn-sm btn-danger waves-effect" data-id="'.$row->id.'" data-type="brands">
                                 <i class="fas fa-times-circle"></i>
                             </button>
                         </div>';

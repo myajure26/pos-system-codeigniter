@@ -4,7 +4,7 @@
 <div class="page-content">
     <div class="container-fluid">
 
-        <button class="float-btn waves-effect" data-bs-toggle="modal" data-bs-target="#newCoinModal" >
+        <button class="float-btn waves-effect" data-bs-toggle="modal" data-bs-target="#createModal" >
           <span>+</span>
         </button>
 
@@ -58,7 +58,7 @@
 <!-- End Page-content -->
 
 <!--  add category -->
-<div class="modal fade" id="newCoinModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -88,7 +88,7 @@
 </div><!-- /.modal -->
 
 <!-- update coin -->
-<div class="modal fade" id="updateCoinModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -120,5 +120,11 @@
 
 <script>
     tableConfig('/coins/get');
+
+    function updateCoin(data){
+        $('#updateId').val(data[0].id);
+        $('#updateName').val(data[0].coin);
+        $('#updateSymbol').val(data[0].symbol);
+    }
 </script>
 

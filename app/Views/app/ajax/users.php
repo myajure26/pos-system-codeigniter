@@ -4,7 +4,7 @@
 <div class="page-content">
     <div class="container-fluid">
 
-        <button class="float-btn waves-effect" data-bs-toggle="modal" data-bs-target="#newUserModal" >
+        <button class="float-btn waves-effect" data-bs-toggle="modal" data-bs-target="#createModal" >
           <span>+</span>
         </button>
 
@@ -61,7 +61,7 @@
 <!-- End Page-content -->
 
 <!--  add user -->
-<div class="modal fade" id="newUserModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -119,7 +119,7 @@
 </div><!-- /.modal -->
 
 <!-- update user -->
-<div class="modal fade" id="updateUserModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -183,4 +183,19 @@
 
 <script>
     tableConfig('/users/get');
+
+    function updateUser(data){
+        $('.photo').val('');
+        $('#updateId').val(data[0].id);
+        $('#updateCi').val(data[0].ci);
+        $('#updateName').val(data[0].name);
+        $('#updateEmail').val(data[0].email);
+        $('#updatePasswordPreview').val(data[0].password);
+        $('#updatePrivilege').val(data[0].privilege);
+        $('#updatePhotoPreview').val(data[0].photo);
+        $('#updatePhoto').attr('src', url + "/assets/images/users/anonymous.png");
+        if(data[0].photo != null && data[0].photo != ''){
+            $('#updatePhoto').attr('src', data[0].photo);
+        }
+    }
 </script>

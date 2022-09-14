@@ -83,10 +83,10 @@ class CategoryController extends BaseController
 		return DataTable::of($CategoryModel->getCategories())
 			->add('Acciones', function($row){
 				return '<div class="btn-list"> 
-                            <button type="button" class="btnUpdateCategory btn btn-sm btn-primary waves-effect" category-id="'.$row->id.'" data-bs-toggle="modal" data-bs-target="#updateCategoryModal">
+                            <button type="button" class="btnUpdate btn btn-sm btn-primary waves-effect" data-id="'.$row->id.'" data-type="categories" data-bs-toggle="modal" data-bs-target="#updateModal">
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
-                            <button type="button" class="btnDeleteCategory btn btn-sm btn-danger waves-effect" category-id="'.$row->id.'">
+                            <button type="button" class="btnDelete btn btn-sm btn-danger waves-effect" data-id="'.$row->id.'" data-type="categories">
                                 <i class="fas fa-times-circle"></i>
                             </button>
                         </div>';

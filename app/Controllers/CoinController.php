@@ -87,10 +87,10 @@ class CoinController extends BaseController
 		return DataTable::of($CoinModel->getCoins())
 			->add('Acciones', function($row){
 				return '<div class="btn-list"> 
-                            <button type="button" class="btnUpdateCoin btn btn-sm btn-primary waves-effect" coin-id="'.$row->id.'" data-bs-toggle="modal" data-bs-target="#updateCoinModal">
+                            <button type="button" class="btnUpdate btn btn-sm btn-primary waves-effect" data-id="'.$row->id.'" data-type="coins" data-bs-toggle="modal" data-bs-target="#updateModal">
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
-                            <button type="button" class="btnDeleteCoin btn btn-sm btn-danger waves-effect" coin-id="'.$row->id.'">
+                            <button type="button" class="btnDelete btn btn-sm btn-danger waves-effect" data-id="'.$row->id.'" data-type="coins">
                                 <i class="fas fa-times-circle"></i>
                             </button>
                         </div>';

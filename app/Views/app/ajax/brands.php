@@ -4,7 +4,7 @@
 <div class="page-content">
     <div class="container-fluid">
 
-        <button class="float-btn waves-effect" data-bs-toggle="modal" data-bs-target="#newBrandModal" >
+        <button class="float-btn waves-effect" data-bs-toggle="modal" data-bs-target="#createModal" >
           <span>+</span>
         </button>
 
@@ -57,7 +57,7 @@
 <!-- End Page-content -->
 
 <!--  add brand -->
-<div class="modal fade" id="newBrandModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -83,7 +83,7 @@
 </div><!-- /.modal -->
 
 <!-- update brand -->
-<div class="modal fade" id="updateBrandModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -111,4 +111,9 @@
 
 <script>
     tableConfig('/brands/get');
+
+    function updateBrand(data){
+        $('#updateId').val(data[0].id);
+        $('#updateName').val(data[0].brand);
+    }
 </script>

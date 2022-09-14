@@ -164,10 +164,10 @@ class UserController extends BaseController
 			})
 			->add('Acciones', function($row){
 				return '<div class="btn-list"> 
-                            <button type="button" class="btnUpdateUser btn btn-sm btn-primary waves-effect" user-id="'.$row->id.'" data-bs-toggle="modal" data-bs-target="#updateUserModal">
+                            <button type="button" class="btnUpdate btn btn-sm btn-primary waves-effect" data-id="'.$row->id.'" data-type="users" data-bs-toggle="modal" data-bs-target="#updateModal">
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
-                            <button type="button" class="btnDeleteUser btn btn-sm btn-danger waves-effect" user-id="'.$row->id.'" photo="'.$row->photo.'">
+                            <button type="button" class="btnDelete btn btn-sm btn-danger waves-effect" data-id="'.$row->id.'" data-type="users" photo="'.$row->photo.'">
                                 <i class="fas fa-times-circle"></i>
                             </button>
                         </div>';
