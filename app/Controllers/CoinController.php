@@ -1,10 +1,10 @@
 <?php 
 namespace App\Controllers;
-use App\Models\CategoryModel;
+use App\Models\CoinModel;
 use App\Models\AuditModel;
 use \Hermawan\DataTables\DataTable;
 
-class CategoryController extends BaseController
+class CoinController extends BaseController
 {
 	protected $errorMessage = [
 		"alert" => "simple",
@@ -24,20 +24,20 @@ class CategoryController extends BaseController
 
 	protected $auditContent = [
 		"user"			=> "",
-		"module"		=> "Categorías",
+		"module"		=> "Monedas",
 		"action"		=> "",
 		"description"	=> ""
 	];
 
-	public function createCategory()
+	public function createCoin()
 	{
-		helper('categoryValidation');
+		helper('coinValidation');
 
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
 		}
 
-		if(!$this->validate(createCategoryValidation())){
+		if(!$this->validate(createCoinValidation())){
 
 			//Mostrar errores de validación
 			$errors = $this->validator->getErrors();
@@ -49,44 +49,48 @@ class CategoryController extends BaseController
 		}
 
 		$name = $this->request->getPost('name');
+		$symbol = $this->request->getPost('symbol');
 
-		$CategoryModel = new CategoryModel();
-		$category = $CategoryModel->createCategory(['category' => $name]);
+		$CoinModel = new CoinModel();
+		$coin = $CoinModel->createCoin([
+									'coin' => $name,
+									'symbol' => $symbol
+								]);
 
-		if(!$category){
-			$this->errorMessage['text'] = "Error al guardar la categoría en la base de datos";
+		if(!$coin){
+			$this->errorMessage['text'] = "Error al guardar la moneda en la base de datos";
 			return sweetAlert($this->errorMessage);
 		}
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
 		$this->auditContent['user_id'] 		= $auditUserId;
-		$this->auditContent['action'] 		= "Crear categoría";
-		$this->auditContent['description'] 	= "Se ha creado la categoría con ID #" . $CategoryModel->getLastId() . " exitosamente.";
+		$this->auditContent['action'] 		= "Crear moneda";
+		$this->auditContent['description'] 	= "Se ha creado la moneda con ID #" . $CoinModel->getLastId() . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
 		//SWEET ALERT
 		$this->successMessage['alert'] 		= "clean";
-		$this->successMessage['text'] 		= "La categoría se ha creado correctamente";
+		$this->successMessage['text'] 		= "La moneda se ha creado correctamente";
 		return sweetAlert($this->successMessage);
 	}
 
-	public function getCategories()
+	public function getCoins()
 	{
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
 		}
 
-		$CategoryModel = new CategoryModel();
+		$CoinModel = new CoinModel();
 				
-		return DataTable::of($CategoryModel->getCategories())
+		return DataTable::of($CoinModel->getCoins())
 			->add('Acciones', function($row){
 				return '<div class="btn-list"> 
-                            <button type="button" class="btnUpdateCategory btn btn-sm btn-primary waves-effect" category-id="'.$row->id.'" data-bs-toggle="modal" data-bs-target="#updateCategoryModal">
+                            <button type="button" class="btnUpdateCoin btn btn-sm btn-primary waves-effect" coin-id="'.$row->id.'" data-bs-toggle="modal" data-bs-target="#updateCoinModal">
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
-                            <button type="button" class="btnDeleteCategory btn btn-sm btn-danger waves-effect" category-id="'.$row->id.'">
+                            <button type="button" class="btnDeleteCoin btn btn-sm btn-danger waves-effect" coin-id="'.$row->id.'">
                                 <i class="fas fa-times-circle"></i>
                             </button>
                         </div>';
@@ -94,29 +98,29 @@ class CategoryController extends BaseController
 			->toJson();
 	}
 
-	public function getCategoryById($id)
+	public function getCoinById($id)
 	{
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
 		}
 
-		$CategoryModel = new CategoryModel();
-		$category = $CategoryModel->getCategoryById(['id' => $id]);
-		if(!$category){
+		$CoinModel = new CoinModel();
+		$coin = $CoinModel->getCoinById(['id' => $id]);
+		if(!$coin){
 			return false;
 		}
-		return json_encode($category);
+		return json_encode($coin);
 	}
 
-	public function updateCategory()
+	public function updateCoin()
 	{
-		helper('categoryValidation');
+		helper('coinValidation');
 
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
 		}
 
-		if(!$this->validate(updateCategoryValidation())){
+		if(!$this->validate(updateCoinValidation())){
 
 			//Mostrar errores de validación
 			$errors = $this->validator->getErrors();
@@ -129,30 +133,34 @@ class CategoryController extends BaseController
 
 		$id = $this->request->getPost('id');
 		$name = $this->request->getPost('name');
+		$symbol = $this->request->getPost('symbol');
 
-		$CategoryModel = new CategoryModel();
-		$category = $CategoryModel->updateCategory($name, $id);
+		$CoinModel = new CoinModel();
+		$coin = $CoinModel->updateCoin([
+										"name" => $name,
+										"symbol" => $symbol
+									], $id);
 
-		if(!$category){
-			$this->errorMessage['text'] = "Error actualizar la categoría en la base de datos";
+		if(!$coin){
+			$this->errorMessage['text'] = "Error actualizar la moneda en la base de datos";
 			return sweetAlert($this->errorMessage);
 		}
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
 		$this->auditContent['user_id'] 		= $auditUserId;
-		$this->auditContent['action'] 		= "Actualizar categoría";
-		$this->auditContent['description'] 	= "Se ha actualizado la categoría con ID #" . $id . " exitosamente.";
+		$this->auditContent['action'] 		= "Actualizar moneda";
+		$this->auditContent['description'] 	= "Se ha actualizado la moneda con ID #" . $id . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
 		//SWEET ALERT
 		$this->successMessage['alert'] 		= "clean";
-		$this->successMessage['text'] 		= "La categoría se ha actualizado correctamente";
+		$this->successMessage['text'] 		= "La moneda se ha actualizado correctamente";
 		return sweetAlert($this->successMessage);
 	}
 
-	public function deleteCategory()
+	public function deleteCoin()
 	{
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
@@ -160,25 +168,25 @@ class CategoryController extends BaseController
 
 		$id = $this->request->getPost('id');
 
-		$CategoryModel = new CategoryModel();
-		$deleteCategory = $CategoryModel->deleteCategory($id);
+		$CoinModel = new CoinModel();
+		$deleteCoin = $CoinModel->deleteCoin($id);
 
-		if(!$deleteCategory){
-			$this->errorMessage['text'] = "La categoría no existe";
+		if(!$deleteCoin){
+			$this->errorMessage['text'] = "La moneda no existe";
 			return sweetAlert($this->errorMessage);
 		}
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
 		$this->auditContent['user_id'] 		= $auditUserId;
-		$this->auditContent['action'] 		= "Eliminar categoría";
-		$this->auditContent['description'] 	= "Se ha eliminado la categoría con ID #" . $id . " exitosamente.";
+		$this->auditContent['action'] 		= "Eliminar moneda";
+		$this->auditContent['description'] 	= "Se ha eliminado la moneda con ID #" . $id . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
 		//SWEET ALERT
 		$this->successMessage['alert'] 		= "clean";
-		$this->successMessage['title'] 		= "Categoría eliminada";
+		$this->successMessage['title'] 		= "Moneda eliminada";
 		$this->successMessage['text'] 		= "Puede recuperarla desde la papelera";
 		return sweetAlert($this->successMessage);
 	}

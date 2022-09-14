@@ -4,7 +4,7 @@
 <div class="page-content">
     <div class="container-fluid">
 
-        <button class="float-btn waves-effect" data-bs-toggle="modal" data-bs-target="#newCategoryModal" >
+        <button class="float-btn waves-effect" data-bs-toggle="modal" data-bs-target="#newCoinModal" >
           <span>+</span>
         </button>
 
@@ -42,6 +42,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Nombre</th>
+                                        <th>Símbolo</th>
                                         <th>Creada en</th>
                                         <th>Acciones</th>
                                     </tr>
@@ -62,15 +63,19 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel">Nueva categoría</h5>
+                <h5 class="modal-title" id="myLargeModalLabel">Nueva moneda</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="custom-form" action="<?=base_url('categories/create')?>" method="POST">
+            <form class="custom-form" action="<?=base_url('coins/create')?>" method="POST">
                 <div class="modal-body">
                     <div class="response"></div>
                     <div class="mb-3">
                         <label class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="name" placeholder="Introduce el nombre de la categoría" name="name" required>
+                        <input type="text" class="form-control" id="name" placeholder="Introduce el nombre de la moneda" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Símbolo</label>
+                        <input type="text" class="form-control" id="symbol" placeholder="Introduce el símbolo de la moneda" name="symbol" maxlength="5" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -88,16 +93,20 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel">Actualizar categoría</h5>
+                <h5 class="modal-title" id="myLargeModalLabel">Actualizar moneda</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="custom-form" action="<?=base_url('categories/update')?>" method="POST">
+            <form class="custom-form" action="<?=base_url('coins/update')?>" method="POST">
                 <div class="modal-body">
                     <div class="response"></div>
                     <input type="hidden" id="updateId" name="id" value="">
                     <div class="mb-3">
                         <label class="form-label">Nombre</label>
                         <input type="text" class="form-control" id="updateName" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Símbolo</label>
+                        <input type="text" class="form-control" id="updateSymbol" name="symbol" maxlength="5" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -110,6 +119,6 @@
 </div><!-- /.modal -->
 
 <script>
-    tableConfig('/categories/get');
+    tableConfig('/coins/get');
 </script>
 

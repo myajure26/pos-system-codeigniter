@@ -64,6 +64,15 @@ $routes->group('brands', static function ($routes) {
     $routes->post('delete', 'BrandController::deleteBrand');
 });
 
+//COINS MODULE
+$routes->group('coins', static function ($routes) {
+    $routes->post('create', 'CoinController::createCoin');
+    $routes->get('get', 'CoinController::getCoins');
+    $routes->get('getById/(:num)', 'CoinController::getCoinById/$1');
+    $routes->post('update', 'CoinController::updateCoin');
+    $routes->post('delete', 'CoinController::deleteCoin');
+});
+
 //PRODUCTS MODULE
 $routes->group('products', static function ($routes) {
     $routes->post('create', 'CategoryController::createCategory');
@@ -74,14 +83,7 @@ $routes->group('products', static function ($routes) {
 });
 
 
-//COINDS MODULE
-$routes->group('coins', static function ($routes) {
-    $routes->post('create', 'CoinController::createCoin');
-    $routes->get('get', 'CoinController::getCoins');
-    $routes->get('getById/(:num)', 'CoinController::getCoinById/$1');
-    $routes->post('update', 'CoinController::updateCoin');
-    $routes->post('delete', 'CoinController::deleteCoin');
-});
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
