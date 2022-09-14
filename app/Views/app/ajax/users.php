@@ -180,15 +180,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!-- password addon init -->
-<script src="<?=base_url('assets/js/pages/pass-addon.init.js')?>"></script>
-<!-- image validation -->
-<script src="<?=base_url('assets/js/imageValidation.js')?>"></script>
-<!-- table config -->
-<script src="<?=base_url('assets/js/tableConfig.js')?>"></script>
+
 <script>
     tableConfig('/users/get');
 </script>
-<!-- ajax -->
-<script src="<?=base_url('assets/js/ajaxForm.js')?>"></script>
-<script src="<?=base_url('assets/js/system-pages/users.js')?>"></script>

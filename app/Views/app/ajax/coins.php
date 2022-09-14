@@ -4,7 +4,7 @@
 <div class="page-content">
     <div class="container-fluid">
 
-        <button class="float-btn waves-effect" data-bs-toggle="modal" data-bs-target="#newProductModal" >
+        <button class="float-btn waves-effect" data-bs-toggle="modal" data-bs-target="#newCategoryModal" >
           <span>+</span>
         </button>
 
@@ -13,13 +13,13 @@
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center
                     justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">Productos</h4>
+                    <h4 class="mb-sm-0 font-size-18">Monedas</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript:
-                                    void(0);">Administrar inventario</a></li>
-                            <li class="breadcrumb-item active">Productos</li>
+                                    void(0);">Configuraciones del sistema</a></li>
+                            <li class="breadcrumb-item active">Monedas</li>
                         </ol>
                     </div>
 
@@ -32,8 +32,8 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Administrar productos</h4>
-                        <p class="card-title-desc">En este módulo podrás ver, agregar, actualizar y eliminar productos.</p>
+                        <h4 class="card-title">Administrar monedas</h4>
+                        <p class="card-title-desc">En este módulo podrás ver, agregar, actualizar y eliminar monedas.</p>
                     </div>
                     <div class="card-body">
                         <table class="table text-nowrap table-striped nowrap w-100" id="datatable">
@@ -42,7 +42,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Nombre</th>
-                                        <th>Fecha de creación</th>
+                                        <th>Creada en</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </tr>
@@ -56,43 +56,21 @@
 </div>
 <!-- End Page-content -->
 
-<!--  add product -->
-<div class="modal fade" id="newProductModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+<!--  add category -->
+<div class="modal fade" id="newCoinModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel">Nuevo producto</h5>
+                <h5 class="modal-title" id="myLargeModalLabel">Nueva categoría</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form class="custom-form" action="<?=base_url('categories/create')?>" method="POST">
                 <div class="modal-body">
                     <div class="response"></div>
                     <div class="mb-3">
-                        <label class="form-label">Código</label>
-                        <input type="text" class="form-control" id="name" placeholder="Introduce el código del producto" name="name" required>
-                    </div>
-                    <div class="mb-3">
                         <label class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="name" placeholder="Introduce el nombre del producto" name="name" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Marca</label>
-                        <select class="form-select" name="brand" required>
-                            <option value="">Selecciona la marca</option>
-                            <?php foreach($brands as $row)
-                                echo '<option value="'.$row->id.'">'.$row->brand.'</option>';
-                            ?>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Categoría</label>
-                        <select class="form-select" name="brand" required>
-                            <option value="">Selecciona la categoría</option>
-                            <?php foreach($categories as $row)
-                                echo '<option value="'.$row->id.'">'.$row->category.'</option>';
-                            ?>
-                        </select>
+                        <input type="text" class="form-control" id="name" placeholder="Introduce el nombre de la categoría" name="name" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -104,8 +82,8 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!-- update category -->
-<div class="modal fade" id="updateProductModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+<!-- update coin -->
+<div class="modal fade" id="updateCoinModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -134,3 +112,4 @@
 <script>
     tableConfig('/categories/get');
 </script>
+

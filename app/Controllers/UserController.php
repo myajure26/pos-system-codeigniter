@@ -31,7 +31,9 @@ class UserController extends BaseController
 
 	public function signin()
 	{
-		if(!$this->validate('signin')){
+		helper('signinValidation');
+
+		if(!$this->validate(signinValidation())){
 			
 			//Mostrar errores de validación
 			$errors = $this->validator->getErrors();
@@ -83,11 +85,13 @@ class UserController extends BaseController
 
 	public function createUser()
 	{
+		helper('userValidation');
+
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
 		}
 
-		if(!$this->validate('users')){
+		if(!$this->validate(createUserValidation())){
 			
 			//Mostrar errores de validación
 			$errors = $this->validator->getErrors();
@@ -187,11 +191,13 @@ class UserController extends BaseController
 
 	public function updateUser()
 	{
+		helper('userValidation');
+
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
 		}
 
-		if(!$this->validate('updateUser')){
+		if(!$this->validate(updateUserValidation())){
 			
 			//Mostrar errores de validación
 			$errors = $this->validator->getErrors();

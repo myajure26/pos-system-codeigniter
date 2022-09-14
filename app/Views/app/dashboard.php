@@ -195,7 +195,7 @@
                             <li>
                                 <a href="<?=base_url('#products')?>">
                                     <i data-feather="shopping-cart"></i>
-                                    <span data-key="t-products">Artículos</span>
+                                    <span data-key="t-products">Productos</span>
                                 </a>
                             </li>
                             <li>
@@ -230,6 +230,12 @@
                                 <a href="<?=base_url('#settings')?>">
                                     <i data-feather="settings"></i>
                                     <span data-key="t-settings">Configuración general</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?=base_url('#coins')?>">
+                                    <i data-feather="dollar-sign"></i>
+                                    <span data-key="t-coins">Monedas</span>
                                 </a>
                             </li>
 
@@ -282,6 +288,12 @@
         <!-- Required datatable js -->
         <script src="<?=base_url('assets/libs/datatables.net/js/jquery.dataTables.min.js')?>"></script>
         <script src="<?=base_url('assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js')?>"></script>
+        <!-- password addon init -->
+        <script src="<?=base_url('assets/js/pages/pass-addon.init.js')?>"></script>
+        <!-- image validation -->
+        <script src="<?=base_url('assets/js/imageValidation.js')?>"></script>
+        <!-- table config -->
+        <script src="<?=base_url('assets/js/tableConfig.js')?>"></script>
         <!-- DOCUMENT -->
         <script src="<?=base_url('assets/js/app.js')?>"></script>
         <script src="<?=base_url('assets/js/ajax.js')?>"></script>

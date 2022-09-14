@@ -52,8 +52,7 @@
     </div> <!-- container-fluid -->
 </div>
 <!-- End Page-content -->
-<!-- table config -->
-<script src="<?=base_url('assets/js/tableConfig.js')?>"></script>
+
 <script>
     tableConfig('/audits/get');
 </script>

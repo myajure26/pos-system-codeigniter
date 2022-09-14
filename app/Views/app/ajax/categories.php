@@ -109,11 +109,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!-- table config -->
-<script src="<?=base_url('assets/js/tableConfig.js')?>"></script>
 <script>
     tableConfig('/categories/get');
 </script>
-<!-- ajax -->
-<script src="<?=base_url('assets/js/ajaxForm.js')?>"></script>
-<script src="<?=base_url('assets/js/system-pages/categories.js')?>"></script>
+

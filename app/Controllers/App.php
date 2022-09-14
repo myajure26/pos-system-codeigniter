@@ -66,7 +66,7 @@ class App extends BaseController
 	public function audits()
 	{
 		if($this->session->has('name')){
-			
+
 			$data = [
 				"title" => "Auditoría - $this->system"
 			];
@@ -82,9 +82,25 @@ class App extends BaseController
 	public function products()
 	{
 		if($this->session->has('name')){
+
+			$db      	= \Config\Database::connect();
+			$brands 	= $db
+							->table('brands')
+							->select('id, brand')
+							->where('deleted_at', NULL)
+							->get()
+							->getResult();
+			$categories = $db
+							->table('categories')
+							->select('id, category')
+							->where('deleted_at', NULL)
+							->get()
+							->getResult();
 			
 			$data = [
-				"title" => "Productos - $this->system"
+				"title" 		=> "Productos - $this->system",
+				"brands" 		=> $brands,
+				"categories" 	=> $categories
 			];
 			return view('app/ajax/products', $data);
 		
@@ -135,6 +151,22 @@ class App extends BaseController
 				"title" => "Usuarios - $this->system"
 			];
 			return view('app/ajax/users', $data);
+		
+		}else{
+
+			return redirect()->to(base_url());
+		
+		}
+	}
+
+	public function coins()
+	{
+		if($this->session->has('name')){
+		
+			$data = [
+				"title" => "Monedas - $this->system"
+			];
+			return view('app/ajax/coins', $data);
 		
 		}else{
 

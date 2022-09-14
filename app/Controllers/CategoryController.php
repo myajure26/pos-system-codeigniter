@@ -31,7 +31,13 @@ class CategoryController extends BaseController
 
 	public function createCategory()
 	{
-		if(!$this->validate('categories')){
+		helper('categoryValidation');
+
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		if(!$this->validate(createCategoryValidation())){
 
 			//Mostrar errores de validación
 			$errors = $this->validator->getErrors();
@@ -104,7 +110,13 @@ class CategoryController extends BaseController
 
 	public function updateCategory()
 	{
-		if(!$this->validate('updateCategory')){
+		helper('categoryValidation');
+
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		if(!$this->validate(updateCategoryValidation())){
 
 			//Mostrar errores de validación
 			$errors = $this->validator->getErrors();

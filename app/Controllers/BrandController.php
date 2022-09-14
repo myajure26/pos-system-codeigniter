@@ -31,7 +31,13 @@ class BrandController extends BaseController
 
 	public function createBrand()
 	{
-		if(!$this->validate('brands')){
+		helper('brandValidation');
+
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		if(!$this->validate(createBrandValidation())){
 
 			//Mostrar errores de validación
 			$errors = $this->validator->getErrors();
@@ -104,7 +110,13 @@ class BrandController extends BaseController
 
 	public function updateBrand()
 	{
-		if(!$this->validate('updateBrand')){
+		helper('brandValidation');
+
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+		
+		if(!$this->validate(updateBrandValidation())){
 
 			//Mostrar errores de validación
 			$errors = $this->validator->getErrors();

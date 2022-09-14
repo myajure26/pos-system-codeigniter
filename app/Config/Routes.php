@@ -73,6 +73,15 @@ $routes->group('products', static function ($routes) {
     $routes->post('delete', 'CategoryController::deleteCategory');
 });
 
+
+//COINDS MODULE
+$routes->group('coins', static function ($routes) {
+    $routes->post('create', 'CoinController::createCoin');
+    $routes->get('get', 'CoinController::getCoins');
+    $routes->get('getById/(:num)', 'CoinController::getCoinById/$1');
+    $routes->post('update', 'CoinController::updateCoin');
+    $routes->post('delete', 'CoinController::deleteCoin');
+});
 /*
  * --------------------------------------------------------------------
  * Additional Routing
