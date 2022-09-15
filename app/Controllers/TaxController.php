@@ -137,7 +137,7 @@ class TaxController extends BaseController
 
 		$TaxModel = new TaxModel();
 		$tax = $TaxModel->updateTax([
-									"name" => $name,
+									"tax" => $name,
 									"percentage" => $percentage
 								], $id);
 

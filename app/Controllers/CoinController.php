@@ -137,7 +137,7 @@ class CoinController extends BaseController
 
 		$CoinModel = new CoinModel();
 		$coin = $CoinModel->updateCoin([
-										"name" => $name,
+										"coin" => $name,
 										"symbol" => $symbol
 									], $id);
 
