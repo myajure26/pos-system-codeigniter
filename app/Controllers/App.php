@@ -175,6 +175,22 @@ class App extends BaseController
 		}
 	}
 
+	public function taxes()
+	{
+		if($this->session->has('name')){
+		
+			$data = [
+				"title" => "Impuestos - $this->system"
+			];
+			return view('app/ajax/taxes', $data);
+		
+		}else{
+
+			return redirect()->to(base_url());
+		
+		}
+	}
+
 	public function logout()
 	{
 		$this->session->destroy();

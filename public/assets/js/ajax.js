@@ -175,6 +175,8 @@ $(document).ready(function() {
                return updateBrand(data);
             case 'coins':
                return updateCoin(data);
+            case 'taxes':
+               return updateTax(data);
         }
             
     }

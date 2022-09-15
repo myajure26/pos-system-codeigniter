@@ -73,6 +73,15 @@ $routes->group('coins', static function ($routes) {
     $routes->post('delete', 'CoinController::deleteCoin');
 });
 
+//TAXES MODULE
+$routes->group('taxes', static function ($routes) {
+    $routes->post('create', 'TaxController::createTax');
+    $routes->get('get', 'TaxController::getTaxes');
+    $routes->get('getById/(:num)', 'TaxController::getTaxById/$1');
+    $routes->post('update', 'TaxController::updateTax');
+    $routes->post('delete', 'TaxController::deleteTax');
+});
+
 //PRODUCTS MODULE
 $routes->group('products', static function ($routes) {
     $routes->post('create', 'CategoryController::createCategory');

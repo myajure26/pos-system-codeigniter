@@ -238,7 +238,12 @@
                                     <span data-key="t-coins">Monedas</span>
                                 </a>
                             </li>
-
+                            <li>
+                                <a href="<?=base_url('#taxes')?>">
+                                    <i data-feather="file-text"></i>
+                                    <span data-key="t-taxes">Impuesto</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                     <!-- Sidebar -->
