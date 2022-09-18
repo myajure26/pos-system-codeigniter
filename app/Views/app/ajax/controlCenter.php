@@ -31,6 +31,7 @@
                         <h4 class="card-title">Administrar configuraciones del sistema</h4>
                         <p class="card-title-desc">En este módulo podrás hacer algunos ajustes menores al sistema.</p>
                     </div>
+                    <div class="response"></div>
                     <div class="card-body">
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
@@ -99,8 +100,10 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div>
-                                            <h5 class="font-size-14 mb-4 mt-2"><i class="mdi mdi-arrow-right text-primary me-1"></i> Seleccionar la moneda principal y la moneda secundaria</h5>
-                                            <form>
+                                            <h5 class="font-size-14 mt-2"><i class="mdi mdi-arrow-right text-primary me-1"></i> Actualmente las monedas son:</h5>
+                                            <h5 class="font-size-14 mt-2"><i class="mdi mdi-check text-primary me-1"></i> Moneda principal: <?=$settings[0]->value?></h5>
+                                            <h5 class="font-size-14 mb-4 mt-1"><i class="mdi mdi-check text-primary me-1"></i> Moneda secundaria: <?=$settings[1]->value?></h5>
+                                            <form class="custom-form" action="<?=base_url('settings/setCoins')?>" method="POST">
                                                 <div class="row">       
                                                     <div class="col-md-6">
                                                         <div class="mb-3">
@@ -108,7 +111,7 @@
                                                             <select class="form-select" name="setPrincipalCoin" id="setPrincipalCoin" required>
                                                                 <option value="">Selecciona la moneda principal</option>
                                                                 <?php foreach($coins as $row)
-                                                                    echo '<option value="'.$row->id.'">'.$row->coin.'</option>';
+                                                                    echo '<option value="'.$row->coin.'">'.$row->coin.'</option>';
                                                                 ?>
                                                             </select>
                                                         </div>
@@ -119,7 +122,7 @@
                                                             <select class="form-select" name="setSecondaryCoin" id="setSecondaryCoin" required>
                                                                 <option value="">Selecciona la moneda secundaria</option>
                                                                 <?php foreach($coins as $row)
-                                                                    echo '<option value="'.$row->id.'">'.$row->coin.'</option>';
+                                                                    echo '<option value="'.$row->coin.'">'.$row->coin.'</option>';
                                                                 ?>
                                                             </select>
                                                         </div>

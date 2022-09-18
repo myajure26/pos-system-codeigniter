@@ -1,4 +1,6 @@
 const url = $(location).attr('origin');
+
+// MENU
 $(document).on("click", ".metismenu li a, .navbar-nav  li a", function(e) {
 	e.preventDefault();
 
@@ -164,6 +166,8 @@ $(document).ready(function() {
         return false;
     });
 
+    
+
     function update(data, type){
 
         switch(type){
@@ -177,6 +181,8 @@ $(document).ready(function() {
                return updateCoin(data);
             case 'taxes':
                return updateTax(data);
+            case 'configCoin':
+               return updateConfigCoin(data);
         }
             
     }

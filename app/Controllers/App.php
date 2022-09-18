@@ -84,16 +84,23 @@ class App extends BaseController
 		if($this->session->has('name')){
 
 			$db      	= \Config\Database::connect();
-			$coins 	= $db
+			$coins 		= $db
 							->table('coins')
 							->select('id, coin')
 							->where('deleted_at', NULL)
 							->get()
 							->getResult();
+			$settings 	= $db
+							->table('settings')
+							->select('type, name, value')
+							->where('type', 'coin')
+							->get()
+							->getResult();
 
 			$data = [
 				"title" => "Centro de control - $this->system",
-				"coins" => $coins
+				"coins" => $coins,
+				"settings" => $settings
 			];
 			return view('app/ajax/controlCenter', $data);
 		

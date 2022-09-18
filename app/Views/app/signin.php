@@ -210,7 +210,7 @@
         <!-- password addon init -->
         <script src="<?=base_url('assets/js/pages/pass-addon.init.js')?>"></script>
         <!-- ajax -->
-        <script src="<?=base_url('assets/js/ajaxForm.js')?>"></script>
+        <script src="<?=base_url('assets/js/ajax.js')?>"></script>
 
     </body>
 

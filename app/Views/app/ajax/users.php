@@ -199,3 +199,5 @@
         }
     }
 </script>
+<!-- password addon init -->
+<script src="<?=base_url('assets/js/pages/pass-addon.init.js')?>"></script>

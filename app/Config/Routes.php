@@ -91,6 +91,11 @@ $routes->group('products', static function ($routes) {
     $routes->post('delete', 'CategoryController::deleteCategory');
 });
 
+//SETTINGS MODULE
+$routes->group('settings', static function ($routes) {
+    $routes->post('setCoins', 'SettingController::setCoins');
+});
+
 
 
 /*

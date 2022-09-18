@@ -11,7 +11,6 @@ class TaxController extends BaseController
 		"type" => "error",
 		"title" => "¡Oops!",
 		"text" => ""
-
 	];
 
 	protected $successMessage = [
@@ -19,7 +18,6 @@ class TaxController extends BaseController
 		"type" => "success",
 		"title" => "¡Éxito!",
 		"text" => ""
-
 	];
 
 	protected $auditContent = [
