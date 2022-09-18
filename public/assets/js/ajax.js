@@ -181,6 +181,8 @@ $(document).ready(function() {
                return updateCoin(data);
             case 'taxes':
                return updateTax(data);
+            case 'products':
+               return updateProduct(data);
             case 'configCoin':
                return updateConfigCoin(data);
         }

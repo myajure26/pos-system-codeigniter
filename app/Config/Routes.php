@@ -84,11 +84,11 @@ $routes->group('taxes', static function ($routes) {
 
 //PRODUCTS MODULE
 $routes->group('products', static function ($routes) {
-    $routes->post('create', 'CategoryController::createCategory');
-    $routes->get('get', 'CategoryController::getCategories');
-    $routes->get('getById/(:num)', 'CategoryController::getCategoryById/$1');
-    $routes->post('update', 'CategoryController::updateCategory');
-    $routes->post('delete', 'CategoryController::deleteCategory');
+    $routes->post('create', 'ProductController::createProduct');
+    $routes->get('get', 'ProductController::getProducts');
+    $routes->get('getById/(:num)', 'ProductController::getProductById/$1');
+    $routes->post('update', 'ProductController::updateProduct');
+    $routes->post('delete', 'ProductController::deleteProduct');
 });
 
 //SETTINGS MODULE

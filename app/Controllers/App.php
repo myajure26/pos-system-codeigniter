@@ -134,12 +134,19 @@ class App extends BaseController
 							->where('deleted_at', NULL)
 							->get()
 							->getResult();
+			$coins 		= $db
+							->table('coins')
+							->select('id, coin, symbol')
+							->where('deleted_at', NULL)
+							->get()
+							->getResult();
 			
 			$data = [
 				"title" 		=> "Productos - $this->system",
 				"brands" 		=> $brands,
 				"categories" 	=> $categories,
-				"taxes" 		=> $taxes
+				"taxes" 		=> $taxes,
+				"coins" 		=> $coins
 			];
 			return view('app/ajax/products', $data);
 		
