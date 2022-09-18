@@ -88,10 +88,10 @@ class CoinController extends BaseController
 			->add('Acciones', function($row){
 				return '<div class="btn-list"> 
                             <button type="button" class="btnUpdate btn btn-sm btn-primary waves-effect" data-id="'.$row->id.'" data-type="coins" data-bs-toggle="modal" data-bs-target="#updateModal">
-                                <i class="fas fa-pencil-alt"></i>
+                                <i class="far fa-edit"></i>
                             </button>
                             <button type="button" class="btnDelete btn btn-sm btn-danger waves-effect" data-id="'.$row->id.'" data-type="coins">
-                                <i class="fas fa-times-circle"></i>
+                                <i class="far fa-trash-alt"></i>
                             </button>
                         </div>';
 			}, 'last') 

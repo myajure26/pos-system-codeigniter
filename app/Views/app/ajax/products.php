@@ -41,8 +41,14 @@
                                 <tr>
                                     <tr>
                                         <th>#</th>
+                                        <th>Código</th>
                                         <th>Nombre</th>
-                                        <th>Fecha de creación</th>
+                                        <th>Descripción</th>
+                                        <th>Marca</th>
+                                        <th>Categoría</th>
+                                        <th>Precio</th>
+                                        <th>Impuesto</th>
+                                        <th>Creado en</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </tr>
@@ -77,8 +83,12 @@
                         <input type="text" class="form-control" id="name" placeholder="Introduce el nombre del producto" name="name" required>
                     </div>
                     <div class="mb-3">
+                        <label class="form-label">Descripción</label>
+                        <textarea name="description" id="description" cols="30" rows="2" class="form-control"></textarea>
+                    </div>
+                    <div class="mb-3">
                         <label class="form-label">Marca</label>
-                        <select class="form-select" name="brand" required>
+                        <select class="form-select" name="brand" id="brand" required>
                             <option value="">Selecciona la marca</option>
                             <?php foreach($brands as $row)
                                 echo '<option value="'.$row->id.'">'.$row->brand.'</option>';
@@ -87,10 +97,26 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Categoría</label>
-                        <select class="form-select" name="brand" required>
+                        <select class="form-select" name="category" id="category" required>
                             <option value="">Selecciona la categoría</option>
                             <?php foreach($categories as $row)
                                 echo '<option value="'.$row->id.'">'.$row->category.'</option>';
+                            ?>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Precio</label>
+                        <div class="input-group">
+                            <div class="input-group-text">$</div>
+                            <input type="text" class="form-control" id="price" placeholder="Introduce el precio del producto" name="price" required value="0.00">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Impuesto</label>
+                        <select class="form-select" name="tax" id="tax" required>
+                            <option value="">Selecciona el impuesto</option>
+                            <?php foreach($taxes as $row)
+                                echo '<option value="'.$row->id.'">'.$row->tax.'</option>';
                             ?>
                         </select>
                     </div>
@@ -133,4 +159,7 @@
 
 <script>
     tableConfig('/categories/get');
+    $("#price").priceFormat({
+        prefix: ''
+    });
 </script>

@@ -79,6 +79,31 @@ class App extends BaseController
 		}
 	}
 
+	public function controlCenter()
+	{
+		if($this->session->has('name')){
+
+			$db      	= \Config\Database::connect();
+			$coins 	= $db
+							->table('coins')
+							->select('id, coin')
+							->where('deleted_at', NULL)
+							->get()
+							->getResult();
+
+			$data = [
+				"title" => "Centro de control - $this->system",
+				"coins" => $coins
+			];
+			return view('app/ajax/controlCenter', $data);
+		
+		}else{
+
+			return redirect()->to(base_url());
+		
+		}
+	}
+
 	public function products()
 	{
 		if($this->session->has('name')){
@@ -96,11 +121,18 @@ class App extends BaseController
 							->where('deleted_at', NULL)
 							->get()
 							->getResult();
+			$taxes = $db
+							->table('taxes')
+							->select('id, tax')
+							->where('deleted_at', NULL)
+							->get()
+							->getResult();
 			
 			$data = [
 				"title" 		=> "Productos - $this->system",
 				"brands" 		=> $brands,
-				"categories" 	=> $categories
+				"categories" 	=> $categories,
+				"taxes" 		=> $taxes
 			];
 			return view('app/ajax/products', $data);
 		

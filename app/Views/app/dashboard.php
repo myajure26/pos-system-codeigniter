@@ -140,7 +140,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="<?=base_url('#control')?>">
+                                <a href="<?=base_url('#controlCenter')?>">
                                     <i data-feather="tool"></i>
                                     <span data-key="t-control">Centro de control</span>
                                 </a>
@@ -299,6 +299,8 @@
         <script src="<?=base_url('assets/js/imageValidation.js')?>"></script>
         <!-- table config -->
         <script src="<?=base_url('assets/js/tableConfig.js')?>"></script>
+        <!-- price format -->
+        <script src="<?=base_url('assets/libs/price-format/priceformat.min.js')?>"></script>
         <!-- DOCUMENT -->
         <script src="<?=base_url('assets/js/app.js')?>"></script>
         <script src="<?=base_url('assets/js/ajax.js')?>"></script>

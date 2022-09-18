@@ -75,7 +75,10 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Porcentaje</label>
-                        <input type="number" class="form-control" id="percentage" placeholder="Introduce el porcentaje del impuesto" name="percentage" maxlength="2" required>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="percentage" placeholder="Introduce el porcentaje del impuesto" name="percentage" maxlength="2" required> 
+                            <div class="input-group-text">%</div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -106,7 +109,10 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Porcentaje</label>
-                        <input type="number" class="form-control" id="updatePercentage" name="percentage" maxlength="2" required>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="updatePercentage" name="percentage" maxlength="2" required>
+                            <div class="input-group-text">%</div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
