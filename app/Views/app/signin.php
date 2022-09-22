@@ -210,7 +210,47 @@
         <!-- password addon init -->
         <script src="<?=base_url('assets/js/pages/pass-addon.init.js')?>"></script>
         <!-- ajax -->
-        <script src="<?=base_url('assets/js/ajax.js')?>"></script>
+        <!-- <script src="<?=base_url('assets/js/ajax.js')?>"></script> -->
+
+        <script>
+            // AJAX FORM
+    $(document).on('submit', 'form', function (e) {
+        e.preventDefault();
+
+        const form = $(this);
+        const response = $('.response');
+        const action = form.attr('action');
+        const method = form.attr('method');
+        const formdata = new FormData(this);
+
+        $.ajax({
+            type: method,
+            url: action,
+            data: formdata ? formdata : form.serialize(),
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function() {
+                Swal.fire({
+                    icon: 'info',
+                    title: '<strong>Procesando...</strong>',
+                    text: 'Por favor, espera unos segundos',
+                    showConfirmButton: false,
+                    didOpen: function() {
+                        Swal.showLoading();
+                    }
+                });
+            },
+            success: function (data) {
+                response.html(data);
+            },
+            error: function (data) {
+                response.html(data);
+            }
+        });
+        return false;
+    });
+        </script>
 
     </body>
 

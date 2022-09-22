@@ -5,10 +5,10 @@ function createProductValidation()
 	$product = [
 		'code' => [
 			'label' => 'code',
-			'rules' => 'required|alpha_numeric|is_unique[products.code]',
+			'rules' => 'required|alpha_numeric_punct|is_unique[products.code]',
 			'errors' => [
 				'required' => 'El código es requerido',
-				'alpha_numeric' => 'Para el código sólo se permiten carácteres alfanuméricos',
+				'alpha_numeric_punct' => 'Para el código sólo se permiten carácteres alfanuméricos y guiones',
 				'is_unique' => 'El código ya se encuentra registrado'
 			]
 		],

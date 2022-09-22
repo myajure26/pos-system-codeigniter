@@ -91,6 +91,15 @@ $routes->group('products', static function ($routes) {
     $routes->post('delete', 'ProductController::deleteProduct');
 });
 
+//PROVIDERS MODULE
+$routes->group('providers', static function ($routes) {
+    $routes->post('create', 'ProviderController::createProvider');
+    $routes->get('get', 'ProviderController::getProviders');
+    $routes->get('getById/(:num)', 'ProviderController::getProviderById/$1');
+    $routes->post('update', 'ProviderController::updateProvider');
+    $routes->post('delete', 'ProviderController::deleteProvider');
+});
+
 //SETTINGS MODULE
 $routes->group('settings', static function ($routes) {
     $routes->post('setCoins', 'SettingController::setCoins');

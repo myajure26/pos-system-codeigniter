@@ -111,6 +111,31 @@ class App extends BaseController
 		}
 	}
 
+	public function providers()
+	{
+		if($this->session->has('name')){
+
+			$db      	= \Config\Database::connect();
+			$coins 		= $db
+							->table('coins')
+							->select('id, coin, symbol')
+							->where('deleted_at', NULL)
+							->get()
+							->getResult();
+			
+			$data = [
+				"title" => "Proveedores - $this->system",
+				"coins" => $coins
+			];
+			return view('app/ajax/providers', $data);
+		
+		}else{
+
+			return redirect()->to(base_url());
+		
+		}
+	}
+
 	public function products()
 	{
 		if($this->session->has('name')){

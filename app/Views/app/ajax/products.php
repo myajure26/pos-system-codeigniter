@@ -103,7 +103,7 @@
                         <label class="form-label">Precio</label>
                         <div class="row">
                             <div class="col-sm-2">
-                                <select class="form-select price" name="coin" id="coin" required>
+                                <select class="form-select" name="coin" id="coin" required>
                                 <?php foreach($coins as $row)
                                     echo '<option value="'.$row->id.'">'.$row->symbol.'</option>';
                                 ?>

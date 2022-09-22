@@ -183,6 +183,8 @@ $(document).ready(function() {
                return updateTax(data);
             case 'products':
                return updateProduct(data);
+            case 'providers':
+               return updateProvider(data);
             case 'configCoin':
                return updateConfigCoin(data);
         }
