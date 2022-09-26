@@ -14,7 +14,7 @@ class ProviderModel extends Model
 	protected $returnType           = 'array';
 	protected $useSoftDeletes       = true;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["code", "name", "rifLetter", "rif", "address", "phone", "phone2", "type", "updated_at", "deleted_at", "created_at"];
+	protected $allowedFields        = ["code", "name", "rif", "address", "phone", "phone2", "type", "updated_at", "deleted_at", "created_at"];
 
 	// Dates
 	protected $useTimestamps        = true;
@@ -33,7 +33,7 @@ class ProviderModel extends Model
 	public function getProviders()
 	{
 		$query = $this
-			->select('id, code, name, rifLetter, rif, address, phone, phone2, type, created_at')
+			->select('id, code, name, rif')
 			->where('deleted_at', NULL);
 		return $query;
 	}

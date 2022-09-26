@@ -45,16 +45,15 @@ class ProviderController extends BaseController
 			}
 
 		}
-
+		
 		$data = [
-			"code" 		=> $this->request->getPost('code'),
-			"name" 		=> $this->request->getPost('name'),
-			"rifLetter" => $this->request->getPost('rifLetter'),
-			"rif" 		=> $this->request->getPost('rif'),
-			"address" 	=> $this->request->getPost('address'),
-			"phone" 	=> $this->request->getPost('phone'),
-			"phone2" 	=> $this->request->getPost('phone2'),
-			"type" 		=> $this->request->getPost('providerType')
+			"code" 			=> $this->request->getPost('code'),
+			"name" 			=> $this->request->getPost('name'),
+			"rif" 			=> $this->request->getPost('identification'),
+			"address" 		=> $this->request->getPost('address'),
+			"phone" 		=> $this->request->getPost('phone'),
+			"phone2" 		=> $this->request->getPost('phone2'),
+			"type" 			=> $this->request->getPost('providerType')
 		];
 
 		$ProviderModel = new ProviderModel();
@@ -88,22 +87,10 @@ class ProviderController extends BaseController
 		$ProviderModel = new ProviderModel();
 				
 		return DataTable::of($ProviderModel->getProviders())
-			->hide('rifLetter')
-			->edit('rif', function($row){
-				return $row->rifLetter . "-" . $row->rif;
-			})
-			->edit('phone', function($row){
-				if($row->phone2 != ''){
-					return $row->phone . "<br>" . $row->phone2;
-				}
-				return $row->phone;
-
-			})
-			->hide('phone2')
 			->add('Acciones', function($row){
 				return '<div class="btn-list"> 
-                            <button type="button" class="btnUpdate btn btn-sm btn-primary waves-effect" data-id="'.$row->id.'" data-type="providers" data-bs-toggle="modal" data-bs-target="#updateModal">
-                                <i class="far fa-edit"></i>
+							<button type="button" class="btnView btn btn-sm btn-primary waves-effect" data-id="'.$row->id.'" data-type="providers" data-bs-toggle="modal" data-bs-target="#viewModal">
+                                <i class="far fa-eye"></i>
                             </button>
                             <button type="button" class="btnDelete btn btn-sm btn-danger waves-effect" data-id="'.$row->id.'" data-type="providers">
                                 <i class="far fa-trash-alt"></i>
@@ -129,13 +116,13 @@ class ProviderController extends BaseController
 
 	public function updateProvider()
 	{
-		helper('brandValidation');
+		helper('providerValidation');
 
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
 		}
-		
-		if(!$this->validate(updateBrandValidation())){
+
+		if(!$this->validate(updateProviderValidation())){
 
 			//Mostrar errores de validación
 			$errors = $this->validator->getErrors();
@@ -150,8 +137,7 @@ class ProviderController extends BaseController
 		$data = [
 			"code" 		=> $this->request->getPost('code'),
 			"name" 		=> $this->request->getPost('name'),
-			"rifLetter" => $this->request->getPost('rifLetter'),
-			"rif" 		=> $this->request->getPost('rif'),
+			"rif" 		=> $this->request->getPost('identification'),
 			"address" 	=> $this->request->getPost('address'),
 			"phone" 	=> $this->request->getPost('phone'),
 			"phone2" 	=> $this->request->getPost('phone2'),

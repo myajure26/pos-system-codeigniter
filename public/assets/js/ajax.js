@@ -91,6 +91,12 @@ $(document).ready(function() {
         const method = form.attr('method');
         const formdata = new FormData(this);
 
+        if(formdata.get('legalIdentification')){
+            const identification = formdata.get('letter') + '-' + formdata.get('legalIdentification');
+            formdata.append('identification', identification);
+        }
+        
+
         $.ajax({
             type: method,
             url: action,
@@ -119,8 +125,21 @@ $(document).ready(function() {
         return false;
     });
 
-    // AJAX UPDATE
     $(document).on('click', '.btnUpdate', function(){
+        $('.btnSubmit').show();
+        $('.btnUpdate').hide();
+        $('.viewForm input, .viewForm textarea, .viewForm select').removeAttr('disabled');
+        $('#viewUpdated, #viewCreated').attr('disabled', 'true');
+
+        $("#viewModal").on('hidden.bs.modal', function () {
+            $('.btnSubmit').hide();
+            $('.btnUpdate').show();
+            $('.viewForm input, .viewForm textarea, .viewForm select').attr('disabled', 'true');
+        });
+    });
+
+    // AJAX UPDATE
+    $(document).on('click', '.btnView', function(){
 
         //Vaciar form
         $('form')[1].reset();
@@ -147,7 +166,7 @@ $(document).ready(function() {
                 });
             },
             success: function (data) {
-                update(data, type);
+                view(data, type);
                 Swal.close();
 
             },
@@ -168,25 +187,25 @@ $(document).ready(function() {
 
     
 
-    function update(data, type){
+    function view(data, type){
 
         switch(type){
             case 'users':
-               return updateUser(data);
+               return viewUser(data);
             case 'categories':
-               return updateCategory(data);
+               return viewCategory(data);
             case 'brands':
-               return updateBrand(data);
+               return viewBrand(data);
             case 'coins':
-               return updateCoin(data);
+               return viewCoin(data);
             case 'taxes':
-               return updateTax(data);
+               return viewTax(data);
             case 'products':
-               return updateProduct(data);
+               return viewProduct(data);
             case 'providers':
-               return updateProvider(data);
+               return viewProvider(data);
             case 'configCoin':
-               return updateConfigCoin(data);
+               return viewConfigCoin(data);
         }
             
     }

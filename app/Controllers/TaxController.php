@@ -148,7 +148,7 @@ class TaxController extends BaseController
 		$auditUserId = $this->session->get('id');
 		$this->auditContent['user_id'] 		= $auditUserId;
 		$this->auditContent['action'] 		= "Actualizar impuesto";
-		$this->auditContent['description'] 	= "Se ha actualizado el impueto con ID #" . $id . " exitosamente.";
+		$this->auditContent['description'] 	= "Se ha actualizado el impuesto con ID #" . $id . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		

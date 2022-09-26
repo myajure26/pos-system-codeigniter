@@ -12,7 +12,7 @@ function createProviderValidation()
 				'is_unique' => 'El código ya se encuentra registrado'
 			]
 		],
-		'rifLetter' => [
+		'letter' => [
 			'label' => 'rifLetter',
 			'rules' => 'required|in_list[V, J, E, P, G]',
 			'errors' => [
@@ -20,15 +20,15 @@ function createProviderValidation()
 				'in_list' => 'La letra del rif no es válida'
 			]
 		],
-		'rif' => [
-			'label' => 'rif',
-			'rules' => 'required|numeric|min_length[7]|max_length[10]|is_unique[providers.rif]',
+		'identification' => [
+			'label' => 'identification',
+			'rules' => 'required|min_length[9]|max_length[12]|regex_match[^([VEJPG]{1})([-]{1})([0-9]{9})$]|is_unique[providers.rif]',
 			'errors' => [
 				'required' => 'El rif es requerido',
-				'numeric' => 'Para el rif sólo se permiten números',
-				'min_length' => 'Introduce un rif válida',
-				'max_length' => 'Introduce un rif válida',
-				'is_unique' => 'El rif ya se encuentra registrado'
+				'min_length' => 'Introduce un rif válido',
+				'max_length' => 'Introduce un rif válido',
+				'regex_match' => 'El formato del rif no es válido',
+				'is_unique' => 'El rif ya existe'
 			]
 		],
 		'name' => [
@@ -71,7 +71,7 @@ function createProviderValidation()
 	return $provider;
 }
 
-function updateUserValidation()
+function updateProviderValidation()
 {
 	$updateProvider = [
 		'code' => [
@@ -83,7 +83,7 @@ function updateUserValidation()
 				'is_unique' => 'El código ya se encuentra registrado'
 			]
 		],
-		'rifLetter' => [
+		'letter' => [
 			'label' => 'rifLetter',
 			'rules' => 'required|in_list[V, J, E, P, G]',
 			'errors' => [
@@ -91,15 +91,15 @@ function updateUserValidation()
 				'in_list' => 'La letra del rif no es válida'
 			]
 		],
-		'rif' => [
-			'label' => 'rif',
-			'rules' => 'required|numeric|min_length[7]|max_length[10]|is_unique[providers.rif,id,{id}]',
+		'identification' => [
+			'label' => 'identification',
+			'rules' => 'required|min_length[9]|max_length[12]|regex_match[^([VEJPG]{1})([-]{1})([0-9]{9})$]|is_unique[providers.rif,id,{id}]',
 			'errors' => [
 				'required' => 'El rif es requerido',
-				'numeric' => 'Para el rif sólo se permiten números',
-				'min_length' => 'Introduce un rif válida',
-				'max_length' => 'Introduce un rif válida',
-				'is_unique' => 'El rif ya se encuentra registrada'
+				'min_length' => 'Introduce un rif válido',
+				'max_length' => 'Introduce un rif válido',
+				'regex_match' => 'El formato del rif no es válido',
+				'is_unique' => 'El rif ya existe'
 			]
 		],
 		'name' => [

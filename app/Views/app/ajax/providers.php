@@ -44,10 +44,6 @@
                                         <th>Código</th>
                                         <th>Nombre</th>
                                         <th>RIF</th>
-                                        <th>Dirección</th>
-                                        <th>Teléfonos</th>
-                                        <th>Tipo</th>
-                                        <th>Creado en</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </tr>
@@ -64,7 +60,7 @@
 <!--  add provider -->
 <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="myLargeModalLabel">Nuevo proveedor</h5>
@@ -73,49 +69,67 @@
             <form class="custom-form" action="<?=base_url('providers/create')?>" method="POST">
                 <div class="modal-body">
                     <div class="response"></div>
-                    <div class="mb-3">
-                        <label class="form-label">Código</label>
-                        <input type="text" class="form-control" id="code" placeholder="Introduce el código del proveedor" name="code" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">RIF</label>
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <select class="form-select" name="rifLetter" id="rifLetter">
-                                    <option value="V">V</option>
-                                    <option value="J">J</option>
-                                    <option value="E">E</option>
-                                    <option value="P">P</option>
-                                    <option value="G">G</option>
-                                </select>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="mb-3">
+                                <label class="form-label">Código</label>
+                                <input type="text" class="form-control" id="code" placeholder="Introduce el código del proveedor" name="code" id="name" required>
                             </div>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="rif" placeholder="Introduce el número de rif" name="rif" required maxlength="10" minlength="7">
+                        </div>
+                        <div class="col-md-7">
+                            <div class="mb-3">
+                                <label class="form-label">RIF</label>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <select class="form-select" name="letter">
+                                            <option value="V">V</option>
+                                            <option value="J">J</option>
+                                            <option value="E">E</option>
+                                            <option value="P">P</option>
+                                            <option value="G">G</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" placeholder="Introduce el número de rif" name="legalIdentification" id="legalIdentification" required maxlength="10" minlength="7">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="name" placeholder="Introduce el nombre del proveedor" name="name" required>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="name" placeholder="Introduce el nombre del proveedor" name="name" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Tipo de proveedor</label>
+                                <select class="form-select" name="providerType" id="providerType" required>
+                                    <option value="">Selecciona el tipo</option>
+                                    <option value="normal">Normal</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Dirección</label>
                         <textarea class="form-control" id="address" placeholder="Introduce la dirección del proveedor" name="address" required cols="2"></textarea>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Teléfono</label>
-                        <input type="text" class="form-control" id="phone" placeholder="Introduce el teléfono del proveedor" name="phone" required maxlength="11" minlength="11">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Teléfono (opcional)</label>
-                        <input type="text" class="form-control" id="phone2" placeholder="Se puede dejar en blanco" name="phone2" maxlength="11" minlength="11">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Tipo de proveedor</label>
-                        <select class="form-select" name="providerType" id="providerType" required>
-                            <option value="">Selecciona el tipo</option>
-                            <option value="normal">Normal</option>
-                        </select>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Teléfono</label>
+                                <input type="text" class="form-control" id="phone" placeholder="Introduce el teléfono del proveedor" name="phone" required maxlength="11" minlength="11">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Teléfono (opcional)</label>
+                                <input type="text" class="form-control" id="phone2" placeholder="Se puede dejar en blanco" name="phone2" maxlength="11" minlength="11">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -127,67 +141,100 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!-- update provider -->
-<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+<!-- view details -->
+<div id="viewModal" class="modal fade" tabindex="-1" aria-labelledby="exampleModalFullscreenLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel">Actualizar categoría</h5>
+                <h5 class="modal-title">Ver detalles del proveedor</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="custom-form" action="<?=base_url('providers/update')?>" method="POST">
+            <form class="custom-form viewForm" action="<?=base_url('providers/update')?>" method="POST">
                 <div class="modal-body">
                     <div class="response"></div>
-                    <input type="hidden" id="updateId" name="id" value="">
-                    <div class="mb-3">
-                        <label class="form-label">Código</label>
-                        <input type="text" class="form-control" id="updateCode" placeholder="Introduce el código del proveedor" name="code" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">RIF</label>
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <select class="form-select" name="rifLetter" id="updateRifLetter">
-                                    <option value="V">V</option>
-                                    <option value="J">J</option>
-                                    <option value="E">E</option>
-                                    <option value="P">P</option>
-                                    <option value="G">G</option>
-                                </select>
+                    <input type="hidden" id="viewId" name="id" value="">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="mb-3">
+                                <label class="form-label">Código</label>
+                                <input type="text" class="form-control" id="viewCode" name="code" disabled>
                             </div>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="updateRif" placeholder="Introduce el número de rif" name="rif" required maxlength="10" minlength="7">
+                        </div>
+                        <div class="col-md-7">
+                            <div class="mb-3">
+                                <label class="form-label">RIF</label>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <select class="form-select" name="letter" id="viewLetter" disabled>
+                                            <option value="V">V</option>
+                                            <option value="J">J</option>
+                                            <option value="E">E</option>
+                                            <option value="P">P</option>
+                                            <option value="G">G</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" id="viewRif" name="legalIdentification" disabled>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="updateName" placeholder="Introduce el nombre del proveedor" name="name" required>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="viewName" name="name" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Tipo de proveedor</label>
+                            <select class="form-select" name="providerType" id="viewProviderType" required disabled>
+                                <option value="">Selecciona el tipo</option>
+                                <option value="normal">Normal</option>
+                            </select>
+                        </div>
                     </div>
+                    
                     <div class="mb-3">
                         <label class="form-label">Dirección</label>
-                        <textarea class="form-control" id="updateAddress" placeholder="Introduce la dirección del proveedor" name="address" required cols="2"></textarea>
+                        <textarea class="form-control" id="viewAddress" name="address" disabled></textarea>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Teléfono</label>
-                        <input type="text" class="form-control" id="updatePhone" placeholder="Introduce el teléfono del proveedor" name="phone" required maxlength="11" minlength="11">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Teléfono</label>
+                                <input type="text" class="form-control" id="viewPhone" name="phone" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Teléfono 2</label>
+                                <input type="text" class="form-control" id="viewPhone2" name="phone2" disabled>
+                            </div>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Teléfono (opcional)</label>
-                        <input type="text" class="form-control" id="updatePhone2" placeholder="Se puede dejar en blanco" name="phone2" maxlength="11" minlength="11">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Tipo de proveedor</label>
-                        <select class="form-select" name="providerType" id="updateProviderType" required>
-                            <option value="">Selecciona el tipo</option>
-                            <option value="normal">Normal</option>
-                        </select>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Fecha de creación</label>
+                                <input type="text" class="form-control" id="viewCreated" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Fecha de actualización</label>
+                                <input type="text" class="form-control" id="viewUpdated" disabled>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary waves-effect waves-light sent">Guardar</button>
+                    <button type="button" class="btn btnClose btn-secondary waves-effect" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btnUpdate btn-primary waves-effect waves-light">Editar</button>
+                    <button type="submit" class="btn btnSubmit btn-primary waves-effect waves-light" style="display: none;">Guardar</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -197,16 +244,18 @@
 <script>
     tableConfig('/providers/get');
 
-    function updateProvider(data){
-        $('#updateId').val(data[0].id);
-        $('#updateCode').val(data[0].code);
-        $('#updateName').val(data[0].name);
-        $('#updateRifLetter').val(data[0].rifLetter);
-        $('#updateRif').val(data[0].rif);
-        $('#updateAddress').val(data[0].address);
-        $('#updatePhone').val(data[0].phone);
-        $('#updatePhone2').val(data[0].phone2);
-        $('#updateProviderType').val(data[0].type);
+    function viewProvider(data){
+        $('#viewId').val(data[0].id);
+        $('#viewCode').val(data[0].code);
+        $('#viewName').val(data[0].name);
+        $('#viewLetter').val(data[0].rif.split('-')[0]);
+        $('#viewRif').val(data[0].rif.split('-')[1]);
+        $('#viewAddress').val(data[0].address);
+        $('#viewPhone').val(data[0].phone);
+        $('#viewPhone2').val(data[0].phone2);
+        $('#viewProviderType').val(data[0].type);
+        $('#viewCreated').val(data[0].created_at);
+        $('#viewUpdated').val(data[0].updated_at);
     }
 </script>
 
