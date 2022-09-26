@@ -39,7 +39,7 @@ class UserModel extends Model
 	public function getUsers()
 	{
 		$query = $this
-			->select('id, ci, name, email, photo, privilege, last_session')
+			->select('id, ci, name, privilege, photo')
 			->where('deleted_at', NULL);
 		return $query;
 	}

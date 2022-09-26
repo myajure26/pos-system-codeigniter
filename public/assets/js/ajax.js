@@ -129,7 +129,9 @@ $(document).ready(function() {
         $('.btnSubmit').show();
         $('.btnUpdate').hide();
         $('.viewForm input, .viewForm textarea, .viewForm select').removeAttr('disabled');
-        $('#viewUpdated, #viewCreated').attr('disabled', 'true');
+
+        $('.viewDisabled').attr('disabled', 'true');
+        $('.viewReadonly').attr('readonly', 'readonly');   
 
         $("#viewModal").on('hidden.bs.modal', function () {
             $('.btnSubmit').hide();

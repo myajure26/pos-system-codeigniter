@@ -152,18 +152,11 @@ class UserController extends BaseController
 		$UserModel = new UserModel();
 				
 		return DataTable::of($UserModel->getUsers())
-			->edit('photo', function($row){
-
-				if($row->photo == NULL){
-					return '<img src="'.base_url('assets/images/users/anonymous.png').'" class="rounded-circle header-profile-user">';
-				}
-
-				return '<img src="'.$row->photo.'" class="rounded-circle header-profile-user">';
-			})
+			->hide('photo')
 			->add('Acciones', function($row){
 				return '<div class="btn-list"> 
-                            <button type="button" class="btnUpdate btn btn-sm btn-primary waves-effect" data-id="'.$row->id.'" data-type="users" data-bs-toggle="modal" data-bs-target="#updateModal">
-                                <i class="far fa-edit"></i>
+                            <button type="button" class="btnView btn btn-sm btn-primary waves-effect" data-id="'.$row->id.'" data-type="users" data-bs-toggle="modal" data-bs-target="#viewModal">
+                                <i class="far fa-eye"></i>
                             </button>
                             <button type="button" class="btnDelete btn btn-sm btn-danger waves-effect" data-id="'.$row->id.'" data-type="users" photo="'.$row->photo.'">
                                 <i class="far fa-trash-alt"></i>

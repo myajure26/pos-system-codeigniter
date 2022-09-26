@@ -65,12 +65,13 @@ function updateUserValidation()
 	$updateUser = [
 		'ci' => [
 			'label' => 'ci',
-			'rules' => 'required|numeric|min_length[7]|max_length[8]',
+			'rules' => 'required|numeric|min_length[7]|max_length[8]|is_unique[users.ci,id,{id}]',
 			'errors' => [
 				'required' => 'La cédula es requerida',
 				'numeric' => 'Para la cédula sólo se permiten números',
 				'min_length' => 'Introduce una cédula válida',
-				'max_length' => 'Introduce una cédula válida'
+				'max_length' => 'Introduce una cédula válida',
+				'is_unique'	=> 'La cédula ya se encuentra registrada'
 			]
 		],
 		'name' => [
@@ -83,7 +84,7 @@ function updateUserValidation()
 		],
 		'email' => [
 			'label' => 'email',
-			'rules' => 'required|valid_email|is_unique[users.email,ci,{ci}]',
+			'rules' => 'required|valid_email|is_unique[users.email,id,{id}]',
 			'errors' => [
 				'required' => 'El correo electrónico es requerido.',
 				'valid_email' => 'Por favor, introduce un correo electrónico válido',

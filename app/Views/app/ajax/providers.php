@@ -220,13 +220,13 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Fecha de creación</label>
-                                <input type="text" class="form-control" id="viewCreated" disabled>
+                                <input type="text" class="form-control viewDisabled" id="viewCreated" disabled>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Fecha de actualización</label>
-                                <input type="text" class="form-control" id="viewUpdated" disabled>
+                                <input type="text" class="form-control viewDisabled" id="viewUpdated" disabled>
                             </div>
                         </div>
                     </div>
@@ -234,7 +234,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btnClose btn-secondary waves-effect" data-bs-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btnUpdate btn-primary waves-effect waves-light">Editar</button>
-                    <button type="submit" class="btn btnSubmit btn-primary waves-effect waves-light" style="display: none;">Guardar</button>
+                    <button type="submit" class="btn btnSubmit btn-success waves-effect waves-light" style="display: none;">Guardar</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
