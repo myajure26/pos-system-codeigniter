@@ -85,8 +85,8 @@ class TaxController extends BaseController
 		return DataTable::of($TaxModel->getTaxes())
 			->add('Acciones', function($row){
 				return '<div class="btn-list"> 
-                            <button type="button" class="btnUpdate btn btn-sm btn-primary waves-effect" data-id="'.$row->id.'" data-type="taxes" data-bs-toggle="modal" data-bs-target="#updateModal">
-                                <i class="far fa-edit"></i>
+                            <button type="button" class="btnView btn btn-sm btn-primary waves-effect" data-id="'.$row->id.'" data-type="taxes" data-bs-toggle="modal" data-bs-target="#viewModal">
+                                <i class="far fa-eye"></i>
                             </button>
                             <button type="button" class="btnDelete btn btn-sm btn-danger waves-effect" data-id="'.$row->id.'" data-type="taxes">
                                 <i class="far fa-trash-alt"></i>

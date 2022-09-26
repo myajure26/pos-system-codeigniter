@@ -43,7 +43,6 @@
                                         <th>#</th>
                                         <th>Nombre</th>
                                         <th>Símbolo</th>
-                                        <th>Creada en</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </tr>
@@ -57,7 +56,7 @@
 </div>
 <!-- End Page-content -->
 
-<!--  add category -->
+<!--  add coin -->
 <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -87,31 +86,46 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!-- update coin -->
-<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+<!-- view coin -->
+<div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel">Actualizar moneda</h5>
+                <h5 class="modal-title" id="myLargeModalLabel">Ver detalles de moneda</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="custom-form" action="<?=base_url('coins/update')?>" method="POST">
+            <form class="custom-form viewForm" action="<?=base_url('coins/update')?>" method="POST">
                 <div class="modal-body">
                     <div class="response"></div>
-                    <input type="hidden" id="updateId" name="id" value="">
+                    <input type="hidden" id="viewId" name="id" value="">
                     <div class="mb-3">
                         <label class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="updateName" name="name" required>
+                        <input type="text" class="form-control" id="viewName" name="name" disabled required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Símbolo</label>
-                        <input type="text" class="form-control" id="updateSymbol" name="symbol" maxlength="5" required>
+                        <input type="text" class="form-control" id="viewSymbol" name="symbol" maxlength="5" disabled required>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Fecha de creación</label>
+                                <input type="text" class="form-control viewDisabled" id="viewCreated" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Fecha de actualización</label>
+                                <input type="text" class="form-control viewDisabled" id="viewUpdated" disabled>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary waves-effect waves-light sent">Guardar</button>
+                    <button type="button" class="btn btnClose btn-secondary waves-effect" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btnUpdate btn-primary waves-effect waves-light">Editar</button>
+                    <button type="submit" class="btn btnSubmit btn-success waves-effect waves-light" style="display: none;">Guardar</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -121,10 +135,12 @@
 <script>
     tableConfig('/coins/get');
 
-    function updateCoin(data){
-        $('#updateId').val(data[0].id);
-        $('#updateName').val(data[0].coin);
-        $('#updateSymbol').val(data[0].symbol);
+    function viewCoin(data){
+        $('#viewId').val(data[0].id);
+        $('#viewName').val(data[0].coin);
+        $('#viewSymbol').val(data[0].symbol);
+        $('#viewCreated').val(data[0].created_at);
+        $('#viewUpdated').val(data[0].updated_at);
     }
 </script>
 

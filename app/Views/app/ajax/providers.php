@@ -18,7 +18,7 @@
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript:
-                                    void(0);">Administrar compras</a></li>
+                                    void(0);">Administrar usuarios</a></li>
                             <li class="breadcrumb-item active">Proveedores</li>
                         </ol>
                     </div>
@@ -141,7 +141,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!-- view details -->
+<!-- view provider -->
 <div id="viewModal" class="modal fade" tabindex="-1" aria-labelledby="exampleModalFullscreenLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">

@@ -33,7 +33,7 @@ class CategoryModel extends Model
 	public function getCategories()
 	{
 		$query = $this
-			->select('id, category, created_at')
+			->select('id, category')
 			->where('deleted_at', NULL);
 		return $query;
 	}

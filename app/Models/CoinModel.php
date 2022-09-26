@@ -33,7 +33,7 @@ class CoinModel extends Model
 	public function getCoins()
 	{
 		$query = $this
-			->select('id, coin, symbol, created_at')
+			->select('id, coin, symbol')
 			->where('deleted_at', NULL);
 		return $query;
 	}

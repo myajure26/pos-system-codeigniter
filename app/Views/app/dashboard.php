@@ -178,12 +178,6 @@
                                     <span data-key="t-purchases">Compras</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="<?=base_url('#providers')?>">
-                                    <i data-feather="credit-card"></i>
-                                    <span data-key="t-providers">Proveedores</span>
-                                </a>
-                            </li>
 
                             <li class="menu-title" data-key="t-menu">Administrar inventario</li>
                             <li>
@@ -219,8 +213,14 @@
                                 </a>
                             </li>
                             <li>
+                                <a href="<?=base_url('#providers')?>">
+                                    <i data-feather="user-check"></i>
+                                    <span data-key="t-providers">Proveedores</span>
+                                </a>
+                            </li>
+                            <li>
                                 <a href="<?=base_url('#users')?>">
-                                    <i data-feather="users"></i>
+                                    <i data-feather="user-plus"></i>
                                     <span data-key="t-users">Usuarios</span>
                                 </a>
                             </li>

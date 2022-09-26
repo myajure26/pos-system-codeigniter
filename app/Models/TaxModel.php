@@ -33,7 +33,7 @@ class TaxModel extends Model
 	public function getTaxes()
 	{
 		$query = $this
-			->select('id, tax, percentage, created_at')
+			->select('id, tax, percentage')
 			->where('deleted_at', NULL);
 		return $query;
 	}

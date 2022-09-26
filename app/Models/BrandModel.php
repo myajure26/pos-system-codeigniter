@@ -33,7 +33,7 @@ class BrandModel extends Model
 	public function getBrands()
 	{
 		$query = $this
-			->select('id, brand, created_at')
+			->select('id, brand')
 			->where('deleted_at', NULL);
 		return $query;
 	}
