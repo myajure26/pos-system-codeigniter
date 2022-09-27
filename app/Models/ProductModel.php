@@ -33,7 +33,7 @@ class ProductModel extends Model
 	public function getProducts()
 	{
 		$query = $this
-			->select('products.id, code, name, brands.brand, categories.category, coins.symbol, price, taxes.tax, products.created_at')
+			->select('products.id, code, name, brands.brand, categories.category, coins.symbol, price, taxes.tax')
 			->join('brands', 'brands.id = products.brand')
 			->join('categories', 'categories.id = products.category')
 			->join('coins', 'coins.id = products.coin')

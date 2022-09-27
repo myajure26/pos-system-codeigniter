@@ -47,7 +47,6 @@
                                         <th>Categoría</th>
                                         <th>Precio</th>
                                         <th>Impuesto</th>
-                                        <th>Creado en</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </tr>
@@ -64,7 +63,7 @@
 <!--  add product -->
 <div class="modal fade" id="newProductModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="myLargeModalLabel">Nuevo producto</h5>
@@ -73,55 +72,73 @@
             <form class="custom-form" action="<?=base_url('products/create')?>" method="POST">
                 <div class="modal-body">
                     <div class="response"></div>
-                    <div class="mb-3">
-                        <label class="form-label">Código</label>
-                        <input type="text" class="form-control" id="code" placeholder="Introduce el código del producto" name="code" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="name" placeholder="Introduce el nombre del producto" name="name" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Marca</label>
-                        <select class="form-select" name="brand" id="brand" required>
-                            <option value="">Selecciona la marca</option>
-                            <?php foreach($brands as $row)
-                                echo '<option value="'.$row->id.'">'.$row->brand.'</option>';
-                            ?>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Categoría</label>
-                        <select class="form-select" name="category" id="category" required>
-                            <option value="">Selecciona la categoría</option>
-                            <?php foreach($categories as $row)
-                                echo '<option value="'.$row->id.'">'.$row->category.'</option>';
-                            ?>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Precio</label>
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <select class="form-select" name="coin" id="coin" required>
-                                <?php foreach($coins as $row)
-                                    echo '<option value="'.$row->id.'">'.$row->symbol.'</option>';
-                                ?>
-                                </select>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Código</label>
+                                <input type="text" class="form-control" id="code" placeholder="Introduce el código del producto" name="code" required>
                             </div>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="price" placeholder="Introduce el precio del producto" name="price" required value="0.00">
+                        </div>
+                        <div class="col-md-6">    
+                            <div class="mb-3">
+                                <label class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="name" placeholder="Introduce el nombre del producto" name="name" required>
                             </div>
                         </div>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Impuesto</label>
-                        <select class="form-select" name="tax" id="tax" required>
-                            <option value="">Selecciona el impuesto</option>
-                            <?php foreach($taxes as $row)
-                                echo '<option value="'.$row->id.'">'.$row->tax.'</option>';
-                            ?>
-                        </select>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Marca</label>
+                                <select class="form-select" name="brand" id="brand" required>
+                                    <option value="">Selecciona la marca</option>
+                                    <?php foreach($brands as $row)
+                                        echo '<option value="'.$row->id.'">'.$row->brand.'</option>';
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Categoría</label>
+                                <select class="form-select" name="category" id="category" required>
+                                    <option value="">Selecciona la categoría</option>
+                                    <?php foreach($categories as $row)
+                                        echo '<option value="'.$row->id.'">'.$row->category.'</option>';
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Precio</label>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <select class="form-select" name="coin" id="coin" required>
+                                        <?php foreach($coins as $row)
+                                            echo '<option value="'.$row->id.'">'.$row->symbol.'</option>';
+                                        ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control price" id="price" placeholder="Introduce el precio del producto" name="price" required value="0.00">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Impuesto</label>
+                                <select class="form-select" name="tax" id="tax" required>
+                                    <option value="">Selecciona el impuesto</option>
+                                    <?php foreach($taxes as $row)
+                                        echo '<option value="'.$row->id.'">'.$row->tax.'</option>';
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -133,73 +150,106 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!-- update category -->
-<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+<!-- view product -->
+<div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel">Actualizar categoría</h5>
+                <h5 class="modal-title" id="myLargeModalLabel">Ver detalles del producto</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="custom-form" action="<?=base_url('products/update')?>" method="POST">
-                <input type="hidden" id="updateId" name="id" value="">
+            <form class="custom-form viewForm" action="<?=base_url('products/update')?>" method="POST">
+                <input type="hidden" id="viewId" name="id" value="">
                 <div class="modal-body">
                     <div class="response"></div>
-                    <div class="mb-3">
-                        <label class="form-label">Código</label>
-                        <input type="text" class="form-control" id="updateCode" name="code" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="updateName" name="name" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Marca</label>
-                        <select class="form-select" name="brand" id="updateBrand" required>
-                            <option value="">Selecciona la marca</option>
-                            <?php foreach($brands as $row)
-                                echo '<option value="'.$row->id.'">'.$row->brand.'</option>';
-                            ?>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Categoría</label>
-                        <select class="form-select" name="category" id="updateCategory" required>
-                            <option value="">Selecciona la categoría</option>
-                            <?php foreach($categories as $row)
-                                echo '<option value="'.$row->id.'">'.$row->category.'</option>';
-                            ?>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Precio</label>
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <select class="form-select" name="coin" id="updateCoin" required>
-                                <?php foreach($coins as $row)
-                                    echo '<option value="'.$row->id.'">'.$row->symbol.'</option>';
-                                ?>
-                                </select>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Código</label>
+                                <input type="text" class="form-control" id="viewCode" name="code" disabled required>
                             </div>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control price" id="updatePrice" name="price" required>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="viewName" name="name" disabled required>
                             </div>
                         </div>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Impuesto</label>
-                        <select class="form-select" name="tax" id="updateTax" required>
-                            <option value="">Selecciona el impuesto</option>
-                            <?php foreach($taxes as $row)
-                                echo '<option value="'.$row->id.'">'.$row->tax.'</option>';
-                            ?>
-                        </select>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Marca</label>
+                                <select class="form-select" name="brand" id="viewBrand" disabled required>
+                                    <option value="">Selecciona la marca</option>
+                                    <?php foreach($brands as $row)
+                                        echo '<option value="'.$row->id.'">'.$row->brand.'</option>';
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Categoría</label>
+                                <select class="form-select" name="category" id="viewCategory" disabled required>
+                                    <option value="">Selecciona la categoría</option>
+                                    <?php foreach($categories as $row)
+                                        echo '<option value="'.$row->id.'">'.$row->category.'</option>';
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col -md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Precio</label>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <select class="form-select" name="coin" id="viewCoin" disabled required>
+                                        <?php foreach($coins as $row)
+                                            echo '<option value="'.$row->id.'">'.$row->symbol.'</option>';
+                                        ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control price" id="viewPrice" name="price" disabled required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Impuesto</label>
+                                <select class="form-select" name="tax" id="viewTax" disabled required>
+                                    <option value="">Selecciona el impuesto</option>
+                                    <?php foreach($taxes as $row)
+                                        echo '<option value="'.$row->id.'">'.$row->tax.'</option>';
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Fecha de creación</label>
+                                <input type="text" class="form-control viewDisabled" id="viewCreated" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Fecha de actualización</label>
+                                <input type="text" class="form-control viewDisabled" id="viewUpdated" disabled>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary waves-effect waves-light sent">Guardar</button>
+                    <button type="button" class="btn btnClose btn-secondary waves-effect" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btnUpdate btn-primary waves-effect waves-light">Editar</button>
+                    <button type="submit" class="btn btnSubmit btn-success waves-effect waves-light" style="display: none;">Guardar</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -212,14 +262,16 @@
         prefix: ''
     });
 
-    function updateProduct(data){
-        $('#updateId').val(data[0].id);
-        $('#updateCode').val(data[0].code);
-        $('#updateName').val(data[0].name);
-        $('#updateBrand').val(data[0].brand);
-        $('#updateCategory').val(data[0].category);
-        $('#updateCoin').val(data[0].coin);
-        $('#updatePrice').val(data[0].price);
-        $('#updateTax').val(data[0].tax);
+    function viewProduct(data){
+        $('#viewId').val(data[0].id);
+        $('#viewCode').val(data[0].code);
+        $('#viewName').val(data[0].name);
+        $('#viewBrand').val(data[0].brand);
+        $('#viewCategory').val(data[0].category);
+        $('#viewCoin').val(data[0].coin);
+        $('#viewPrice').val(data[0].price);
+        $('#viewTax').val(data[0].tax);
+        $('#viewCreated').val(data[0].created_at);
+        $('#viewUpdated').val(data[0].updated_at);
     }
 </script>
