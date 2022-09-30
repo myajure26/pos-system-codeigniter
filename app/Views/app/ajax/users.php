@@ -94,7 +94,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Privilegio</label>
                                 <select class="form-select" name="privilege" required>
-                                    <option value="">Selecciona el perfil</option>
+                                    <option value="">Seleccione el perfil</option>
                                     <option value="admin">Administrador</option>
                                     <option value="special">Especial</option>
                                     <option value="seller">Vendedor</option>
@@ -112,7 +112,7 @@
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Selecciona una foto de perfil</label>
+                                <label class="form-label">Seleccione una foto de perfil</label>
                                 <input class="form-control photo" type="file" name="photo"> 
                             </div>
                         </div>
@@ -169,7 +169,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Privilegio</label>
                                 <select class="form-select" name="privilege" id="viewPrivilege" disabled required>
-                                    <option value="">Selecciona el perfil</option>
+                                    <option value="">Seleccione el perfil</option>
                                     <option value="admin">Administrador</option>
                                     <option value="special">Especial</option>
                                     <option value="seller">Vendedor</option>
@@ -189,7 +189,7 @@
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Selecciona una foto de perfil</label>
+                                <label class="form-label">Seleccione una foto de perfil</label>
                                 <input type="hidden" name="viewPhotoPreview" id="viewPhotoPreview" value="">
                                 <input class="form-control photo" type="file" name="photo" disabled>
                             </div>
@@ -226,7 +226,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btnClose btn-secondary waves-effect" data-bs-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btnUpdate btn-primary waves-effect waves-light">Editar</button>
-                    <button type="submit" class="btn btnSubmit btn-success waves-effect waves-light" style="display: none;">Guardar</button>
+                    <button type="submit" class="btn btnSubmit btn-primary waves-effect waves-light" style="display: none;">Guardar</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->

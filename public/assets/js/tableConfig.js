@@ -3,7 +3,40 @@ function tableConfig(ajaxUrl){
     const path = origin + ajaxUrl;
 
     $('#datatable').DataTable({
-        scrollX: true,
+        dom: '<"row"<"col-sm-12 col-md-4"l><"col-sm-12 col-md-4"<"d-flex align-items-center justify-content-center"B>><"col-sm-12 col-md-4"f>>t<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+        buttons: [
+            {
+                //colvis
+                extend: 'colvis',
+                text: '<i class="fas fa-columns"></i>',
+                title: 'Mostrar columnas',
+                exportOptions: {
+                    columns: [0, 1]
+                },
+                className: 'btn btn-info btn-sm'
+            },
+            {
+                //copy
+                extend: 'copy',
+                text: '<i class="fas fa-copy"></i>',
+                title: 'Copiar',
+                className: 'btn btn-info btn-sm'
+            },
+            {
+                //pdf
+                extend: 'pdf',
+                text: '<i class="fas fa-file-pdf"></i>',
+                title: 'PDF',
+                className: 'btn btn-info btn-sm'
+            },
+            {
+                //excel
+                extend: 'excel',
+                text: '<i class="fas fa-file-excel"></i>',
+                title: 'Excel',
+                className: 'btn btn-info btn-sm'
+            },
+        ],
         language: {
             sProcessing:     "Procesando...",
             sLengthMenu:     "Mostrar _MENU_ registros",

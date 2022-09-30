@@ -36,7 +36,7 @@
                         <p class="card-title-desc">En este módulo podrás ver, agregar, actualizar y eliminar productos.</p>
                     </div>
                     <div class="card-body">
-                        <table class="table text-nowrap table-striped nowrap w-100" id="datatable">
+                        <table class="table text-nowrap table-striped nowrap w-100 dt-responsive" id="datatable">
                             <thead>
                                 <tr>
                                     <tr>
@@ -91,7 +91,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Marca</label>
                                 <select class="form-select" name="brand" id="brand" required>
-                                    <option value="">Selecciona la marca</option>
+                                    <option value="">Seleccione la marca</option>
                                     <?php foreach($brands as $row)
                                         echo '<option value="'.$row->id.'">'.$row->brand.'</option>';
                                     ?>
@@ -102,7 +102,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Categoría</label>
                                 <select class="form-select" name="category" id="category" required>
-                                    <option value="">Selecciona la categoría</option>
+                                    <option value="">Seleccione le categoría</option>
                                     <?php foreach($categories as $row)
                                         echo '<option value="'.$row->id.'">'.$row->category.'</option>';
                                     ?>
@@ -132,7 +132,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Impuesto</label>
                                 <select class="form-select" name="tax" id="tax" required>
-                                    <option value="">Selecciona el impuesto</option>
+                                    <option value="">Seleccione el impuesto</option>
                                     <?php foreach($taxes as $row)
                                         echo '<option value="'.$row->id.'">'.$row->tax.'</option>';
                                     ?>
@@ -182,7 +182,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Marca</label>
                                 <select class="form-select" name="brand" id="viewBrand" disabled required>
-                                    <option value="">Selecciona la marca</option>
+                                    <option value="">Seleccione la marca</option>
                                     <?php foreach($brands as $row)
                                         echo '<option value="'.$row->id.'">'.$row->brand.'</option>';
                                     ?>
@@ -193,7 +193,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Categoría</label>
                                 <select class="form-select" name="category" id="viewCategory" disabled required>
-                                    <option value="">Selecciona la categoría</option>
+                                    <option value="">Seleccione la categoría</option>
                                     <?php foreach($categories as $row)
                                         echo '<option value="'.$row->id.'">'.$row->category.'</option>';
                                     ?>
@@ -223,7 +223,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Impuesto</label>
                                 <select class="form-select" name="tax" id="viewTax" disabled required>
-                                    <option value="">Selecciona el impuesto</option>
+                                    <option value="">Seleccione el impuesto</option>
                                     <?php foreach($taxes as $row)
                                         echo '<option value="'.$row->id.'">'.$row->tax.'</option>';
                                     ?>
@@ -249,7 +249,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btnClose btn-secondary waves-effect" data-bs-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btnUpdate btn-primary waves-effect waves-light">Editar</button>
-                    <button type="submit" class="btn btnSubmit btn-success waves-effect waves-light" style="display: none;">Guardar</button>
+                    <button type="submit" class="btn btnSubmit btn-primary waves-effect waves-light" style="display: none;">Guardar</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->

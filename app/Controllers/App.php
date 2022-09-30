@@ -111,23 +111,28 @@ class App extends BaseController
 		}
 	}
 
-	public function providers()
+	public function newPurchase()
 	{
 		if($this->session->has('name')){
 
 			$db      	= \Config\Database::connect();
-			$coins 		= $db
-							->table('coins')
-							->select('id, coin, symbol')
+			$providers 	= $db
+							->table('providers')
+							->select('id, name')
 							->where('deleted_at', NULL)
 							->get()
 							->getResult();
-			
+			$taxes 		= $db
+							->table('taxes')
+							->select('id, tax')
+							->where('deleted_at', NULL)
+							->get()
+							->getResult();
 			$data = [
-				"title" => "Proveedores - $this->system",
-				"coins" => $coins
+				"title" 	=> "Registrar nueva compra - $this->system",
+				"taxes" 	=> $taxes
 			];
-			return view('app/ajax/providers', $data);
+			return view('app/ajax/newPurchase', $data);
 		
 		}else{
 
@@ -206,6 +211,31 @@ class App extends BaseController
 				"title" => "Marcas - $this->system"
 			];
 			return view('app/ajax/brands', $data);
+		
+		}else{
+
+			return redirect()->to(base_url());
+		
+		}
+	}
+
+	public function providers()
+	{
+		if($this->session->has('name')){
+
+			$db      	= \Config\Database::connect();
+			$coins 		= $db
+							->table('coins')
+							->select('id, coin, symbol')
+							->where('deleted_at', NULL)
+							->get()
+							->getResult();
+			
+			$data = [
+				"title" => "Proveedores - $this->system",
+				"coins" => $coins
+			];
+			return view('app/ajax/providers', $data);
 		
 		}else{
 

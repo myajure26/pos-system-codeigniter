@@ -131,7 +131,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btnClose btn-secondary waves-effect" data-bs-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btnUpdate btn-primary waves-effect waves-light">Editar</button>
-                    <button type="submit" class="btn btnSubmit btn-success waves-effect waves-light" style="display: none;">Guardar</button>
+                    <button type="submit" class="btn btnSubmit btn-primary waves-effect waves-light" style="display: none;">Guardar</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->

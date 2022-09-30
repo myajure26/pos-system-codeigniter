@@ -107,7 +107,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Tipo de proveedor</label>
                                 <select class="form-select" name="providerType" id="providerType" required>
-                                    <option value="">Selecciona el tipo</option>
+                                    <option value="">Seleccione el tipo</option>
                                     <option value="normal">Normal</option>
                                 </select>
                             </div>
@@ -191,7 +191,7 @@
                         <div class="col-md-6">
                             <label class="form-label">Tipo de proveedor</label>
                             <select class="form-select" name="providerType" id="viewProviderType" required disabled>
-                                <option value="">Selecciona el tipo</option>
+                                <option value="">Seleccione el tipo</option>
                                 <option value="normal">Normal</option>
                             </select>
                         </div>
@@ -234,7 +234,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btnClose btn-secondary waves-effect" data-bs-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btnUpdate btn-primary waves-effect waves-light">Editar</button>
-                    <button type="submit" class="btn btnSubmit btn-success waves-effect waves-light" style="display: none;">Guardar</button>
+                    <button type="submit" class="btn btnSubmit btn-primary waves-effect waves-light" style="display: none;">Guardar</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->

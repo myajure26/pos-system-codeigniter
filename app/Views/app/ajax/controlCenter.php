@@ -109,7 +109,7 @@
                                                         <div class="mb-3">
                                                             <label class="form-label">Moneda principal</label>
                                                             <select class="form-select" name="setPrincipalCoin" id="setPrincipalCoin" required>
-                                                                <option value="">Selecciona la moneda principal</option>
+                                                                <option value="">Seleccione la moneda principal</option>
                                                                 <?php foreach($coins as $row)
                                                                     echo '<option value="'.$row->coin.'">'.$row->coin.'</option>';
                                                                 ?>
@@ -120,7 +120,7 @@
                                                         <div class="mb-3">
                                                             <label class="form-label">Moneda secundaria</label>
                                                             <select class="form-select" name="setSecondaryCoin" id="setSecondaryCoin" required>
-                                                                <option value="">Selecciona la moneda secundaria</option>
+                                                                <option value="">Seleccione la moneda secundaria</option>
                                                                 <?php foreach($coins as $row)
                                                                     echo '<option value="'.$row->coin.'">'.$row->coin.'</option>';
                                                                 ?>
