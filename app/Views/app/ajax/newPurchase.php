@@ -47,8 +47,11 @@
                                                 <div class="mb-3">
                                                     <label class="form-label" for="provider">Proveedor</label>
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" id="provider" placeholder="Por favor, busque al proveedor" readonly>
-                                                        <div class="input-group-btn"><button type="button" class="btn btn-primary"><i class="fas fa-search"></i></button></div>
+                                                        <input type="hidden" id="provider" name="provider" value="">
+                                                        <input type="text" class="form-control" id="providerInput" placeholder="Por favor, busque al proveedor" readonly>
+                                                        <div class="input-group-btn">
+                                                            <button type="button" class="btn btn-primary waves-effect" data-bs-toggle="modal" data-bs-target="#searchProviderModal"><i class="fas fa-search"></i></button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -78,15 +81,61 @@
                                                     <select class="form-select" name="tax" id="tax" required>
                                                         <option value="">Seleccione el impuesto</option>
                                                         <?php foreach($taxes as $row)
-                                                            echo '<option value="'.$row->id.'">'.$row->tax.'</option>';
+                                                            echo '<option value="'.$row->id.'" percentage="'.$row->percentage.'">'.$row->tax.'</option>';
                                                         ?>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="mb-3">
-                                                    <label class="form-label" for="tax">Productos</label>
-                                                    <button type="button" class="btn btn-primary d-block w-100">Buscar productos</button>
+                                                    <label class="form-label" for="coin">Moneda a pagar</label>
+                                                    <select class="form-select" name="coin" id="coin" required>
+                                                        <option value="">Seleccione la moneda</option>
+                                                        <?php foreach($coins as $row)
+                                                            echo '<option value="'.$row->id.'">'.$row->coin.'</option>';
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 mt-3">
+                                            <button type="button" class="btn btn-primary waves-effect d-block w-50 d-block mx-auto" data-bs-toggle="modal" data-bs-target="#searchProductsModal">Buscar productos</button>
+                                        </div>
+                                        <h5 class="font-size-14 mb-4 mt-2"><i class="mdi mdi-arrow-right text-primary me-1"></i>Lista de compras</h5>
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-bordered table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Código</th>
+                                                        <th>Nombre</th>
+                                                        <th style="width:150px">Cantidad</th>
+                                                        <th style="width:150px">Precio</th>
+                                                        <th style="width:150px">Total</th>
+                                                        <th>Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="list">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="input-group">
+                                                    <div class="input-group-text border-primary">Subtotal</div>
+                                                    <input type="text" class="form-control border-primary price" readonly value="0.00">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="input-group">
+                                                    <div class="input-group-text border-primary">Impuesto</div>
+                                                    <input type="text" class="form-control border-primary price" readonly value="0.00">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="input-group">
+                                                    <div class="input-group-text border-primary">Total</div>
+                                                    <input type="text" class="form-control border-primary price" readonly value="0.00">
                                                 </div>
                                             </div>
                                         </div>
@@ -105,3 +154,80 @@
     </div> <!-- container-fluid -->
 </div>
 <!-- End Page-content -->
+
+<!-- provider modal -->
+<div class="modal fade" id="searchProviderModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel">Selecciona el proveedor</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table getProviders text-nowrap table-striped nowrap w-100 responsive">
+                        <thead>
+                            <tr>
+                                <tr>
+                                    <th>Seleccionar</th>
+                                    <th>#</th>
+                                    <th>Código</th>
+                                    <th>Nombre</th>
+                                    <th>RIF</th>
+                                </tr>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Cerrar</button>
+            </div>        
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- product modal -->
+<div class="modal fade" id="searchProductsModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel">Selecciona los productos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table getProducts text-nowrap table-striped nowrap w-100 responsive">
+                        <thead>
+                            <tr>
+                                <tr>
+                                    <th>Seleccionar</th>
+                                    <th>#</th>
+                                    <th>Código</th>
+                                    <th>Nombre</th>
+                                    <th>Categoría</th>
+                                    <th>Marca</th>
+                                </tr>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Cerrar</button>
+            </div>        
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script src="<?=base_url('assets/js/purchases.js')?>"></script>
+<script>
+    tableConfig('/purchases/getProviders', '.getProviders');
+    tableConfig('/purchases/getProducts', '.getProducts');
+
+    $(".price").priceFormat({
+        prefix: ''
+    });
+</script>

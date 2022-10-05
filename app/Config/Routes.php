@@ -36,6 +36,12 @@ $routes->get('/', 'App::index');
 $routes->get('/recover', 'App::recover');
 $routes->get('/audits/get', 'AuditController::getAudits');
 
+//PURCHASES MODULE
+$routes->group('purchases', static function ($routes) {
+    $routes->get('getProviders', 'PurchaseController::getProviders');
+    $routes->get('getProducts', 'PurchaseController::getProducts');
+});
+
 //USERS MODULE
 $routes->group('users', static function ($routes) {
     $routes->post('signin', 'UserController::signin');

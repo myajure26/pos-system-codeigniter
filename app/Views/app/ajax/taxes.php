@@ -36,7 +36,7 @@
                         <p class="card-title-desc">En este módulo podrás ver, agregar, actualizar y eliminar impuestos.</p>
                     </div>
                     <div class="card-body">
-                        <table class="table text-nowrap table-striped nowrap w-100" id="datatable">
+                        <table class="table datatable text-nowrap table-striped nowrap w-100 dt-responsive">
                             <thead>
                                 <tr>
                                     <tr>
@@ -139,7 +139,7 @@
 </div><!-- /.modal -->
 
 <script>
-    tableConfig('/taxes/get');
+    tableConfig('/taxes/get', '.datatable');
 
     function viewTax(data){
         $('#viewId').val(data[0].id);

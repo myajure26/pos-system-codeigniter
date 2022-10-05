@@ -1,9 +1,9 @@
-function tableConfig(ajaxUrl){
+function tableConfig(ajaxUrl, selector){
     const origin = $(location).attr('origin');
     const path = origin + ajaxUrl;
 
-    $('#datatable').DataTable({
-        dom: '<"row"<"col-sm-12 col-md-4"l><"col-sm-12 col-md-4"<"d-flex align-items-center justify-content-center"B>><"col-sm-12 col-md-4"f>>t<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+    $(`${selector}`).DataTable({
+        dom: '<"row"<"col-sm-12 col-md-4"l><"col-sm-12 col-md-4"<"d-flex align-items-center justify-content-center"B>><"col-sm-12 col-md-4"f>>tr<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
         buttons: [
             {
                 //colvis
@@ -73,5 +73,6 @@ function tableConfig(ajaxUrl){
 }
 
 function reloadTable(){
-     $('#datatable').DataTable().ajax.reload();
+     $('.datatable').DataTable().ajax.reload();
 }
+

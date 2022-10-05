@@ -173,7 +173,6 @@ $(document).ready(function() {
 
             },
             error: function (data) {
-                console.log(data);
                 Swal.close();
                 $('#updateModal').modal('hide');
                 
@@ -262,8 +261,6 @@ $(document).ready(function() {
                         response.html(data);
                     },
                     error: function (data) {
-                        
-                        console.log(data);
                         Swal.fire({
                            title: 'Ha ocurrido un error',
                            text: 'Intente nuevamente',

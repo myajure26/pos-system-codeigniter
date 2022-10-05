@@ -124,13 +124,21 @@ class App extends BaseController
 							->getResult();
 			$taxes 		= $db
 							->table('taxes')
-							->select('id, tax')
+							->select('id, tax, percentage')
 							->where('deleted_at', NULL)
 							->get()
 							->getResult();
+			$coins 		= $db
+							->table('coins')
+							->select('id, coin, symbol')
+							->where('deleted_at', NULL)
+							->get()
+							->getResult();
+
 			$data = [
 				"title" 	=> "Registrar nueva compra - $this->system",
-				"taxes" 	=> $taxes
+				"taxes" 	=> $taxes,
+				"coins"		=> $coins
 			];
 			return view('app/ajax/newPurchase', $data);
 		

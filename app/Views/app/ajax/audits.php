@@ -31,7 +31,7 @@
                         <p class="card-title-desc">Aquí podrás ver todos los movimientos realizados en el sistema</p>
                     </div>
                     <div class="card-body">
-                        <table class="table text-nowrap table-striped nowrap w-100" id="datatable">
+                        <table class="table datatable text-nowrap table-striped nowrap w-100 dt-responsive">
                             <thead>
                                 <tr>
                                     <tr>
@@ -54,5 +54,5 @@
 <!-- End Page-content -->
 
 <script>
-    tableConfig('/audits/get');
+    tableConfig('/audits/get', '.datatable');
 </script>

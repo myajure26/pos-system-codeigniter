@@ -36,7 +36,7 @@
                         <p class="card-title-desc">En este módulo podrás ver, agregar, actualizar y eliminar categorías.</p>
                     </div>
                     <div class="card-body">
-                        <table class="table text-nowrap table-striped nowrap w-100" id="datatable">
+                        <table class="table datatable text-nowrap table-striped nowrap w-100 dt-responsive">
                             <thead>
                                 <tr>
                                     <tr>
@@ -124,7 +124,7 @@
 </div><!-- /.modal -->
 
 <script>
-    tableConfig('/categories/get');
+    tableConfig('/categories/get', '.datatable');
     
     function viewCategory(data){
         $('#viewId').val(data[0].id);

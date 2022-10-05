@@ -36,7 +36,7 @@
                         <p class="card-title-desc">En este módulo podrás ver, agregar, actualizar y eliminar productos.</p>
                     </div>
                     <div class="card-body">
-                        <table class="table text-nowrap table-striped nowrap w-100 dt-responsive" id="datatable">
+                        <table class="table datatable text-nowrap table-striped nowrap w-100 dt-responsive">
                             <thead>
                                 <tr>
                                     <tr>
@@ -257,7 +257,7 @@
 </div><!-- /.modal -->
 
 <script>
-    tableConfig('/products/get');
+    tableConfig('/products/get', '.datatable');
     $(".price").priceFormat({
         prefix: ''
     });
