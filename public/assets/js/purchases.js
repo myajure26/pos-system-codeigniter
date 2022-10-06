@@ -19,7 +19,7 @@ $(document).ready(function(){
                 <td><input type="hidden" name="productName[]" value="${name}">${name}</td>
                 <td><input type="number" class="form-control form-control-sm productQuantity" name="productQuantity[]" value="1"></td>
                 <td><input type="text" class="form-control form-control-sm price productPrice" name="productPrice[]" value="0.00"></td>
-                <td class="text-center"><input type="text" class="form-control form-control-sm price" value="${totalProduct}" readonly></td>
+                <td class="text-center"><input type="text" class="form-control form-control-sm price totalPriceProduct" value="${totalProduct}" readonly></td>
                 <td>
                     <div class="btn-list"> 
                         <button type="button" class="removeProduct btn btn-sm btn-danger waves-effect d-block mx-auto" data-id="${id}">
@@ -34,43 +34,78 @@ $(document).ready(function(){
             prefix: ''
         });
     });
+    
+    //Calcular el subtotal, impuesto y total
+    const totalCount = () => {
+        let subtotal = 0;
+        let tax = 0;
+        let total = 0;
+        
+        //Obtener el impuesto seleccionado
+        const taxPercentage = $('#tax option:selected').attr('percentage');
+        
+        //Sumar todas las columnas de 'total'
+        $('.totalPriceProduct').each(function(){
+            let price = $(this).val();
+            price = price.replace(/,/g, "");
+            price = price.replace('.', "");
+            subtotal += Number(price);
+        });
 
-    let total = "";
+        //Multiplicar por 0.01 para poder agregar los decimales
+        subtotal = subtotal*0.01;
+        tax = ((subtotal*(Number(taxPercentage)))/100);
+        total = subtotal + tax;
 
-    $(document).on('input', '.productQuantity', function(){
-        const quantity = $(this).val();
+        //Dar formato a los números ya que el plugin me da problemas con el cálculo de los porcentajes
+        subtotal = subtotal.toLocaleString('en', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        total = total.toLocaleString('en', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        tax = tax.toLocaleString('en', {minimumFractionDigits: 2, maximumFractionDigits: 2})
+
+        //Insertar los valores en los input
+        $('.subtotal').val(subtotal);
+        $('.tax').val(tax);
+        $('.total').val(total);
+        
+    }
+    
+    //Calcular al ingresar la cantidad del producto
+    $(document).on('input', '.productPrice, .productQuantity', function(){
+        let quantity = $(this).closest('tr').find('.productQuantity').val();
         let price = $(this).closest('tr').find('.productPrice').val();
 
-        price = price.replace(',','');
-        price = price.replace('.','');
-
-        const count = Number(quantity)*Number(price);
-
+        //Quitar las comas y puntos
+        price = price.replace(/,/g, "");
+        price = price.replace('.', "");
+        
+        //Convertir a números
+        price = Number(price);
+        quantity = Number(quantity);
+        
+        //Calcular
+        const count = quantity * price;
+        
+        //Insertar
         $(this).closest('tr').find('td:eq(5) input').val(count);
+        
+        //Dar formato
         $(".price").priceFormat({
             prefix: ''
         });
+        
+        //Llamar la función totalCount
+        totalCount();
+    });
+    
+    //Llamar a totalCount cuando se seleccione el impuesto
+    $(document).on('change', '#tax', function(){
+        totalCount();
     });
 
-    $(document).on('input', '.productPrice', function(){
-        let price = $(this).val();
-        const quantity = $(this).closest('tr').find('.productQuantity').val();
-
-        price = price.replace(',','');
-        price = price.replace('.','');
-
-        const count = Number(quantity)*Number(price);
-
-        $(this).closest('tr').find('td:eq(5) input').val(count);
-        $(".price").priceFormat({
-            prefix: ''
-        });
-    });
-
+    //Eliminar producto de la lista
     $(document).on('click', '.removeProduct', function(){
         $(this).closest('tr').remove();
+        totalCount();
     });
-
-    
-
 });
+

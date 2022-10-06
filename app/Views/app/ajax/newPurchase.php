@@ -79,7 +79,7 @@
                                                 <div class="mb-3">
                                                     <label class="form-label" for="tax">Impuesto</label>
                                                     <select class="form-select" name="tax" id="tax" required>
-                                                        <option value="">Seleccione el impuesto</option>
+                                                        <option value="" percentage="0">Seleccione el impuesto</option>
                                                         <?php foreach($taxes as $row)
                                                             echo '<option value="'.$row->id.'" percentage="'.$row->percentage.'">'.$row->tax.'</option>';
                                                         ?>
@@ -123,19 +123,19 @@
                                             <div class="col-md-4">
                                                 <div class="input-group">
                                                     <div class="input-group-text border-primary">Subtotal</div>
-                                                    <input type="text" class="form-control border-primary price" readonly value="0.00">
+                                                    <input type="text" class="form-control border-primary subtotal" readonly value="0.00">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="input-group">
                                                     <div class="input-group-text border-primary">Impuesto</div>
-                                                    <input type="text" class="form-control border-primary price" readonly value="0.00">
+                                                    <input type="text" class="form-control border-primary tax" readonly value="0.00">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="input-group">
                                                     <div class="input-group-text border-primary">Total</div>
-                                                    <input type="text" class="form-control border-primary price" readonly value="0.00">
+                                                    <input type="text" class="form-control border-primary total" readonly value="0.00">
                                                 </div>
                                             </div>
                                         </div>
