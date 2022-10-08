@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class ProviderModel extends Model
+class PurchaseModel extends Model
 {
 	protected $DBGroup              = 'default';
 	protected $table                = 'purchases';
@@ -14,7 +14,7 @@ class ProviderModel extends Model
 	protected $returnType           = 'array';
 	protected $useSoftDeletes       = true;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["code", "name", "rif", "address", "phone", "phone2", "type", "updated_at", "deleted_at", "created_at"];
+	protected $allowedFields        = ["provider", "date", "receipt", "reference", "tax", "coin", "updated_at", "deleted_at", "created_at"];
 
 	// Dates
 	protected $useTimestamps        = true;
@@ -23,11 +23,29 @@ class ProviderModel extends Model
 	protected $updatedField         = 'updated_at';
 	protected $deletedField         = 'deleted_at';
 
-	public function createProvider($data)
+	public function createPurchase($purchase, $purchaseDetails)
 	{
-		$query = $this
-			->insert($data);
-		return $query;
+		$this->transStart();
+		$this->insert($purchase);
+		$purchaseId = $this->insertID();
+		
+		//Insertar el ID al arreglo
+		for($i = 0; $i < count($purchaseDetails); $i++){
+			$purchaseDetails[$i]['purchase'] = $purchaseId;
+		}
+
+		$purchaseDetailsDB = \Config\Database::connect();
+		$purchaseDetailsDB
+			->table('purchase_details')
+			->insertBatch($purchaseDetails);
+
+		$this->transComplete();
+
+		if ($this->transStatus() === false) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public function getProviders()

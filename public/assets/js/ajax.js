@@ -95,7 +95,6 @@ $(document).ready(function() {
             const identification = formdata.get('letter') + '-' + formdata.get('legalIdentification');
             formdata.append('identification', identification);
         }
-        
 
         $.ajax({
             type: method,

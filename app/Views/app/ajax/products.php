@@ -123,7 +123,7 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control price" id="price" placeholder="Introduce el precio del producto" name="price" required value="0.00">
+                                        <input type="text" class="form-control price" id="price" placeholder="Introduce el precio del producto" name="price" required value="0.00" maxlength="10">
                                     </div>
                                 </div>
                             </div>
@@ -214,7 +214,7 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control price" id="viewPrice" name="price" disabled required>
+                                        <input type="text" class="form-control price" id="viewPrice" name="price" disabled required maxlength="10">
                                     </div>
                                 </div>
                             </div>

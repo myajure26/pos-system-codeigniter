@@ -15,11 +15,11 @@ $(document).ready(function(){
         $('#list').append(`
             <tr id="${id}">
                 <td><input type="hidden" name="productId[]" value="${id}">${id}</td>
-                <td><input type="hidden" name="productCode[]" value="${code}">${code}</td>
-                <td><input type="hidden" name="productName[]" value="${name}">${name}</td>
-                <td><input type="number" class="form-control form-control-sm productQuantity" name="productQuantity[]" value="1"></td>
-                <td><input type="text" class="form-control form-control-sm price productPrice" name="productPrice[]" value="0.00"></td>
-                <td class="text-center"><input type="text" class="form-control form-control-sm price totalPriceProduct" value="${totalProduct}" readonly></td>
+                <td>${code}</td>
+                <td>${name}</td>
+                <td><input type="number" class="form-control form-control-sm productQuantity" name="productQuantity[]" value="1" required></td>
+                <td><input type="text" class="form-control form-control-sm price productPrice" name="productPrice[]" value="0.00" required maxlength="10"></td>
+                <td class="text-center"><input type="text" class="form-control form-control-sm price totalPriceProduct" value="${totalProduct}" readonly required></td>
                 <td>
                     <div class="btn-list"> 
                         <button type="button" class="removeProduct btn btn-sm btn-danger waves-effect d-block mx-auto" data-id="${id}">

@@ -35,12 +35,13 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div>
-                                    <form>
+                                    <form class="custom-form" action="<?=base_url('purchases/create')?>" method="POST">
+                                        <div class="response"></div>
                                         <div class="row">                       
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label" for="date">Fecha de la compra</label>
-                                                    <input type="date" class="form-control" id="date" name="date"> 
+                                                    <input type="date" class="form-control" id="date" name="date" required> 
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -48,7 +49,7 @@
                                                     <label class="form-label" for="provider">Proveedor</label>
                                                     <div class="input-group">
                                                         <input type="hidden" id="provider" name="provider" value="">
-                                                        <input type="text" class="form-control" id="providerInput" placeholder="Por favor, busque al proveedor" readonly>
+                                                        <input type="text" class="form-control" id="providerInput" placeholder="Por favor, busque al proveedor" readonly required>
                                                         <div class="input-group-btn">
                                                             <button type="button" class="btn btn-primary waves-effect" data-bs-toggle="modal" data-bs-target="#searchProviderModal"><i class="fas fa-search"></i></button>
                                                         </div>
@@ -70,7 +71,7 @@
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label" for="reference">Número de referencia</label>
-                                                    <input type="number" class="form-control" id="reference" placeholder="Ingresa el número de referencia" name="reference" >
+                                                    <input type="number" class="form-control" id="reference" placeholder="Ingresa el número de referencia" name="reference" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -88,7 +89,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="mb-3">
-                                                    <label class="form-label" for="coin">Moneda a pagar</label>
+                                                    <label class="form-label" for="coin">Moneda</label>
                                                     <select class="form-select" name="coin" id="coin" required>
                                                         <option value="">Seleccione la moneda</option>
                                                         <?php foreach($coins as $row)
@@ -103,7 +104,7 @@
                                         </div>
                                         <h5 class="font-size-14 mb-4 mt-2"><i class="mdi mdi-arrow-right text-primary me-1"></i>Lista de compras</h5>
                                         <div class="table-responsive">
-                                            <table class="table table-hover table-bordered table-striped">
+                                            <table class="table table-hover table-bordered table-striped" id="newPurchase">
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
@@ -222,7 +223,6 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<script src="<?=base_url('assets/js/purchases.js')?>"></script>
 <script>
     tableConfig('/purchases/getProviders', '.getProviders');
     tableConfig('/purchases/getProducts', '.getProducts');

@@ -312,6 +312,7 @@
         <!-- DOCUMENT -->
         <script src="<?=base_url('assets/js/app.js')?>"></script>
         <script src="<?=base_url('assets/js/ajax.js')?>"></script>
+        <script src="<?=base_url('assets/js/purchases.js')?>"></script>
 
     </body>
 </html>

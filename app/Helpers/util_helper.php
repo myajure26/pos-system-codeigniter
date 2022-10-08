@@ -81,6 +81,9 @@ function sweetAlert($data)
 	                    $('.img').attr('src', '../../assets/images/users/anonymous.png');
                         $('.modal').modal('hide');
                         reloadTable();
+                        $('#list tr').each(function(){
+                            $(this).remove();
+                        });
                     });
             </script>
         ";

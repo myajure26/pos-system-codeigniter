@@ -40,6 +40,7 @@ $routes->get('/audits/get', 'AuditController::getAudits');
 $routes->group('purchases', static function ($routes) {
     $routes->get('getProviders', 'PurchaseController::getProviders');
     $routes->get('getProducts', 'PurchaseController::getProducts');
+    $routes->post('create', 'PurchaseController::createPurchase');
 });
 
 //USERS MODULE

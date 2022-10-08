@@ -27,15 +27,15 @@ class PurchaseController extends BaseController
 		"description"	=> ""
 	];
 
-	public function createProvider()
+	public function createPurchase()
 	{
-		helper('providerValidation');
+		helper('purchaseValidation');
 
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
 		}
 
-		if(!$this->validate(createProviderValidation())){
+		if(!$this->validate(createPurchaseValidation())){
 
 			//Mostrar errores de validación
 			$errors = $this->validator->getErrors();
@@ -45,36 +45,71 @@ class PurchaseController extends BaseController
 			}
 
 		}
-		
-		$data = [
-			"code" 			=> $this->request->getPost('code'),
-			"name" 			=> $this->request->getPost('name'),
-			"rif" 			=> $this->request->getPost('identification'),
-			"address" 		=> $this->request->getPost('address'),
-			"phone" 		=> $this->request->getPost('phone'),
-			"phone2" 		=> $this->request->getPost('phone2'),
-			"type" 			=> $this->request->getPost('providerType')
+
+		$purchase = [
+			"provider" 	=> $this->request->getPost('provider'),
+			"date" 		=> $this->request->getPost('date'),
+			"receipt" 	=> $this->request->getPost('receipt'),
+			"reference" => $this->request->getPost('reference'),
+			"tax" 		=> $this->request->getPost('tax'),
+			"coin" 		=> $this->request->getPost('coin')
 		];
 
-		$ProviderModel = new ProviderModel();
-		$provider = $ProviderModel->createProvider($data);
+		if(strtotime($purchase['date']) > strtotime(date('Y-m-d'))){
+			$this->errorMessage['text'] = "La fecha de la compra no puede ser mayor a la fecha actual";
+			return sweetAlert($this->errorMessage);
+		}
 
-		if(!$provider){
-			$this->errorMessage['text'] = "Error al guardar el proveedor en la base de datos";
+		$productId = $this->request->getPost('productId');
+		$productQuantity = $this->request->getPost('productQuantity');
+		$productPrice = $this->request->getPost('productPrice');
+
+		$purchaseDetails = [];
+
+		for($i = 0; $i < count($productId); $i++){
+
+			$price = str_replace(',', '', $productPrice[$i]);
+			$price = floatval($price);
+
+			if($productQuantity[$i] <= 0){
+				$this->errorMessage['text'] = "La cantidad tiene que ser mayor a 0, por favor revisa la fila #$productId[$i]";
+				return sweetAlert($this->errorMessage);
+			}
+
+			if($price <= 0){
+				$this->errorMessage['text'] = "El precio tiene que ser mayor a 0, por favor revisa la fila #$productId[$i]";
+				return sweetAlert($this->errorMessage);
+			}
+
+			$data = [
+				"product"	=> $productId[$i],
+				"quantity"	=> $productQuantity[$i],
+				"price"		=> $price
+			];
+
+			array_push($purchaseDetails, $data);
+
+		}
+		
+		$PurchaseModel = new PurchaseModel();
+		$purchase = $PurchaseModel->createPurchase($purchase, $purchaseDetails);
+
+		if(!$purchase){
+			$this->errorMessage['text'] = "Error al registrar la compra, intenta nuevamente.";
 			return sweetAlert($this->errorMessage);
 		}
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
 		$this->auditContent['user_id'] 		= $auditUserId;
-		$this->auditContent['action'] 		= "Crear proveedor";
-		$this->auditContent['description'] 	= "Se ha creado al proveedor con ID #" . $ProviderModel->getLastId() . " exitosamente.";
+		$this->auditContent['action'] 		= "Crear compra";
+		$this->auditContent['description'] 	= "Se ha creado la compra con ID #" . $PurchaseModel->getLastId() . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
 		//SWEET ALERT
 		$this->successMessage['alert'] 		= "clean";
-		$this->successMessage['text'] 		= "El proveedor se ha creado correctamente";
+		$this->successMessage['text'] 		= "La compra se ha registrado correctamente";
 		return sweetAlert($this->successMessage);
 	}
 
