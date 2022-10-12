@@ -38,9 +38,13 @@ $routes->get('/audits/get', 'AuditController::getAudits');
 
 //PURCHASES MODULE
 $routes->group('purchases', static function ($routes) {
+    $routes->post('create', 'PurchaseController::createPurchase');
+    $routes->get('get', 'PurchaseController::getPurchases');
+    $routes->get('getById/(:num)', 'PurchaseController::getPurchaseById/$1');
     $routes->get('getProviders', 'PurchaseController::getProviders');
     $routes->get('getProducts', 'PurchaseController::getProducts');
-    $routes->post('create', 'PurchaseController::createPurchase');
+    $routes->post('update', 'PurchaseController::updatePurchase');
+    $routes->post('delete', 'PurchaseController::deletePurchase');
 });
 
 //USERS MODULE

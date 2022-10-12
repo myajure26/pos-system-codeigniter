@@ -116,12 +116,6 @@ class App extends BaseController
 		if($this->session->has('name')){
 
 			$db      	= \Config\Database::connect();
-			$providers 	= $db
-							->table('providers')
-							->select('id, name')
-							->where('deleted_at', NULL)
-							->get()
-							->getResult();
 			$taxes 		= $db
 							->table('taxes')
 							->select('id, tax, percentage')
@@ -141,6 +135,38 @@ class App extends BaseController
 				"coins"		=> $coins
 			];
 			return view('app/ajax/newPurchase', $data);
+		
+		}else{
+
+			return redirect()->to(base_url());
+		
+		}
+	}
+
+	public function purchases()
+	{
+		if($this->session->has('name')){
+
+			$db      	= \Config\Database::connect();
+			$taxes 		= $db
+							->table('taxes')
+							->select('id, tax, percentage')
+							->where('deleted_at', NULL)
+							->get()
+							->getResult();
+			$coins 		= $db
+							->table('coins')
+							->select('id, coin, symbol')
+							->where('deleted_at', NULL)
+							->get()
+							->getResult();
+			
+			$data = [
+				"title" => "Compras - $this->system",
+				"taxes" 	=> $taxes,
+				"coins"		=> $coins
+			];
+			return view('app/ajax/purchases', $data);
 		
 		}else{
 

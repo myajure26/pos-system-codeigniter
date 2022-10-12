@@ -25,40 +25,48 @@ class PurchaseModel extends Model
 
 	public function createPurchase($purchase, $purchaseDetails)
 	{
-		$this->transStart();
-		$this->insert($purchase);
-		$purchaseId = $this->insertID();
+
+		$db = \Config\Database::connect();
+		$db->transStart();
 		
+		$db->table('purchases')->insert($purchase);
+		
+		//Obtener ID de la compra
+		$purchaseId = $db->insertID();
+
 		//Insertar el ID al arreglo
 		for($i = 0; $i < count($purchaseDetails); $i++){
 			$purchaseDetails[$i]['purchase'] = $purchaseId;
 		}
 
-		$purchaseDetailsDB = \Config\Database::connect();
-		$purchaseDetailsDB
-			->table('purchase_details')
-			->insertBatch($purchaseDetails);
+		$db->table('purchase_details')->insertBatch($purchaseDetails);
 
-		$this->transComplete();
+		$db->transComplete();
 
-		if ($this->transStatus() === false) {
+		if ($db->transStatus() === false) {
 			return false;
 		}
 
-		return true;
+		return $purchaseId;
 	}
 
-	public function getProviders()
+	public function getPurchases()
 	{
 		$query = $this
-			->select('id, code, name, rif')
-			->where('deleted_at', NULL);
+			->select('purchases.id, providers.name, date, reference')
+			->join('providers', 'providers.id = purchases.provider')
+			->where('purchases.deleted_at', NULL);
 		return $query;
 	}
 
-	public function getProviderById($data)
+	public function getPurchaseById($data)
 	{
-		$query = $this->where($data);
+		$query = $this
+				->select('purchases.id as purchaseId, date, purchases.provider, providers.name as providerName, receipt, reference, purchases.tax, purchases.coin, purchases.updated_at, purchases.created_at, purchase_details.id as purchaseDetailsId, purchase_details.product, quantity, purchase_details.price, products.code, products.name')
+				->join('purchase_details', 'purchase_details.purchase = purchases.id')
+				->join('products', 'products.id = purchase_details.product')
+				->join('providers', 'providers.id = purchases.provider')
+				->where($data);
 		return $query->get()->getResultArray();
 	}
 
@@ -67,16 +75,31 @@ class PurchaseModel extends Model
 		return $this->insertID();
 	}
 
-	public function updateProvider($data, $id)
+	public function updatePurchase($purchase, $purchaseDetails, $id)
 	{
-		$query = $this
-				->where('id', $id)
-				->set($data)
-				->update();
-		return $query;	
+		$db = \Config\Database::connect();
+		$db->transStart();
+		
+		$db
+			->table('purchases')
+			->where('id', $id)
+			->set($purchase)
+			->update();
+		
+		$db
+			->table('purchase_details')
+			->updateBatch($purchaseDetails, 'id');
+		
+		$db->transComplete();
+
+		if ($db->transStatus() === false) {
+			return false;
+		}
+
+		return true;
 	}
 
-	public function deleteProvider($id)
+	public function deletePurchase($id)
 	{
 		$query = $this
 				->delete($id);

@@ -59,7 +59,7 @@ function createPurchaseValidation()
 			'label' => 'productId',
 			'rules' => 'required|numeric|is_not_unique[products.id]',
 			'errors' => [
-				'required' => 'El producto #{value} es requerido',
+				'required' => 'El producto es requerido',
 				'numeric' => 'El producto #{value} es incorrecto',
 				'is_not_unique' => 'El producto #{value} no existe'
 			]
@@ -86,63 +86,88 @@ function createPurchaseValidation()
 	return $purchase;
 }
 
-function updateProductValidation()
+function updatePurchaseValidation()
 {
-	$updateProduct = [
-		'code' => [
-			'label' => 'code',
-			'rules' => 'required|alpha_numeric|is_unique[products.code,id,{id}]',
+		$updatePurchase = [
+		'date' => [
+			'label' => 'date',
+			'rules' => 'required|valid_date',
 			'errors' => [
-				'required' => 'El código es requerido',
-				'alpha_numeric' => 'Para el código sólo se permiten carácteres alfanuméricos',
-				'is_unique' => 'El código ya se encuentra registrado'
+				'required' => 'La fecha es requerida',
+				'valid_date' => 'La fecha tiene que tener un formato dd/mm/aaaa'
 			]
 		],
-		'name' => [
-			'label' => 'name',
-			'rules' => 'required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ ,.]*$/u]',
+		'provider' => [
+			'label' => 'provider',
+			'rules' => 'required|numeric|is_not_unique[providers.id]',
 			'errors' => [
-				'required' => 'El nombre es requerido',
-				'regex_match' => 'Para el nombre sólo se permiten carácteres alfabéticos.'
+				'required' => 'El proveedor es requerido',
+				'numeric' => 'Ingresa un proveedor válido',
+				'is_not_unique' => 'El proveedor no existe'
 			]
 		],
-		'brand' => [
-			'label' => 'brand',
-			'rules' => 'required',
+		'receipt' => [
+			'label' => 'receipt',
+			'rules' => 'required|in_list[invoice, deliveryNote]',
 			'errors' => [
-				'required' => 'La marca es requerida'
+				'required' => 'El comprobante es requerido',
+				'in_list' => 'Selecciona un comprobante válido'
 			]
 		],
-		'category' => [
-			'label' => 'category',
-			'rules' => 'required',
+		'reference' => [
+			'label' => 'reference',
+			'rules' => 'required|numeric|is_unique[purchases.reference,id,{id}]',
 			'errors' => [
-				'required' => 'La categoría es requerida'
-			]
-		],
-		'coin' => [
-			'label' => 'coin',
-			'rules' => 'required',
-			'errors' => [
-				'required' => 'La moneda es requerida'
-			]
-		],
-		'price' => [
-			'label' => 'price',
-			'rules' => 'required|max_length[15]',
-			'errors' => [
-				'required' => 'El precio es requerido',
-				'min_length' => 'El precio no debe contener más de 15 carácteres'
+				'required' => 'El número de referencia es requerido',
+				'numeric' => 'El número de referencia debe contenter números solamente',
+				'is_unique' => 'El número de referencia ya existe'
 			]
 		],
 		'tax' => [
 			'label' => 'tax',
-			'rules' => 'required',
+			'rules' => 'required|numeric|is_not_unique[taxes.id]',
 			'errors' => [
-				'required' => 'El impuesto es requerido'
+				'required' => 'El impuesto es requerido',
+				'numeric' => 'Ingresa un impuesto válido',
+				'is_not_unique' => 'El impuesto no existe'
+			]
+		],
+		'coin' => [
+			'label' => 'coin',
+			'rules' => 'required|numeric|is_not_unique[coins.id]',
+			'errors' => [
+				'required' => 'La moneda es requerida',
+				'numeric' => 'Ingresa una moneda válida',
+				'is_not_unique' => 'La moneda no existe'
+			]
+		],
+		'productId.*' => [
+			'label' => 'productId',
+			'rules' => 'required|numeric|is_not_unique[products.id]',
+			'errors' => [
+				'required' => 'El producto es requerido',
+				'numeric' => 'El producto #{value} es incorrecto',
+				'is_not_unique' => 'El producto #{value} no existe'
+			]
+		],
+		'productQuantity.*' => [
+			'label' => 'productQuantity',
+			'rules' => 'required|numeric',
+			'errors' => [
+				'required' => 'La cantidad del producto es requerida',
+				'numeric' => 'Solo se permiten números para la cantidad'
+			]
+		],
+		'productPrice.*' => [
+			'label' => 'productPrice',
+			'rules' => 'required|max_length[10]',
+			'errors' => [
+				'required' => 'El precio es requerido',
+				'max_length' => 'El precio no debe contener más de 10 carácteres'
 			]
 		]
+		
 	];
 
-	return $updateProduct;
+	return $updatePurchase;
 }

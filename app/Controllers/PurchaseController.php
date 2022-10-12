@@ -103,7 +103,7 @@ class PurchaseController extends BaseController
 		$auditUserId = $this->session->get('id');
 		$this->auditContent['user_id'] 		= $auditUserId;
 		$this->auditContent['action'] 		= "Crear compra";
-		$this->auditContent['description'] 	= "Se ha creado la compra con ID #" . $PurchaseModel->getLastId() . " exitosamente.";
+		$this->auditContent['description'] 	= "Se ha creado la compra con ID #" . $purchase . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -161,29 +161,51 @@ class PurchaseController extends BaseController
 			->toJson();
 	}
 
-	public function getProviderById($id)
+	public function getPurchases()
 	{
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
 		}
 
-		$ProviderModel = new ProviderModel();
-		$provider = $ProviderModel->getProviderById(['id' => $id]);
-		if(!$provider){
-			return false;
-		}
-		return json_encode($provider);
+		$PurchaseModel = new PurchaseModel();
+				
+		return DataTable::of($PurchaseModel->getPurchases())
+			->add('Acciones', function($row){
+				return '<div class="btn-list"> 
+							<button type="button" class="btnView btn btn-sm btn-primary waves-effect" data-id="'.$row->id.'" data-type="purchases" data-bs-toggle="modal" data-bs-target="#viewModal">
+								<i class="far fa-eye"></i>
+							</button>
+							<button type="button" class="btnDelete btn btn-sm btn-danger waves-effect" data-id="'.$row->id.'" data-type="purchases">
+								<i class="far fa-trash-alt"></i>
+							</button>
+						</div>';
+			}, 'last') 
+			->toJson();
 	}
 
-	public function updateProvider()
+	public function getPurchaseById($id)
 	{
-		helper('providerValidation');
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$PurchaseModel = new PurchaseModel();
+		$purchase = $PurchaseModel->getPurchaseById(['purchases.id' => $id]);
+		if(!$purchase){
+			return false;
+		}
+		return json_encode($purchase);
+	}
+
+	public function updatePurchase()
+	{
+		helper('purchaseValidation');
 
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
 		}
 
-		if(!$this->validate(updateProviderValidation())){
+		if(!$this->validate(updatePurchaseValidation())){
 
 			//Mostrar errores de validación
 			$errors = $this->validator->getErrors();
@@ -195,39 +217,78 @@ class PurchaseController extends BaseController
 		}
 
 		$id = $this->request->getPost('id');
-		$data = [
-			"code" 		=> $this->request->getPost('code'),
-			"name" 		=> $this->request->getPost('name'),
-			"rif" 		=> $this->request->getPost('identification'),
-			"address" 	=> $this->request->getPost('address'),
-			"phone" 	=> $this->request->getPost('phone'),
-			"phone2" 	=> $this->request->getPost('phone2'),
-			"type" 		=> $this->request->getPost('providerType')
+		$purchase = [
+			"provider" 	=> $this->request->getPost('provider'),
+			"date" 		=> $this->request->getPost('date'),
+			"receipt" 	=> $this->request->getPost('receipt'),
+			"reference" => $this->request->getPost('reference'),
+			"tax" 		=> $this->request->getPost('tax'),
+			"coin" 		=> $this->request->getPost('coin'),
+			"updated_at" => date("Y-m-d H:i:s")
 		];
 
-		$ProviderModel = new ProviderModel();
-		$provider = $ProviderModel->updateProvider($data, $id);
+		if(strtotime($purchase['date']) > strtotime(date('Y-m-d'))){
+			$this->errorMessage['text'] = "La fecha de la compra no puede ser mayor a la fecha actual";
+			return sweetAlert($this->errorMessage);
+		}
+		
+		$purchaseDetailsId = $this->request->getPost('purchaseDetailsId');
+		$productId = $this->request->getPost('productId');
+		$productQuantity = $this->request->getPost('productQuantity');
+		$productPrice = $this->request->getPost('productPrice');
 
-		if(!$provider){
-			$this->errorMessage['text'] = "Error actualizar al proveedor en la base de datos";
+		$purchaseDetails = [];
+
+		for($i = 0; $i < count($productId); $i++){
+
+			$price = str_replace(',', '', $productPrice[$i]);
+			$price = floatval($price);
+
+			if($productQuantity[$i] <= 0){
+				$this->errorMessage['text'] = "La cantidad tiene que ser mayor a 0, por favor revisa la fila #$productId[$i]";
+				return sweetAlert($this->errorMessage);
+			}
+
+			if($price <= 0){
+				$this->errorMessage['text'] = "El precio tiene que ser mayor a 0, por favor revisa la fila #$productId[$i]";
+				return sweetAlert($this->errorMessage);
+			}
+
+			$data = [
+				"id"		=> $purchaseDetailsId[$i],
+				"product"	=> $productId[$i],
+				"quantity"	=> $productQuantity[$i],
+				"price"		=> $price,
+				"purchase" 	=> $id
+			];
+
+			array_push($purchaseDetails, $data);
+
+		}
+
+		$PurchaseModel = new PurchaseModel();
+		$purchase = $PurchaseModel->updatePurchase($purchase, $purchaseDetails, $id);
+
+		if(!$purchase){
+			$this->errorMessage['text'] = "Error al actualizar la compra en la base de datos";
 			return sweetAlert($this->errorMessage);
 		}
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
 		$this->auditContent['user_id'] 		= $auditUserId;
-		$this->auditContent['action'] 		= "Actualizar proveedor";
-		$this->auditContent['description'] 	= "Se ha actualizado al proveedor con ID #" . $id . " exitosamente.";
+		$this->auditContent['action'] 		= "Actualizar compra";
+		$this->auditContent['description'] 	= "Se ha actualizado la compra con ID #" . $id . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
 		//SWEET ALERT
 		$this->successMessage['alert'] 		= "clean";
-		$this->successMessage['text'] 		= "El proveedor se ha actualizado correctamente";
+		$this->successMessage['text'] 		= "La compra se ha actualizado correctamente";
 		return sweetAlert($this->successMessage);
 	}
 
-	public function deleteProvider()
+	public function deletePurchase()
 	{
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
@@ -235,25 +296,25 @@ class PurchaseController extends BaseController
 
 		$id = $this->request->getPost('id');
 
-		$ProviderModel = new ProviderModel();
-		$deleteProvider = $ProviderModel->deleteProvider($id);
+		$PurchaseModel = new PurchaseModel();
+		$deletePurchase = $PurchaseModel->deletePurchase($id);
 
-		if(!$deleteProvider){
-			$this->errorMessage['text'] = "El proveedor no existe";
+		if(!$deletePurchase){
+			$this->errorMessage['text'] = "La compra no existe";
 			return sweetAlert($this->errorMessage);
 		}
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
 		$this->auditContent['user_id'] 		= $auditUserId;
-		$this->auditContent['action'] 		= "Eliminar proveedor";
-		$this->auditContent['description'] 	= "Se ha eliminado al proveedor con ID #" . $id . " exitosamente.";
+		$this->auditContent['action'] 		= "Eliminar compra";
+		$this->auditContent['description'] 	= "Se ha eliminado la compra con ID #" . $id . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
 		//SWEET ALERT
 		$this->successMessage['alert'] 		= "clean";
-		$this->successMessage['title'] 		= "Proveedor eliminado";
+		$this->successMessage['title'] 		= "Compra eliminada";
 		$this->successMessage['text'] 		= "Puede recuperarlo desde la papelera";
 		return sweetAlert($this->successMessage);
 	}

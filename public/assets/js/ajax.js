@@ -127,7 +127,7 @@ $(document).ready(function() {
     $(document).on('click', '.btnUpdate', function(){
         $('.btnSubmit').show();
         $('.btnUpdate').hide();
-        $('.viewForm input, .viewForm textarea, .viewForm select').removeAttr('disabled');
+        $('.viewForm input, .viewForm textarea, .viewForm select, .viewForm .btn-disabled').removeAttr('disabled');
 
         $('.viewDisabled').attr('disabled', 'true');
         $('.viewReadonly').attr('readonly', 'readonly');   
@@ -135,7 +135,7 @@ $(document).ready(function() {
         $("#viewModal").on('hidden.bs.modal', function () {
             $('.btnSubmit').hide();
             $('.btnUpdate').show();
-            $('.viewForm input, .viewForm textarea, .viewForm select').attr('disabled', 'true');
+            $('.viewForm input, .viewForm textarea, .viewForm select, .viewForm .btn-disabled').attr('disabled', 'true');
         });
     });
 
@@ -144,6 +144,9 @@ $(document).ready(function() {
 
         //Vaciar form
         $('form')[1].reset();
+        $('#list tr').each(function(){
+            $(this).remove();
+        });
 
         const id = $(this).attr('data-id');
         const type = $(this).attr('data-type');
@@ -204,6 +207,8 @@ $(document).ready(function() {
                return viewProduct(data);
             case 'providers':
                return viewProvider(data);
+            case 'purchases':
+                return viewPurchase(data);
             case 'configCoin':
                return viewConfigCoin(data);
         }

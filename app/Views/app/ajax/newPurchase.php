@@ -104,7 +104,7 @@
                                         </div>
                                         <h5 class="font-size-14 mb-4 mt-2"><i class="mdi mdi-arrow-right text-primary me-1"></i>Lista de compras</h5>
                                         <div class="table-responsive">
-                                            <table class="table table-hover table-bordered table-striped" id="newPurchase">
+                                            <table class="table table-hover table-bordered table-striped">
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
@@ -121,19 +121,19 @@
                                             </table>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-md-4 mt-2">
                                                 <div class="input-group">
                                                     <div class="input-group-text border-primary">Subtotal</div>
                                                     <input type="text" class="form-control border-primary subtotal" readonly value="0.00">
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-4 mt-2">
                                                 <div class="input-group">
                                                     <div class="input-group-text border-primary">Impuesto</div>
                                                     <input type="text" class="form-control border-primary tax" readonly value="0.00">
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-4 mt-2">
                                                 <div class="input-group">
                                                     <div class="input-group-text border-primary">Total</div>
                                                     <input type="text" class="form-control border-primary total" readonly value="0.00">

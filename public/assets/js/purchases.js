@@ -2,7 +2,7 @@ $(document).ready(function(){
 
     $(document).on('click', '.btn-select-provider', function(){
         $('#providerInput').val($(this).closest('tr').find('td:eq(3)').text());
-        $('#provider').val($(this).closest('tr').find('td:eq(1)').text());
+        $('#provider, #viewProvider').val($(this).closest('tr').find('td:eq(1)').text());
         $('#searchProviderModal').modal('hide');
     });
 
@@ -34,40 +34,6 @@ $(document).ready(function(){
             prefix: ''
         });
     });
-    
-    //Calcular el subtotal, impuesto y total
-    const totalCount = () => {
-        let subtotal = 0;
-        let tax = 0;
-        let total = 0;
-        
-        //Obtener el impuesto seleccionado
-        const taxPercentage = $('#tax option:selected').attr('percentage');
-        
-        //Sumar todas las columnas de 'total'
-        $('.totalPriceProduct').each(function(){
-            let price = $(this).val();
-            price = price.replace(/,/g, "");
-            price = price.replace('.', "");
-            subtotal += Number(price);
-        });
-
-        //Multiplicar por 0.01 para poder agregar los decimales
-        subtotal = subtotal*0.01;
-        tax = ((subtotal*(Number(taxPercentage)))/100);
-        total = subtotal + tax;
-
-        //Dar formato a los números ya que el plugin me da problemas con el cálculo de los porcentajes
-        subtotal = subtotal.toLocaleString('en', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-        total = total.toLocaleString('en', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-        tax = tax.toLocaleString('en', {minimumFractionDigits: 2, maximumFractionDigits: 2})
-
-        //Insertar los valores en los input
-        $('.subtotal').val(subtotal);
-        $('.tax').val(tax);
-        $('.total').val(total);
-        
-    }
     
     //Calcular al ingresar la cantidad del producto
     $(document).on('input', '.productPrice, .productQuantity', function(){
@@ -108,4 +74,38 @@ $(document).ready(function(){
         totalCount();
     });
 });
+
+//Calcular el subtotal, impuesto y total
+const totalCount = () => {
+    let subtotal = 0;
+    let tax = 0;
+    let total = 0;
+    
+    //Obtener el impuesto seleccionado
+    const taxPercentage = $('#tax option:selected').attr('percentage');
+    
+    //Sumar todas las columnas de 'total'
+    $('.totalPriceProduct').each(function(){
+        let price = $(this).val();
+        price = price.replace(/,/g, "");
+        price = price.replace('.', "");
+        subtotal += Number(price);
+    });
+
+    //Multiplicar por 0.01 para poder agregar los decimales
+    subtotal = subtotal*0.01;
+    tax = ((subtotal*(Number(taxPercentage)))/100);
+    total = subtotal + tax;
+
+    //Dar formato a los números ya que el plugin me da problemas con el cálculo de los porcentajes
+    subtotal = subtotal.toLocaleString('en', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    total = total.toLocaleString('en', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    tax = tax.toLocaleString('en', {minimumFractionDigits: 2, maximumFractionDigits: 2})
+
+    //Insertar los valores en los input
+    $('.subtotal').val(subtotal);
+    $('.tax').val(tax);
+    $('.total').val(total);
+    
+}
 
