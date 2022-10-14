@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 14-10-2022 a las 18:38:55
+-- Tiempo de generación: 14-10-2022 a las 20:19:20
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 7.4.32
 
@@ -43,7 +43,18 @@ CREATE TABLE `audits` (
 --
 
 INSERT INTO `audits` (`id`, `user`, `module`, `action`, `description`, `created_at`) VALUES
-(1, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-10-14 17:52:21');
+(1, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-10-14 17:52:21'),
+(2, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-10-14 18:44:09'),
+(3, 2, 'Compras', 'Crear compra', 'Se ha creado la compra con ID #1 exitosamente.', '2022-10-14 18:49:37'),
+(4, 2, 'Marcas', 'Actualizar marca', 'Se ha actualizado la marca con ID #2 exitosamente.', '2022-10-14 18:58:34'),
+(5, 2, 'Clientes', 'Crear proveedor', 'Se ha creado al proveedor con ID #6 exitosamente.', '2022-10-14 19:40:10'),
+(6, 2, 'Proveedores', 'Eliminar proveedor', 'Se ha eliminado al proveedor con ID #6 exitosamente.', '2022-10-14 19:41:34'),
+(7, 2, 'Clientes', 'Crear cliente', 'Se ha creado al cliente con ID #1 exitosamente.', '2022-10-14 19:42:17'),
+(8, 2, 'Clientes', 'Crear cliente', 'Se ha creado al cliente con ID #1 exitosamente.', '2022-10-14 19:47:14'),
+(9, 2, 'Clientes', 'Actualizar cliente', 'Se ha actualizado al cliente con ID #1 exitosamente.', '2022-10-14 20:17:31'),
+(10, 2, 'Clientes', 'Actualizar cliente', 'Se ha actualizado al cliente con ID #1 exitosamente.', '2022-10-14 20:17:41'),
+(11, 2, 'Clientes', 'Crear cliente', 'Se ha creado al cliente con ID #2 exitosamente.', '2022-10-14 20:18:07'),
+(12, 2, 'Clientes', 'Eliminar cliente', 'Se ha eliminado al cliente con ID #2 exitosamente.', '2022-10-14 20:18:12');
 
 -- --------------------------------------------------------
 
@@ -65,7 +76,7 @@ CREATE TABLE `brands` (
 
 INSERT INTO `brands` (`id`, `brand`, `updated_at`, `deleted_at`, `created_at`) VALUES
 (1, 'Firestone', '2022-09-26 21:26:45', NULL, '2022-09-11 21:44:08'),
-(2, 'Bridgestone', '2022-09-11 21:45:14', NULL, '2022-09-11 21:44:19'),
+(2, 'Pirelli', '2022-10-14 17:58:34', NULL, '2022-09-11 21:44:19'),
 (3, 'Fire', '2022-09-12 23:14:28', '2022-09-12 23:14:28', '2022-09-12 01:17:35'),
 (4, 'Cauchos', '2022-09-14 21:36:41', '2022-09-14 21:36:41', '2022-09-14 21:35:43');
 
@@ -131,7 +142,7 @@ CREATE TABLE `coin_prices` (
   `secondary_coin` int NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `updated_at` timestamp NOT NULL,
-  `deleted_at` timestamp NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 
@@ -144,13 +155,21 @@ CREATE TABLE `coin_prices` (
 CREATE TABLE `customers` (
   `id` int NOT NULL,
   `name` varchar(100) COLLATE utf8mb3_spanish_ci NOT NULL,
-  `rif` varchar(12) COLLATE utf8mb3_spanish_ci NOT NULL,
+  `identification` varchar(12) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
   `address` text COLLATE utf8mb3_spanish_ci NOT NULL,
   `phone` varchar(11) COLLATE utf8mb3_spanish_ci NOT NULL,
   `updated_at` timestamp NOT NULL,
-  `deleted_at` timestamp NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `customers`
+--
+
+INSERT INTO `customers` (`id`, `name`, `identification`, `address`, `phone`, `updated_at`, `deleted_at`, `created_at`) VALUES
+(1, 'Mariangel Yajure', 'V-28454829', 'Las tunitas', '04121538387', '2022-10-14 19:17:41', NULL, '2022-10-14 18:47:14'),
+(2, 'Francisco', 'V-28454123', 'Marte', '04245458695', '2022-10-14 19:18:12', '2022-10-14 19:18:12', '2022-10-14 19:18:07');
 
 -- --------------------------------------------------------
 
@@ -163,7 +182,7 @@ CREATE TABLE `inventory` (
   `product` int NOT NULL,
   `quantity` int NOT NULL,
   `updated_at` timestamp NOT NULL,
-  `deleted_at` timestamp NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 
@@ -227,7 +246,8 @@ INSERT INTO `providers` (`id`, `code`, `name`, `rif`, `address`, `phone`, `updat
 (2, 'A-002', 'Ana González', 'V-284548290', 'Las tunitas', '04245118022', '2022-10-06 01:28:41', NULL, '2022-09-21 23:30:10'),
 (3, 'C200', 'Mariangel Yajure', 'J-284544829', 'Las tunitas', '04245118022', '2022-09-26 15:14:25', '2022-09-26 15:14:25', '2022-09-26 01:13:04'),
 (4, 'A-003', 'Mariangel Yajure', 'J-284548290', 'Las tunitas', '04245118022', '2022-10-07 00:49:33', NULL, '2022-09-26 14:41:40'),
-(5, 'C222', 'Mariangel Yajure', 'J-248454829', 'Las tunitas', '04245118022', '2022-09-26 15:14:18', '2022-09-26 15:14:18', '2022-09-26 14:43:34');
+(5, 'C222', 'Mariangel Yajure', 'J-248454829', 'Las tunitas', '04245118022', '2022-09-26 15:14:18', '2022-09-26 15:14:18', '2022-09-26 14:43:34'),
+(6, '', 'Mariangel Yajure', '', 'Las tunitas', '04121538387', '2022-10-14 18:41:34', '2022-10-14 18:41:34', '2022-10-14 18:40:10');
 
 -- --------------------------------------------------------
 
@@ -249,6 +269,13 @@ CREATE TABLE `purchases` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `purchases`
+--
+
+INSERT INTO `purchases` (`id`, `provider`, `user`, `date`, `receipt`, `reference`, `tax`, `coin`, `updated_at`, `deleted_at`, `created_at`) VALUES
+(1, 4, 2, '2022-10-08', 'deliveryNote', '5345435454', 3, 1, NULL, NULL, '2022-10-14 18:49:37');
+
 -- --------------------------------------------------------
 
 --
@@ -263,6 +290,14 @@ CREATE TABLE `purchase_details` (
   `purchase` int NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `purchase_details`
+--
+
+INSERT INTO `purchase_details` (`id`, `product`, `quantity`, `price`, `purchase`) VALUES
+(1, 4, 1, '100.00', 1),
+(2, 2, 1, '95.50', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -276,7 +311,7 @@ CREATE TABLE `sales` (
   `date` date NOT NULL,
   `receipt` int NOT NULL,
   `updated_at` timestamp NOT NULL,
-  `deleted_at` timestamp NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 
@@ -475,7 +510,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `audits`
 --
 ALTER TABLE `audits`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `brands`
@@ -505,7 +540,7 @@ ALTER TABLE `coin_prices`
 -- AUTO_INCREMENT de la tabla `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `inventory`
@@ -523,19 +558,19 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT de la tabla `providers`
 --
 ALTER TABLE `providers`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `purchases`
 --
 ALTER TABLE `purchases`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `purchase_details`
 --
 ALTER TABLE `purchase_details`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `sales`
