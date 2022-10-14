@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 13-10-2022 a las 12:52:20
+-- Tiempo de generación: 14-10-2022 a las 18:38:55
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 7.4.32
 
@@ -31,7 +31,7 @@ USE `pos_system`;
 
 CREATE TABLE `audits` (
   `id` int NOT NULL,
-  `user_id` int NOT NULL,
+  `user` int NOT NULL,
   `module` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
   `action` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
   `description` text CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
@@ -42,256 +42,8 @@ CREATE TABLE `audits` (
 -- Volcado de datos para la tabla `audits`
 --
 
-INSERT INTO `audits` (`id`, `user_id`, `module`, `action`, `description`, `created_at`) VALUES
-(4, 2, 'Usuarios', 'Inicio de sesión', 'El usuario con ID #2 ha iniciado sesión exitosamente', '2022-09-10 22:03:55'),
-(5, 2, 'Usuarios', 'Inicio de sesión', 'El usuario con ID #2 ha iniciado sesión exitosamente', '2022-09-10 22:04:36'),
-(6, 1, 'Usuarios', 'Inicio de sesión', 'El usuario con ID #1 ha iniciado sesión exitosamente', '2022-09-10 22:06:40'),
-(7, 1, 'Usuarios', 'Inicio de sesión', 'El usuario con ID #1 ha iniciado sesión exitosamente', '2022-09-11 01:12:22'),
-(8, 1, 'Usuarios', 'Crear usuario', 'El usuario con ID #1 ha creado al usuario con cedula 30044335', '2022-09-11 01:41:03'),
-(9, 1, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con cedula 30044335 exitosamente', '2022-09-11 01:45:37'),
-(10, 1, 'Usuarios', 'Eliminar usuario', 'Se ha eliminado al usuario con cédula <strong>30044335</strong> exitosamente', '2022-09-11 01:53:34'),
-(11, 1, 'Usuarios', 'Crear usuario', 'Se ha creado al usuario con cédula 30044336 exitosamente', '2022-09-11 01:55:46'),
-(12, 1, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-09-11 01:57:28'),
-(13, 1, 'Usuarios', 'Eliminar usuario', 'Se ha eliminado al usuario con cédula 30044335 exitosamente.', '2022-09-11 02:30:21'),
-(14, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-09-11 15:52:34'),
-(15, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-09-11 15:53:40'),
-(16, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-09-11 15:54:28'),
-(17, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-09-11 15:56:14'),
-(18, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con cédula 30044336 exitosamente.', '2022-09-11 16:50:35'),
-(19, 2, 'Usuarios', 'Eliminar usuario', 'Se ha eliminado al usuario con cédula 30044336 exitosamente.', '2022-09-11 16:51:02'),
-(20, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con cédula 30044336 exitosamente.', '2022-09-11 16:55:04'),
-(21, 2, 'Usuarios', 'Eliminar usuario', 'Se ha eliminado al usuario con cédula 30044336 exitosamente.', '2022-09-11 16:55:17'),
-(22, 2, 'Usuarios', 'Crear usuario', 'Se ha creado al usuario con cédula 15647634 exitosamente.', '2022-09-11 16:57:41'),
-(23, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con cédula 15647634 exitosamente.', '2022-09-11 16:57:55'),
-(24, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-09-11 16:59:23'),
-(25, 2, 'Usuarios', 'Eliminar usuario', 'Se ha eliminado al usuario con cédula 15647634 exitosamente.', '2022-09-11 17:07:28'),
-(26, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-09-11 17:08:09'),
-(27, 2, 'Usuarios', 'Eliminar usuario', 'Se ha eliminado al usuario con cédula 15647634 exitosamente.', '2022-09-11 17:09:45'),
-(28, 2, 'Usuarios', 'Eliminar usuario', 'Se ha eliminado al usuario con cédula 15647634 exitosamente.', '2022-09-11 17:12:34'),
-(29, 2, 'Usuarios', 'Crear usuario', 'Se ha creado al usuario con ID #17 exitosamente.', '2022-09-11 17:40:00'),
-(30, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con ID # exitosamente.', '2022-09-11 17:46:16'),
-(31, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con ID #17 exitosamente.', '2022-09-11 17:48:15'),
-(32, 2, 'Usuarios', 'Eliminar usuario', 'Se ha eliminado al usuario con ID #17 exitosamente.', '2022-09-11 17:48:28'),
-(33, 2, 'Usuarios', 'Crear categoría', 'Se ha creado la categoría con ID #1 exitosamente.', '2022-09-11 17:55:20'),
-(34, 2, 'Usuarios', 'Crear categoría', 'Se ha creado la categoría con ID #2 exitosamente.', '2022-09-11 17:58:40'),
-(35, 2, 'Usuarios', 'Crear categoría', 'Se ha creado la categoría con ID #3 exitosamente.', '2022-09-11 17:59:52'),
-(36, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con ID #16 exitosamente.', '2022-09-11 19:09:23'),
-(37, 2, 'Categorías', 'Actualizar categoría', 'Se ha actualizado la categoría con ID #3 exitosamente.', '2022-09-11 19:16:29'),
-(38, 2, 'Categorías', 'Actualizar categoría', 'Se ha actualizado la categoría con ID #3 exitosamente.', '2022-09-11 19:16:47'),
-(39, 2, 'Categorías', 'Actualizar categoría', 'Se ha actualizado la categoría con ID #3 exitosamente.', '2022-09-11 19:17:00'),
-(40, 2, 'Categorías', 'Actualizar categoría', 'Se ha actualizado la categoría con ID #1 exitosamente.', '2022-09-11 19:25:12'),
-(41, 2, 'Categorías', 'Crear categoría', 'Se ha creado la categoría con ID #4 exitosamente.', '2022-09-11 19:25:43'),
-(42, 2, 'Categorías', 'Eliminar categoía', 'Se ha eliminado la categoía con ID #4 exitosamente.', '2022-09-11 19:35:24'),
-(43, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con ID #15 exitosamente.', '2022-09-11 19:41:33'),
-(44, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con ID #1 exitosamente.', '2022-09-11 19:42:08'),
-(45, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con ID #16 exitosamente.', '2022-09-11 19:44:07'),
-(46, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con ID #16 exitosamente.', '2022-09-11 19:45:51'),
-(47, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con ID #16 exitosamente.', '2022-09-11 19:46:09'),
-(48, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con ID #16 exitosamente.', '2022-09-11 19:53:28'),
-(49, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con ID #16 exitosamente.', '2022-09-11 19:54:11'),
-(50, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con ID #16 exitosamente.', '2022-09-11 19:54:28'),
-(51, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con ID #16 exitosamente.', '2022-09-11 19:57:14'),
-(52, 2, 'Categorías', 'Actualizar categoría', 'Se ha actualizado la categoría con ID #3 exitosamente.', '2022-09-11 19:58:51'),
-(53, 2, 'Marcas', 'Crear marca', 'Se ha creado la marca con ID #1 exitosamente.', '2022-09-11 22:14:08'),
-(54, 2, 'Marcas', 'Crear marca', 'Se ha creado la marca con ID #2 exitosamente.', '2022-09-11 22:14:19'),
-(55, 2, 'Marcas', 'Actualizar marca', 'Se ha actualizado la marca con ID #2 exitosamente.', '2022-09-11 22:14:44'),
-(56, 2, 'Marcas', 'Eliminar marca', 'Se ha eliminado la marca con ID #2 exitosamente.', '2022-09-11 22:15:14'),
-(57, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-09-12 01:46:34'),
-(58, 2, 'Marcas', 'Crear marca', 'Se ha creado la marca con ID #3 exitosamente.', '2022-09-12 01:47:35'),
-(59, 2, 'Marcas', 'Actualizar marca', 'Se ha actualizado la marca con ID #3 exitosamente.', '2022-09-12 01:47:50'),
-(60, 2, 'Marcas', 'Actualizar marca', 'Se ha actualizado la marca con ID #3 exitosamente.', '2022-09-12 01:48:00'),
-(61, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con ID #16 exitosamente.', '2022-09-12 01:49:26'),
-(62, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con ID #16 exitosamente.', '2022-09-12 01:49:44'),
-(63, 2, 'Categorías', 'Eliminar categoría', 'Se ha eliminado la categoría con ID #3 exitosamente.', '2022-09-12 02:35:49'),
-(64, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-09-12 19:52:47'),
-(65, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con ID #15 exitosamente.', '2022-09-12 19:54:03'),
-(66, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con ID #1 exitosamente.', '2022-09-12 21:36:01'),
-(67, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con ID #16 exitosamente.', '2022-09-12 23:15:34'),
-(68, 2, 'Categorías', 'Actualizar categoría', 'Se ha actualizado la categoría con ID #1 exitosamente.', '2022-09-12 23:16:08'),
-(69, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con ID #16 exitosamente.', '2022-09-12 23:18:15'),
-(70, 2, 'Categorías', 'Actualizar categoría', 'Se ha actualizado la categoría con ID #2 exitosamente.', '2022-09-12 23:18:37'),
-(71, 2, 'Marcas', 'Actualizar marca', 'Se ha actualizado la marca con ID #3 exitosamente.', '2022-09-12 23:19:00'),
-(72, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con ID #16 exitosamente.', '2022-09-12 23:39:37'),
-(73, 2, 'Marcas', 'Actualizar marca', 'Se ha actualizado la marca con ID #3 exitosamente.', '2022-09-12 23:40:09'),
-(74, 2, 'Marcas', 'Eliminar marca', 'Se ha eliminado la marca con ID #3 exitosamente.', '2022-09-12 23:44:28'),
-(75, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-09-14 19:43:34'),
-(76, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-09-14 19:53:47'),
-(77, 2, 'Marcas', 'Actualizar marca', 'Se ha actualizado la marca con ID #1 exitosamente.', '2022-09-14 20:07:15'),
-(78, 2, 'Monedas', 'Crear moneda', 'Se ha creado la moneda con ID #2 exitosamente.', '2022-09-14 20:39:20'),
-(79, 2, 'Monedas', 'Crear moneda', 'Se ha creado la moneda con ID #3 exitosamente.', '2022-09-14 20:48:47'),
-(80, 2, 'Monedas', 'Actualizar moneda', 'Se ha actualizado la moneda con ID #3 exitosamente.', '2022-09-14 20:52:58'),
-(81, 2, 'Monedas', 'Eliminar moneda', 'Se ha eliminado la moneda con ID #3 exitosamente.', '2022-09-14 20:53:14'),
-(82, 2, 'Monedas', 'Actualizar moneda', 'Se ha actualizado la moneda con ID #1 exitosamente.', '2022-09-14 20:54:37'),
-(83, 2, 'Monedas', 'Actualizar moneda', 'Se ha actualizado la moneda con ID #2 exitosamente.', '2022-09-14 20:54:53'),
-(84, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con ID #16 exitosamente.', '2022-09-14 21:23:59'),
-(85, 2, 'Usuarios', 'Eliminar usuario', 'Se ha eliminado al usuario con ID #16 exitosamente.', '2022-09-14 21:39:54'),
-(86, 2, 'Categorías', 'Actualizar categoría', 'Se ha actualizado la categoría con ID #2 exitosamente.', '2022-09-14 21:54:46'),
-(87, 2, 'Categorías', 'Eliminar categoría', 'Se ha eliminado la categoría con ID #2 exitosamente.', '2022-09-14 21:54:56'),
-(88, 2, 'Categorías', 'Crear categoría', 'Se ha creado la categoría con ID #5 exitosamente.', '2022-09-14 21:55:20'),
-(89, 2, 'Marcas', 'Crear marca', 'Se ha creado la marca con ID #4 exitosamente.', '2022-09-14 22:05:43'),
-(90, 2, 'Marcas', 'Actualizar marca', 'Se ha actualizado la marca con ID #4 exitosamente.', '2022-09-14 22:06:33'),
-(91, 2, 'Marcas', 'Eliminar marca', 'Se ha eliminado la marca con ID #4 exitosamente.', '2022-09-14 22:06:41'),
-(92, 2, 'Monedas', 'Crear moneda', 'Se ha creado la moneda con ID #4 exitosamente.', '2022-09-14 22:10:32'),
-(93, 2, 'Monedas', 'Actualizar moneda', 'Se ha actualizado la moneda con ID #4 exitosamente.', '2022-09-14 22:10:46'),
-(94, 2, 'Monedas', 'Actualizar moneda', 'Se ha actualizado la moneda con ID #4 exitosamente.', '2022-09-14 22:11:02'),
-(95, 2, 'Monedas', 'Eliminar moneda', 'Se ha eliminado la moneda con ID #4 exitosamente.', '2022-09-14 22:11:14'),
-(96, 2, 'Impuestos', 'Crear impuesto', 'Se ha creado el impuesto con ID #1 exitosamente.', '2022-09-14 23:51:31'),
-(97, 2, 'Impuestos', 'Actualizar impuesto', 'Se ha actualizado el impueto con ID #1 exitosamente.', '2022-09-15 00:02:34'),
-(98, 2, 'Impuestos', 'Actualizar impuesto', 'Se ha actualizado el impueto con ID #1 exitosamente.', '2022-09-15 00:02:46'),
-(99, 2, 'Impuestos', 'Crear impuesto', 'Se ha creado el impuesto con ID #2 exitosamente.', '2022-09-15 00:03:06'),
-(100, 2, 'Impuestos', 'Eliminar impuesto', 'Se ha eliminado el impuesto con ID #2 exitosamente.', '2022-09-15 00:03:17'),
-(101, 2, 'Impuestos', 'Actualizar impuesto', 'Se ha actualizado el impueto con ID #1 exitosamente.', '2022-09-15 00:11:22'),
-(102, 2, 'Impuestos', 'Actualizar impuesto', 'Se ha actualizado el impueto con ID #1 exitosamente.', '2022-09-15 00:11:35'),
-(103, 2, 'Impuestos', 'Actualizar impuesto', 'Se ha actualizado el impueto con ID #1 exitosamente.', '2022-09-15 00:12:32'),
-(104, 2, 'Monedas', 'Actualizar moneda', 'Se ha actualizado la moneda con ID #2 exitosamente.', '2022-09-15 00:13:38'),
-(105, 2, 'Monedas', 'Actualizar moneda', 'Se ha actualizado la moneda con ID #2 exitosamente.', '2022-09-15 00:13:51'),
-(106, 2, 'Monedas', 'Actualizar moneda', 'Se ha actualizado la moneda con ID #2 exitosamente.', '2022-09-15 00:14:01'),
-(107, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-09-16 20:29:30'),
-(108, 2, 'Impuestos', 'Crear impuesto', 'Se ha creado el impuesto con ID #3 exitosamente.', '2022-09-16 20:30:27'),
-(109, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-09-17 23:06:38'),
-(110, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-09-18 16:49:22'),
-(111, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-09-18 17:24:07'),
-(112, 2, 'Centro de control', 'Establecer monedas', 'Se han establecido las monedas Bolívar Soberano y  como monedas principal y secundaria', '2022-09-18 18:29:28'),
-(113, 2, 'Centro de control', 'Establecer monedas', 'Se han establecido las monedas Bolívar Soberano y  como monedas principal y secundaria', '2022-09-18 18:30:07'),
-(114, 2, 'Centro de control', 'Establecer monedas', 'Se han establecido las monedas Bolívar Soberano y  como monedas principal y secundaria', '2022-09-18 18:31:28'),
-(115, 2, 'Centro de control', 'Establecer monedas', 'Se han establecido las monedas Dólar y  como monedas principal y secundaria', '2022-09-18 18:33:10'),
-(116, 2, 'Centro de control', 'Establecer monedas', 'Se han establecido las monedas Dólar y Dólar como monedas principal y secundaria', '2022-09-18 18:33:37'),
-(117, 2, 'Categorías', 'Crear categoría', 'Se ha creado la categoría con ID #6 exitosamente.', '2022-09-18 19:46:27'),
-(118, 2, 'Productos', 'Crear producto', 'Se ha creado el producto con ID #1 exitosamente.', '2022-09-18 19:49:06'),
-(119, 2, 'Productos', 'Crear producto', 'Se ha creado el producto con ID #2 exitosamente.', '2022-09-18 19:50:05'),
-(120, 2, 'Productos', 'Crear producto', 'Se ha creado el producto con ID #3 exitosamente.', '2022-09-18 20:02:01'),
-(121, 2, 'Productos', 'Crear producto', 'Se ha creado el producto con ID #4 exitosamente.', '2022-09-18 20:03:02'),
-(122, 2, 'Productos', 'Crear producto', 'Se ha creado el producto con ID #5 exitosamente.', '2022-09-18 20:06:03'),
-(123, 2, 'Productos', 'Actualizar producto', 'Se ha actualizado el producto con ID #5 exitosamente.', '2022-09-18 21:11:02'),
-(124, 2, 'Productos', 'Actualizar producto', 'Se ha actualizado el producto con ID #5 exitosamente.', '2022-09-18 21:11:23'),
-(125, 2, 'Productos', 'Actualizar producto', 'Se ha actualizado el producto con ID #4 exitosamente.', '2022-09-18 21:11:51'),
-(126, 2, 'Productos', 'Actualizar producto', 'Se ha actualizado el producto con ID #5 exitosamente.', '2022-09-18 21:12:02'),
-(127, 2, 'Productos', 'Eliminar producto', 'Se ha eliminado el producto con ID #3 exitosamente.', '2022-09-18 21:13:42'),
-(128, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-09-20 00:09:12'),
-(129, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-09-20 00:09:13'),
-(130, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-09-21 20:24:02'),
-(131, 2, 'Centro de control', 'Establecer monedas', 'Se han establecido las monedas Dólar y Bolívar Soberano como monedas principal y secundaria', '2022-09-21 20:37:20'),
-(132, 2, 'Proveedores', 'Crear proveedor', 'Se ha creado el proveedor con ID #1 exitosamente.', '2022-09-21 23:51:28'),
-(133, 2, 'Proveedores', 'Crear proveedor', 'Se ha creado el proveedor con ID #2 exitosamente.', '2022-09-22 00:00:10'),
-(134, 2, 'Proveedores', 'Actualizar proveedor', 'Se ha actualizado el proveedor con ID #2 exitosamente.', '2022-09-22 00:22:47'),
-(135, 2, 'Proveedores', 'Eliminar proveedor', 'Se ha eliminado al proveedor con ID #2 exitosamente.', '2022-09-22 00:23:01'),
-(136, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-09-25 14:02:35'),
-(137, 2, 'Proveedores', 'Actualizar proveedor', 'Se ha actualizado al proveedor con ID #2 exitosamente.', '2022-09-25 14:03:13'),
-(138, 2, 'Proveedores', 'Actualizar proveedor', 'Se ha actualizado al proveedor con ID #2 exitosamente.', '2022-09-25 14:03:46'),
-(139, 2, 'Proveedores', 'Actualizar proveedor', 'Se ha actualizado al proveedor con ID #2 exitosamente.', '2022-09-25 14:10:32'),
-(140, 2, 'Proveedores', 'Actualizar proveedor', 'Se ha actualizado al proveedor con ID #2 exitosamente.', '2022-09-25 14:11:01'),
-(141, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-09-25 15:37:42'),
-(142, 2, 'Impuestos', 'Actualizar impuesto', 'Se ha actualizado el impueto con ID #3 exitosamente.', '2022-09-25 15:40:33'),
-(143, 2, 'Monedas', 'Actualizar moneda', 'Se ha actualizado la moneda con ID #2 exitosamente.', '2022-09-25 15:41:50'),
-(144, 2, 'Impuestos', 'Actualizar impuesto', 'Se ha actualizado el impuesto con ID #3 exitosamente.', '2022-09-25 15:46:13'),
-(145, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-09-25 20:56:15'),
-(146, 2, 'Proveedores', 'Actualizar proveedor', 'Se ha actualizado al proveedor con ID #2 exitosamente.', '2022-09-25 21:27:57'),
-(147, 2, 'Proveedores', 'Actualizar proveedor', 'Se ha actualizado al proveedor con ID #2 exitosamente.', '2022-09-25 21:34:51'),
-(148, 2, 'Proveedores', 'Actualizar proveedor', 'Se ha actualizado al proveedor con ID #2 exitosamente.', '2022-09-25 21:36:20'),
-(149, 2, 'Proveedores', 'Actualizar proveedor', 'Se ha actualizado al proveedor con ID #2 exitosamente.', '2022-09-25 21:46:37'),
-(150, 2, 'Proveedores', 'Actualizar proveedor', 'Se ha actualizado al proveedor con ID #1 exitosamente.', '2022-09-25 21:46:55'),
-(151, 2, 'Proveedores', 'Actualizar proveedor', 'Se ha actualizado al proveedor con ID #1 exitosamente.', '2022-09-25 21:57:54'),
-(152, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-09-26 01:32:58'),
-(153, 2, 'Proveedores', 'Crear proveedor', 'Se ha creado al proveedor con ID #3 exitosamente.', '2022-09-26 01:43:05'),
-(154, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-09-26 14:32:32'),
-(155, 2, 'Proveedores', 'Crear proveedor', 'Se ha creado al proveedor con ID #4 exitosamente.', '2022-09-26 15:11:41'),
-(156, 2, 'Proveedores', 'Crear proveedor', 'Se ha creado al proveedor con ID #5 exitosamente.', '2022-09-26 15:13:34'),
-(157, 2, 'Proveedores', 'Actualizar proveedor', 'Se ha actualizado al proveedor con ID #3 exitosamente.', '2022-09-26 15:22:14'),
-(158, 2, 'Proveedores', 'Actualizar proveedor', 'Se ha actualizado al proveedor con ID #2 exitosamente.', '2022-09-26 15:24:47'),
-(159, 2, 'Proveedores', 'Actualizar proveedor', 'Se ha actualizado al proveedor con ID #1 exitosamente.', '2022-09-26 15:25:10'),
-(160, 2, 'Proveedores', 'Actualizar proveedor', 'Se ha actualizado al proveedor con ID #3 exitosamente.', '2022-09-26 15:25:26'),
-(161, 2, 'Proveedores', 'Actualizar proveedor', 'Se ha actualizado al proveedor con ID #4 exitosamente.', '2022-09-26 15:25:39'),
-(162, 2, 'Proveedores', 'Actualizar proveedor', 'Se ha actualizado al proveedor con ID #5 exitosamente.', '2022-09-26 15:25:53'),
-(163, 2, 'Proveedores', 'Eliminar proveedor', 'Se ha eliminado al proveedor con ID #5 exitosamente.', '2022-09-26 15:44:18'),
-(164, 2, 'Proveedores', 'Eliminar proveedor', 'Se ha eliminado al proveedor con ID #3 exitosamente.', '2022-09-26 15:44:25'),
-(165, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con ID #15 exitosamente.', '2022-09-26 16:00:44'),
-(166, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con ID #15 exitosamente.', '2022-09-26 16:01:15'),
-(167, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con ID #15 exitosamente.', '2022-09-26 16:22:11'),
-(168, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con ID #15 exitosamente.', '2022-09-26 16:27:58'),
-(169, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con ID #15 exitosamente.', '2022-09-26 16:28:30'),
-(170, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con ID #15 exitosamente.', '2022-09-26 16:32:31'),
-(171, 2, 'Usuarios', 'Actualizar usuario', 'Se ha actualizado al usuario con ID #15 exitosamente.', '2022-09-26 16:58:52'),
-(172, 2, 'Impuestos', 'Actualizar impuesto', 'Se ha actualizado el impuesto con ID #3 exitosamente.', '2022-09-26 17:16:33'),
-(173, 2, 'Impuestos', 'Actualizar impuesto', 'Se ha actualizado el impuesto con ID #1 exitosamente.', '2022-09-26 17:16:43'),
-(174, 2, 'Impuestos', 'Actualizar impuesto', 'Se ha actualizado el impuesto con ID #1 exitosamente.', '2022-09-26 17:16:53'),
-(175, 2, 'Impuestos', 'Actualizar impuesto', 'Se ha actualizado el impuesto con ID #3 exitosamente.', '2022-09-26 17:55:28'),
-(176, 2, 'Monedas', 'Actualizar moneda', 'Se ha actualizado la moneda con ID #2 exitosamente.', '2022-09-26 18:02:04'),
-(177, 2, 'Monedas', 'Actualizar moneda', 'Se ha actualizado la moneda con ID #2 exitosamente.', '2022-09-26 18:02:17'),
-(178, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-09-26 21:49:29'),
-(179, 2, 'Monedas', 'Actualizar moneda', 'Se ha actualizado la moneda con ID #2 exitosamente.', '2022-09-26 21:51:06'),
-(180, 2, 'Marcas', 'Actualizar marca', 'Se ha actualizado la marca con ID #1 exitosamente.', '2022-09-26 21:56:34'),
-(181, 2, 'Marcas', 'Actualizar marca', 'Se ha actualizado la marca con ID #1 exitosamente.', '2022-09-26 21:56:45'),
-(182, 2, 'Categorías', 'Actualizar categoría', 'Se ha actualizado la categoría con ID #6 exitosamente.', '2022-09-26 22:02:15'),
-(183, 2, 'Categorías', 'Actualizar categoría', 'Se ha actualizado la categoría con ID #6 exitosamente.', '2022-09-26 22:09:02'),
-(184, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-09-27 01:16:49'),
-(185, 2, 'Productos', 'Actualizar producto', 'Se ha actualizado el producto con ID #5 exitosamente.', '2022-09-27 01:33:03'),
-(186, 2, 'Productos', 'Actualizar producto', 'Se ha actualizado el producto con ID #5 exitosamente.', '2022-09-27 01:37:07'),
-(187, 2, 'Productos', 'Actualizar producto', 'Se ha actualizado el producto con ID #5 exitosamente.', '2022-09-27 01:37:34'),
-(188, 2, 'Productos', 'Actualizar producto', 'Se ha actualizado el producto con ID #1 exitosamente.', '2022-09-27 01:39:56'),
-(189, 2, 'Productos', 'Crear producto', 'Se ha creado el producto con ID #6 exitosamente.', '2022-09-27 01:47:26'),
-(190, 2, 'Productos', 'Actualizar producto', 'Se ha actualizado el producto con ID #1 exitosamente.', '2022-09-27 01:48:16'),
-(191, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-09-27 21:25:56'),
-(192, 2, 'Productos', 'Eliminar producto', 'Se ha eliminado el producto con ID #6 exitosamente.', '2022-09-27 22:11:28'),
-(193, 2, 'Productos', 'Actualizar producto', 'Se ha actualizado el producto con ID #6 exitosamente.', '2022-09-27 22:11:36'),
-(194, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-09-28 20:55:35'),
-(195, 2, 'Productos', 'Actualizar producto', 'Se ha actualizado el producto con ID #1 exitosamente.', '2022-09-28 20:57:06'),
-(196, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-09-30 21:52:07'),
-(197, 2, 'Proveedores', 'Actualizar proveedor', 'Se ha actualizado al proveedor con ID #4 exitosamente.', '2022-09-30 21:53:17'),
-(198, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-10-01 18:38:57'),
-(199, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-10-02 10:44:29'),
-(200, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-10-02 16:15:05'),
-(201, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-10-03 20:12:36'),
-(202, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-10-06 02:25:46'),
-(203, 2, 'Usuarios', 'Eliminar usuario', 'Se ha eliminado al usuario con ID #15 exitosamente.', '2022-10-06 02:26:27'),
-(204, 2, 'Usuarios', 'Eliminar usuario', 'Se ha eliminado al usuario con ID #11 exitosamente.', '2022-10-06 02:28:10'),
-(205, 2, 'Proveedores', 'Actualizar proveedor', 'Se ha actualizado al proveedor con ID #2 exitosamente.', '2022-10-06 02:28:41'),
-(206, 2, 'Proveedores', 'Actualizar proveedor', 'Se ha actualizado al proveedor con ID #1 exitosamente.', '2022-10-06 02:28:56'),
-(207, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-10-06 15:57:52'),
-(208, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-10-07 01:28:54'),
-(209, 2, 'Productos', 'Actualizar producto', 'Se ha actualizado el producto con ID #5 exitosamente.', '2022-10-07 01:37:46'),
-(210, 2, 'Productos', 'Eliminar producto', 'Se ha eliminado el producto con ID #5 exitosamente.', '2022-10-07 01:38:23'),
-(211, 2, 'Categorías', 'Crear categoría', 'Se ha creado la categoría con ID #7 exitosamente.', '2022-10-07 01:39:22'),
-(212, 2, 'Categorías', 'Actualizar categoría', 'Se ha actualizado la categoría con ID #7 exitosamente.', '2022-10-07 01:39:41'),
-(213, 2, 'Categorías', 'Eliminar categoría', 'Se ha eliminado la categoría con ID #7 exitosamente.', '2022-10-07 01:39:47'),
-(214, 2, 'Productos', 'Crear producto', 'Se ha creado el producto con ID #7 exitosamente.', '2022-10-07 01:41:59'),
-(215, 2, 'Proveedores', 'Actualizar proveedor', 'Se ha actualizado al proveedor con ID #4 exitosamente.', '2022-10-07 01:49:33'),
-(216, 2, 'Usuarios', 'Crear usuario', 'Se ha creado al usuario con ID #18 exitosamente.', '2022-10-07 01:54:19'),
-(217, 2, 'Monedas', 'Actualizar moneda', 'Se ha actualizado la moneda con ID #3 exitosamente.', '2022-10-07 02:19:52'),
-(218, 2, 'Impuestos', 'Crear impuesto', 'Se ha creado el impuesto con ID #4 exitosamente.', '2022-10-07 02:20:55'),
-(219, 2, 'Impuestos', 'Eliminar impuesto', 'Se ha eliminado el impuesto con ID #4 exitosamente.', '2022-10-07 02:21:13'),
-(220, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-10-07 16:16:22'),
-(221, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-10-07 22:05:33'),
-(222, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-10-08 18:33:52'),
-(223, 2, 'Compras', 'Crear compra', 'Se ha creado la compra con ID #0 exitosamente.', '2022-10-08 20:06:16'),
-(224, 2, 'Compras', 'Crear compra', 'Se ha creado la compra con ID #0 exitosamente.', '2022-10-08 20:14:17'),
-(225, 2, 'Compras', 'Crear compra', 'Se ha creado la compra con ID #0 exitosamente.', '2022-10-08 20:19:38'),
-(226, 2, 'Compras', 'Crear compra', 'Se ha creado la compra con ID #0 exitosamente.', '2022-10-08 20:22:22'),
-(227, 2, 'Compras', 'Crear compra', 'Se ha creado la compra con ID #0 exitosamente.', '2022-10-08 20:24:12'),
-(228, 2, 'Compras', 'Crear compra', 'Se ha creado la compra con ID #0 exitosamente.', '2022-10-08 20:25:05'),
-(229, 2, 'Compras', 'Crear compra', 'Se ha creado la compra con ID #0 exitosamente.', '2022-10-08 20:26:31'),
-(230, 2, 'Compras', 'Crear compra', 'Se ha creado la compra con ID #0 exitosamente.', '2022-10-08 20:27:45'),
-(231, 2, 'Compras', 'Crear compra', 'Se ha creado la compra con ID #0 exitosamente.', '2022-10-08 20:30:48'),
-(232, 2, 'Compras', 'Crear compra', 'Se ha creado la compra con ID #0 exitosamente.', '2022-10-08 20:38:22'),
-(233, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-10-10 21:21:45'),
-(234, 2, 'Compras', 'Crear compra', 'Se ha creado la compra con ID #0 exitosamente.', '2022-10-10 21:42:00'),
-(235, 2, 'Compras', 'Crear compra', 'Se ha creado la compra con ID #0 exitosamente.', '2022-10-10 22:06:23'),
-(236, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-10-11 16:27:58'),
-(237, 2, 'Compras', 'Crear compra', 'Se ha creado la compra con ID #28 exitosamente.', '2022-10-11 16:35:12'),
-(238, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-10-12 16:34:05'),
-(239, 2, 'Compras', 'Actualizar compra', 'Se ha actualizado la compra con ID #28 exitosamente.', '2022-10-12 21:27:38'),
-(240, 2, 'Compras', 'Actualizar compra', 'Se ha actualizado la compra con ID #28 exitosamente.', '2022-10-12 21:27:52'),
-(241, 2, 'Compras', 'Actualizar compra', 'Se ha actualizado la compra con ID #28 exitosamente.', '2022-10-12 21:28:38'),
-(242, 2, 'Compras', 'Actualizar compra', 'Se ha actualizado la compra con ID #28 exitosamente.', '2022-10-12 21:29:04'),
-(243, 2, 'Compras', 'Actualizar compra', 'Se ha actualizado la compra con ID #28 exitosamente.', '2022-10-12 21:35:05'),
-(244, 2, 'Compras', 'Actualizar compra', 'Se ha actualizado la compra con ID #28 exitosamente.', '2022-10-12 21:47:03'),
-(245, 2, 'Compras', 'Actualizar compra', 'Se ha actualizado la compra con ID #28 exitosamente.', '2022-10-12 21:49:57'),
-(246, 2, 'Compras', 'Actualizar compra', 'Se ha actualizado la compra con ID #27 exitosamente.', '2022-10-12 21:50:14'),
-(247, 2, 'Compras', 'Actualizar compra', 'Se ha actualizado la compra con ID #28 exitosamente.', '2022-10-12 21:50:27'),
-(248, 2, 'Compras', 'Actualizar compra', 'Se ha actualizado la compra con ID #27 exitosamente.', '2022-10-12 21:50:39'),
-(249, 2, 'Compras', 'Actualizar compra', 'Se ha actualizado la compra con ID #28 exitosamente.', '2022-10-12 21:52:28'),
-(250, 2, 'Compras', 'Actualizar compra', 'Se ha actualizado la compra con ID #27 exitosamente.', '2022-10-12 21:52:38'),
-(251, 2, 'Compras', 'Actualizar compra', 'Se ha actualizado la compra con ID #9 exitosamente.', '2022-10-12 21:53:45'),
-(252, 2, 'Compras', 'Eliminar compra', 'Se ha eliminado la compra con ID #13 exitosamente.', '2022-10-12 21:55:29');
+INSERT INTO `audits` (`id`, `user`, `module`, `action`, `description`, `created_at`) VALUES
+(1, 2, 'Usuarios', 'Inicio de sesión', 'El usuario ha iniciado sesión exitosamente.', '2022-10-14 17:52:21');
 
 -- --------------------------------------------------------
 
@@ -365,9 +117,55 @@ CREATE TABLE `coins` (
 
 INSERT INTO `coins` (`id`, `coin`, `symbol`, `updated_at`, `deleted_at`, `created_at`) VALUES
 (1, 'Dólar', '$', '2022-09-14 20:24:37', NULL, '2022-09-14 20:08:40'),
-(2, 'Bolívar Digital', 'Bsd.', '2022-09-26 21:21:06', NULL, '2022-09-14 20:09:20'),
-(3, 'Euro', 'e', '2022-10-07 01:19:52', NULL, '2022-09-14 20:18:47'),
-(4, 'Yen', 'Yenes', '2022-09-14 21:41:14', '2022-09-14 21:41:14', '2022-09-14 21:40:32');
+(2, 'Bolívar Digital', 'Bsd.', '2022-09-26 21:21:06', NULL, '2022-09-14 20:09:20');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `coin_prices`
+--
+
+CREATE TABLE `coin_prices` (
+  `id` int NOT NULL,
+  `primary_coin` int NOT NULL,
+  `secondary_coin` int NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `updated_at` timestamp NOT NULL,
+  `deleted_at` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `customers`
+--
+
+CREATE TABLE `customers` (
+  `id` int NOT NULL,
+  `name` varchar(100) COLLATE utf8mb3_spanish_ci NOT NULL,
+  `rif` varchar(12) COLLATE utf8mb3_spanish_ci NOT NULL,
+  `address` text COLLATE utf8mb3_spanish_ci NOT NULL,
+  `phone` varchar(11) COLLATE utf8mb3_spanish_ci NOT NULL,
+  `updated_at` timestamp NOT NULL,
+  `deleted_at` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `inventory`
+--
+
+CREATE TABLE `inventory` (
+  `id` int NOT NULL,
+  `product` int NOT NULL,
+  `quantity` int NOT NULL,
+  `updated_at` timestamp NOT NULL,
+  `deleted_at` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -415,8 +213,6 @@ CREATE TABLE `providers` (
   `rif` varchar(12) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
   `address` text CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
   `phone` varchar(11) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
-  `phone2` varchar(11) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci DEFAULT NULL,
-  `type` varchar(25) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -426,12 +222,12 @@ CREATE TABLE `providers` (
 -- Volcado de datos para la tabla `providers`
 --
 
-INSERT INTO `providers` (`id`, `code`, `name`, `rif`, `address`, `phone`, `phone2`, `type`, `updated_at`, `deleted_at`, `created_at`) VALUES
-(1, 'A-001', 'Javier Alvarez', 'V-284558290', 'Las tunitas', '04245118022', '', 'normal', '2022-10-06 01:28:56', NULL, '2022-09-21 23:21:28'),
-(2, 'A-002', 'Ana González', 'V-284548290', 'Las tunitas', '04245118022', '04121538387', 'normal', '2022-10-06 01:28:41', NULL, '2022-09-21 23:30:10'),
-(3, 'C200', 'Mariangel Yajure', 'J-284544829', 'Las tunitas', '04245118022', '', 'normal', '2022-09-26 15:14:25', '2022-09-26 15:14:25', '2022-09-26 01:13:04'),
-(4, 'A-003', 'Mariangel Yajure', 'J-284548290', 'Las tunitas', '04245118022', '', 'normal', '2022-10-07 00:49:33', NULL, '2022-09-26 14:41:40'),
-(5, 'C222', 'Mariangel Yajure', 'J-248454829', 'Las tunitas', '04245118022', '', 'normal', '2022-09-26 15:14:18', '2022-09-26 15:14:18', '2022-09-26 14:43:34');
+INSERT INTO `providers` (`id`, `code`, `name`, `rif`, `address`, `phone`, `updated_at`, `deleted_at`, `created_at`) VALUES
+(1, 'A-001', 'Javier Alvarez', 'V-284558290', 'Las tunitas', '04245118022', '2022-10-06 01:28:56', NULL, '2022-09-21 23:21:28'),
+(2, 'A-002', 'Ana González', 'V-284548290', 'Las tunitas', '04245118022', '2022-10-06 01:28:41', NULL, '2022-09-21 23:30:10'),
+(3, 'C200', 'Mariangel Yajure', 'J-284544829', 'Las tunitas', '04245118022', '2022-09-26 15:14:25', '2022-09-26 15:14:25', '2022-09-26 01:13:04'),
+(4, 'A-003', 'Mariangel Yajure', 'J-284548290', 'Las tunitas', '04245118022', '2022-10-07 00:49:33', NULL, '2022-09-26 14:41:40'),
+(5, 'C222', 'Mariangel Yajure', 'J-248454829', 'Las tunitas', '04245118022', '2022-09-26 15:14:18', '2022-09-26 15:14:18', '2022-09-26 14:43:34');
 
 -- --------------------------------------------------------
 
@@ -442,6 +238,7 @@ INSERT INTO `providers` (`id`, `code`, `name`, `rif`, `address`, `phone`, `phone
 CREATE TABLE `purchases` (
   `id` int NOT NULL,
   `provider` int NOT NULL,
+  `user` int NOT NULL,
   `date` date NOT NULL,
   `receipt` varchar(50) COLLATE utf8mb3_spanish_ci NOT NULL,
   `reference` varchar(150) COLLATE utf8mb3_spanish_ci NOT NULL,
@@ -451,24 +248,6 @@ CREATE TABLE `purchases` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
-
---
--- Volcado de datos para la tabla `purchases`
---
-
-INSERT INTO `purchases` (`id`, `provider`, `date`, `receipt`, `reference`, `tax`, `coin`, `updated_at`, `deleted_at`, `created_at`) VALUES
-(6, 2, '2022-10-06', 'invoice', '132135453', 3, 1, '2022-10-08 19:14:17', NULL, '2022-10-08 19:14:17'),
-(7, 4, '2022-10-05', 'invoice', '132135453', 3, 1, '2022-10-08 19:19:38', NULL, '2022-10-08 19:19:38'),
-(8, 1, '2022-10-01', 'invoice', '132135453', 3, 1, '2022-10-08 19:22:22', NULL, '2022-10-08 19:22:22'),
-(9, 2, '2022-10-04', 'invoice', '1321354536', 3, 1, '2022-10-12 20:53:45', NULL, '2022-10-08 19:24:12'),
-(10, 4, '2022-10-01', 'deliveryNote', '234234656', 1, 1, '2022-10-08 19:25:05', NULL, '2022-10-08 19:25:05'),
-(11, 4, '2022-10-01', 'deliveryNote', '2312345', 1, 1, '2022-10-08 19:26:31', NULL, '2022-10-08 19:26:31'),
-(12, 4, '2022-10-01', 'invoice', '12312343', 3, 2, '2022-10-08 19:27:45', NULL, '2022-10-08 19:27:45'),
-(13, 1, '2022-10-06', 'deliveryNote', '1232343', 1, 1, '2022-10-12 20:55:29', '2022-10-12 20:55:29', '2022-10-08 19:30:48'),
-(14, 1, '2022-10-01', 'deliveryNote', '3123', 3, 1, '2022-10-08 19:38:22', NULL, '2022-10-08 19:38:22'),
-(26, 1, '2022-10-09', 'invoice', '123123443', 3, 1, NULL, NULL, '2022-10-10 21:42:00'),
-(27, 4, '2022-10-01', 'deliveryNote', '123545345', 1, 1, '2022-10-12 20:52:38', NULL, '2022-10-10 22:06:23'),
-(28, 4, '2022-10-06', 'deliveryNote', '31234', 3, 1, '2022-10-12 20:52:28', NULL, '2022-10-11 16:35:12');
 
 -- --------------------------------------------------------
 
@@ -484,59 +263,35 @@ CREATE TABLE `purchase_details` (
   `purchase` int NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 
+-- --------------------------------------------------------
+
 --
--- Volcado de datos para la tabla `purchase_details`
+-- Estructura de tabla para la tabla `sales`
 --
 
-INSERT INTO `purchase_details` (`id`, `product`, `quantity`, `price`, `purchase`) VALUES
-(5, 1, 1, '3.43', 6),
-(6, 2, 1, '4.34', 6),
-(7, 4, 1, '40.34', 6),
-(8, 7, 1, '40.03', 6),
-(9, 1, 5, '25.00', 7),
-(10, 2, 6, '4.34', 7),
-(11, 7, 4, '34.32', 7),
-(12, 1, 32, '1.00', 8),
-(13, 2, 43, '23.34', 8),
-(14, 7, 100, '43.24', 9),
-(15, 2, 100, '10.00', 10),
-(16, 7, 10, '9999.99', 11),
-(17, 2, 1, '10000.00', 12),
-(18, 4, 1, '100000.00', 13),
-(19, 1, 1, '100000.00', 14),
-(20, 7, 1, '23.24', 26),
-(21, 2, 1, '24.34', 26),
-(22, 4, 10, '100.00', 26),
-(23, 1, 13, '50.00', 26),
-(24, 1, 10, '100.00', 27),
-(25, 2, 10, '150.00', 27),
-(26, 4, 5, '50.00', 27),
-(27, 1, 5, '15.00', 28),
-(28, 2, 1, '10.00', 28);
+CREATE TABLE `sales` (
+  `id` int NOT NULL,
+  `customer` int NOT NULL,
+  `seller` int NOT NULL,
+  `date` date NOT NULL,
+  `receipt` int NOT NULL,
+  `updated_at` timestamp NOT NULL,
+  `deleted_at` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `settings`
+-- Estructura de tabla para la tabla `sales_details`
 --
 
-CREATE TABLE `settings` (
+CREATE TABLE `sales_details` (
   `id` int NOT NULL,
-  `type` varchar(10) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
-  `name` text CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
-  `value` text CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish_ci NOT NULL,
-  `table_id` int NOT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `product` int NOT NULL,
+  `quantity` int NOT NULL,
+  `sale` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish_ci;
-
---
--- Volcado de datos para la tabla `settings`
---
-
-INSERT INTO `settings` (`id`, `type`, `name`, `value`, `table_id`, `updated_at`) VALUES
-(1, 'system', 'systemName', 'POS System', 0, NULL),
-(2, 'coin', 'principalCoin', 'Dólar', 0, '2022-09-21 20:07:20'),
-(3, 'coin', 'secondaryCoin', 'Bolívar Soberano', 0, '2022-09-21 20:07:20');
 
 -- --------------------------------------------------------
 
@@ -609,7 +364,7 @@ INSERT INTO `users` (`id`, `ci`, `name`, `email`, `password`, `privilege`, `phot
 --
 ALTER TABLE `audits`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id_audit` (`user_id`);
+  ADD KEY `user_id_audit` (`user`);
 
 --
 -- Indices de la tabla `brands`
@@ -628,6 +383,27 @@ ALTER TABLE `categories`
 --
 ALTER TABLE `coins`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `coin_prices`
+--
+ALTER TABLE `coin_prices`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `coin_prices_ibfk_1` (`primary_coin`),
+  ADD KEY `coin_prices_ibfk_2` (`secondary_coin`);
+
+--
+-- Indices de la tabla `customers`
+--
+ALTER TABLE `customers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `inventory`
+--
+ALTER TABLE `inventory`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `inventory_ibfk_1` (`product`);
 
 --
 -- Indices de la tabla `products`
@@ -652,7 +428,8 @@ ALTER TABLE `purchases`
   ADD PRIMARY KEY (`id`),
   ADD KEY `purchases_ibfk_1` (`provider`),
   ADD KEY `purchases_ibfk_2` (`tax`),
-  ADD KEY `purchases_ibfk_3` (`coin`);
+  ADD KEY `purchases_ibfk_3` (`coin`),
+  ADD KEY `purchases_ibfk_4` (`user`);
 
 --
 -- Indices de la tabla `purchase_details`
@@ -663,10 +440,20 @@ ALTER TABLE `purchase_details`
   ADD KEY `purchase_details_ibfk_2` (`purchase`);
 
 --
--- Indices de la tabla `settings`
+-- Indices de la tabla `sales`
 --
-ALTER TABLE `settings`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `sales`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sales_ibfk_1` (`customer`),
+  ADD KEY `sales_ibfk_2` (`seller`);
+
+--
+-- Indices de la tabla `sales_details`
+--
+ALTER TABLE `sales_details`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sales_details_ibfk_1` (`product`),
+  ADD KEY `sales_details_ibfk_2` (`sale`);
 
 --
 -- Indices de la tabla `taxes`
@@ -688,7 +475,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `audits`
 --
 ALTER TABLE `audits`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=253;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `brands`
@@ -709,6 +496,24 @@ ALTER TABLE `coins`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT de la tabla `coin_prices`
+--
+ALTER TABLE `coin_prices`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `customers`
+--
+ALTER TABLE `customers`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `inventory`
+--
+ALTER TABLE `inventory`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `products`
 --
 ALTER TABLE `products`
@@ -724,19 +529,25 @@ ALTER TABLE `providers`
 -- AUTO_INCREMENT de la tabla `purchases`
 --
 ALTER TABLE `purchases`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `purchase_details`
 --
 ALTER TABLE `purchase_details`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `settings`
+-- AUTO_INCREMENT de la tabla `sales`
 --
-ALTER TABLE `settings`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `sales`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `sales_details`
+--
+ALTER TABLE `sales_details`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `taxes`
@@ -758,7 +569,20 @@ ALTER TABLE `users`
 -- Filtros para la tabla `audits`
 --
 ALTER TABLE `audits`
-  ADD CONSTRAINT `audits_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `audits_ibfk_1` FOREIGN KEY (`user`) REFERENCES `users` (`id`);
+
+--
+-- Filtros para la tabla `coin_prices`
+--
+ALTER TABLE `coin_prices`
+  ADD CONSTRAINT `coin_prices_ibfk_1` FOREIGN KEY (`primary_coin`) REFERENCES `coins` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `coin_prices_ibfk_2` FOREIGN KEY (`secondary_coin`) REFERENCES `coins` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Filtros para la tabla `inventory`
+--
+ALTER TABLE `inventory`
+  ADD CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`product`) REFERENCES `products` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Filtros para la tabla `products`
@@ -775,7 +599,8 @@ ALTER TABLE `products`
 ALTER TABLE `purchases`
   ADD CONSTRAINT `purchases_ibfk_1` FOREIGN KEY (`provider`) REFERENCES `providers` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `purchases_ibfk_2` FOREIGN KEY (`tax`) REFERENCES `taxes` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `purchases_ibfk_3` FOREIGN KEY (`coin`) REFERENCES `coins` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `purchases_ibfk_3` FOREIGN KEY (`coin`) REFERENCES `coins` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `purchases_ibfk_4` FOREIGN KEY (`user`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Filtros para la tabla `purchase_details`
@@ -783,6 +608,20 @@ ALTER TABLE `purchases`
 ALTER TABLE `purchase_details`
   ADD CONSTRAINT `purchase_details_ibfk_1` FOREIGN KEY (`product`) REFERENCES `products` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `purchase_details_ibfk_2` FOREIGN KEY (`purchase`) REFERENCES `purchases` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Filtros para la tabla `sales`
+--
+ALTER TABLE `sales`
+  ADD CONSTRAINT `sales_ibfk_1` FOREIGN KEY (`customer`) REFERENCES `customers` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `sales_ibfk_2` FOREIGN KEY (`seller`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Filtros para la tabla `sales_details`
+--
+ALTER TABLE `sales_details`
+  ADD CONSTRAINT `sales_details_ibfk_1` FOREIGN KEY (`product`) REFERENCES `products` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `sales_details_ibfk_2` FOREIGN KEY (`sale`) REFERENCES `sales` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
