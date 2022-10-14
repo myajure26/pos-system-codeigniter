@@ -53,7 +53,7 @@ class SettingController extends BaseController
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
-		$this->auditContent['user_id'] 		= $auditUserId;
+		$this->auditContent['user'] 		= $auditUserId;
 		$this->auditContent['action'] 		= "Establecer monedas";
 		$this->auditContent['description'] 	= "Se han establecido las monedas " . $principalCoin . " y " . $secondaryCoin . " como monedas principal y secundaria";
 		$AuditModel = new AuditModel();

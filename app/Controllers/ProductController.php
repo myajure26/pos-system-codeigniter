@@ -69,7 +69,7 @@ class ProductController extends BaseController
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
-		$this->auditContent['user_id'] 		= $auditUserId;
+		$this->auditContent['user'] 		= $auditUserId;
 		$this->auditContent['action'] 		= "Crear producto";
 		$this->auditContent['description'] 	= "Se ha creado el producto con ID #" . $ProductModel->getLastId() . " exitosamente.";
 		$AuditModel = new AuditModel();
@@ -166,7 +166,7 @@ class ProductController extends BaseController
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
-		$this->auditContent['user_id'] 		= $auditUserId;
+		$this->auditContent['user'] 		= $auditUserId;
 		$this->auditContent['action'] 		= "Actualizar producto";
 		$this->auditContent['description'] 	= "Se ha actualizado el producto con ID #" . $id . " exitosamente.";
 		$AuditModel = new AuditModel();
@@ -196,7 +196,7 @@ class ProductController extends BaseController
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
-		$this->auditContent['user_id'] 		= $auditUserId;
+		$this->auditContent['user'] 		= $auditUserId;
 		$this->auditContent['action'] 		= "Eliminar producto";
 		$this->auditContent['description'] 	= "Se ha eliminado el producto con ID #" . $id . " exitosamente.";
 		$AuditModel = new AuditModel();

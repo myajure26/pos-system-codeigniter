@@ -129,16 +129,22 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="mb-3">
                                 <label class="form-label">Fecha de creación</label>
                                 <input type="text" class="form-control viewDisabled" id="viewCreated" disabled>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="mb-3">
                                 <label class="form-label">Fecha de actualización</label>
                                 <input type="text" class="form-control viewDisabled" id="viewUpdated" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label">Usuario que realizó la compra</label>
+                                <input type="text" class="form-control viewDisabled" id="viewUser" disabled>
                             </div>
                         </div>
                     </div>
@@ -238,6 +244,8 @@
         $('#viewCoin').val(data[0].coin);
         $('#viewCreated').val(data[0].created_at);
         $('#viewUpdated').val(data[0].updated_at);
+        $('#viewUser').val(data[0].user);
+
         // Para los productos
         data.forEach(element => {
 

@@ -62,7 +62,7 @@ class TaxController extends BaseController
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
-		$this->auditContent['user_id'] 		= $auditUserId;
+		$this->auditContent['user'] 		= $auditUserId;
 		$this->auditContent['action'] 		= "Crear impuesto";
 		$this->auditContent['description'] 	= "Se ha creado el impuesto con ID #" . $TaxModel->getLastId() . " exitosamente.";
 		$AuditModel = new AuditModel();
@@ -146,7 +146,7 @@ class TaxController extends BaseController
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
-		$this->auditContent['user_id'] 		= $auditUserId;
+		$this->auditContent['user'] 		= $auditUserId;
 		$this->auditContent['action'] 		= "Actualizar impuesto";
 		$this->auditContent['description'] 	= "Se ha actualizado el impuesto con ID #" . $id . " exitosamente.";
 		$AuditModel = new AuditModel();
@@ -176,7 +176,7 @@ class TaxController extends BaseController
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
-		$this->auditContent['user_id'] 		= $auditUserId;
+		$this->auditContent['user'] 		= $auditUserId;
 		$this->auditContent['action'] 		= "Eliminar impuesto";
 		$this->auditContent['description'] 	= "Se ha eliminado el impuesto con ID #" . $id . " exitosamente.";
 		$AuditModel = new AuditModel();

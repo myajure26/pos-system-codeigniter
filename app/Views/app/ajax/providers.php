@@ -105,31 +105,14 @@
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label">Tipo de proveedor</label>
-                                <select class="form-select" name="providerType" id="providerType" required>
-                                    <option value="">Seleccione el tipo</option>
-                                    <option value="normal">Normal</option>
-                                </select>
+                                <label class="form-label">Teléfono</label>
+                                <input type="text" class="form-control" id="phone" placeholder="Introduce el teléfono del proveedor" name="phone" required maxlength="11" minlength="11">
                             </div>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Dirección</label>
                         <textarea class="form-control" id="address" placeholder="Introduce la dirección del proveedor" name="address" required cols="2"></textarea>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Teléfono</label>
-                                <input type="text" class="form-control" id="phone" placeholder="Introduce el teléfono del proveedor" name="phone" required maxlength="11" minlength="11">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Teléfono (opcional)</label>
-                                <input type="text" class="form-control" id="phone2" placeholder="Se puede dejar en blanco" name="phone2" maxlength="11" minlength="11">
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -189,11 +172,10 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Tipo de proveedor</label>
-                            <select class="form-select" name="providerType" id="viewProviderType" required disabled>
-                                <option value="">Seleccione el tipo</option>
-                                <option value="normal">Normal</option>
-                            </select>
+                            <div class="mb-3">
+                                <label class="form-label">Teléfono</label>
+                                <input type="text" class="form-control" id="viewPhone" name="phone" disabled>
+                            </div>
                         </div>
                     </div>
                     
@@ -202,20 +184,6 @@
                         <textarea class="form-control" id="viewAddress" name="address" disabled></textarea>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Teléfono</label>
-                                <input type="text" class="form-control" id="viewPhone" name="phone" disabled>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Teléfono 2</label>
-                                <input type="text" class="form-control" id="viewPhone2" name="phone2" disabled>
-                            </div>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">

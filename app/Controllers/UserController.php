@@ -66,7 +66,7 @@ class UserController extends BaseController
 		$this->session->set($userData);
 
 		//PARA LA AUDITORÍA
-		$this->auditContent['user_id'] 		= $user[0]["id"];
+		$this->auditContent['user'] 		= $user[0]["id"];
 		$this->auditContent['action'] 		= "Inicio de sesión";
 		$this->auditContent['description'] 	= "El usuario ha iniciado sesión exitosamente.";
 		$AuditModel = new AuditModel();
@@ -131,7 +131,7 @@ class UserController extends BaseController
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
-		$this->auditContent['user_id'] 		= $auditUserId;
+		$this->auditContent['user'] 		= $auditUserId;
 		$this->auditContent['action'] 		= "Crear usuario";
 		$this->auditContent['description'] 	= "Se ha creado al usuario con ID #" . $UserModel->getLastId() . " exitosamente.";
 		$AuditModel 						= new AuditModel();
@@ -234,7 +234,7 @@ class UserController extends BaseController
 		
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
-		$this->auditContent['user_id'] 		= $auditUserId;
+		$this->auditContent['user'] 		= $auditUserId;
 		$this->auditContent['action'] 		= "Actualizar usuario";
 		$this->auditContent['description'] 	= "Se ha actualizado al usuario con ID #" . $id . " exitosamente.";
 		$AuditModel = new AuditModel();
@@ -267,7 +267,7 @@ class UserController extends BaseController
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
-		$this->auditContent['user_id'] 		= $auditUserId;
+		$this->auditContent['user'] 		= $auditUserId;
 		$this->auditContent['action'] 		= "Eliminar usuario";
 		$this->auditContent['description'] 	= "Se ha eliminado al usuario con ID #" . $id . " exitosamente.";
 		$AuditModel = new AuditModel();

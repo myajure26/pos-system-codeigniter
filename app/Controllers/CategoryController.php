@@ -58,7 +58,7 @@ class CategoryController extends BaseController
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
-		$this->auditContent['user_id'] 		= $auditUserId;
+		$this->auditContent['user'] 		= $auditUserId;
 		$this->auditContent['action'] 		= "Crear categoría";
 		$this->auditContent['description'] 	= "Se ha creado la categoría con ID #" . $CategoryModel->getLastId() . " exitosamente.";
 		$AuditModel = new AuditModel();
@@ -138,7 +138,7 @@ class CategoryController extends BaseController
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
-		$this->auditContent['user_id'] 		= $auditUserId;
+		$this->auditContent['user'] 		= $auditUserId;
 		$this->auditContent['action'] 		= "Actualizar categoría";
 		$this->auditContent['description'] 	= "Se ha actualizado la categoría con ID #" . $id . " exitosamente.";
 		$AuditModel = new AuditModel();
@@ -168,7 +168,7 @@ class CategoryController extends BaseController
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
-		$this->auditContent['user_id'] 		= $auditUserId;
+		$this->auditContent['user'] 		= $auditUserId;
 		$this->auditContent['action'] 		= "Eliminar categoría";
 		$this->auditContent['description'] 	= "Se ha eliminado la categoría con ID #" . $id . " exitosamente.";
 		$AuditModel = new AuditModel();

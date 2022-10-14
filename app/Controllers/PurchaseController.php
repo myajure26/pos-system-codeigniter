@@ -48,6 +48,7 @@ class PurchaseController extends BaseController
 
 		$purchase = [
 			"provider" 	=> $this->request->getPost('provider'),
+			"user" 		=> $this->session->get('id'),
 			"date" 		=> $this->request->getPost('date'),
 			"receipt" 	=> $this->request->getPost('receipt'),
 			"reference" => $this->request->getPost('reference'),
@@ -101,7 +102,7 @@ class PurchaseController extends BaseController
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
-		$this->auditContent['user_id'] 		= $auditUserId;
+		$this->auditContent['user'] 		= $auditUserId;
 		$this->auditContent['action'] 		= "Crear compra";
 		$this->auditContent['description'] 	= "Se ha creado la compra con ID #" . $purchase . " exitosamente.";
 		$AuditModel = new AuditModel();
@@ -276,7 +277,7 @@ class PurchaseController extends BaseController
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
-		$this->auditContent['user_id'] 		= $auditUserId;
+		$this->auditContent['user'] 		= $auditUserId;
 		$this->auditContent['action'] 		= "Actualizar compra";
 		$this->auditContent['description'] 	= "Se ha actualizado la compra con ID #" . $id . " exitosamente.";
 		$AuditModel = new AuditModel();
@@ -306,7 +307,7 @@ class PurchaseController extends BaseController
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
-		$this->auditContent['user_id'] 		= $auditUserId;
+		$this->auditContent['user'] 		= $auditUserId;
 		$this->auditContent['action'] 		= "Eliminar compra";
 		$this->auditContent['description'] 	= "Se ha eliminado la compra con ID #" . $id . " exitosamente.";
 		$AuditModel = new AuditModel();

@@ -14,7 +14,7 @@ class AuditModel extends Model
 	protected $returnType           = 'array';
 	protected $useSoftDelete        = false;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["user_id", "module", "action", "description"];
+	protected $allowedFields        = ["user", "module", "action", "description"];
 
 	public function createAudit($data)
 	{
@@ -27,7 +27,7 @@ class AuditModel extends Model
 	{
 		$query = $this
 			->select('audits.id, name, module, action, description, audits.created_at')
-			->join('users', 'users.id = audits.user_id');
+			->join('users', 'users.id = audits.user');
 		return $query;
 	}
 

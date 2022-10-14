@@ -52,7 +52,6 @@ class ProviderController extends BaseController
 			"rif" 			=> $this->request->getPost('identification'),
 			"address" 		=> $this->request->getPost('address'),
 			"phone" 		=> $this->request->getPost('phone'),
-			"phone2" 		=> $this->request->getPost('phone2'),
 			"type" 			=> $this->request->getPost('providerType')
 		];
 
@@ -66,7 +65,7 @@ class ProviderController extends BaseController
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
-		$this->auditContent['user_id'] 		= $auditUserId;
+		$this->auditContent['user'] 		= $auditUserId;
 		$this->auditContent['action'] 		= "Crear proveedor";
 		$this->auditContent['description'] 	= "Se ha creado al proveedor con ID #" . $ProviderModel->getLastId() . " exitosamente.";
 		$AuditModel = new AuditModel();
@@ -140,7 +139,6 @@ class ProviderController extends BaseController
 			"rif" 		=> $this->request->getPost('identification'),
 			"address" 	=> $this->request->getPost('address'),
 			"phone" 	=> $this->request->getPost('phone'),
-			"phone2" 	=> $this->request->getPost('phone2'),
 			"type" 		=> $this->request->getPost('providerType')
 		];
 
@@ -154,7 +152,7 @@ class ProviderController extends BaseController
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
-		$this->auditContent['user_id'] 		= $auditUserId;
+		$this->auditContent['user'] 		= $auditUserId;
 		$this->auditContent['action'] 		= "Actualizar proveedor";
 		$this->auditContent['description'] 	= "Se ha actualizado al proveedor con ID #" . $id . " exitosamente.";
 		$AuditModel = new AuditModel();
@@ -184,7 +182,7 @@ class ProviderController extends BaseController
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
-		$this->auditContent['user_id'] 		= $auditUserId;
+		$this->auditContent['user'] 		= $auditUserId;
 		$this->auditContent['action'] 		= "Eliminar proveedor";
 		$this->auditContent['description'] 	= "Se ha eliminado al proveedor con ID #" . $id . " exitosamente.";
 		$AuditModel = new AuditModel();

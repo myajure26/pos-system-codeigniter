@@ -58,7 +58,7 @@ class BrandController extends BaseController
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
-		$this->auditContent['user_id'] 		= $auditUserId;
+		$this->auditContent['user'] 		= $auditUserId;
 		$this->auditContent['action'] 		= "Crear marca";
 		$this->auditContent['description'] 	= "Se ha creado la marca con ID #" . $BrandModel->getLastId() . " exitosamente.";
 		$AuditModel = new AuditModel();
@@ -138,7 +138,7 @@ class BrandController extends BaseController
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
-		$this->auditContent['user_id'] 		= $auditUserId;
+		$this->auditContent['user'] 		= $auditUserId;
 		$this->auditContent['action'] 		= "Actualizar marca";
 		$this->auditContent['description'] 	= "Se ha actualizado la marca con ID #" . $id . " exitosamente.";
 		$AuditModel = new AuditModel();
@@ -168,7 +168,7 @@ class BrandController extends BaseController
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
-		$this->auditContent['user_id'] 		= $auditUserId;
+		$this->auditContent['user'] 		= $auditUserId;
 		$this->auditContent['action'] 		= "Eliminar marca";
 		$this->auditContent['description'] 	= "Se ha eliminado la marca con ID #" . $id . " exitosamente.";
 		$AuditModel = new AuditModel();

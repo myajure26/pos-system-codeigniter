@@ -62,7 +62,7 @@ class CoinController extends BaseController
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
-		$this->auditContent['user_id'] 		= $auditUserId;
+		$this->auditContent['user'] 		= $auditUserId;
 		$this->auditContent['action'] 		= "Crear moneda";
 		$this->auditContent['description'] 	= "Se ha creado la moneda con ID #" . $CoinModel->getLastId() . " exitosamente.";
 		$AuditModel = new AuditModel();
@@ -146,7 +146,7 @@ class CoinController extends BaseController
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
-		$this->auditContent['user_id'] 		= $auditUserId;
+		$this->auditContent['user'] 		= $auditUserId;
 		$this->auditContent['action'] 		= "Actualizar moneda";
 		$this->auditContent['description'] 	= "Se ha actualizado la moneda con ID #" . $id . " exitosamente.";
 		$AuditModel = new AuditModel();
@@ -176,7 +176,7 @@ class CoinController extends BaseController
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
-		$this->auditContent['user_id'] 		= $auditUserId;
+		$this->auditContent['user'] 		= $auditUserId;
 		$this->auditContent['action'] 		= "Eliminar moneda";
 		$this->auditContent['description'] 	= "Se ha eliminado la moneda con ID #" . $id . " exitosamente.";
 		$AuditModel = new AuditModel();
