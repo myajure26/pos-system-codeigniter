@@ -1,10 +1,10 @@
 <?php 
 namespace App\Controllers;
-use App\Models\ProviderModel;
+use App\Models\CustomerModel;
 use App\Models\AuditModel;
 use \Hermawan\DataTables\DataTable;
 
-class ProviderController extends BaseController
+class CustomerController extends BaseController
 {
 	protected $errorMessage = [
 		"alert" => "simple",
@@ -22,20 +22,20 @@ class ProviderController extends BaseController
 
 	protected $auditContent = [
 		"user"			=> "",
-		"module"		=> "Proveedores",
+		"module"		=> "Clientes",
 		"action"		=> "",
 		"description"	=> ""
 	];
 
-	public function createProvider()
+	public function createCustomer()
 	{
-		helper('providerValidation');
+		helper('customerValidation');
 
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
 		}
 
-		if(!$this->validate(createProviderValidation())){
+		if(!$this->validate(createCustomerValidation())){
 
 			//Mostrar errores de validación
 			$errors = $this->validator->getErrors();
@@ -47,50 +47,49 @@ class ProviderController extends BaseController
 		}
 		
 		$data = [
-			"code" 			=> $this->request->getPost('code'),
-			"name" 			=> $this->request->getPost('name'),
-			"rif" 			=> $this->request->getPost('identification'),
-			"address" 		=> $this->request->getPost('address'),
-			"phone" 		=> $this->request->getPost('phone')
+			"name" 						=> $this->request->getPost('name'),
+			"identification" 			=> $this->request->getPost('identification'),
+			"address" 					=> $this->request->getPost('address'),
+			"phone" 					=> $this->request->getPost('phone'),
 		];
 
-		$ProviderModel = new ProviderModel();
-		$provider = $ProviderModel->createProvider($data);
+		$CustomerModel = new CustomerModel();
+		$customer = $CustomerModel->createCustomer($data);
 
-		if(!$provider){
-			$this->errorMessage['text'] = "Error al guardar el proveedor en la base de datos";
+		if(!$customer){
+			$this->errorMessage['text'] = "Error al guardar al cliente en la base de datos";
 			return sweetAlert($this->errorMessage);
 		}
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
 		$this->auditContent['user'] 		= $auditUserId;
-		$this->auditContent['action'] 		= "Crear proveedor";
-		$this->auditContent['description'] 	= "Se ha creado al proveedor con ID #" . $ProviderModel->getLastId() . " exitosamente.";
+		$this->auditContent['action'] 		= "Crear cliente";
+		$this->auditContent['description'] 	= "Se ha creado al cliente con ID #" . $CustomerModel->getLastId() . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
 		//SWEET ALERT
 		$this->successMessage['alert'] 		= "clean";
-		$this->successMessage['text'] 		= "El proveedor se ha creado correctamente";
+		$this->successMessage['text'] 		= "El cliente se ha creado correctamente";
 		return sweetAlert($this->successMessage);
 	}
 
-	public function getProviders()
+	public function getCustomers()
 	{
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
 		}
 
-		$ProviderModel = new ProviderModel();
+		$CustomerModel = new CustomerModel();
 				
-		return DataTable::of($ProviderModel->getProviders())
+		return DataTable::of($CustomerModel->getCustomers())
 			->add('Acciones', function($row){
 				return '<div class="btn-list"> 
-							<button type="button" class="btnView btn btn-sm btn-primary waves-effect" data-id="'.$row->id.'" data-type="providers" data-bs-toggle="modal" data-bs-target="#viewModal">
+							<button type="button" class="btnView btn btn-sm btn-primary waves-effect" data-id="'.$row->id.'" data-type="customers" data-bs-toggle="modal" data-bs-target="#viewModal">
                                 <i class="far fa-eye"></i>
                             </button>
-                            <button type="button" class="btnDelete btn btn-sm btn-danger waves-effect" data-id="'.$row->id.'" data-type="providers">
+                            <button type="button" class="btnDelete btn btn-sm btn-danger waves-effect" data-id="'.$row->id.'" data-type="customers">
                                 <i class="far fa-trash-alt"></i>
                             </button>
                         </div>';
@@ -98,29 +97,29 @@ class ProviderController extends BaseController
 			->toJson();
 	}
 
-	public function getProviderById($id)
+	public function getCustomerById($id)
 	{
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
 		}
 
-		$ProviderModel = new ProviderModel();
-		$provider = $ProviderModel->getProviderById(['id' => $id]);
-		if(!$provider){
+		$CustomerModel = new CustomerModel();
+		$customer = $CustomerModel->getCustomerById(['id' => $id]);
+		if(!$customer){
 			return false;
 		}
-		return json_encode($provider);
+		return json_encode($customer);
 	}
 
-	public function updateProvider()
+	public function updateCustomer()
 	{
-		helper('providerValidation');
+		helper('customerValidation');
 
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
 		}
 
-		if(!$this->validate(updateProviderValidation())){
+		if(!$this->validate(updateCustomerValidation())){
 
 			//Mostrar errores de validación
 			$errors = $this->validator->getErrors();
@@ -133,36 +132,35 @@ class ProviderController extends BaseController
 
 		$id = $this->request->getPost('id');
 		$data = [
-			"code" 		=> $this->request->getPost('code'),
-			"name" 		=> $this->request->getPost('name'),
-			"rif" 		=> $this->request->getPost('identification'),
-			"address" 	=> $this->request->getPost('address'),
-			"phone" 	=> $this->request->getPost('phone')
+			"name" 					=> $this->request->getPost('name'),
+			"identification" 		=> $this->request->getPost('identification'),
+			"address" 				=> $this->request->getPost('address'),
+			"phone" 				=> $this->request->getPost('phone')
 		];
 
-		$ProviderModel = new ProviderModel();
-		$provider = $ProviderModel->updateProvider($data, $id);
+		$CustomerModel = new CustomerModel();
+		$customer = $CustomerModel->updateCustomer($data, $id);
 
-		if(!$provider){
-			$this->errorMessage['text'] = "Error actualizar al proveedor en la base de datos";
+		if(!$customer){
+			$this->errorMessage['text'] = "Error actualizar al cliente en la base de datos";
 			return sweetAlert($this->errorMessage);
 		}
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
 		$this->auditContent['user'] 		= $auditUserId;
-		$this->auditContent['action'] 		= "Actualizar proveedor";
-		$this->auditContent['description'] 	= "Se ha actualizado al proveedor con ID #" . $id . " exitosamente.";
+		$this->auditContent['action'] 		= "Actualizar cliente";
+		$this->auditContent['description'] 	= "Se ha actualizado al cliente con ID #" . $id . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
 		//SWEET ALERT
 		$this->successMessage['alert'] 		= "clean";
-		$this->successMessage['text'] 		= "El proveedor se ha actualizado correctamente";
+		$this->successMessage['text'] 		= "El cliente se ha actualizado correctamente";
 		return sweetAlert($this->successMessage);
 	}
 
-	public function deleteProvider()
+	public function deleteCustomer()
 	{
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
@@ -170,25 +168,25 @@ class ProviderController extends BaseController
 
 		$id = $this->request->getPost('id');
 
-		$ProviderModel = new ProviderModel();
-		$deleteProvider = $ProviderModel->deleteProvider($id);
+		$CustomerModel = new CustomerModel();
+		$deleteCustomer = $CustomerModel->deleteCustomer($id);
 
-		if(!$deleteProvider){
-			$this->errorMessage['text'] = "El proveedor no existe";
+		if(!$deleteCustomer){
+			$this->errorMessage['text'] = "El cliente no existe";
 			return sweetAlert($this->errorMessage);
 		}
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('id');
 		$this->auditContent['user'] 		= $auditUserId;
-		$this->auditContent['action'] 		= "Eliminar proveedor";
-		$this->auditContent['description'] 	= "Se ha eliminado al proveedor con ID #" . $id . " exitosamente.";
+		$this->auditContent['action'] 		= "Eliminar cliente";
+		$this->auditContent['description'] 	= "Se ha eliminado al cliente con ID #" . $id . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
 		//SWEET ALERT
 		$this->successMessage['alert'] 		= "clean";
-		$this->successMessage['title'] 		= "Proveedor eliminado";
+		$this->successMessage['title'] 		= "Cliente eliminado";
 		$this->successMessage['text'] 		= "Puede recuperarlo desde la papelera";
 		return sweetAlert($this->successMessage);
 	}

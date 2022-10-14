@@ -193,8 +193,6 @@ $(document).ready(function() {
     function view(data, type){
 
         switch(type){
-            case 'users':
-               return viewUser(data);
             case 'categories':
                return viewCategory(data);
             case 'brands':
@@ -205,8 +203,12 @@ $(document).ready(function() {
                return viewTax(data);
             case 'products':
                return viewProduct(data);
+            case 'customers':
+                return viewCustomer(data);
             case 'providers':
                return viewProvider(data);
+            case 'users':
+               return viewUser(data);
             case 'purchases':
                 return viewPurchase(data);
             case 'configCoin':
