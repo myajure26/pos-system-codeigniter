@@ -7,21 +7,20 @@ use CodeIgniter\Model;
 class PurchaseModel extends Model
 {
 	protected $DBGroup              = 'default';
-	protected $table                = 'purchases';
+	protected $table                = 'compras';
 	protected $primaryKey           = 'id';
 	protected $useAutoIncrement     = true;
 	protected $insertID             = 0;
 	protected $returnType           = 'array';
 	protected $useSoftDeletes       = true;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["provider", "date", "receipt", "reference", "tax", "coin", "updated_at", "deleted_at", "created_at"];
+	protected $allowedFields        = ["proveedor", "usuario", "fecha", "tipo_documento", "referencia", "moneda", "estado", "actualizado_en", "creado_en"];
 
 	// Dates
 	protected $useTimestamps        = true;
 	protected $dateFormat           = 'datetime';
-	protected $createdField         = 'created_at';
-	protected $updatedField         = 'updated_at';
-	protected $deletedField         = 'deleted_at';
+	protected $createdField         = 'creado_en';
+	protected $updatedField         = 'actualizado_en';
 
 	public function createPurchase($purchase, $purchaseDetails)
 	{
@@ -29,17 +28,17 @@ class PurchaseModel extends Model
 		$db = \Config\Database::connect();
 		$db->transStart();
 		
-		$db->table('purchases')->insert($purchase);
+		$db->table('compras')->insert($purchase);
 		
 		//Obtener ID de la compra
 		$purchaseId = $db->insertID();
 
 		//Insertar el ID al arreglo
 		for($i = 0; $i < count($purchaseDetails); $i++){
-			$purchaseDetails[$i]['purchase'] = $purchaseId;
+			$purchaseDetails[$i]['compra'] = $purchaseId;
 		}
 
-		$db->table('purchase_details')->insertBatch($purchaseDetails);
+		$db->table('detalle_compra')->insertBatch($purchaseDetails);
 
 		$db->transComplete();
 
@@ -53,20 +52,19 @@ class PurchaseModel extends Model
 	public function getPurchases()
 	{
 		$query = $this
-			->select('purchases.id, providers.name, date, reference')
-			->join('providers', 'providers.id = purchases.provider')
-			->where('purchases.deleted_at', NULL);
+			->select('compras.identificacion, proveedores.nombre, fecha, referencia, compras.estado')
+			->join('proveedores', 'proveedores.codigo = compras.proveedor');
 		return $query;
 	}
 
 	public function getPurchaseById($data)
 	{
 		$query = $this
-				->select('purchases.id as purchaseId, date, purchases.provider, providers.name as providerName, receipt, reference, purchases.tax, purchases.coin, purchases.updated_at, purchases.created_at, purchase_details.id as purchaseDetailsId, purchase_details.product, quantity, purchase_details.price, products.code, products.name, users.name as user')
-				->join('purchase_details', 'purchase_details.purchase = purchases.id')
-				->join('products', 'products.id = purchase_details.product')
-				->join('providers', 'providers.id = purchases.provider')
-				->join('users', 'users.id = purchases.user')
+				->select('compras.identificacion as idCompra, fecha, compras.proveedor, proveedores.nombre as nombreProveedor, tipo_documento, referencia, compras.moneda, compras.actualizado_en, compras.creado_en, detalle_compra.identificacion as idDetalleCompra, detalle_compra.producto, cantidad, detalle_compra.precio, productos.codigo, productos.nombre, usuarios.nombre as usuario, compras.estado')
+				->join('detalle_compra', 'detalle_compra.compra = compras.identificacion')
+				->join('productos', 'productos.codigo = detalle_compra.producto')
+				->join('proveedores', 'proveedores.codigo = compras.proveedor')
+				->join('usuarios', 'usuarios.identificacion = compras.usuario')
 				->where($data);
 		return $query->get()->getResultArray();
 	}
@@ -82,14 +80,14 @@ class PurchaseModel extends Model
 		$db->transStart();
 		
 		$db
-			->table('purchases')
-			->where('id', $id)
+			->table('compras')
+			->where('identificacion', $id)
 			->set($purchase)
 			->update();
 		
 		$db
-			->table('purchase_details')
-			->updateBatch($purchaseDetails, 'id');
+			->table('detalle_compra')
+			->updateBatch($purchaseDetails, 'identificacion');
 		
 		$db->transComplete();
 
@@ -100,10 +98,21 @@ class PurchaseModel extends Model
 		return true;
 	}
 
-	public function deletePurchase($id)
+	public function deletePurchase($identification)
 	{
 		$query = $this
-				->delete($id);
+				->where('identificacion', $identification)
+				->set('estado', 0)
+				->update();
+		return $query;
+	}
+
+	public function recoverPurchase($identification)
+	{
+		$query = $this
+				->where('identificacion', $identification)
+				->set('estado', 1)
+				->update();
 		return $query;
 	}
 }

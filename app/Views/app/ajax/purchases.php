@@ -32,6 +32,14 @@
                         <p class="card-title-desc">En este módulo podrás ver, actualizar y eliminar compras.</p>
                     </div>
                     <div class="card-body">
+                        <div class="mt-2 mb-4">
+                            <label class="form-label" for="status">Filtros</label>
+                            <select name="status" class="form-select" id="status">
+                                <option value="">Todas las compras</option>
+                                <option value="1">Compras activadas</option>
+                                <option value="0">Compras desactivadas (Papelera)</option>
+                            </select>
+                        </div>
                         <table class="table datatable text-nowrap table-striped nowrap w-100 dt-responsive">
                             <thead>
                                 <tr>
@@ -40,6 +48,7 @@
                                         <th>Proveedor</th>
                                         <th>Fecha</th>
                                         <th>Referencia</th>
+                                        <th>Estado</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </tr>
@@ -65,7 +74,7 @@
             <form class="custom-form viewForm" action="<?=base_url('purchases/update')?>" method="POST">
                 <div class="modal-body">
                     <div class="response"></div>
-                    <input type="hidden" id="viewId" name="id" value="">
+                    <input type="hidden" id="viewIdentification" name="identification" value="">
                     <div class="row">                       
                         <div class="col-md-6">
                             <div class="mb-3">
@@ -92,8 +101,9 @@
                                 <label class="form-label">Tipo de comprobante</label>
                                 <select class="form-select" name="receipt" id="viewReceipt" required disabled>
                                     <option value="">Seleccione el comprobante</option>
-                                    <option value="invoice">Factura</option>
-                                    <option value="deliveryNote">Nota de entrega</option>
+                                    <?php foreach($receipt as $row)
+                                        echo '<option value="'.$row->identificacion.'">'.$row->nombre.'</option>';
+                                    ?>
                                 </select>
                             </div>
                         </div>
@@ -105,24 +115,14 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="tax">Impuesto</label>
-                                <select class="form-select" name="tax" id="tax" required disabled>
-                                    <option value="" percentage="0">Seleccione el impuesto</option>
-                                    <?php foreach($taxes as $row)
-                                        echo '<option value="'.$row->id.'" percentage="'.$row->percentage.'">'.$row->tax.'</option>';
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
+                        
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="coin">Moneda</label>
                                 <select class="form-select" name="coin" id="viewCoin" required disabled>
                                     <option value="">Seleccione la moneda</option>
                                     <?php foreach($coins as $row)
-                                        echo '<option value="'.$row->id.'">'.$row->coin.'</option>';
+                                        echo '<option value="'.$row->identificacion.'">'.$row->moneda.'</option>';
                                     ?>
                                 </select>
                             </div>
@@ -166,19 +166,7 @@
                         </table>
                     </div>
                     <div class="row">
-                        <div class="col-md-4 mt-2">
-                            <div class="input-group">
-                                <div class="input-group-text border-primary">Subtotal</div>
-                                <input type="text" class="form-control border-primary subtotal" readonly value="0.00">
-                            </div>
-                        </div>
-                        <div class="col-md-4 mt-2">
-                            <div class="input-group">
-                                <div class="input-group-text border-primary">Impuesto</div>
-                                <input type="text" class="form-control border-primary tax" readonly value="0.00">
-                            </div>
-                        </div>
-                        <div class="col-md-4 mt-2">
+                        <div class="col-md-4 mt-2 d-block mx-auto">
                             <div class="input-group">
                                 <div class="input-group-text border-primary">Total</div>
                                 <input type="text" class="form-control border-primary total" readonly value="0.00">
@@ -212,10 +200,9 @@
                             <tr>
                                 <tr>
                                     <th>Seleccionar</th>
-                                    <th>#</th>
                                     <th>Código</th>
                                     <th>Nombre</th>
-                                    <th>RIF</th>
+                                    <th>Cédula/Rif</th>
                                 </tr>
                             </tr>
                         </thead>
@@ -234,34 +221,32 @@
     tableConfig('/purchases/get', '.datatable');
 
     function viewPurchase(data){
-        $('#viewId').val(data[0].purchaseId);
-        $('#viewDate').val(data[0].date);
-        $('#viewProvider').val(data[0].provider);
-        $('#providerInput').val(data[0].providerName);
-        $('#viewReceipt').val(data[0].receipt);
-        $('#viewReference').val(data[0].reference);
-        $('#tax').val(data[0].tax);
-        $('#viewCoin').val(data[0].coin);
-        $('#viewCreated').val(data[0].created_at);
-        $('#viewUpdated').val(data[0].updated_at);
-        $('#viewUser').val(data[0].user);
+        $('#viewIdentification').val(data[0].idCompra);
+        $('#viewDate').val(data[0].fecha);
+        $('#viewProvider').val(data[0].proveedor);
+        $('#providerInput').val(data[0].nombreProveedor);
+        $('#viewReceipt').val(data[0].tipo_documento);
+        $('#viewReference').val(data[0].referencia);
+        $('#viewCoin').val(data[0].moneda);
+        $('#viewCreated').val(data[0].creado_en);
+        $('#viewUpdated').val(data[0].actualizado_en);
+        $('#viewUser').val(data[0].usuario);
 
         // Para los productos
         data.forEach(element => {
 
-            const totalProduct = (element.quantity * element.price)*100;
+            const totalProduct = (element.cantidad * element.precio)*100;
 
             $('#list').append(`
-                <tr id="${element.product}">
+                <tr id="${element.producto}">
                     <td>
-                        <input type="hidden" name="purchaseDetailsId[]" value="${element.purchaseDetailsId}">
-                        <input type="hidden" name="productId[]" value="${element.product}">
-                        ${element.product}
+                        <input type="hidden" name="purchaseDetailsId[]" value="${element.idDetalleCompra}">
+                        <input type="hidden" name="productCode[]" value="${element.codigo}">
+                        ${element.codigo}
                     </td>
-                    <td>${element.code}</td>
-                    <td>${element.name}</td>
-                    <td><input type="number" class="form-control form-control-sm productQuantity" name="productQuantity[]" value="${element.quantity}" required disabled></td>
-                    <td><input type="text" class="form-control form-control-sm price productPrice" name="productPrice[]" value="${element.price}" required maxlength="10" disabled></td>
+                    <td>${element.nombre}</td>
+                    <td><input type="number" class="form-control form-control-sm productQuantity" name="productQuantity[]" value="${element.cantidad}" required disabled></td>
+                    <td><input type="text" class="form-control form-control-sm price productPrice" name="productPrice[]" value="${element.precio}" required maxlength="10" disabled></td>
                     <td class="text-center"><input type="text" class="form-control form-control-sm price totalPriceProduct" value="${totalProduct}" readonly required></td>
                 </tr>
             `);

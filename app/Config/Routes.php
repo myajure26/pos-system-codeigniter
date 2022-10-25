@@ -103,7 +103,7 @@ $routes->group('taxes', static function ($routes) {
 $routes->group('products', static function ($routes) {
     $routes->post('create', 'ProductController::createProduct');
     $routes->get('get', 'ProductController::getProducts');
-    $routes->get('getById/(:num)', 'ProductController::getProductById/$1');
+    $routes->get('getById/(:any)', 'ProductController::getProductById/$1');
     $routes->post('update', 'ProductController::updateProduct');
     $routes->post('delete', 'ProductController::deleteProduct');
     $routes->post('recover', 'ProductController::recoverProduct');

@@ -13,55 +13,46 @@ function createPurchaseValidation()
 		],
 		'provider' => [
 			'label' => 'provider',
-			'rules' => 'required|numeric|is_not_unique[providers.id]',
+			'rules' => 'required|alpha_numeric_punct|is_not_unique[proveedores.codigo]',
 			'errors' => [
 				'required' => 'El proveedor es requerido',
-				'numeric' => 'Ingresa un proveedor válido',
+				'alpha_numeric_punct' => 'Ingresa un proveedor válido',
 				'is_not_unique' => 'El proveedor no existe'
 			]
 		],
 		'receipt' => [
 			'label' => 'receipt',
-			'rules' => 'required|in_list[invoice, deliveryNote]',
+			'rules' => 'required|is_not_unique[tipo_documento.identificacion]',
 			'errors' => [
 				'required' => 'El comprobante es requerido',
-				'in_list' => 'Selecciona un comprobante válido'
+				'is_not_unique' => 'El comprobante no existe'
 			]
 		],
 		'reference' => [
 			'label' => 'reference',
-			'rules' => 'required|numeric|is_unique[purchases.reference]',
+			'rules' => 'required|numeric|is_unique[compras.referencia]',
 			'errors' => [
 				'required' => 'El número de referencia es requerido',
 				'numeric' => 'El número de referencia debe contenter números solamente',
 				'is_unique' => 'El número de referencia ya existe'
 			]
 		],
-		'tax' => [
-			'label' => 'tax',
-			'rules' => 'required|numeric|is_not_unique[taxes.id]',
-			'errors' => [
-				'required' => 'El impuesto es requerido',
-				'numeric' => 'Ingresa un impuesto válido',
-				'is_not_unique' => 'El impuesto no existe'
-			]
-		],
 		'coin' => [
 			'label' => 'coin',
-			'rules' => 'required|numeric|is_not_unique[coins.id]',
+			'rules' => 'required|numeric|is_not_unique[monedas.identificacion]',
 			'errors' => [
 				'required' => 'La moneda es requerida',
 				'numeric' => 'Ingresa una moneda válida',
 				'is_not_unique' => 'La moneda no existe'
 			]
 		],
-		'productId.*' => [
+		'productCode.*' => [
 			'label' => 'productId',
-			'rules' => 'required|numeric|is_not_unique[products.id]',
+			'rules' => 'required|alpha_numeric_punct|is_not_unique[productos.codigo]',
 			'errors' => [
 				'required' => 'El producto es requerido',
-				'numeric' => 'El producto #{value} es incorrecto',
-				'is_not_unique' => 'El producto #{value} no existe'
+				'alpha_numeric_punct' => 'El producto {value} es incorrecto',
+				'is_not_unique' => 'El producto {value} no existe'
 			]
 		],
 		'productQuantity.*' => [
@@ -99,55 +90,46 @@ function updatePurchaseValidation()
 		],
 		'provider' => [
 			'label' => 'provider',
-			'rules' => 'required|numeric|is_not_unique[providers.id]',
+			'rules' => 'required|alpha_numeric_punct|is_not_unique[proveedores.codigo]',
 			'errors' => [
 				'required' => 'El proveedor es requerido',
-				'numeric' => 'Ingresa un proveedor válido',
+				'alpha_numeric_punct' => 'Ingresa un proveedor válido',
 				'is_not_unique' => 'El proveedor no existe'
 			]
 		],
 		'receipt' => [
 			'label' => 'receipt',
-			'rules' => 'required|in_list[invoice, deliveryNote]',
+			'rules' => 'required|is_not_unique[tipo_documento.identificacion]',
 			'errors' => [
 				'required' => 'El comprobante es requerido',
-				'in_list' => 'Selecciona un comprobante válido'
+				'is_no_unique' => 'El comprobante no existe'
 			]
 		],
 		'reference' => [
 			'label' => 'reference',
-			'rules' => 'required|numeric|is_unique[purchases.reference,id,{id}]',
+			'rules' => 'required|numeric|is_unique[compras.referencia,identificacion,{identification}]',
 			'errors' => [
 				'required' => 'El número de referencia es requerido',
 				'numeric' => 'El número de referencia debe contenter números solamente',
 				'is_unique' => 'El número de referencia ya existe'
 			]
 		],
-		'tax' => [
-			'label' => 'tax',
-			'rules' => 'required|numeric|is_not_unique[taxes.id]',
-			'errors' => [
-				'required' => 'El impuesto es requerido',
-				'numeric' => 'Ingresa un impuesto válido',
-				'is_not_unique' => 'El impuesto no existe'
-			]
-		],
 		'coin' => [
 			'label' => 'coin',
-			'rules' => 'required|numeric|is_not_unique[coins.id]',
+			'rules' => 'required|numeric|is_not_unique[monedas.identificacion]',
 			'errors' => [
 				'required' => 'La moneda es requerida',
 				'numeric' => 'Ingresa una moneda válida',
 				'is_not_unique' => 'La moneda no existe'
 			]
 		],
-		'productId.*' => [
-			'label' => 'productId',
-			'rules' => 'required|numeric|is_not_unique[products.id]',
+		'productCode.*' => [
+			'label' => 'productCode',
+			'rules' => 'required|alpha_numeric_punct|is_not_unique[productos.codigo]',
 			'errors' => [
 				'required' => 'El producto es requerido',
-				'numeric' => 'El producto #{value} es incorrecto',
-				'is_not_unique' => 'El producto #{value} no existe'
+				'alpha_numeric_punct' => 'El producto {value} es incorrecto',
+				'is_not_unique' => 'El producto {value} no existe'
 			]
 		],
 		'productQuantity.*' => [

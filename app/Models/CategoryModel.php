@@ -7,34 +7,35 @@ use CodeIgniter\Model;
 class CategoryModel extends Model
 {
 	protected $DBGroup              = 'default';
-	protected $table                = 'categories';
-	protected $primaryKey           = 'id';
+	protected $table                = 'categorias';
+	protected $primaryKey           = 'identificacion';
 	protected $useAutoIncrement     = true;
 	protected $insertID             = 0;
 	protected $returnType           = 'array';
 	protected $useSoftDeletes       = true;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["category", "updated_at", "deleted_at", "created_at"];
+	protected $allowedFields        = ["categoria", "estado", "actualizado_en", "creado_en"];
 
 	// Dates
 	protected $useTimestamps        = true;
 	protected $dateFormat           = 'datetime';
-	protected $createdField         = 'created_at';
-	protected $updatedField         = 'updated_at';
+	protected $createdField         = 'creado_en';
+	protected $updatedField         = 'actualizado_en';
 	protected $deletedField         = 'deleted_at';
 
 	public function createCategory($data)
 	{
-		$query = $this
-			->insert($data);
-		return $query;
+		if($this->save($data)){
+			return true;
+		}
+		
+		return false;
 	}
 
 	public function getCategories()
 	{
 		$query = $this
-			->select('id, category')
-			->where('deleted_at', NULL);
+			->select('identificacion, categoria, estado');
 		return $query;
 	}
 
@@ -49,19 +50,30 @@ class CategoryModel extends Model
 		return $this->insertID();
 	}
 
-	public function updateCategory($name, $id)
+	public function updateCategory($name, $identification)
 	{
 		$query = $this
-				->where('id', $id)
-				->set(["category" => $name])
+				->where('identificacion', $identification)
+				->set(["categoria" => $name])
 				->update();
 		return $query;	
 	}
 
-	public function deleteCategory($id)
+	public function deleteCategory($identification)
 	{
 		$query = $this
-				->delete($id);
+				->where('identificacion', $identification)
+				->set('estado', 0)
+				->update();
+		return $query;
+	}
+
+	public function recoverCategory($identification)
+	{
+		$query = $this
+				->where('identificacion', $identification)
+				->set('estado', 1)
+				->update();
 		return $query;
 	}
 }

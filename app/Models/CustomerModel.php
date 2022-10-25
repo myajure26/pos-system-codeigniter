@@ -8,12 +8,11 @@ class CustomerModel extends Model
 {
 	protected $DBGroup              = 'default';
 	protected $table                = 'clientes';
-	protected $primaryKey           = 'identificacion';
 	protected $insertID             = 0;
 	protected $returnType           = 'array';
 	protected $useSoftDeletes       = true;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["nombre", "direccion", "telefono", "estado", "actualizado_en", "creado_en"];
+	protected $allowedFields        = ["identificacion", "nombre", "direccion", "telefono", "estado", "actualizado_en", "creado_en"];
 
 	// Dates
 	protected $useTimestamps        = true;

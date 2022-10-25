@@ -21,10 +21,10 @@ class ProductController extends BaseController
 	];
 
 	protected $auditContent = [
-		"user"			=> "",
-		"module"		=> "Productos",
-		"action"		=> "",
-		"description"	=> ""
+		"usuario"		=> "",
+		"modulo"		=> "Productos",
+		"accion"		=> "",
+		"descripcion"	=> ""
 	];
 
 	public function createProduct()
@@ -52,14 +52,14 @@ class ProductController extends BaseController
 
 		$ProductModel = new ProductModel();
 		$product = $ProductModel->createProduct([
-									'code' 			=> $this->request->getPost('code'),
-									'name' 			=> $this->request->getPost('name'),
-									'description' 	=> $this->request->getPost('description'),
-									'brand' 		=> $this->request->getPost('brand'),
-									'category' 		=> $this->request->getPost('category'),
-									'coin' 			=> $this->request->getPost('coin'),
-									'price' 		=> $price,
-									'tax' 			=> $this->request->getPost('tax')
+									'codigo' 		=> $this->request->getPost('code'),
+									'nombre' 		=> $this->request->getPost('name'),
+									'descripcion' 	=> $this->request->getPost('description'),
+									'marca' 		=> $this->request->getPost('brand'),
+									'categoria' 	=> $this->request->getPost('category'),
+									'moneda' 		=> $this->request->getPost('coin'),
+									'precio' 		=> $price,
+									'impuesto' 		=> $this->request->getPost('tax')
 								]);
 
 		if(!$product){
@@ -68,10 +68,10 @@ class ProductController extends BaseController
 		}
 
 		//PARA LA AUDITORÍA
-		$auditUserId = $this->session->get('id');
-		$this->auditContent['user'] 		= $auditUserId;
-		$this->auditContent['action'] 		= "Crear producto";
-		$this->auditContent['description'] 	= "Se ha creado el producto con ID #" . $ProductModel->getLastId() . " exitosamente.";
+		$auditUserId = $this->session->get('identification');
+		$this->auditContent['usuario'] 		= $auditUserId;
+		$this->auditContent['accion'] 		= "Crear producto";
+		$this->auditContent['descripcion'] 	= "Se ha creado el producto con código " . $this->request->getPost('code') . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -90,36 +90,62 @@ class ProductController extends BaseController
 		$ProductModel = new ProductModel();
 				
 		return DataTable::of($ProductModel->getProducts())
-			->edit('price', function($row){
-				$price = number_format($row->price, 2);
-				return $row->symbol . $price;
+			->edit('precio', function($row){
+				$price = number_format($row->precio, 2);
+				return $row->simbolo . $price;
 			})
-			->hide('symbol')
+			->hide('simbolo')
+			->edit('estado', function($row){
+						
+				if($row->estado == 0){
+					return '<div class="mt-sm-1 d-block"><a href="javascript:void(0)" class="badge bg-soft-danger text-danger p-2 px-3">Desactivado</a></div>';
+				}
+
+				return '<div class="mt-sm-1 d-block"><a href="javascript:void(0)" class="badge bg-soft-success text-success p-2 px-3">Activado</a></div>';
+			})
 			->add('Acciones', function($row){
+				if($row->estado == 1){
+					return '<div class="btn-list"> 
+								<button type="button" class="btnView btn btn-sm btn-primary waves-effect" data-id="'.$row->codigo.'" data-type="products" data-bs-toggle="modal" data-bs-target="#viewModal">
+									<i class="far fa-eye"></i>
+								</button>
+								<button type="button" class="btnDelete btn btn-sm btn-danger waves-effect" data-id="'.$row->codigo.'" data-type="products">
+									<i class="far fa-trash-alt"></i>
+								</button>
+							</div>';
+				}
+
 				return '<div class="btn-list"> 
-                            <button type="button" class="btnView btn btn-sm btn-primary waves-effect" data-id="'.$row->id.'" data-type="products" data-bs-toggle="modal" data-bs-target="#viewModal">
-                                <i class="far fa-eye"></i>
-                            </button>
-                            <button type="button" class="btnDelete btn btn-sm btn-danger waves-effect" data-id="'.$row->id.'" data-type="products">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                        </div>';
+								<button type="button" class="btnRecover btn btn-sm btn-success waves-effect" data-id="'.$row->codigo.'" data-type="products">
+									<i class="fas fa-check"></i>
+								</button>
+							</div>';
+
 			}, 'last') 
+			->filter(function ($builder, $request) {
+		
+				if ($request->status == ''){
+					return true;
+				}
+				
+				return $builder->where('productos.estado', $request->status);
+		
+			})
 			->toJson();
 	}
 
-	public function getProductById($id)
+	public function getProductById($code)
 	{
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
 		}
 
 		$ProductModel = new ProductModel();
-		$product = $ProductModel->getProductById(['id' => $id]);
+		$product = $ProductModel->getProductById(['codigo' => $code]);
 		if(!$product){
 			return false;
 		}
-		$product[0]['price'] = number_format($product[0]['price'], 2);
+		$product[0]['precio'] = number_format($product[0]['precio'], 2);
 		return json_encode($product);
 	}
 
@@ -145,19 +171,18 @@ class ProductController extends BaseController
 		// Dar formato al precio
 		$price 	= str_replace(',', '', $this->request->getPost('price'));
 		$price 	= floatval($price);
-		$id 	= $this->request->getPost('id');
+		$code 	= $this->request->getPost('code');
 
 		$ProductModel = new ProductModel();
 		$product = $ProductModel->updateProduct([
-									'code' 			=> $this->request->getPost('code'),
-									'name' 			=> $this->request->getPost('name'),
-									'description' 	=> $this->request->getPost('description'),
-									'brand' 		=> $this->request->getPost('brand'),
-									'category' 		=> $this->request->getPost('category'),
-									'coin' 			=> $this->request->getPost('coin'),
-									'price' 		=> $price,
-									'tax' 			=> $this->request->getPost('tax')
-								], $id);
+									'nombre' 		=> $this->request->getPost('name'),
+									'descripcion' 	=> $this->request->getPost('description'),
+									'marca' 		=> $this->request->getPost('brand'),
+									'categoria' 	=> $this->request->getPost('category'),
+									'moneda' 		=> $this->request->getPost('coin'),
+									'precio' 		=> $price,
+									'impuesto' 		=> $this->request->getPost('tax')
+								], $code);
 
 		if(!$product){
 			$this->errorMessage['text'] = "Error actualizar el producto en la base de datos";
@@ -165,10 +190,10 @@ class ProductController extends BaseController
 		}
 
 		//PARA LA AUDITORÍA
-		$auditUserId = $this->session->get('id');
-		$this->auditContent['user'] 		= $auditUserId;
-		$this->auditContent['action'] 		= "Actualizar producto";
-		$this->auditContent['description'] 	= "Se ha actualizado el producto con ID #" . $id . " exitosamente.";
+		$auditUserId = $this->session->get('identification');
+		$this->auditContent['usuario'] 		= $auditUserId;
+		$this->auditContent['accion'] 		= "Actualizar producto";
+		$this->auditContent['descripcion'] 	= "Se ha actualizado el producto con código " . $code . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -184,10 +209,10 @@ class ProductController extends BaseController
 			return redirect()->to(base_url());
 		}
 
-		$id = $this->request->getPost('id');
+		$code = $this->request->getPost('identification');
 
 		$ProductModel 	= new ProductModel();
-		$deleteProduct 	= $ProductModel->deleteProduct($id);
+		$deleteProduct 	= $ProductModel->deleteProduct($code);
 
 		if(!$deleteProduct){
 			$this->errorMessage['text'] = "El producto no existe";
@@ -195,10 +220,10 @@ class ProductController extends BaseController
 		}
 
 		//PARA LA AUDITORÍA
-		$auditUserId = $this->session->get('id');
-		$this->auditContent['user'] 		= $auditUserId;
-		$this->auditContent['action'] 		= "Eliminar producto";
-		$this->auditContent['description'] 	= "Se ha eliminado el producto con ID #" . $id . " exitosamente.";
+		$auditUserId = $this->session->get('identification');
+		$this->auditContent['usuario'] 		= $auditUserId;
+		$this->auditContent['accion'] 		= "Eliminar producto";
+		$this->auditContent['descripcion'] 	= "Se ha eliminado el producto con código " . $code . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -206,6 +231,37 @@ class ProductController extends BaseController
 		$this->successMessage['alert'] 		= "clean";
 		$this->successMessage['title'] 		= "Producto eliminado";
 		$this->successMessage['text'] 		= "Puede recuperarlo desde la papelera";
+		return sweetAlert($this->successMessage);
+	}
+
+	public function recoverProduct()
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$code = $this->request->getPost('identification');
+
+		$ProductModel = new ProductModel();
+		$recoverProduct = $ProductModel->recoverProduct($code);
+
+		if(!$recoverProduct){
+			$this->errorMessage['text'] = "El producto no existe";
+			return sweetAlert($this->errorMessage);
+		}
+
+		//PARA LA AUDITORÍA
+		$auditUserId = $this->session->get('identification');
+		$this->auditContent['usuario'] 		= $auditUserId;
+		$this->auditContent['accion'] 		= "Recuperar producto";
+		$this->auditContent['descripcion'] 	= "Se ha recuperado al producto con código " . $code . " exitosamente.";
+		$AuditModel = new AuditModel();
+		$AuditModel->createAudit($this->auditContent);
+		
+		//SWEET ALERT
+		$this->successMessage['alert'] 		= "clean";
+		$this->successMessage['title'] 		= "¡Exito!";
+		$this->successMessage['text'] 		= "El producto ha sido recuperado";
 		return sweetAlert($this->successMessage);
 	}
 }

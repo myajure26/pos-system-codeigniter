@@ -21,10 +21,10 @@ class CategoryController extends BaseController
 	];
 
 	protected $auditContent = [
-		"user"			=> "",
-		"module"		=> "Categorías",
-		"action"		=> "",
-		"description"	=> ""
+		"usuario"		=> "",
+		"modulo"		=> "Categorías",
+		"accion"		=> "",
+		"descripcion"	=> ""
 	];
 
 	public function createCategory()
@@ -49,7 +49,7 @@ class CategoryController extends BaseController
 		$name = $this->request->getPost('name');
 
 		$CategoryModel = new CategoryModel();
-		$category = $CategoryModel->createCategory(['category' => $name]);
+		$category = $CategoryModel->createCategory(['categoria' => $name]);
 
 		if(!$category){
 			$this->errorMessage['text'] = "Error al guardar la categoría en la base de datos";
@@ -57,10 +57,10 @@ class CategoryController extends BaseController
 		}
 
 		//PARA LA AUDITORÍA
-		$auditUserId = $this->session->get('id');
-		$this->auditContent['user'] 		= $auditUserId;
-		$this->auditContent['action'] 		= "Crear categoría";
-		$this->auditContent['description'] 	= "Se ha creado la categoría con ID #" . $CategoryModel->getLastId() . " exitosamente.";
+		$auditUserId = $this->session->get('identification');
+		$this->auditContent['usuario'] 		= $auditUserId;
+		$this->auditContent['accion'] 		= "Crear categoría";
+		$this->auditContent['descripcion'] 	= "Se ha creado la categoría con ID #" . $CategoryModel->getLastId() . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -79,27 +79,53 @@ class CategoryController extends BaseController
 		$CategoryModel = new CategoryModel();
 				
 		return DataTable::of($CategoryModel->getCategories())
+			->edit('estado', function($row){
+									
+				if($row->estado == 0){
+					return '<div class="mt-sm-1 d-block"><a href="javascript:void(0)" class="badge bg-soft-danger text-danger p-2 px-3">Desactivado</a></div>';
+				}
+
+				return '<div class="mt-sm-1 d-block"><a href="javascript:void(0)" class="badge bg-soft-success text-success p-2 px-3">Activado</a></div>';
+			})
 			->add('Acciones', function($row){
+				if($row->estado == 1){
+					return '<div class="btn-list"> 
+								<button type="button" class="btnView btn btn-sm btn-primary waves-effect" data-id="'.$row->identificacion.'" data-type="categories" data-bs-toggle="modal" data-bs-target="#viewModal">
+									<i class="far fa-eye"></i>
+								</button>
+								<button type="button" class="btnDelete btn btn-sm btn-danger waves-effect" data-id="'.$row->identificacion.'" data-type="categories">
+									<i class="far fa-trash-alt"></i>
+								</button>
+							</div>';
+				}
+
 				return '<div class="btn-list"> 
-                            <button type="button" class="btnView btn btn-sm btn-primary waves-effect" data-id="'.$row->id.'" data-type="categories" data-bs-toggle="modal" data-bs-target="#viewModal">
-                                <i class="far fa-eye"></i>
-                            </button>
-                            <button type="button" class="btnDelete btn btn-sm btn-danger waves-effect" data-id="'.$row->id.'" data-type="categories">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                        </div>';
+								<button type="button" class="btnRecover btn btn-sm btn-success waves-effect" data-id="'.$row->identificacion.'" data-type="categories">
+									<i class="fas fa-check"></i>
+								</button>
+							</div>';
+
 			}, 'last') 
+			->filter(function ($builder, $request) {
+		
+				if ($request->status == ''){
+					return true;
+				}
+				
+				return $builder->where('estado', $request->status);
+		
+			})
 			->toJson();
 	}
 
-	public function getCategoryById($id)
+	public function getCategoryById($identification)
 	{
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
 		}
 
 		$CategoryModel = new CategoryModel();
-		$category = $CategoryModel->getCategoryById(['id' => $id]);
+		$category = $CategoryModel->getCategoryById(['identificacion' => $identification]);
 		if(!$category){
 			return false;
 		}
@@ -125,11 +151,11 @@ class CategoryController extends BaseController
 
 		}
 
-		$id = $this->request->getPost('id');
+		$identification = $this->request->getPost('identification');
 		$name = $this->request->getPost('name');
 
 		$CategoryModel = new CategoryModel();
-		$category = $CategoryModel->updateCategory($name, $id);
+		$category = $CategoryModel->updateCategory($name, $identification);
 
 		if(!$category){
 			$this->errorMessage['text'] = "Error actualizar la categoría en la base de datos";
@@ -137,10 +163,10 @@ class CategoryController extends BaseController
 		}
 
 		//PARA LA AUDITORÍA
-		$auditUserId = $this->session->get('id');
-		$this->auditContent['user'] 		= $auditUserId;
-		$this->auditContent['action'] 		= "Actualizar categoría";
-		$this->auditContent['description'] 	= "Se ha actualizado la categoría con ID #" . $id . " exitosamente.";
+		$auditUserId = $this->session->get('identification');
+		$this->auditContent['usuario'] 		= $auditUserId;
+		$this->auditContent['accion'] 		= "Actualizar categoría";
+		$this->auditContent['descripcion'] 	= "Se ha actualizado la categoría con ID #" . $id . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -156,10 +182,10 @@ class CategoryController extends BaseController
 			return redirect()->to(base_url());
 		}
 
-		$id = $this->request->getPost('id');
+		$identification = $this->request->getPost('identification');
 
 		$CategoryModel = new CategoryModel();
-		$deleteCategory = $CategoryModel->deleteCategory($id);
+		$deleteCategory = $CategoryModel->deleteCategory($identification);
 
 		if(!$deleteCategory){
 			$this->errorMessage['text'] = "La categoría no existe";
@@ -167,10 +193,10 @@ class CategoryController extends BaseController
 		}
 
 		//PARA LA AUDITORÍA
-		$auditUserId = $this->session->get('id');
-		$this->auditContent['user'] 		= $auditUserId;
-		$this->auditContent['action'] 		= "Eliminar categoría";
-		$this->auditContent['description'] 	= "Se ha eliminado la categoría con ID #" . $id . " exitosamente.";
+		$auditUserId = $this->session->get('identification');
+		$this->auditContent['usuario'] 		= $auditUserId;
+		$this->auditContent['accion'] 		= "Eliminar categoría";
+		$this->auditContent['descripcion'] 	= "Se ha eliminado la categoría con ID #" . $identification . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -178,6 +204,37 @@ class CategoryController extends BaseController
 		$this->successMessage['alert'] 		= "clean";
 		$this->successMessage['title'] 		= "Categoría eliminada";
 		$this->successMessage['text'] 		= "Puede recuperarla desde la papelera";
+		return sweetAlert($this->successMessage);
+	}
+
+	public function recoverCategory()
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$identification = $this->request->getPost('identification');
+
+		$CategoryModel = new CategoryModel();
+		$recoverCategory = $CategoryModel->recoverCategory($identification);
+
+		if(!$recoverCategory){
+			$this->errorMessage['text'] = "La categoría no existe";
+			return sweetAlert($this->errorMessage);
+		}
+
+		//PARA LA AUDITORÍA
+		$auditUserId = $this->session->get('identification');
+		$this->auditContent['usuario'] 		= $auditUserId;
+		$this->auditContent['accion'] 		= "Recuperar categoría";
+		$this->auditContent['descripcion'] 	= "Se ha recuperado la categoría con ID #" . $identification . " exitosamente.";
+		$AuditModel = new AuditModel();
+		$AuditModel->createAudit($this->auditContent);
+		
+		//SWEET ALERT
+		$this->successMessage['alert'] 		= "clean";
+		$this->successMessage['title'] 		= "¡Exito!";
+		$this->successMessage['text'] 		= "La categoría ha sido recuperada";
 		return sweetAlert($this->successMessage);
 	}
 }

@@ -7,38 +7,36 @@ use CodeIgniter\Model;
 class ProductModel extends Model
 {
 	protected $DBGroup              = 'default';
-	protected $table                = 'products';
-	protected $primaryKey           = 'id';
-	protected $useAutoIncrement     = true;
+	protected $table                = 'productos';
 	protected $insertID             = 0;
 	protected $returnType           = 'array';
 	protected $useSoftDeletes       = true;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["code", "name", "brand", "category", "coin", "price", "tax", "updated_at", "deleted_at", "created_at"];
+	protected $allowedFields        = ["codigo", "nombre", "marca", "categoria", "moneda", "precio", "impuesto", "estado", "actualizado_en", "creado_en"];
 
 	// Dates
 	protected $useTimestamps        = true;
 	protected $dateFormat           = 'datetime';
-	protected $createdField         = 'created_at';
-	protected $updatedField         = 'updated_at';
-	protected $deletedField         = 'deleted_at';
+	protected $createdField         = 'creado_en';
+	protected $updatedField         = 'actualizado_en';
 
 	public function createProduct($data)
 	{
-		$query = $this
-			->insert($data);
-		return $query;
+		if($this->save($data)){
+			return true;
+		}
+		
+		return false;
 	}
 
 	public function getProducts()
 	{
 		$query = $this
-			->select('products.id, code, name, brands.brand, categories.category, coins.symbol, price, taxes.tax')
-			->join('brands', 'brands.id = products.brand')
-			->join('categories', 'categories.id = products.category')
-			->join('coins', 'coins.id = products.coin')
-			->join('taxes', 'taxes.id = products.tax')
-			->where('products.deleted_at', NULL);
+			->select('codigo, nombre, marcas.marca, categorias.categoria, monedas.simbolo, precio, impuestos.impuesto, productos.estado')
+			->join('marcas', 'marcas.identificacion = productos.marca')
+			->join('categorias', 'categorias.identificacion = productos.categoria')
+			->join('monedas', 'monedas.identificacion = productos.moneda')
+			->join('impuestos', 'impuestos.identificacion = productos.impuesto');
 		return $query;
 	}
 
@@ -48,24 +46,30 @@ class ProductModel extends Model
 		return $query->get()->getResultArray();
 	}
 
-	public function getLastId()
-	{
-		return $this->insertID();
-	}
-
-	public function updateProduct($data, $id)
+	public function updateProduct($data, $code)
 	{
 		$query = $this
-				->where('id', $id)
+				->where('codigo', $code)
 				->set($data)
 				->update();
-		return $query;	
+		return $query;
 	}
 
-	public function deleteProduct($id)
+	public function deleteProduct($code)
 	{
 		$query = $this
-				->delete($id);
+				->where('codigo', $code)
+				->set('estado', 0)
+				->update();
+		return $query;
+	}
+
+	public function recoverProduct($code)
+	{
+		$query = $this
+				->where('codigo', $code)
+				->set('estado', 1)
+				->update();
 		return $query;
 	}
 }

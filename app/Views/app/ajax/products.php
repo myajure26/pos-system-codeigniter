@@ -36,17 +36,25 @@
                         <p class="card-title-desc">En este módulo podrás ver, agregar, actualizar y eliminar productos.</p>
                     </div>
                     <div class="card-body">
+                        <div class="mt-2 mb-4">
+                            <label class="form-label" for="status">Filtros</label>
+                            <select name="status" class="form-select" id="status">
+                                <option value="">Todos los productos</option>
+                                <option value="1">Productos activados</option>
+                                <option value="0">Productos desactivados (Papelera)</option>
+                            </select>
+                        </div>
                         <table class="table datatable text-nowrap table-striped nowrap w-100 dt-responsive">
                             <thead>
                                 <tr>
                                     <tr>
-                                        <th>#</th>
                                         <th>Código</th>
                                         <th>Nombre</th>
                                         <th>Marca</th>
                                         <th>Categoría</th>
                                         <th>Precio</th>
                                         <th>Impuesto</th>
+                                        <th>Estado</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </tr>
@@ -93,7 +101,7 @@
                                 <select class="form-select" name="brand" id="brand" required>
                                     <option value="">Seleccione la marca</option>
                                     <?php foreach($brands as $row)
-                                        echo '<option value="'.$row->id.'">'.$row->brand.'</option>';
+                                        echo '<option value="'.$row->identificacion.'">'.$row->marca.'</option>';
                                     ?>
                                 </select>
                             </div>
@@ -104,7 +112,7 @@
                                 <select class="form-select" name="category" id="category" required>
                                     <option value="">Seleccione le categoría</option>
                                     <?php foreach($categories as $row)
-                                        echo '<option value="'.$row->id.'">'.$row->category.'</option>';
+                                        echo '<option value="'.$row->identificacion.'">'.$row->categoria.'</option>';
                                     ?>
                                 </select>
                             </div>
@@ -118,7 +126,7 @@
                                     <div class="col-sm-4">
                                         <select class="form-select" name="coin" id="coin" required>
                                         <?php foreach($coins as $row)
-                                            echo '<option value="'.$row->id.'">'.$row->symbol.'</option>';
+                                            echo '<option value="'.$row->identificacion.'">'.$row->simbolo.'</option>';
                                         ?>
                                         </select>
                                     </div>
@@ -134,7 +142,7 @@
                                 <select class="form-select" name="tax" id="tax" required>
                                     <option value="">Seleccione el impuesto</option>
                                     <?php foreach($taxes as $row)
-                                        echo '<option value="'.$row->id.'">'.$row->tax.'</option>';
+                                        echo '<option value="'.$row->identificacion.'">'.$row->impuesto.'</option>';
                                     ?>
                                 </select>
                             </div>
@@ -160,14 +168,14 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form class="custom-form viewForm" action="<?=base_url('products/update')?>" method="POST">
-                <input type="hidden" id="viewId" name="id" value="">
+                <input type="hidden" id="viewIdentification" name="code" value="">
                 <div class="modal-body">
                     <div class="response"></div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Código</label>
-                                <input type="text" class="form-control" id="viewCode" name="code" disabled required>
+                                <input type="text" class="form-control viewDisabled" id="viewCode" disabled required>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -184,7 +192,7 @@
                                 <select class="form-select" name="brand" id="viewBrand" disabled required>
                                     <option value="">Seleccione la marca</option>
                                     <?php foreach($brands as $row)
-                                        echo '<option value="'.$row->id.'">'.$row->brand.'</option>';
+                                        echo '<option value="'.$row->identificacion.'">'.$row->marca.'</option>';
                                     ?>
                                 </select>
                             </div>
@@ -195,7 +203,7 @@
                                 <select class="form-select" name="category" id="viewCategory" disabled required>
                                     <option value="">Seleccione la categoría</option>
                                     <?php foreach($categories as $row)
-                                        echo '<option value="'.$row->id.'">'.$row->category.'</option>';
+                                        echo '<option value="'.$row->identificacion.'">'.$row->categoria.'</option>';
                                     ?>
                                 </select>
                             </div>
@@ -209,7 +217,7 @@
                                     <div class="col-sm-4">
                                         <select class="form-select" name="coin" id="viewCoin" disabled required>
                                         <?php foreach($coins as $row)
-                                            echo '<option value="'.$row->id.'">'.$row->symbol.'</option>';
+                                            echo '<option value="'.$row->identificacion.'">'.$row->simbolo.'</option>';
                                         ?>
                                         </select>
                                     </div>
@@ -225,7 +233,7 @@
                                 <select class="form-select" name="tax" id="viewTax" disabled required>
                                     <option value="">Seleccione el impuesto</option>
                                     <?php foreach($taxes as $row)
-                                        echo '<option value="'.$row->id.'">'.$row->tax.'</option>';
+                                        echo '<option value="'.$row->identificacion.'">'.$row->impuesto.'</option>';
                                     ?>
                                 </select>
                             </div>
@@ -263,15 +271,15 @@
     });
 
     function viewProduct(data){
-        $('#viewId').val(data[0].id);
-        $('#viewCode').val(data[0].code);
-        $('#viewName').val(data[0].name);
-        $('#viewBrand').val(data[0].brand);
-        $('#viewCategory').val(data[0].category);
-        $('#viewCoin').val(data[0].coin);
-        $('#viewPrice').val(data[0].price);
-        $('#viewTax').val(data[0].tax);
-        $('#viewCreated').val(data[0].created_at);
-        $('#viewUpdated').val(data[0].updated_at);
+        $('#viewIdentification').val(data[0].codigo);
+        $('#viewCode').val(data[0].codigo);
+        $('#viewName').val(data[0].nombre);
+        $('#viewBrand').val(data[0].marca);
+        $('#viewCategory').val(data[0].categoria);
+        $('#viewCoin').val(data[0].moneda);
+        $('#viewPrice').val(data[0].precio);
+        $('#viewTax').val(data[0].impuesto);
+        $('#viewCreated').val(data[0].creado_en);
+        $('#viewUpdated').val(data[0].actualizado_en);
     }
 </script>

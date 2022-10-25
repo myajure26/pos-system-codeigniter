@@ -8,12 +8,11 @@ class ProviderModel extends Model
 {
 	protected $DBGroup              = 'default';
 	protected $table                = 'proveedores';
-	protected $primaryKey           = 'codigo';
 	protected $insertID             = 0;
 	protected $returnType           = 'array';
 	protected $useSoftDeletes       = true;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["nombre", "identificacion", "direccion", "telefono", "estado", "actualizado_en", "creado_en"];
+	protected $allowedFields        = ["codigo", "nombre", "identificacion", "direccion", "telefono", "estado", "actualizado_en", "creado_en"];
 
 	// Dates
 	protected $useTimestamps        = true;

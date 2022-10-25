@@ -63,8 +63,9 @@
                                                     <label class="form-label">Tipo de comprobante</label>
                                                     <select class="form-select" name="receipt" id="receipt" required>
                                                         <option value="">Seleccione el comprobante</option>
-                                                        <option value="invoice">Factura</option>
-                                                        <option value="deliveryNote">Nota de entrega</option>
+                                                        <?php foreach($receipt as $row)
+                                                            echo '<option value="'.$row->identificacion.'">'.$row->nombre.'</option>';
+                                                        ?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -76,24 +77,24 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <!-- <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label" for="tax">Impuesto</label>
                                                     <select class="form-select" name="tax" id="tax" required>
                                                         <option value="" percentage="0">Seleccione el impuesto</option>
-                                                        <?php foreach($taxes as $row)
-                                                            echo '<option value="'.$row->id.'" percentage="'.$row->percentage.'">'.$row->tax.'</option>';
+                                                        <?php //foreach($taxes as $row)
+                                                            //echo '<option value="'.$row->id.'" percentage="'.$row->percentage.'">'.$row->tax.'</option>';
                                                         ?>
                                                     </select>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label" for="coin">Moneda</label>
                                                     <select class="form-select" name="coin" id="coin" required>
                                                         <option value="">Seleccione la moneda</option>
                                                         <?php foreach($coins as $row)
-                                                            echo '<option value="'.$row->id.'">'.$row->coin.'</option>';
+                                                            echo '<option value="'.$row->identificacion.'">'.$row->moneda.'</option>';
                                                         ?>
                                                     </select>
                                                 </div>
@@ -107,7 +108,6 @@
                                             <table class="table table-hover table-bordered table-striped">
                                                 <thead>
                                                     <tr>
-                                                        <th>#</th>
                                                         <th>Código</th>
                                                         <th>Nombre</th>
                                                         <th style="width:150px">Cantidad</th>
@@ -121,19 +121,7 @@
                                             </table>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-4 mt-2">
-                                                <div class="input-group">
-                                                    <div class="input-group-text border-primary">Subtotal</div>
-                                                    <input type="text" class="form-control border-primary subtotal" readonly value="0.00">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 mt-2">
-                                                <div class="input-group">
-                                                    <div class="input-group-text border-primary">Impuesto</div>
-                                                    <input type="text" class="form-control border-primary tax" readonly value="0.00">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 mt-2">
+                                            <div class="col-md-4 mt-2 d-block mx-auto">
                                                 <div class="input-group">
                                                     <div class="input-group-text border-primary">Total</div>
                                                     <input type="text" class="form-control border-primary total" readonly value="0.00">
@@ -172,10 +160,9 @@
                             <tr>
                                 <tr>
                                     <th>Seleccionar</th>
-                                    <th>#</th>
                                     <th>Código</th>
                                     <th>Nombre</th>
-                                    <th>RIF</th>
+                                    <th>Cédula/Rif</th>
                                 </tr>
                             </tr>
                         </thead>
@@ -205,11 +192,10 @@
                             <tr>
                                 <tr>
                                     <th>Seleccionar</th>
-                                    <th>#</th>
                                     <th>Código</th>
                                     <th>Nombre</th>
-                                    <th>Categoría</th>
                                     <th>Marca</th>
+                                    <th>Categoría</th>
                                 </tr>
                             </tr>
                         </thead>

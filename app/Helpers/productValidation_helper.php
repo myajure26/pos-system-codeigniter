@@ -5,7 +5,7 @@ function createProductValidation()
 	$product = [
 		'code' => [
 			'label' => 'code',
-			'rules' => 'required|alpha_numeric_punct|is_unique[products.code]',
+			'rules' => 'required|alpha_numeric_punct|is_unique[productos.codigo]',
 			'errors' => [
 				'required' => 'El código es requerido',
 				'alpha_numeric_punct' => 'Para el código sólo se permiten carácteres alfanuméricos y guiones',
@@ -14,31 +14,34 @@ function createProductValidation()
 		],
 		'name' => [
 			'label' => 'name',
-			'rules' => 'required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ ,.]*$/u]',
+			'rules' => 'required|regex_match[/^[a-z0-9ñáéíóúüA-ZÑÁÉÍÓÚÜ ~!#$%\&\*\-_+=|:.\/]*$/u]',
 			'errors' => [
 				'required' => 'El nombre es requerido',
-				'regex_match' => 'Para el nombre sólo se permiten carácteres alfabéticos.'
+				'regex_match' => 'Para el nombre sólo se permiten carácteres alfabéticos y un conjunto limitado de signos.'
 			]
 		],
 		'brand' => [
 			'label' => 'brand',
-			'rules' => 'required',
+			'rules' => 'required|is_not_unique[marcas.identificacion]',
 			'errors' => [
-				'required' => 'La marca es requerida'
+				'required' => 'La marca es requerida',
+				'is_not_unique' => 'La marca no se encuentra registrada'
 			]
 		],
 		'category' => [
 			'label' => 'category',
-			'rules' => 'required',
+			'rules' => 'required|is_not_unique[categorias.identificacion]',
 			'errors' => [
-				'required' => 'La categoría es requerida'
+				'required' => 'La categoría es requerida',
+				'is_not_unique' => 'La categoría no se encuentra registrada'
 			]
 		],
 		'coin' => [
 			'label' => 'coin',
-			'rules' => 'required',
+			'rules' => 'required|is_not_unique[monedas.identificacion]',
 			'errors' => [
-				'required' => 'La moneda es requerida'
+				'required' => 'La moneda es requerida',
+				'is_not_unique' => 'La moneda no se encuentra registrada'
 			]
 		],
 		'price' => [
@@ -51,9 +54,10 @@ function createProductValidation()
 		],
 		'tax' => [
 			'label' => 'tax',
-			'rules' => 'required',
+			'rules' => 'required|is_not_unique[impuestos.identificacion]',
 			'errors' => [
-				'required' => 'El impuesto es requerido'
+				'required' => 'El impuesto es requerido',
+				'is_not_unique' => 'El impuesto no se encuentra registrado'
 			]
 		]
 	];
@@ -66,40 +70,43 @@ function updateProductValidation()
 	$updateProduct = [
 		'code' => [
 			'label' => 'code',
-			'rules' => 'required|alpha_numeric|is_unique[products.code,id,{id}]',
+			'rules' => 'required|alpha_numeric_punct|is_not_unique[productos.codigo]',
 			'errors' => [
 				'required' => 'El código es requerido',
-				'alpha_numeric' => 'Para el código sólo se permiten carácteres alfanuméricos',
-				'is_unique' => 'El código ya se encuentra registrado'
+				'alpha_numeric_punct' => 'Para el código sólo se permiten carácteres alfanuméricos',
+				'is_not_unique' => 'El código no se encuentra registrado'
 			]
 		],
 		'name' => [
 			'label' => 'name',
-			'rules' => 'required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ ,.]*$/u]',
+			'rules' => 'required|regex_match[/^[a-z0-9ñáéíóúüA-ZÑÁÉÍÓÚÜ ~!#$%\&\*\-_+=|:.\/]*$/u]',
 			'errors' => [
 				'required' => 'El nombre es requerido',
-				'regex_match' => 'Para el nombre sólo se permiten carácteres alfabéticos.'
+				'regex_match' => 'Para el nombre sólo se permiten carácteres alfabéticos y un número limitado de signos'
 			]
 		],
 		'brand' => [
 			'label' => 'brand',
-			'rules' => 'required',
+			'rules' => 'required|is_not_unique[marcas.identificacion]',
 			'errors' => [
-				'required' => 'La marca es requerida'
+				'required' => 'La marca es requerida',
+				'is_not_unique' => 'La marca no se encuentra registrada'
 			]
 		],
 		'category' => [
 			'label' => 'category',
-			'rules' => 'required',
+			'rules' => 'required|is_not_unique[categorias.identificacion]',
 			'errors' => [
-				'required' => 'La categoría es requerida'
+				'required' => 'La categoría es requerida',
+				'is_not_unique' => 'La categoría no se encuentra registrada'
 			]
 		],
 		'coin' => [
 			'label' => 'coin',
-			'rules' => 'required',
+			'rules' => 'required|is_not_unique[monedas.identificacion]',
 			'errors' => [
-				'required' => 'La moneda es requerida'
+				'required' => 'La moneda es requerida',
+				'is_not_unique' => 'La moneda no se encuentra registrada'
 			]
 		],
 		'price' => [
@@ -112,9 +119,10 @@ function updateProductValidation()
 		],
 		'tax' => [
 			'label' => 'tax',
-			'rules' => 'required',
+			'rules' => 'required|is_not_unique[impuestos.identificacion]',
 			'errors' => [
-				'required' => 'El impuesto es requerido'
+				'required' => 'El impuesto es requerido',
+				'is_not_unique' => 'El impuesto no se encuentra registrado'
 			]
 		]
 	];

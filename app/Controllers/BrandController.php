@@ -234,7 +234,7 @@ class BrandController extends BaseController
 		//SWEET ALERT
 		$this->successMessage['alert'] 		= "clean";
 		$this->successMessage['title'] 		= "¡Exito!";
-		$this->successMessage['text'] 		= "La marca ha sido recuperado";
+		$this->successMessage['text'] 		= "La marca ha sido recuperada";
 		return sweetAlert($this->successMessage);
 	}
 }

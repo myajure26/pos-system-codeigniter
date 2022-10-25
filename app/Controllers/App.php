@@ -109,23 +109,23 @@ class App extends BaseController
 		if($this->session->has('name')){
 
 			$db      	= \Config\Database::connect();
-			$taxes 		= $db
-							->table('taxes')
-							->select('id, tax, percentage')
-							->where('deleted_at', NULL)
+			$coins 		= $db
+							->table('monedas')
+							->select('identificacion, moneda, simbolo')
+							->where('estado', 1)
 							->get()
 							->getResult();
-			$coins 		= $db
-							->table('coins')
-							->select('id, coin, symbol')
-							->where('deleted_at', NULL)
+			$receipt 	= $db
+							->table('tipo_documento')
+							->select('identificacion, nombre')
+							->where('estado', 1)
 							->get()
 							->getResult();
 
 			$data = [
 				"title" 	=> "Registrar nueva compra - $this->system",
-				"taxes" 	=> $taxes,
-				"coins"		=> $coins
+				"coins"		=> $coins,
+				"receipt"	=> $receipt
 			];
 			return view('app/ajax/newPurchase', $data);
 		
@@ -141,22 +141,22 @@ class App extends BaseController
 		if($this->session->has('name')){
 
 			$db      	= \Config\Database::connect();
-			$taxes 		= $db
-							->table('taxes')
-							->select('id, tax, percentage')
-							->where('deleted_at', NULL)
+			$coins 		= $db
+							->table('monedas')
+							->select('identificacion, moneda, simbolo')
+							->where('estado', 1)
 							->get()
 							->getResult();
-			$coins 		= $db
-							->table('coins')
-							->select('id, coin, symbol')
-							->where('deleted_at', NULL)
+			$receipt 	= $db
+							->table('tipo_documento')
+							->select('identificacion, nombre')
+							->where('estado', 1)
 							->get()
 							->getResult();
 			
 			$data = [
 				"title" => "Compras - $this->system",
-				"taxes" 	=> $taxes,
+				"receipt" 	=> $receipt,
 				"coins"		=> $coins
 			];
 			return view('app/ajax/purchases', $data);
@@ -174,27 +174,27 @@ class App extends BaseController
 
 			$db      	= \Config\Database::connect();
 			$brands 	= $db
-							->table('brands')
-							->select('id, brand')
-							->where('deleted_at', NULL)
+							->table('marcas')
+							->select('identificacion, marca')
+							->where('estado', 1)
 							->get()
 							->getResult();
 			$categories = $db
-							->table('categories')
-							->select('id, category')
-							->where('deleted_at', NULL)
+							->table('categorias')
+							->select('identificacion, categoria')
+							->where('estado', 1)
 							->get()
 							->getResult();
 			$taxes = $db
-							->table('taxes')
-							->select('id, tax')
-							->where('deleted_at', NULL)
+							->table('impuestos')
+							->select('identificacion, impuesto')
+							->where('estado', 1)
 							->get()
 							->getResult();
 			$coins 		= $db
-							->table('coins')
-							->select('id, coin, symbol')
-							->where('deleted_at', NULL)
+							->table('monedas')
+							->select('identificacion, moneda, simbolo')
+							->where('estado', 1)
 							->get()
 							->getResult();
 			
