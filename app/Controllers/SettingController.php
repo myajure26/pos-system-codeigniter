@@ -25,7 +25,7 @@ class SettingController extends BaseController
 		"action"		=> "",
 		"description"	=> ""
 	];
-	public function setCoins()
+	public function createCoinPrice()
 	{
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());

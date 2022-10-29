@@ -13,7 +13,7 @@ function createCustomerValidation()
 		],
 		'identification' => [
 			'label' => 'identification',
-			'rules' => 'required|min_length[9]|max_length[12]|regex_match[^([VEJPG]{1})([-]{1})([0-9]{7,9})$]|is_unique[customers.identification]',
+			'rules' => 'required|min_length[9]|max_length[12]|regex_match[^([VEJPG]{1})([-]{1})([0-9]{7,9})$]|is_unique[clientes.identificacion]',
 			'errors' => [
 				'required' => 'El rif es requerido',
 				'min_length' => 'Introduce una cédula/rif válida',
@@ -56,23 +56,15 @@ function createCustomerValidation()
 function updateCustomerValidation()
 {
 	$updateCustomer = [
-		'letter' => [
-			'label' => 'letter',
-			'rules' => 'required|in_list[V, J, E, P, G]',
-			'errors' => [
-				'required' => 'La cédula/rif es requerida',
-				'in_list' => 'La letra de la cédula/rif no es válida'
-			]
-		],
 		'identification' => [
 			'label' => 'identification',
-			'rules' => 'required|min_length[9]|max_length[12]|regex_match[^([VEJPG]{1})([-]{1})([0-9]{7,9})$]|is_unique[customers.identification,id,{id}]',
+			'rules' => 'required|min_length[9]|max_length[12]|regex_match[^([VEJPG]{1})([-]{1})([0-9]{7,9})$]|is_not_unique[clientes.identificacion]',
 			'errors' => [
 				'required' => 'La cédula/rif es requerida',
 				'min_length' => 'Introduce una cédula/rif válido',
 				'max_length' => 'Introduce una cédula/rif válido',
 				'regex_match' => 'El formato de la cédula/rif no es válido',
-				'is_unique' => 'La cédula/rif ya existe'
+				'is_not_unique' => 'La cédula/rif no existe'
 			]
 		],
 		'name' => [

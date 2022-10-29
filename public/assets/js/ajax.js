@@ -225,7 +225,7 @@ $(document).ready(function() {
         const type = $(this).attr('data-type');
         
         const data = new FormData();
-        data.append('id', id);
+        data.append('identification', id);
         
         if(type == 'users'){
             data.append('photo', $(this).attr('photo'));
@@ -233,7 +233,7 @@ $(document).ready(function() {
         
         Swal.fire({
            
-           title: '¿Está seguro de eliminar la fila #'+id+'?',
+           title: '¿Está seguro de eliminar la fila con identificación '+id+'?',
            text: 'Si no está seguro, puede cancelar la operación',
            icon: 'warning',
            showCancelButton: true,
@@ -278,4 +278,63 @@ $(document).ready(function() {
             }
         });
     });    
+
+    // AJAX RECOVER
+    $(document).on('click', '.btnRecover', function(){ 
+        
+        const response = $('.response');
+        const id = $(this).attr('data-id');
+        const type = $(this).attr('data-type');
+        
+        const data = new FormData();
+        data.append('identification', id);
+        
+        Swal.fire({
+           
+           title: '¿Está seguro de recuperar la fila con identificación '+id+'?',
+           text: 'Si no está seguro, puede cancelar la operación',
+           icon: 'warning',
+           showCancelButton: true,
+           cancelButtonColor: '#D33',
+           confirmButtonText: 'Sí',
+           cancelButtonText: 'Cancelar'
+
+        }).then((result) => {
+            if(result.value){
+
+                //AJAX
+                $.ajax({
+                    url: url + '/' + type + '/recover',
+                    method: "POST",
+                    data: data,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function() {
+                        Swal.fire({
+                            icon: 'info',
+                            title: '<strong>Procesando...</strong>',
+                            text: 'Por favor, espera unos segundos',
+                            showConfirmButton: false,
+                            didOpen: function() {
+                                Swal.showLoading();
+                            }
+                        });
+                    },
+                    success: function (data) {
+                        response.html(data);
+                    },
+                    error: function (data) {
+                        Swal.fire({
+                           title: 'Ha ocurrido un error',
+                           text: 'Intente nuevamente',
+                           icon: 'error'
+                        });
+
+                    }
+                });
+            }
+        });
+    });    
+
 });

@@ -5,7 +5,7 @@ function createTaxValidation()
 	$tax = [
 		'name' => [
 			'label' => 'name',
-			'rules' => 'required|alpha_numeric_punct|is_unique[taxes.tax]',
+			'rules' => 'required|alpha_numeric_punct|is_unique[impuestos.impuesto]',
 			'errors' => [
 				'required' => 'El nombre del impuesto es requerido',
 				'alpha_numeric_punct' => 'Para el nombre sólo se permiten carácteres alfanuméricos y el símbolo de porcentaje (%).',
@@ -30,11 +30,11 @@ function updateTaxValidation()
 	$updateTax = [
 		'name' => [
 			'label' => 'name',
-			'rules' => 'required|alpha_numeric_punct|is_unique[coins.coin,id,{id}]',
+			'rules' => 'required|alpha_numeric_punct|is_unique[impuestos.impuesto,identificacion,{identification}]',
 			'errors' => [
-				'required' => 'El nombre de la moneda es requerido',
+				'required' => 'El nombre del impuesto es requerido',
 				'alpha_numeric_punct' => 'Para el nombre sólo se permiten carácteres alfanuméricos y el símbolo de porcentaje (%).',
-				'is_unique' => 'El nombre de la moneda ya existe'
+				'is_unique' => 'El nombre del impuesto ya existe'
 			]
 		],
 		'percentage' => [

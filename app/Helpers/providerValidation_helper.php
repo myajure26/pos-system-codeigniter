@@ -5,7 +5,7 @@ function createProviderValidation()
 	$provider = [
 		'code' => [
 			'label' => 'code',
-			'rules' => 'required|alpha_numeric_punct|is_unique[providers.code]',
+			'rules' => 'required|alpha_numeric_punct|is_unique[proveedores.codigo]',
 			'errors' => [
 				'required' => 'El código es requerido',
 				'alpha_numeric_punct' => 'Para el código sólo se permiten carácteres alfanuméricos y guiones',
@@ -16,19 +16,17 @@ function createProviderValidation()
 			'label' => 'rifLetter',
 			'rules' => 'required|in_list[V, J, E, P, G]',
 			'errors' => [
-				'required' => 'El rif es requerido',
-				'in_list' => 'La letra del rif no es válida'
+				'required' => 'La cédula/rif es requerida',
+				'in_list' => 'La letra de la cédula/rif no es válida'
 			]
 		],
 		'identification' => [
 			'label' => 'identification',
-			'rules' => 'required|min_length[9]|max_length[12]|regex_match[^([VEJPG]{1})([-]{1})([0-9]{9})$]|is_unique[providers.rif]',
+			'rules' => 'required|regex_match[^([VEJPG]{1})([-]{1})([0-9]{7,9})$]|is_unique[proveedores.identificacion]',
 			'errors' => [
-				'required' => 'El rif es requerido',
-				'min_length' => 'Introduce un rif válido',
-				'max_length' => 'Introduce un rif válido',
-				'regex_match' => 'El formato del rif no es válido',
-				'is_unique' => 'El rif ya existe'
+				'required' => 'La cédula/rif es requerida',
+				'regex_match' => 'El formato de la cédula/rif no es válido',
+				'is_unique' => 'La cédula/rif ya existe'
 			]
 		],
 		'name' => [
@@ -67,30 +65,28 @@ function updateProviderValidation()
 	$updateProvider = [
 		'code' => [
 			'label' => 'code',
-			'rules' => 'required|alpha_numeric_punct|is_unique[providers.code,id,{id}]',
+			'rules' => 'required|alpha_numeric_punct|is_not_unique[proveedores.codigo]',
 			'errors' => [
 				'required' => 'El código es requerido',
 				'alpha_numeric_punct' => 'Para el código sólo se permiten carácteres alfanuméricos y guiones',
-				'is_unique' => 'El código ya se encuentra registrado'
+				'is_not_unique' => 'El código no se encuentra registrado'
 			]
 		],
 		'letter' => [
 			'label' => 'rifLetter',
 			'rules' => 'required|in_list[V, J, E, P, G]',
 			'errors' => [
-				'required' => 'El rif es requerido',
-				'in_list' => 'La letra del rif no es válida'
+				'required' => 'La cédula/rif es requerida',
+				'in_list' => 'La letra de la cédula/rif no es válida'
 			]
 		],
 		'identification' => [
 			'label' => 'identification',
-			'rules' => 'required|min_length[9]|max_length[12]|regex_match[^([VEJPG]{1})([-]{1})([0-9]{9})$]|is_unique[providers.rif,id,{id}]',
+			'rules' => 'required|regex_match[^([VEJPG]{1})([-]{1})([0-9]{9})$]|is_unique[proveedores.identificacion,codigo,{code}]',
 			'errors' => [
-				'required' => 'El rif es requerido',
-				'min_length' => 'Introduce un rif válido',
-				'max_length' => 'Introduce un rif válido',
-				'regex_match' => 'El formato del rif no es válido',
-				'is_unique' => 'El rif ya existe'
+				'required' => 'La cédula/rif es requerida',
+				'regex_match' => 'El formato de la cédula/rif no es válido',
+				'is_unique' => 'La cédula/rif ya existe'
 			]
 		],
 		'name' => [

@@ -21,10 +21,10 @@ class ProviderController extends BaseController
 	];
 
 	protected $auditContent = [
-		"user"			=> "",
-		"module"		=> "Proveedores",
-		"action"		=> "",
-		"description"	=> ""
+		"usuario"		=> "",
+		"modulo"		=> "Proveedores",
+		"accion"		=> "",
+		"descripcion"	=> ""
 	];
 
 	public function createProvider()
@@ -47,11 +47,11 @@ class ProviderController extends BaseController
 		}
 		
 		$data = [
-			"code" 			=> $this->request->getPost('code'),
-			"name" 			=> $this->request->getPost('name'),
-			"rif" 			=> $this->request->getPost('identification'),
-			"address" 		=> $this->request->getPost('address'),
-			"phone" 		=> $this->request->getPost('phone')
+			"codigo" 			=> $this->request->getPost('code'),
+			"nombre" 			=> $this->request->getPost('name'),
+			"identificacion" 	=> $this->request->getPost('identification'),
+			"direccion" 		=> $this->request->getPost('address'),
+			"telefono" 			=> $this->request->getPost('phone')
 		];
 
 		$ProviderModel = new ProviderModel();
@@ -63,10 +63,10 @@ class ProviderController extends BaseController
 		}
 
 		//PARA LA AUDITORÍA
-		$auditUserId = $this->session->get('id');
-		$this->auditContent['user'] 		= $auditUserId;
-		$this->auditContent['action'] 		= "Crear proveedor";
-		$this->auditContent['description'] 	= "Se ha creado al proveedor con ID #" . $ProviderModel->getLastId() . " exitosamente.";
+		$auditUserId = $this->session->get('identification');
+		$this->auditContent['usuario'] 		= $auditUserId;
+		$this->auditContent['accion'] 		= "Crear proveedor";
+		$this->auditContent['descripcion'] 	= "Se ha creado al proveedor con código " . $data['codigo'] . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -85,27 +85,53 @@ class ProviderController extends BaseController
 		$ProviderModel = new ProviderModel();
 				
 		return DataTable::of($ProviderModel->getProviders())
+			->edit('estado', function($row){
+					
+				if($row->estado == 0){
+					return '<div class="mt-sm-1 d-block"><a href="javascript:void(0)" class="badge bg-soft-danger text-danger p-2 px-3">Desactivado</a></div>';
+				}
+
+				return '<div class="mt-sm-1 d-block"><a href="javascript:void(0)" class="badge bg-soft-success text-success p-2 px-3">Activado</a></div>';
+			})
 			->add('Acciones', function($row){
+				if($row->estado == 1){
+					return '<div class="btn-list"> 
+								<button type="button" class="btnView btn btn-sm btn-primary waves-effect" data-id="'.$row->codigo.'" data-type="providers" data-bs-toggle="modal" data-bs-target="#viewModal">
+									<i class="far fa-eye"></i>
+								</button>
+								<button type="button" class="btnDelete btn btn-sm btn-danger waves-effect" data-id="'.$row->codigo.'" data-type="providers">
+									<i class="far fa-trash-alt"></i>
+								</button>
+							</div>';
+				}
+
 				return '<div class="btn-list"> 
-							<button type="button" class="btnView btn btn-sm btn-primary waves-effect" data-id="'.$row->id.'" data-type="providers" data-bs-toggle="modal" data-bs-target="#viewModal">
-                                <i class="far fa-eye"></i>
-                            </button>
-                            <button type="button" class="btnDelete btn btn-sm btn-danger waves-effect" data-id="'.$row->id.'" data-type="providers">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                        </div>';
+								<button type="button" class="btnRecover btn btn-sm btn-success waves-effect" data-id="'.$row->codigo.'" data-type="providers">
+									<i class="fas fa-check"></i>
+								</button>
+							</div>';
+
 			}, 'last') 
+			->filter(function ($builder, $request) {
+        
+				if ($request->status == ''){
+					return true;
+				}
+				
+				return $builder->where('estado', $request->status);
+		
+			})
 			->toJson();
 	}
 
-	public function getProviderById($id)
+	public function getProviderById($identification)
 	{
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
 		}
 
 		$ProviderModel = new ProviderModel();
-		$provider = $ProviderModel->getProviderById(['id' => $id]);
+		$provider = $ProviderModel->getProviderById(['codigo' => $identification]);
 		if(!$provider){
 			return false;
 		}
@@ -131,17 +157,17 @@ class ProviderController extends BaseController
 
 		}
 
-		$id = $this->request->getPost('id');
+		$code = $this->request->getPost('code');
 		$data = [
-			"code" 		=> $this->request->getPost('code'),
-			"name" 		=> $this->request->getPost('name'),
-			"rif" 		=> $this->request->getPost('identification'),
-			"address" 	=> $this->request->getPost('address'),
-			"phone" 	=> $this->request->getPost('phone')
+			"codigo" 		=> $this->request->getPost('code'),
+			"nombre" 		=> $this->request->getPost('name'),
+			"identificacion"=> $this->request->getPost('identification'),
+			"direccion" 	=> $this->request->getPost('address'),
+			"telefono" 		=> $this->request->getPost('phone')
 		];
 
 		$ProviderModel = new ProviderModel();
-		$provider = $ProviderModel->updateProvider($data, $id);
+		$provider = $ProviderModel->updateProvider($data, $code);
 
 		if(!$provider){
 			$this->errorMessage['text'] = "Error actualizar al proveedor en la base de datos";
@@ -149,10 +175,10 @@ class ProviderController extends BaseController
 		}
 
 		//PARA LA AUDITORÍA
-		$auditUserId = $this->session->get('id');
-		$this->auditContent['user'] 		= $auditUserId;
-		$this->auditContent['action'] 		= "Actualizar proveedor";
-		$this->auditContent['description'] 	= "Se ha actualizado al proveedor con ID #" . $id . " exitosamente.";
+		$auditUserId = $this->session->get('identification');
+		$this->auditContent['usuario'] 		= $auditUserId;
+		$this->auditContent['accion'] 		= "Actualizar proveedor";
+		$this->auditContent['descripcion'] 	= "Se ha actualizado al proveedor con código " . $data['codigo'] . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -168,10 +194,10 @@ class ProviderController extends BaseController
 			return redirect()->to(base_url());
 		}
 
-		$id = $this->request->getPost('id');
+		$code = $this->request->getPost('identification');
 
 		$ProviderModel = new ProviderModel();
-		$deleteProvider = $ProviderModel->deleteProvider($id);
+		$deleteProvider = $ProviderModel->deleteProvider($code);
 
 		if(!$deleteProvider){
 			$this->errorMessage['text'] = "El proveedor no existe";
@@ -179,10 +205,10 @@ class ProviderController extends BaseController
 		}
 
 		//PARA LA AUDITORÍA
-		$auditUserId = $this->session->get('id');
-		$this->auditContent['user'] 		= $auditUserId;
-		$this->auditContent['action'] 		= "Eliminar proveedor";
-		$this->auditContent['description'] 	= "Se ha eliminado al proveedor con ID #" . $id . " exitosamente.";
+		$auditUserId = $this->session->get('identification');
+		$this->auditContent['usuario'] 		= $auditUserId;
+		$this->auditContent['accion'] 		= "Eliminar proveedor";
+		$this->auditContent['descripcion'] 	= "Se ha eliminado al proveedor con código " . $code . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -190,6 +216,37 @@ class ProviderController extends BaseController
 		$this->successMessage['alert'] 		= "clean";
 		$this->successMessage['title'] 		= "Proveedor eliminado";
 		$this->successMessage['text'] 		= "Puede recuperarlo desde la papelera";
+		return sweetAlert($this->successMessage);
+	}
+
+	public function recoverProvider()
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$code = $this->request->getPost('identification');
+
+		$ProviderModel = new ProviderModel();
+		$recoverProvider = $ProviderModel->recoverProvider($code);
+
+		if(!$recoverProvider){
+			$this->errorMessage['text'] = "El proveedor no existe";
+			return sweetAlert($this->errorMessage);
+		}
+
+		//PARA LA AUDITORÍA
+		$auditUserId = $this->session->get('identification');
+		$this->auditContent['usuario'] 		= $auditUserId;
+		$this->auditContent['accion'] 		= "Recuperar proveedor";
+		$this->auditContent['descripcion'] 	= "Se ha recuperado al proveedor con código " . $code . " exitosamente.";
+		$AuditModel = new AuditModel();
+		$AuditModel->createAudit($this->auditContent);
+		
+		//SWEET ALERT
+		$this->successMessage['alert'] 		= "clean";
+		$this->successMessage['title'] 		= "¡Exito!";
+		$this->successMessage['text'] 		= "El proveedor ha sido recuperado";
 		return sweetAlert($this->successMessage);
 	}
 }

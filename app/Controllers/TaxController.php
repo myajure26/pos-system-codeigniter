@@ -21,10 +21,10 @@ class TaxController extends BaseController
 	];
 
 	protected $auditContent = [
-		"user"			=> "",
-		"module"		=> "Impuestos",
-		"action"		=> "",
-		"description"	=> ""
+		"usuario"		=> "",
+		"modulo"		=> "Impuestos",
+		"accion"		=> "",
+		"descripcion"	=> ""
 	];
 
 	public function createTax()
@@ -51,8 +51,8 @@ class TaxController extends BaseController
 
 		$TaxModel = new TaxModel();
 		$tax = $TaxModel->createTax([
-									'tax' => $name,
-									'percentage' => $percentage
+									'impuesto' => $name,
+									'porcentaje' => $percentage
 								]);
 
 		if(!$tax){
@@ -61,10 +61,10 @@ class TaxController extends BaseController
 		}
 
 		//PARA LA AUDITORÍA
-		$auditUserId = $this->session->get('id');
-		$this->auditContent['user'] 		= $auditUserId;
-		$this->auditContent['action'] 		= "Crear impuesto";
-		$this->auditContent['description'] 	= "Se ha creado el impuesto con ID #" . $TaxModel->getLastId() . " exitosamente.";
+		$auditUserId = $this->session->get('identification');
+		$this->auditContent['usuario'] 		= $auditUserId;
+		$this->auditContent['accion'] 		= "Crear impuesto";
+		$this->auditContent['descripcion'] 	= "Se ha creado el impuesto con ID #" . $TaxModel->getLastId() . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -83,27 +83,53 @@ class TaxController extends BaseController
 		$TaxModel = new TaxModel();
 				
 		return DataTable::of($TaxModel->getTaxes())
+			->edit('estado', function($row){
+							
+				if($row->estado == 0){
+					return '<div class="mt-sm-1 d-block"><a href="javascript:void(0)" class="badge bg-soft-danger text-danger p-2 px-3">Desactivado</a></div>';
+				}
+
+				return '<div class="mt-sm-1 d-block"><a href="javascript:void(0)" class="badge bg-soft-success text-success p-2 px-3">Activado</a></div>';
+			})
 			->add('Acciones', function($row){
+				if($row->estado == 1){
+					return '<div class="btn-list"> 
+								<button type="button" class="btnView btn btn-sm btn-primary waves-effect" data-id="'.$row->identificacion.'" data-type="taxes" data-bs-toggle="modal" data-bs-target="#viewModal">
+									<i class="far fa-eye"></i>
+								</button>
+								<button type="button" class="btnDelete btn btn-sm btn-danger waves-effect" data-id="'.$row->identificacion.'" data-type="taxes">
+									<i class="far fa-trash-alt"></i>
+								</button>
+							</div>';
+				}
+
 				return '<div class="btn-list"> 
-                            <button type="button" class="btnView btn btn-sm btn-primary waves-effect" data-id="'.$row->id.'" data-type="taxes" data-bs-toggle="modal" data-bs-target="#viewModal">
-                                <i class="far fa-eye"></i>
-                            </button>
-                            <button type="button" class="btnDelete btn btn-sm btn-danger waves-effect" data-id="'.$row->id.'" data-type="taxes">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                        </div>';
+								<button type="button" class="btnRecover btn btn-sm btn-success waves-effect" data-id="'.$row->identificacion.'" data-type="taxes">
+									<i class="fas fa-check"></i>
+								</button>
+							</div>';
+
 			}, 'last') 
+			->filter(function ($builder, $request) {
+		
+				if ($request->status == ''){
+					return true;
+				}
+				
+				return $builder->where('estado', $request->status);
+		
+			})
 			->toJson();
 	}
 
-	public function getTaxById($id)
+	public function getTaxById($identification)
 	{
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
 		}
 
 		$TaxModel = new TaxModel();
-		$tax = $TaxModel->getTaxById(['id' => $id]);
+		$tax = $TaxModel->getTaxById(['identificacion' => $identification]);
 		if(!$tax){
 			return false;
 		}
@@ -129,15 +155,15 @@ class TaxController extends BaseController
 
 		}
 
-		$id = $this->request->getPost('id');
+		$identification = $this->request->getPost('identification');
 		$name = $this->request->getPost('name');
 		$percentage = $this->request->getPost('percentage');
 
 		$TaxModel = new TaxModel();
 		$tax = $TaxModel->updateTax([
-									"tax" => $name,
-									"percentage" => $percentage
-								], $id);
+									"impuesto" => $name,
+									"porcentaje" => $percentage
+								], $identification);
 
 		if(!$tax){
 			$this->errorMessage['text'] = "Error actualizar el impuesto en la base de datos";
@@ -145,10 +171,10 @@ class TaxController extends BaseController
 		}
 
 		//PARA LA AUDITORÍA
-		$auditUserId = $this->session->get('id');
-		$this->auditContent['user'] 		= $auditUserId;
-		$this->auditContent['action'] 		= "Actualizar impuesto";
-		$this->auditContent['description'] 	= "Se ha actualizado el impuesto con ID #" . $id . " exitosamente.";
+		$auditUserId = $this->session->get('identification');
+		$this->auditContent['usuario'] 		= $auditUserId;
+		$this->auditContent['accion'] 		= "Actualizar impuesto";
+		$this->auditContent['descripcion'] 	= "Se ha actualizado el impuesto con ID #" . $identification . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -164,10 +190,10 @@ class TaxController extends BaseController
 			return redirect()->to(base_url());
 		}
 
-		$id = $this->request->getPost('id');
+		$identification = $this->request->getPost('identification');
 
 		$TaxModel = new TaxModel();
-		$deleteTax = $TaxModel->deleteTax($id);
+		$deleteTax = $TaxModel->deleteTax($identification);
 
 		if(!$deleteTax){
 			$this->errorMessage['text'] = "El impuesto no existe";
@@ -175,10 +201,10 @@ class TaxController extends BaseController
 		}
 
 		//PARA LA AUDITORÍA
-		$auditUserId = $this->session->get('id');
-		$this->auditContent['user'] 		= $auditUserId;
-		$this->auditContent['action'] 		= "Eliminar impuesto";
-		$this->auditContent['description'] 	= "Se ha eliminado el impuesto con ID #" . $id . " exitosamente.";
+		$auditUserId = $this->session->get('identification');
+		$this->auditContent['usuario'] 		= $auditUserId;
+		$this->auditContent['accion'] 		= "Eliminar impuesto";
+		$this->auditContent['descripcion'] 	= "Se ha eliminado el impuesto con ID #" . $identification . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -186,6 +212,37 @@ class TaxController extends BaseController
 		$this->successMessage['alert'] 		= "clean";
 		$this->successMessage['title'] 		= "Impuesto eliminado";
 		$this->successMessage['text'] 		= "Puede recuperarlo desde la papelera";
+		return sweetAlert($this->successMessage);
+	}
+
+	public function recoverTax()
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$identification = $this->request->getPost('identification');
+
+		$TaxModel = new TaxModel();
+		$recoverTax = $TaxModel->recoverTax($identification);
+
+		if(!$recoverTax){
+			$this->errorMessage['text'] = "El impuesto no existe";
+			return sweetAlert($this->errorMessage);
+		}
+
+		//PARA LA AUDITORÍA
+		$auditUserId = $this->session->get('identification');
+		$this->auditContent['usuario'] 		= $auditUserId;
+		$this->auditContent['accion'] 		= "Recuperar impuesto";
+		$this->auditContent['descripcion'] 	= "Se ha recuperado al impuesto con ID #" . $identification . " exitosamente.";
+		$AuditModel = new AuditModel();
+		$AuditModel->createAudit($this->auditContent);
+		
+		//SWEET ALERT
+		$this->successMessage['alert'] 		= "clean";
+		$this->successMessage['title'] 		= "¡Exito!";
+		$this->successMessage['text'] 		= "El impuesto ha sido recuperado";
 		return sweetAlert($this->successMessage);
 	}
 }

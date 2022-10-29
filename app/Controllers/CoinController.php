@@ -21,10 +21,10 @@ class CoinController extends BaseController
 	];
 
 	protected $auditContent = [
-		"user"			=> "",
-		"module"		=> "Monedas",
-		"action"		=> "",
-		"description"	=> ""
+		"usuario"		=> "",
+		"modulo"		=> "Monedas",
+		"accion"		=> "",
+		"descripcion"	=> ""
 	];
 
 	public function createCoin()
@@ -51,8 +51,8 @@ class CoinController extends BaseController
 
 		$CoinModel = new CoinModel();
 		$coin = $CoinModel->createCoin([
-									'coin' => $name,
-									'symbol' => $symbol
+									'moneda' => $name,
+									'simbolo' => $symbol
 								]);
 
 		if(!$coin){
@@ -61,10 +61,10 @@ class CoinController extends BaseController
 		}
 
 		//PARA LA AUDITORÍA
-		$auditUserId = $this->session->get('id');
-		$this->auditContent['user'] 		= $auditUserId;
-		$this->auditContent['action'] 		= "Crear moneda";
-		$this->auditContent['description'] 	= "Se ha creado la moneda con ID #" . $CoinModel->getLastId() . " exitosamente.";
+		$auditUserId = $this->session->get('identification');
+		$this->auditContent['usuario'] 		= $auditUserId;
+		$this->auditContent['accion'] 		= "Crear moneda";
+		$this->auditContent['descripcion'] 	= "Se ha creado la moneda con ID #" . $CoinModel->getLastId() . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -83,27 +83,53 @@ class CoinController extends BaseController
 		$CoinModel = new CoinModel();
 				
 		return DataTable::of($CoinModel->getCoins())
+			->edit('estado', function($row){
+								
+				if($row->estado == 0){
+					return '<div class="mt-sm-1 d-block"><a href="javascript:void(0)" class="badge bg-soft-danger text-danger p-2 px-3">Desactivado</a></div>';
+				}
+
+				return '<div class="mt-sm-1 d-block"><a href="javascript:void(0)" class="badge bg-soft-success text-success p-2 px-3">Activado</a></div>';
+			})
 			->add('Acciones', function($row){
+				if($row->estado == 1){
+					return '<div class="btn-list"> 
+								<button type="button" class="btnView btn btn-sm btn-primary waves-effect" data-id="'.$row->identificacion.'" data-type="coins" data-bs-toggle="modal" data-bs-target="#viewModal">
+									<i class="far fa-eye"></i>
+								</button>
+								<button type="button" class="btnDelete btn btn-sm btn-danger waves-effect" data-id="'.$row->identificacion.'" data-type="coins">
+									<i class="far fa-trash-alt"></i>
+								</button>
+							</div>';
+				}
+
 				return '<div class="btn-list"> 
-                            <button type="button" class="btnView btn btn-sm btn-primary waves-effect" data-id="'.$row->id.'" data-type="coins" data-bs-toggle="modal" data-bs-target="#viewModal">
-                                <i class="far fa-eye"></i>
-                            </button>
-                            <button type="button" class="btnDelete btn btn-sm btn-danger waves-effect" data-id="'.$row->id.'" data-type="coins">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                        </div>';
+								<button type="button" class="btnRecover btn btn-sm btn-success waves-effect" data-id="'.$row->identificacion.'" data-type="coins">
+									<i class="fas fa-check"></i>
+								</button>
+							</div>';
+
 			}, 'last') 
+			->filter(function ($builder, $request) {
+		
+				if ($request->status == ''){
+					return true;
+				}
+				
+				return $builder->where('estado', $request->status);
+		
+			})
 			->toJson();
 	}
 
-	public function getCoinById($id)
+	public function getCoinById($identification)
 	{
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
 		}
 
 		$CoinModel = new CoinModel();
-		$coin = $CoinModel->getCoinById(['id' => $id]);
+		$coin = $CoinModel->getCoinById(['identificacion' => $identification]);
 		if(!$coin){
 			return false;
 		}
@@ -129,15 +155,15 @@ class CoinController extends BaseController
 
 		}
 
-		$id = $this->request->getPost('id');
+		$identification = $this->request->getPost('identification');
 		$name = $this->request->getPost('name');
 		$symbol = $this->request->getPost('symbol');
 
 		$CoinModel = new CoinModel();
 		$coin = $CoinModel->updateCoin([
-										"coin" => $name,
-										"symbol" => $symbol
-									], $id);
+										"moneda" => $name,
+										"simbolo" => $symbol
+									], $identification);
 
 		if(!$coin){
 			$this->errorMessage['text'] = "Error actualizar la moneda en la base de datos";
@@ -145,10 +171,10 @@ class CoinController extends BaseController
 		}
 
 		//PARA LA AUDITORÍA
-		$auditUserId = $this->session->get('id');
-		$this->auditContent['user'] 		= $auditUserId;
-		$this->auditContent['action'] 		= "Actualizar moneda";
-		$this->auditContent['description'] 	= "Se ha actualizado la moneda con ID #" . $id . " exitosamente.";
+		$auditUserId = $this->session->get('identification');
+		$this->auditContent['usuario'] 		= $auditUserId;
+		$this->auditContent['accion'] 		= "Actualizar moneda";
+		$this->auditContent['descripcion'] 	= "Se ha actualizado la moneda con ID #" . $identification . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -164,10 +190,10 @@ class CoinController extends BaseController
 			return redirect()->to(base_url());
 		}
 
-		$id = $this->request->getPost('id');
+		$identification = $this->request->getPost('identification');
 
 		$CoinModel = new CoinModel();
-		$deleteCoin = $CoinModel->deleteCoin($id);
+		$deleteCoin = $CoinModel->deleteCoin($identification);
 
 		if(!$deleteCoin){
 			$this->errorMessage['text'] = "La moneda no existe";
@@ -175,10 +201,10 @@ class CoinController extends BaseController
 		}
 
 		//PARA LA AUDITORÍA
-		$auditUserId = $this->session->get('id');
-		$this->auditContent['user'] 		= $auditUserId;
-		$this->auditContent['action'] 		= "Eliminar moneda";
-		$this->auditContent['description'] 	= "Se ha eliminado la moneda con ID #" . $id . " exitosamente.";
+		$auditUserId = $this->session->get('identification');
+		$this->auditContent['usuario'] 		= $auditUserId;
+		$this->auditContent['accion'] 		= "Eliminar moneda";
+		$this->auditContent['descripcion'] 	= "Se ha eliminado la moneda con ID #" . $identification . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -186,6 +212,37 @@ class CoinController extends BaseController
 		$this->successMessage['alert'] 		= "clean";
 		$this->successMessage['title'] 		= "Moneda eliminada";
 		$this->successMessage['text'] 		= "Puede recuperarla desde la papelera";
+		return sweetAlert($this->successMessage);
+	}
+
+	public function recoverCoin()
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$identification = $this->request->getPost('identification');
+
+		$CoinModel = new CoinModel();
+		$recoverCoin = $CoinModel->recoverCoin($identification);
+
+		if(!$recoverCoin){
+			$this->errorMessage['text'] = "La moneda no existe";
+			return sweetAlert($this->errorMessage);
+		}
+
+		//PARA LA AUDITORÍA
+		$auditUserId = $this->session->get('identification');
+		$this->auditContent['usuario'] 		= $auditUserId;
+		$this->auditContent['accion'] 		= "Recuperar moneda";
+		$this->auditContent['descripcion'] 	= "Se ha recuperado la moneda con ID #" . $identification . " exitosamente.";
+		$AuditModel = new AuditModel();
+		$AuditModel->createAudit($this->auditContent);
+		
+		//SWEET ALERT
+		$this->successMessage['alert'] 		= "clean";
+		$this->successMessage['title'] 		= "¡Exito!";
+		$this->successMessage['text'] 		= "La moneda ha sido recuperado";
 		return sweetAlert($this->successMessage);
 	}
 }

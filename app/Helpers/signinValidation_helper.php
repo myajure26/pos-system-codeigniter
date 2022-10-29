@@ -3,9 +3,9 @@
 function signinValidation()
 {
 	$signin = [
-		'ci' => [
-			'label' => 'ci',
-			'rules' => 'required|numeric|min_length[7]|max_length[8]|is_not_unique[users.ci]',
+		'identification' => [
+			'label' => 'identification',
+			'rules' => 'required|numeric|min_length[7]|max_length[8]|is_not_unique[usuarios.identificacion]',
 			'errors' => [
 				'required' => 'La cédula es requerida.',
 				'numeric' => 'Para la cédula sólo se permiten números',

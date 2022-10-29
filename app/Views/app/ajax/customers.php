@@ -36,14 +36,22 @@
                         <p class="card-title-desc">En este módulo podrás ver, agregar, actualizar y eliminar clientes.</p>
                     </div>
                     <div class="card-body">
+                        <div class="mt-2 mb-4">
+                            <label class="form-label" for="status">Filtros</label>
+                            <select name="status" class="form-select" id="status">
+                                <option value="">Todos los clientes</option>
+                                <option value="1">Clientes activados</option>
+                                <option value="0">Clientes desactivados (Papelera)</option>
+                            </select>
+                        </div>
                         <table class="table datatable text-nowrap table-striped nowrap w-100 dt-responsive">
                             <thead>
                                 <tr>
                                     <tr>
-                                        <th>#</th>
-                                        <th>Código</th>
-                                        <th>Nombre</th>
                                         <th>Cédula/Rif</th>
+                                        <th>Nombre</th>
+                                        <th>Teléfono</th>
+                                        <th>Estado</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </tr>
@@ -125,12 +133,12 @@
             <form class="custom-form viewForm" action="<?=base_url('customers/update')?>" method="POST">
                 <div class="modal-body">
                     <div class="response"></div>
-                    <input type="hidden" id="viewId" name="id" value="">
+                    <input type="hidden" id="viewIdentificationPreview" name="identification" value="">
                     <div class="mb-3">
                         <label class="form-label">Cédula/Rif</label>
                         <div class="row">
                             <div class="col-md-3">
-                                <select class="form-select" name="letter" id="viewLetter" disabled>
+                                <select class="form-select viewDisabled" id="viewLetter" disabled>
                                     <option value="V">V</option>
                                     <option value="J">J</option>
                                     <option value="E">E</option>
@@ -139,7 +147,7 @@
                                 </select>
                             </div>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" id="viewIdentification" name="legalIdentification" disabled>
+                                <input type="text" class="form-control viewDisabled" id="viewIdentification" disabled>
                             </div>
                         </div>
                     </div>
@@ -193,16 +201,14 @@
     tableConfig('/customers/get', '.datatable');
 
     function viewCustomer(data){
-        $('#viewId').val(data[0].id);
-        $('#viewName').val(data[0].name);
-        $('#viewLetter').val(data[0].identification.split('-')[0]);
-        $('#viewIdentification').val(data[0].identification.split('-')[1]);
-        $('#viewAddress').val(data[0].address);
-        $('#viewPhone').val(data[0].phone);
-        $('#viewPhone2').val(data[0].phone2);
-        $('#viewProviderType').val(data[0].type);
-        $('#viewCreated').val(data[0].created_at);
-        $('#viewUpdated').val(data[0].updated_at);
+        $('#viewIdentificationPreview').val(data[0].identificacion);
+        $('#viewName').val(data[0].nombre);
+        $('#viewLetter').val(data[0].identificacion.split('-')[0]);
+        $('#viewIdentification').val(data[0].identificacion.split('-')[1]);
+        $('#viewAddress').val(data[0].direccion);
+        $('#viewPhone').val(data[0].telefono);
+        $('#viewCreated').val(data[0].creado_en);
+        $('#viewUpdated').val(data[0].actualizado_en);
     }
 </script>
 

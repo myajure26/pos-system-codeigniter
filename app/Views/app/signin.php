@@ -45,7 +45,7 @@
                                             <div class="response"></div>
                                             <div class="mb-3">
                                                 <label class="form-label">Cédula</label>
-                                                <input type="text" minlength="7" maxlength="8" class="form-control" id="ci" placeholder="Introduce tu cédula" name="ci" >
+                                                <input type="text" minlength="7" maxlength="8" class="form-control" id="identification" placeholder="Introduce tu cédula" name="identification" >
                                             </div>
                                             <div class="mb-3">
                                                 <div class="d-flex align-items-start">

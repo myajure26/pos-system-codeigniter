@@ -7,34 +7,33 @@ use CodeIgniter\Model;
 class ProviderModel extends Model
 {
 	protected $DBGroup              = 'default';
-	protected $table                = 'providers';
-	protected $primaryKey           = 'id';
-	protected $useAutoIncrement     = true;
+	protected $table                = 'proveedores';
+	protected $primaryKey           = 'codigo';
 	protected $insertID             = 0;
 	protected $returnType           = 'array';
 	protected $useSoftDeletes       = true;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["code", "name", "rif", "address", "phone", "updated_at", "deleted_at", "created_at"];
+	protected $allowedFields        = ["nombre", "identificacion", "direccion", "telefono", "estado", "actualizado_en", "creado_en"];
 
 	// Dates
 	protected $useTimestamps        = true;
 	protected $dateFormat           = 'datetime';
-	protected $createdField         = 'created_at';
-	protected $updatedField         = 'updated_at';
-	protected $deletedField         = 'deleted_at';
+	protected $createdField         = 'creado_en';
+	protected $updatedField         = 'actualizado_en';
 
 	public function createProvider($data)
 	{
-		$query = $this
-			->insert($data);
-		return $query;
+		if($this->save($data)){
+			return true;
+		}
+
+		return false;
 	}
 
 	public function getProviders()
 	{
 		$query = $this
-			->select('id, code, name, rif')
-			->where('deleted_at', NULL);
+			->select('codigo, nombre, identificacion, estado');
 		return $query;
 	}
 
@@ -44,24 +43,30 @@ class ProviderModel extends Model
 		return $query->get()->getResultArray();
 	}
 
-	public function getLastId()
-	{
-		return $this->insertID();
-	}
-
-	public function updateProvider($data, $id)
+	public function updateProvider($data, $code)
 	{
 		$query = $this
-				->where('id', $id)
+				->where('codigo', $code)
 				->set($data)
 				->update();
 		return $query;	
 	}
 
-	public function deleteProvider($id)
+	public function deleteProvider($code)
 	{
 		$query = $this
-				->delete($id);
+				->where('codigo', $code)
+				->set('estado', 0)
+				->update();
+		return $query;
+	}
+
+	public function recoverProvider($code)
+	{
+		$query = $this
+				->where('codigo', $code)
+				->set('estado', 1)
+				->update();
 		return $query;
 	}
 }

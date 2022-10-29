@@ -3,7 +3,7 @@ function tableConfig(ajaxUrl, selector){
     const path = origin + ajaxUrl;
 
     $(`${selector}`).DataTable({
-        dom: '<"row"<"col-sm-12 col-md-4"l><"col-sm-12 col-md-4"<"d-flex align-items-center justify-content-center"B>><"col-sm-12 col-md-4"f>>tr<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+        dom: 'status<"row"<"col-sm-12 col-md-4"l><"col-sm-12 col-md-4"<"d-flex align-items-center justify-content-center"B>><"col-sm-12 col-md-4"f>>tr<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
         buttons: [
             {
                 //colvis
@@ -63,12 +63,21 @@ function tableConfig(ajaxUrl, selector){
         },
         processing: true,
         serverSide: true,
-        ajax: path,
+        ajax: {
+            url: path,
+            data: function (d) {
+                d.status = $('#status').val();
+            }
+        },
         search: 1000,
         order: [[0, "desc"]],
         columnDefs: [
             { targets: -1, orderable: false}, //target -1 means last column
         ]
+    });
+
+    $('#status').change(function(event) {
+        $(`${selector}`).DataTable().ajax.reload();
     });
 }
 

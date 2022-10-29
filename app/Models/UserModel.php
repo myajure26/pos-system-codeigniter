@@ -7,21 +7,19 @@ use CodeIgniter\Model;
 class UserModel extends Model
 {
 	protected $DBGroup              = 'default';
-	protected $table                = 'users';
-	protected $primaryKey           = 'id';
-	protected $useAutoIncrement     = true;
+	protected $table                = 'usuarios';
+	protected $primaryKey           = 'identificacion';
 	protected $insertID             = 0;
 	protected $returnType           = 'array';
 	protected $useSoftDeletes       = true;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["ci","name", "email", "password", "privilege", "photo", "updated_at", "deleted_at", "created_at","last_session"];
+	protected $allowedFields        = ["nombre", "correo", "clave", "privilegio", "foto", "ultima_sesion", "estado", "actualizado_en", "creado_en"];
 
 	// Dates
 	protected $useTimestamps        = true;
 	protected $dateFormat           = 'datetime';
-	protected $createdField         = 'created_at';
-	protected $updatedField         = 'updated_at';
-	protected $deletedField         = 'deleted_at';
+	protected $createdField         = 'creado_en';
+	protected $updatedField         = 'actualizado_en';
 
 	public function signin($data)
 	{
@@ -31,16 +29,18 @@ class UserModel extends Model
 
 	public function createUser($data)
 	{
-		$query = $this
-			->insert($data);
-		return $query;
+		if($this->save($data)){
+			return true;
+		}
+		
+		return false;
 	}
 
 	public function getUsers()
 	{
 		$query = $this
-			->select('id, ci, name, privilege, photo')
-			->where('deleted_at', NULL);
+			->select('usuarios.identificacion, usuarios.nombre, privilegios.nombre as privilegio, foto, usuarios.estado')
+			->join('privilegios', 'privilegios.identificacion = usuarios.privilegio');
 		return $query;
 	}
 
@@ -50,24 +50,31 @@ class UserModel extends Model
 		return $query->get()->getResultArray();
 	}
 
-	public function getLastId()
-	{
-		return $this->insertID();
-	}
-
-	public function updateUser($data, $id)
+	public function updateUser($data, $identification)
 	{
 		$query = $this
-				->where('id', $id)
+				->where('identificacion', $identification)
 				->set($data)
 				->update();
 		return $query;
 	}
 
-	public function deleteUser($id)
+	public function deleteUser($identification)
 	{
 		$query = $this
-				->delete($id);
+				->where('identificacion', $identification)
+				->set('foto', NULL)
+				->set('estado', 0)
+				->update();
+		return $query;
+	}
+
+	public function recoverUser($identification)
+	{
+		$query = $this
+				->where('identificacion', $identification)
+				->set('estado', 1)
+				->update();
 		return $query;
 	}
 }

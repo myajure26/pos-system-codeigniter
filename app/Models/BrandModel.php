@@ -7,34 +7,34 @@ use CodeIgniter\Model;
 class BrandModel extends Model
 {
 	protected $DBGroup              = 'default';
-	protected $table                = 'brands';
-	protected $primaryKey           = 'id';
+	protected $table                = 'marcas';
+	protected $primaryKey           = 'identificacion';
 	protected $useAutoIncrement     = true;
 	protected $insertID             = 0;
 	protected $returnType           = 'array';
 	protected $useSoftDeletes       = true;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["brand", "updated_at", "deleted_at", "created_at"];
+	protected $allowedFields        = ["marca", "estado", "actualizado_en", "creado_en"];
 
 	// Dates
 	protected $useTimestamps        = true;
 	protected $dateFormat           = 'datetime';
-	protected $createdField         = 'created_at';
-	protected $updatedField         = 'updated_at';
-	protected $deletedField         = 'deleted_at';
+	protected $createdField         = 'creado_en';
+	protected $updatedField         = 'actualizado_en';
 
 	public function createBrand($data)
 	{
-		$query = $this
-			->insert($data);
-		return $query;
+		if($this->save($data)){
+			return true;
+		}
+		
+		return false;
 	}
 
 	public function getBrands()
 	{
 		$query = $this
-			->select('id, brand')
-			->where('deleted_at', NULL);
+			->select('identificacion, marca, estado');
 		return $query;
 	}
 
@@ -49,19 +49,30 @@ class BrandModel extends Model
 		return $this->insertID();
 	}
 
-	public function updateBrand($name, $id)
+	public function updateBrand($name, $identification)
 	{
 		$query = $this
-				->where('id', $id)
-				->set(["brand" => $name])
+				->where('identificacion', $identification)
+				->set(["marca" => $name])
 				->update();
 		return $query;	
 	}
 
-	public function deleteBrand($id)
+	public function deleteBrand($identification)
 	{
 		$query = $this
-				->delete($id);
+				->where('identificacion', $identification)
+				->set('estado', 0)
+				->update();
+		return $query;
+	}
+
+	public function recoverBrand($identification)
+	{
+		$query = $this
+				->where('identificacion', $identification)
+				->set('estado', 1)
+				->update();
 		return $query;
 	}
 }

@@ -36,14 +36,23 @@
                         <p class="card-title-desc">En este módulo podrás ver, agregar, actualizar y eliminar usuarios.</p>
                     </div>
                     <div class="card-body">
+                        <div class="mt-2 mb-4">
+                            <label class="form-label" for="status">Filtros</label>
+                            <select name="status" class="form-select" id="status">
+                                <option value="">Todos los usuarios</option>
+                                <option value="1">Usuarios activados</option>
+                                <option value="0">Usuarios desactivados (Papelera)</option>
+                            </select>
+                        </div>
                         <table class="table datatable text-nowrap table-striped nowrap w-100 dt-responsive">
                             <thead>
                                 <tr>
                                     <tr>
-                                        <th>#</th>
                                         <th>Cédula</th>
                                         <th>Nombre</th>
                                         <th>Privilegio</th>
+                                        <th>Foto</th>
+                                        <th>Estado</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </tr>
@@ -73,7 +82,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Cédula</label>
-                                <input type="text" class="form-control" id="ci" placeholder="Introduce el número de cédula" name="ci" minlength="7" maxlength="8" required>
+                                <input type="text" class="form-control" id="identification" placeholder="Introduce el número de cédula" name="identification" minlength="7" maxlength="8" required>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -95,9 +104,9 @@
                                 <label class="form-label">Privilegio</label>
                                 <select class="form-select" name="privilege" required>
                                     <option value="">Seleccione el perfil</option>
-                                    <option value="admin">Administrador</option>
-                                    <option value="special">Especial</option>
-                                    <option value="seller">Vendedor</option>
+                                    <?php foreach($privileges as $row)
+                                        echo '<option value="'.$row->identificacion.'">'.$row->nombre.'</option>';
+                                    ?>
                                 </select>
                             </div>
                         </div>
@@ -142,13 +151,13 @@
             </div>
             <form class="custom-form viewForm" action="<?=base_url('users/update')?>" method="POST">
                 <div class="modal-body">
+                    <input type="hidden" name="identification" id="viewIdentificationPreview">
                     <div class="response"></div>
-                    <input type="hidden" id="viewId" name="id" value="">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Cédula</label>
-                                <input type="text" class="form-control viewReadonly" id="viewCi" placeholder="Introduce el número de cédula" name="ci" minlength="7" maxlength="8" disabled required>
+                                <input type="text" class="form-control viewReadonly" id="viewIdentification" placeholder="Introduce el número de cédula" minlength="7" maxlength="8" disabled required>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -170,9 +179,9 @@
                                 <label class="form-label">Privilegio</label>
                                 <select class="form-select" name="privilege" id="viewPrivilege" disabled required>
                                     <option value="">Seleccione el perfil</option>
-                                    <option value="admin">Administrador</option>
-                                    <option value="special">Especial</option>
-                                    <option value="seller">Vendedor</option>
+                                    <?php foreach($privileges as $row)
+                                        echo '<option value="'.$row->identificacion.'">'.$row->nombre.'</option>';
+                                    ?>>
                                 </select>
                             </div>
                         </div>
@@ -239,20 +248,20 @@
 
     function viewUser(data){
         $('.photo').val('');
-        $('#viewId').val(data[0].id);
-        $('#viewCi').val(data[0].ci);
-        $('#viewName').val(data[0].name);
-        $('#viewEmail').val(data[0].email);
-        $('#viewPasswordPreview').val(data[0].password);
-        $('#viewLastSession').val(data[0].last_session);
-        $('#viewPrivilege').val(data[0].privilege);
-        $('#viewPhotoPreview').val(data[0].photo);
+        $('#viewIdentificationPreview').val(data[0].identificacion);
+        $('#viewIdentification').val(data[0].identificacion);
+        $('#viewName').val(data[0].nombre);
+        $('#viewEmail').val(data[0].correo);
+        $('#viewPasswordPreview').val(data[0].clave);
+        $('#viewLastSession').val(data[0].ultima_sesion);
+        $('#viewPrivilege').val(data[0].privilegio);
+        $('#viewPhotoPreview').val(data[0].foto);
         $('#viewPhoto').attr('src', url + "/assets/images/users/anonymous.png");
-        if(data[0].photo != null && data[0].photo != ''){
-            $('#viewPhoto').attr('src', data[0].photo);
+        if(data[0].foto != null && data[0].foto != ''){
+            $('#viewPhoto').attr('src', data[0].foto);
         }
-        $('#viewCreated').val(data[0].created_at);
-        $('#viewUpdated').val(data[0].updated_at);
+        $('#viewCreated').val(data[0].creado_en);
+        $('#viewUpdated').val(data[0].actualizado_en);
     }
 </script>
 <!-- password addon init -->

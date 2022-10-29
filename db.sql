@@ -1,504 +1,381 @@
--- phpMyAdmin SQL Dump
--- version 5.2.0
--- https://www.phpmyadmin.net/
---
--- Servidor: localhost:3306
--- Tiempo de generación: 10-10-2022 a las 01:31:47
--- Versión del servidor: 5.7.24
--- Versión de PHP: 7.4.30
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de datos: `pos_system`
---
-CREATE DATABASE IF NOT EXISTS `pos_system` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
-USE `pos_system`;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `audits`
---
-
-CREATE TABLE `audits` (
-  `id` int(11) NOT NULL,
-  `user` varchar(10) NOT NULL,
-  `module` varchar(50) NOT NULL,
-  `action` varchar(50) NOT NULL,
-  `description` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `brands`
---
-
-CREATE TABLE `brands` (
-  `id` int(11) NOT NULL,
-  `brand` varchar(200) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `categories`
---
-
-CREATE TABLE `categories` (
-  `id` int(11) NOT NULL,
-  `category` varchar(200) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `coins`
---
-
-CREATE TABLE `coins` (
-  `id` int(11) NOT NULL,
-  `coin` varchar(50) NOT NULL,
-  `symbol` varchar(5) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `coin_prices`
---
-
-CREATE TABLE `coin_prices` (
-  `id` int(11) NOT NULL,
-  `primary_coin` int(11) NOT NULL,
-  `secondary_coin` int(11) NOT NULL,
-  `price` decimal(10,2) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `customers`
---
-
-CREATE TABLE `customers` (
-  `identification` varchar(12) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `address` text NOT NULL,
-  `phone` varchar(11) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `document_type`
---
-
-CREATE TABLE `document_type` (
-  `id` int(11) NOT NULL,
-  `name` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `inventory`
---
-
-CREATE TABLE `inventory` (
-  `product` varchar(50) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `privileges`
---
-
-CREATE TABLE `privileges` (
-  `id` int(11) NOT NULL,
-  `name` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `products`
---
-
-CREATE TABLE `products` (
-  `code` varchar(50) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `brand` int(11) NOT NULL,
-  `category` int(11) NOT NULL,
-  `coin` int(11) NOT NULL,
-  `price` decimal(10,2) NOT NULL,
-  `tax` int(11) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `providers`
---
-
-CREATE TABLE `providers` (
-  `code` varchar(50) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `identification` varchar(12) NOT NULL,
-  `address` text NOT NULL,
-  `phone` varchar(11) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `purchases`
---
-
-CREATE TABLE `purchases` (
-  `id` int(11) NOT NULL,
-  `provider` varchar(12) NOT NULL,
-  `user` varchar(10) NOT NULL,
-  `date` date NOT NULL,
-  `document_type` int(11) NOT NULL,
-  `reference` varchar(150) NOT NULL,
-  `coin` int(11) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `purchase_details`
---
-
-CREATE TABLE `purchase_details` (
-  `id` int(11) NOT NULL,
-  `product` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `price` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `purchase` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `sales`
---
-
-CREATE TABLE `sales` (
-  `id` int(11) NOT NULL,
-  `customer` varchar(12) NOT NULL,
-  `user` varchar(10) NOT NULL,
-  `date` date NOT NULL,
-  `document_type` int(11) NOT NULL,
-  `coin` int(11) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `sales_details`
---
-
-CREATE TABLE `sales_details` (
-  `id` int(11) NOT NULL,
-  `product` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `price` decimal(10,2) NOT NULL,
-  `sale` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `taxes`
---
-
-CREATE TABLE `taxes` (
-  `id` int(11) NOT NULL,
-  `tax` varchar(50) NOT NULL,
-  `percentage` int(11) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `users`
---
-
-CREATE TABLE `users` (
-  `identification` varchar(10) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `password` text NOT NULL,
-  `privilege` int(11) NOT NULL,
-  `photo` text,
-  `last_session` datetime DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `audits`
---
-ALTER TABLE `audits`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `audit_fk_1` (`user`);
-
---
--- Indices de la tabla `brands`
---
-ALTER TABLE `brands`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `categories`
---
-ALTER TABLE `categories`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `coins`
---
-ALTER TABLE `coins`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `coin_prices`
---
-ALTER TABLE `coin_prices`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `coin_prices_ibfk_1` (`primary_coin`),
-  ADD KEY `coin_prices_ibfk_2` (`secondary_coin`);
-
---
--- Indices de la tabla `customers`
---
-ALTER TABLE `customers`
-  ADD PRIMARY KEY (`identification`);
-
---
--- Indices de la tabla `document_type`
---
-ALTER TABLE `document_type`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `inventory`
---
-ALTER TABLE `inventory`
-  ADD PRIMARY KEY (`product`);
-
---
--- Indices de la tabla `privileges`
---
-ALTER TABLE `privileges`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `products`
---
-ALTER TABLE `products`
-  ADD PRIMARY KEY (`code`),
-  ADD KEY `brand` (`brand`),
-  ADD KEY `category` (`category`),
-  ADD KEY `coin` (`coin`),
-  ADD KEY `tax` (`tax`);
-
---
--- Indices de la tabla `providers`
---
-ALTER TABLE `providers`
-  ADD PRIMARY KEY (`code`);
-
---
--- Indices de la tabla `purchases`
---
-ALTER TABLE `purchases`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `purchases_ibfk_3` (`coin`),
-  ADD KEY `purchases_fk_1` (`provider`),
-  ADD KEY `purchases_fk_2` (`user`),
-  ADD KEY `purchases_fk_3` (`document_type`);
-
---
--- Indices de la tabla `purchase_details`
---
-ALTER TABLE `purchase_details`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `purchase_details_ibfk_2` (`purchase`);
-
---
--- Indices de la tabla `sales`
---
-ALTER TABLE `sales`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `sales_fk_1` (`customer`),
-  ADD KEY `sales_fk_2` (`user`),
-  ADD KEY `sales_fk_3` (`document_type`),
-  ADD KEY `sales_fk_4` (`coin`);
-
---
--- Indices de la tabla `sales_details`
---
-ALTER TABLE `sales_details`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `sales_details_ibfk_2` (`sale`);
-
---
--- Indices de la tabla `taxes`
---
-ALTER TABLE `taxes`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`identification`),
-  ADD KEY `users_fk_1` (`privilege`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `document_type`
---
-ALTER TABLE `document_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `privileges`
---
-ALTER TABLE `privileges`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `audits`
---
-ALTER TABLE `audits`
-  ADD CONSTRAINT `audit_fk_1` FOREIGN KEY (`user`) REFERENCES `users` (`identification`);
-
---
--- Filtros para la tabla `coin_prices`
---
-ALTER TABLE `coin_prices`
-  ADD CONSTRAINT `coin_prices_fk_1` FOREIGN KEY (`primary_coin`) REFERENCES `coins` (`id`),
-  ADD CONSTRAINT `coin_prices_fk_2` FOREIGN KEY (`secondary_coin`) REFERENCES `coins` (`id`);
-
---
--- Filtros para la tabla `inventory`
---
-ALTER TABLE `inventory`
-  ADD CONSTRAINT `inventory_fk_1` FOREIGN KEY (`product`) REFERENCES `products` (`code`);
-
---
--- Filtros para la tabla `products`
---
-ALTER TABLE `products`
-  ADD CONSTRAINT `products_fk_1` FOREIGN KEY (`brand`) REFERENCES `brands` (`id`),
-  ADD CONSTRAINT `products_fk_2` FOREIGN KEY (`category`) REFERENCES `categories` (`id`),
-  ADD CONSTRAINT `products_fk_3` FOREIGN KEY (`coin`) REFERENCES `coins` (`id`),
-  ADD CONSTRAINT `products_fk_4` FOREIGN KEY (`tax`) REFERENCES `taxes` (`id`);
-
---
--- Filtros para la tabla `purchases`
---
-ALTER TABLE `purchases`
-  ADD CONSTRAINT `purchases_fk_1` FOREIGN KEY (`provider`) REFERENCES `providers` (`code`),
-  ADD CONSTRAINT `purchases_fk_2` FOREIGN KEY (`user`) REFERENCES `users` (`identification`),
-  ADD CONSTRAINT `purchases_fk_3` FOREIGN KEY (`document_type`) REFERENCES `document_type` (`id`),
-  ADD CONSTRAINT `purchases_fk_4` FOREIGN KEY (`coin`) REFERENCES `coins` (`id`);
-
---
--- Filtros para la tabla `purchase_details`
---
-ALTER TABLE `purchase_details`
-  ADD CONSTRAINT `purchase_details_ibfk_2` FOREIGN KEY (`purchase`) REFERENCES `purchases` (`id`);
-
---
--- Filtros para la tabla `sales`
---
-ALTER TABLE `sales`
-  ADD CONSTRAINT `sales_fk_1` FOREIGN KEY (`customer`) REFERENCES `customers` (`identification`),
-  ADD CONSTRAINT `sales_fk_2` FOREIGN KEY (`user`) REFERENCES `users` (`identification`),
-  ADD CONSTRAINT `sales_fk_3` FOREIGN KEY (`document_type`) REFERENCES `document_type` (`id`),
-  ADD CONSTRAINT `sales_fk_4` FOREIGN KEY (`coin`) REFERENCES `coins` (`id`);
-
---
--- Filtros para la tabla `sales_details`
---
-ALTER TABLE `sales_details`
-  ADD CONSTRAINT `sales_details_ibfk_2` FOREIGN KEY (`sale`) REFERENCES `sales` (`id`);
-
---
--- Filtros para la tabla `users`
---
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_fk_1` FOREIGN KEY (`privilege`) REFERENCES `privileges` (`id`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+-- MySQL Script generated by MySQL Workbench
+-- Wed Oct 26 19:52:49 2022
+-- Model: New Model    Version: 1.0
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema sistema
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema sistema
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `sistema` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci ;
+USE `sistema` ;
+
+-- -----------------------------------------------------
+-- Table `sistema`.`privilegios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sistema`.`privilegios` (
+  `identificacion` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
+  `estado` TINYINT(1) NOT NULL DEFAULT '1',
+  `actualizado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `creado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`identificacion`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_spanish_ci;
+
+
+-- -----------------------------------------------------
+-- Table `sistema`.`usuarios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sistema`.`usuarios` (
+  `identificacion` VARCHAR(10) NOT NULL,
+  `nombre` VARCHAR(100) NOT NULL,
+  `correo` VARCHAR(255) NOT NULL,
+  `clave` TEXT NOT NULL,
+  `privilegio` INT(11) NOT NULL,
+  `foto` TEXT NULL DEFAULT NULL,
+  `ultima_sesion` DATETIME NULL DEFAULT NULL,
+  `estado` TINYINT(1) NOT NULL DEFAULT '1',
+  `actualizado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `creado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`identificacion`),
+  INDEX `users_fk_1` (`privilegio` ASC) VISIBLE,
+  CONSTRAINT `users_fk_1`
+    FOREIGN KEY (`privilegio`)
+    REFERENCES `sistema`.`privilegios` (`identificacion`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `sistema`.`auditoria`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sistema`.`auditoria` (
+  `identificacion` INT(11) NOT NULL AUTO_INCREMENT,
+  `usuario` VARCHAR(10) NOT NULL,
+  `modulo` VARCHAR(50) NOT NULL,
+  `accion` VARCHAR(50) NOT NULL,
+  `descripcion` TEXT NOT NULL,
+  `creado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`identificacion`),
+  INDEX `audit_fk_1` (`usuario` ASC) VISIBLE,
+  CONSTRAINT `audit_fk_1`
+    FOREIGN KEY (`usuario`)
+    REFERENCES `sistema`.`usuarios` (`identificacion`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `sistema`.`marcas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sistema`.`marcas` (
+  `identificacion` INT(11) NOT NULL AUTO_INCREMENT,
+  `marca` VARCHAR(200) NOT NULL,
+  `estado` TINYINT(1) NOT NULL DEFAULT '1',
+  `actualizado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `creado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`identificacion`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `sistema`.`categorias`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sistema`.`categorias` (
+  `identificacion` INT(11) NOT NULL AUTO_INCREMENT,
+  `categoria` VARCHAR(200) NOT NULL,
+  `estado` TINYINT(1) NOT NULL DEFAULT '1',
+  `actualizado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `creado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`identificacion`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `sistema`.`monedas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sistema`.`monedas` (
+  `identificacion` INT(11) NOT NULL AUTO_INCREMENT,
+  `moneda` VARCHAR(50) NOT NULL,
+  `simbolo` VARCHAR(5) NOT NULL,
+  `estado` TINYINT(1) NOT NULL DEFAULT '1',
+  `actualizado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `creado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`identificacion`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `sistema`.`precio_monedas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sistema`.`precio_monedas` (
+  `identificacion` INT(11) NOT NULL AUTO_INCREMENT,
+  `moneda_principal` INT(11) NOT NULL,
+  `moneda_secundaria` INT(11) NOT NULL,
+  `precio` DECIMAL(10,2) NOT NULL,
+  `estado` TINYINT(1) NOT NULL DEFAULT '1',
+  `actualizado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `creado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`identificacion`),
+  INDEX `coin_prices_ibfk_1` (`moneda_principal` ASC) VISIBLE,
+  INDEX `coin_prices_ibfk_2` (`moneda_secundaria` ASC) VISIBLE,
+  CONSTRAINT `coin_prices_fk_1`
+    FOREIGN KEY (`moneda_principal`)
+    REFERENCES `sistema`.`monedas` (`identificacion`),
+  CONSTRAINT `coin_prices_fk_2`
+    FOREIGN KEY (`moneda_secundaria`)
+    REFERENCES `sistema`.`monedas` (`identificacion`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `sistema`.`clientes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sistema`.`clientes` (
+  `identificacion` VARCHAR(12) NOT NULL,
+  `nombre` VARCHAR(100) NOT NULL,
+  `direccion` TEXT NOT NULL,
+  `telefono` VARCHAR(11) NOT NULL,
+  `estado` TINYINT(1) NOT NULL DEFAULT '1',
+  `actualizado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `creado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`identificacion`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `sistema`.`tipo_documento`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sistema`.`tipo_documento` (
+  `identificacion` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
+  `estado` TINYINT(1) NOT NULL DEFAULT '1',
+  `actualizado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `creado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`identificacion`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_spanish_ci;
+
+
+-- -----------------------------------------------------
+-- Table `sistema`.`impuestos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sistema`.`impuestos` (
+  `identificacion` INT(11) NOT NULL AUTO_INCREMENT,
+  `impuesto` VARCHAR(50) NOT NULL,
+  `porcentaje` INT(11) NOT NULL,
+  `estado` TINYINT(1) NOT NULL DEFAULT '1',
+  `actualizado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `creado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`identificacion`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `sistema`.`productos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sistema`.`productos` (
+  `codigo` VARCHAR(50) NOT NULL,
+  `nombre` VARCHAR(100) NOT NULL,
+  `marca` INT(11) NOT NULL,
+  `categoria` INT(11) NOT NULL,
+  `moneda` INT(11) NOT NULL,
+  `precio` DECIMAL(10,2) NOT NULL,
+  `impuesto` INT(11) NOT NULL,
+  `estado` TINYINT(1) NOT NULL DEFAULT '1',
+  `actualizado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `creado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`codigo`),
+  INDEX `brand` (`marca` ASC) VISIBLE,
+  INDEX `category` (`categoria` ASC) VISIBLE,
+  INDEX `coin` (`moneda` ASC) VISIBLE,
+  INDEX `tax` (`impuesto` ASC) VISIBLE,
+  CONSTRAINT `products_fk_1`
+    FOREIGN KEY (`marca`)
+    REFERENCES `sistema`.`marcas` (`identificacion`),
+  CONSTRAINT `products_fk_2`
+    FOREIGN KEY (`categoria`)
+    REFERENCES `sistema`.`categorias` (`identificacion`),
+  CONSTRAINT `products_fk_3`
+    FOREIGN KEY (`moneda`)
+    REFERENCES `sistema`.`monedas` (`identificacion`),
+  CONSTRAINT `products_fk_4`
+    FOREIGN KEY (`impuesto`)
+    REFERENCES `sistema`.`impuestos` (`identificacion`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `sistema`.`inventario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sistema`.`inventario` (
+  `producto` VARCHAR(50) NOT NULL,
+  `cantidad` INT(11) NOT NULL,
+  `estado` TINYINT(1) NOT NULL DEFAULT '1',
+  `actualizado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `creado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`producto`),
+  CONSTRAINT `inventory_fk_1`
+    FOREIGN KEY (`producto`)
+    REFERENCES `sistema`.`productos` (`codigo`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `sistema`.`proveedores`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sistema`.`proveedores` (
+  `codigo` VARCHAR(50) NOT NULL,
+  `nombre` VARCHAR(100) NOT NULL,
+  `identificacion` VARCHAR(12) NOT NULL,
+  `direccion` TEXT NOT NULL,
+  `telefono` VARCHAR(11) NOT NULL,
+  `estado` TINYINT(1) NOT NULL DEFAULT '1',
+  `actualizado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `creado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`codigo`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `sistema`.`compras`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sistema`.`compras` (
+  `identificacion` INT(11) NOT NULL AUTO_INCREMENT,
+  `proveedor` VARCHAR(12) NOT NULL,
+  `usuario` VARCHAR(10) NOT NULL,
+  `fecha` DATE NOT NULL,
+  `tipo_documento` INT(11) NOT NULL,
+  `referencia` VARCHAR(50) NOT NULL,
+  `moneda` INT(11) NOT NULL,
+  `estado` TINYINT(1) NOT NULL DEFAULT '1',
+  `actualizado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `creado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`identificacion`),
+  INDEX `purchases_ibfk_3` (`moneda` ASC) VISIBLE,
+  INDEX `purchases_fk_1` (`proveedor` ASC) VISIBLE,
+  INDEX `purchases_fk_2` (`usuario` ASC) VISIBLE,
+  INDEX `purchases_fk_3` (`tipo_documento` ASC) VISIBLE,
+  CONSTRAINT `purchases_fk_1`
+    FOREIGN KEY (`proveedor`)
+    REFERENCES `sistema`.`proveedores` (`codigo`),
+  CONSTRAINT `purchases_fk_2`
+    FOREIGN KEY (`usuario`)
+    REFERENCES `sistema`.`usuarios` (`identificacion`),
+  CONSTRAINT `purchases_fk_3`
+    FOREIGN KEY (`tipo_documento`)
+    REFERENCES `sistema`.`tipo_documento` (`identificacion`),
+  CONSTRAINT `purchases_fk_4`
+    FOREIGN KEY (`moneda`)
+    REFERENCES `sistema`.`monedas` (`identificacion`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `sistema`.`detalle_compra`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sistema`.`detalle_compra` (
+  `identificacion` INT(11) NOT NULL AUTO_INCREMENT,
+  `producto` VARCHAR(50) NOT NULL,
+  `cantidad` INT(11) NOT NULL,
+  `precio` DECIMAL(10,2) NOT NULL DEFAULT '0.00',
+  `compra` INT(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`identificacion`),
+  INDEX `purchase_details_ibfk_2` (`compra` ASC) VISIBLE,
+  INDEX `fk_detalle_compra_products1_idx` (`producto` ASC) VISIBLE,
+  CONSTRAINT `purchase_details_ibfk_2`
+    FOREIGN KEY (`compra`)
+    REFERENCES `sistema`.`compras` (`identificacion`),
+  CONSTRAINT `fk_detalle_compra_products1`
+    FOREIGN KEY (`producto`)
+    REFERENCES `sistema`.`productos` (`codigo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `sistema`.`ventas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sistema`.`ventas` (
+  `identificacion` INT(11) NOT NULL AUTO_INCREMENT,
+  `cliente` VARCHAR(12) NOT NULL,
+  `usuario` VARCHAR(10) NOT NULL,
+  `fecha` DATE NOT NULL,
+  `tipo_documento` INT(11) NOT NULL,
+  `moneda` INT(11) NOT NULL,
+  `estado` TINYINT(1) NOT NULL DEFAULT '1',
+  `actualizado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `creado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`identificacion`),
+  INDEX `sales_fk_1` (`cliente` ASC) VISIBLE,
+  INDEX `sales_fk_2` (`usuario` ASC) VISIBLE,
+  INDEX `sales_fk_3` (`tipo_documento` ASC) VISIBLE,
+  INDEX `sales_fk_4` (`moneda` ASC) VISIBLE,
+  CONSTRAINT `sales_fk_1`
+    FOREIGN KEY (`cliente`)
+    REFERENCES `sistema`.`clientes` (`identificacion`),
+  CONSTRAINT `sales_fk_2`
+    FOREIGN KEY (`usuario`)
+    REFERENCES `sistema`.`usuarios` (`identificacion`),
+  CONSTRAINT `sales_fk_3`
+    FOREIGN KEY (`tipo_documento`)
+    REFERENCES `sistema`.`tipo_documento` (`identificacion`),
+  CONSTRAINT `sales_fk_4`
+    FOREIGN KEY (`moneda`)
+    REFERENCES `sistema`.`monedas` (`identificacion`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `sistema`.`detalle_ventas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `sistema`.`detalle_ventas` (
+  `identificacion` INT(11) NOT NULL AUTO_INCREMENT,
+  `producto` VARCHAR(50) NOT NULL,
+  `cantidad` INT(11) NOT NULL,
+  `precio` DECIMAL(10,2) NOT NULL,
+  `venta` INT(11) NOT NULL,
+  PRIMARY KEY (`identificacion`),
+  INDEX `sales_details_ibfk_2` (`venta` ASC) VISIBLE,
+  INDEX `fk_detalle_ventas_productos1_idx` (`producto` ASC) VISIBLE,
+  CONSTRAINT `sales_details_ibfk_2`
+    FOREIGN KEY (`venta`)
+    REFERENCES `sistema`.`ventas` (`identificacion`),
+  CONSTRAINT `fk_detalle_ventas_productos1`
+    FOREIGN KEY (`producto`)
+    REFERENCES `sistema`.`productos` (`codigo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

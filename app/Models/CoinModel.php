@@ -7,34 +7,34 @@ use CodeIgniter\Model;
 class CoinModel extends Model
 {
 	protected $DBGroup              = 'default';
-	protected $table                = 'coins';
-	protected $primaryKey           = 'id';
+	protected $table                = 'monedas';
+	protected $primaryKey           = 'identificacion';
 	protected $useAutoIncrement     = true;
 	protected $insertID             = 0;
 	protected $returnType           = 'array';
 	protected $useSoftDeletes       = true;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["coin", "symbol", "updated_at", "deleted_at", "created_at"];
+	protected $allowedFields        = ["moneda", "simbolo", "estado", "actualizado_en", "creado_en"];
 
 	// Dates
 	protected $useTimestamps        = true;
 	protected $dateFormat           = 'datetime';
-	protected $createdField         = 'created_at';
-	protected $updatedField         = 'updated_at';
-	protected $deletedField         = 'deleted_at';
+	protected $createdField         = 'creado_en';
+	protected $updatedField         = 'actualizado_en';
 
 	public function createCoin($data)
 	{
-		$query = $this
-			->insert($data);
-		return $query;
+		if($this->save($data)){
+			return true;
+		}
+		
+		return false;
 	}
 
 	public function getCoins()
 	{
 		$query = $this
-			->select('id, coin, symbol')
-			->where('deleted_at', NULL);
+			->select('identificacion, moneda, simbolo, estado');
 		return $query;
 	}
 
@@ -49,19 +49,30 @@ class CoinModel extends Model
 		return $this->insertID();
 	}
 
-	public function updateCoin($data, $id)
+	public function updateCoin($data, $identification)
 	{
 		$query = $this
-				->where('id', $id)
+				->where('identificacion', $identification)
 				->set($data)
 				->update();
 		return $query;	
 	}
 
-	public function deleteCoin($id)
+	public function deleteCoin($identification)
 	{
 		$query = $this
-				->delete($id);
+				->where('identificacion', $identification)
+				->set('estado', 0)
+				->update();
+		return $query;
+	}
+
+	public function recoverCoin($identification)
+	{
+		$query = $this
+				->where('identificacion', $identification)
+				->set('estado', 1)
+				->update();
 		return $query;
 	}
 }

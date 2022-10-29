@@ -3,9 +3,9 @@
 function createUserValidation()
 {
 	$user = [
-		'ci' => [
-			'label' => 'ci',
-			'rules' => 'required|numeric|min_length[7]|max_length[8]|is_unique[users.ci]',
+		'identification' => [
+			'label' => 'identification',
+			'rules' => 'required|numeric|min_length[7]|max_length[8]|is_unique[usuarios.identificacion]',
 			'errors' => [
 				'required' => 'La cédula es requerida',
 				'numeric' => 'Para la cédula sólo se permiten números',
@@ -24,7 +24,7 @@ function createUserValidation()
 		],
 		'email' => [
 			'label' => 'email',
-			'rules' => 'required|valid_email|is_unique[users.email]',
+			'rules' => 'required|valid_email|is_unique[usuarios.correo]',
 			'errors' => [
 				'required' => 'El correo electrónico es requerido',
 				'valid_email' => 'Por favor, introduce un correo electrónico válido',
@@ -41,10 +41,9 @@ function createUserValidation()
 		],
 		'privilege' => [
 			'label' => 'privilege',
-			'rules' => 'required|in_list[admin, special, seller]',
+			'rules' => 'required',
 			'errors' => [
-				'required' => 'El privilegio es requerido',
-				'in_list' => 'Por favor, elige un privilegio de la lista'
+				'required' => 'El privilegio es requerido'
 			]
 		],
 		'photo' => [
@@ -63,15 +62,15 @@ function createUserValidation()
 function updateUserValidation()
 {
 	$updateUser = [
-		'ci' => [
-			'label' => 'ci',
-			'rules' => 'required|numeric|min_length[7]|max_length[8]|is_unique[users.ci,id,{id}]',
+		'identification' => [
+			'label' => 'identification',
+			'rules' => 'required|numeric|min_length[7]|max_length[8]|is_not_unique[usuarios.identificacion]',
 			'errors' => [
 				'required' => 'La cédula es requerida',
 				'numeric' => 'Para la cédula sólo se permiten números',
 				'min_length' => 'Introduce una cédula válida',
 				'max_length' => 'Introduce una cédula válida',
-				'is_unique'	=> 'La cédula ya se encuentra registrada'
+				'is_not_unique'	=> 'La cédula no se encuentra registrada'
 			]
 		],
 		'name' => [
@@ -84,7 +83,7 @@ function updateUserValidation()
 		],
 		'email' => [
 			'label' => 'email',
-			'rules' => 'required|valid_email|is_unique[users.email,id,{id}]',
+			'rules' => 'required|valid_email|is_unique[usuarios.correo,identificacion,{identification}]',
 			'errors' => [
 				'required' => 'El correo electrónico es requerido.',
 				'valid_email' => 'Por favor, introduce un correo electrónico válido',
@@ -93,10 +92,9 @@ function updateUserValidation()
 		],
 		'privilege' => [
 			'label' => 'privilege',
-			'rules' => 'required|in_list[admin, special, seller]',
+			'rules' => 'required',
 			'errors' => [
-				'required' => 'El privilegio es requerido',
-				'in_list' => 'Por favor, elige un privilegio de la lista'
+				'required' => 'El privilegio es requerido'
 			]
 		],
 		'photo' => [

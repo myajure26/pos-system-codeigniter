@@ -86,21 +86,14 @@ class App extends BaseController
 			$db      	= \Config\Database::connect();
 			$coins 		= $db
 							->table('coins')
-							->select('id, coin')
+							->select('id, coin, symbol')
 							->where('deleted_at', NULL)
-							->get()
-							->getResult();
-			$settings 	= $db
-							->table('settings')
-							->select('type, name, value')
-							->where('type', 'coin')
 							->get()
 							->getResult();
 
 			$data = [
 				"title" => "Centro de control - $this->system",
-				"coins" => $coins,
-				"settings" => $settings
+				"coins" => $coins
 			];
 			return view('app/ajax/controlCenter', $data);
 		
@@ -287,9 +280,18 @@ class App extends BaseController
 	public function users()
 	{
 		if($this->session->has('name')){
+
+			$db      	= \Config\Database::connect();
+			$privileges = $db
+						->table('privilegios')
+						->select('identificacion, nombre')
+						->where('estado !=', 0)
+						->get()
+						->getResult();
 		
 			$data = [
-				"title" => "Usuarios - $this->system"
+				"title" => "Usuarios - $this->system",
+				"privileges" => $privileges
 			];
 			return view('app/ajax/users', $data);
 		

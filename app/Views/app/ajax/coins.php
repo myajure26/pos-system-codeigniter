@@ -36,6 +36,14 @@
                         <p class="card-title-desc">En este módulo podrás ver, agregar, actualizar y eliminar monedas.</p>
                     </div>
                     <div class="card-body">
+                        <div class="mt-2 mb-4">
+                            <label class="form-label" for="status">Filtros</label>
+                            <select name="status" class="form-select" id="status">
+                                <option value="">Todas las monedas</option>
+                                <option value="1">Monedas activadas</option>
+                                <option value="0">Monedas desactivadas (Papelera)</option>
+                            </select>
+                        </div>
                         <table class="table datatable text-nowrap table-striped nowrap w-100 dt-responsive">
                             <thead>
                                 <tr>
@@ -43,6 +51,7 @@
                                         <th>#</th>
                                         <th>Nombre</th>
                                         <th>Símbolo</th>
+                                        <th>Estado</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </tr>
@@ -98,7 +107,7 @@
             <form class="custom-form viewForm" action="<?=base_url('coins/update')?>" method="POST">
                 <div class="modal-body">
                     <div class="response"></div>
-                    <input type="hidden" id="viewId" name="id" value="">
+                    <input type="hidden" id="viewIdentification" name="identification" value="">
                     <div class="mb-3">
                         <label class="form-label">Nombre</label>
                         <input type="text" class="form-control" id="viewName" name="name" disabled required>
@@ -136,11 +145,11 @@
     tableConfig('/coins/get', '.datatable');
 
     function viewCoin(data){
-        $('#viewId').val(data[0].id);
-        $('#viewName').val(data[0].coin);
-        $('#viewSymbol').val(data[0].symbol);
-        $('#viewCreated').val(data[0].created_at);
-        $('#viewUpdated').val(data[0].updated_at);
+        $('#viewIdentification').val(data[0].identificacion);
+        $('#viewName').val(data[0].moneda);
+        $('#viewSymbol').val(data[0].simbolo);
+        $('#viewCreated').val(data[0].creado_en);
+        $('#viewUpdated').val(data[0].actualizado_en);
     }
 </script>
 

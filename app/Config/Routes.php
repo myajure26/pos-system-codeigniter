@@ -45,6 +45,7 @@ $routes->group('purchases', static function ($routes) {
     $routes->get('getProducts', 'PurchaseController::getProducts');
     $routes->post('update', 'PurchaseController::updatePurchase');
     $routes->post('delete', 'PurchaseController::deletePurchase');
+    $routes->post('recover', 'PurchaseController::recoverPurchase');
 });
 
 //USERS MODULE
@@ -55,6 +56,7 @@ $routes->group('users', static function ($routes) {
     $routes->get('getById/(:num)', 'UserController::getUserById/$1');
     $routes->post('update', 'UserController::updateUser');
     $routes->post('delete', 'UserController::deleteUser');
+    $routes->post('recover', 'UserController::recoverUser');
 });
 
 //CATEGORIES MODULE
@@ -64,6 +66,7 @@ $routes->group('categories', static function ($routes) {
     $routes->get('getById/(:num)', 'CategoryController::getCategoryById/$1');
     $routes->post('update', 'CategoryController::updateCategory');
     $routes->post('delete', 'CategoryController::deleteCategory');
+    $routes->post('recover', 'CategoryController::recoverCategory');
 });
 
 //BRANDS MODULE
@@ -73,6 +76,7 @@ $routes->group('brands', static function ($routes) {
     $routes->get('getById/(:num)', 'BrandController::getBrandById/$1');
     $routes->post('update', 'BrandController::updateBrand');
     $routes->post('delete', 'BrandController::deleteBrand');
+    $routes->post('recover', 'BrandController::recoverBrand');
 });
 
 //COINS MODULE
@@ -82,6 +86,7 @@ $routes->group('coins', static function ($routes) {
     $routes->get('getById/(:num)', 'CoinController::getCoinById/$1');
     $routes->post('update', 'CoinController::updateCoin');
     $routes->post('delete', 'CoinController::deleteCoin');
+    $routes->post('recover', 'CoinController::recoverCoin');
 });
 
 //TAXES MODULE
@@ -91,6 +96,7 @@ $routes->group('taxes', static function ($routes) {
     $routes->get('getById/(:num)', 'TaxController::getTaxById/$1');
     $routes->post('update', 'TaxController::updateTax');
     $routes->post('delete', 'TaxController::deleteTax');
+    $routes->post('recover', 'TaxController::recoverTax');
 });
 
 //PRODUCTS MODULE
@@ -100,29 +106,32 @@ $routes->group('products', static function ($routes) {
     $routes->get('getById/(:num)', 'ProductController::getProductById/$1');
     $routes->post('update', 'ProductController::updateProduct');
     $routes->post('delete', 'ProductController::deleteProduct');
+    $routes->post('recover', 'ProductController::recoverProduct');
 });
 
 //PROVIDERS MODULE
 $routes->group('providers', static function ($routes) {
     $routes->post('create', 'ProviderController::createProvider');
     $routes->get('get', 'ProviderController::getProviders');
-    $routes->get('getById/(:num)', 'ProviderController::getProviderById/$1');
+    $routes->get('getById/(:any)', 'ProviderController::getProviderById/$1');
     $routes->post('update', 'ProviderController::updateProvider');
     $routes->post('delete', 'ProviderController::deleteProvider');
+    $routes->post('recover', 'ProviderController::recoverProvider');
 });
 
 //CUSTOMERS MODULE
 $routes->group('customers', static function ($routes) {
     $routes->post('create', 'CustomerController::createCustomer');
     $routes->get('get', 'CustomerController::getCustomers');
-    $routes->get('getById/(:num)', 'CustomerController::getCustomerById/$1');
+    $routes->get('getById/(:any)', 'CustomerController::getCustomerById/$1');
     $routes->post('update', 'CustomerController::updateCustomer');
     $routes->post('delete', 'CustomerController::deleteCustomer');
+    $routes->post('recover', 'CustomerController::recoverCustomer');
 });
 
 //SETTINGS MODULE
 $routes->group('settings', static function ($routes) {
-    $routes->post('setCoins', 'SettingController::setCoins');
+    $routes->post('createCoinPrice', 'SettingController::createCoinPrice');
 });
 
 

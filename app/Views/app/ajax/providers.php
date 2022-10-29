@@ -36,14 +36,22 @@
                         <p class="card-title-desc">En este módulo podrás ver, agregar, actualizar y eliminar proveedores.</p>
                     </div>
                     <div class="card-body">
+                        <div class="mt-2 mb-4">
+                            <label class="form-label" for="status">Filtros</label>
+                            <select name="status" class="form-select" id="status">
+                                <option value="">Todos los proveedores</option>
+                                <option value="1">Proveedores activados</option>
+                                <option value="0">Proveedores desactivados (Papelera)</option>
+                            </select>
+                        </div>
                         <table class="table datatable text-nowrap table-striped nowrap w-100 dt-responsive">
                             <thead>
                                 <tr>
                                     <tr>
-                                        <th>#</th>
                                         <th>Código</th>
                                         <th>Nombre</th>
-                                        <th>RIF</th>
+                                        <th>Cédula/Rif</th>
+                                        <th>Estado</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </tr>
@@ -78,7 +86,7 @@
                         </div>
                         <div class="col-md-7">
                             <div class="mb-3">
-                                <label class="form-label">RIF</label>
+                                <label class="form-label">Cédula/Rif</label>
                                 <div class="row">
                                     <div class="col-sm-3">
                                         <select class="form-select" name="letter">
@@ -90,7 +98,7 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" placeholder="Introduce el número de rif" name="legalIdentification" id="legalIdentification" required maxlength="10" minlength="7">
+                                        <input type="text" class="form-control" placeholder="Introduce el número de cédula/rif" name="legalIdentification" id="legalIdentification" required maxlength="9" minlength="7">
                                     </div>
                                 </div>
                             </div>
@@ -135,17 +143,17 @@
             <form class="custom-form viewForm" action="<?=base_url('providers/update')?>" method="POST">
                 <div class="modal-body">
                     <div class="response"></div>
-                    <input type="hidden" id="viewId" name="id" value="">
+                    <input type="hidden" id="viewCodePreview" name="code" value="">
                     <div class="row">
                         <div class="col-md-5">
                             <div class="mb-3">
                                 <label class="form-label">Código</label>
-                                <input type="text" class="form-control" id="viewCode" name="code" disabled>
+                                <input type="text" class="form-control viewDisabled" id="viewCode" disabled>
                             </div>
                         </div>
                         <div class="col-md-7">
                             <div class="mb-3">
-                                <label class="form-label">RIF</label>
+                                <label class="form-label">Cédula/Rif</label>
                                 <div class="row">
                                     <div class="col-md-3">
                                         <select class="form-select" name="letter" id="viewLetter" disabled>
@@ -157,7 +165,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" id="viewRif" name="legalIdentification" disabled>
+                                        <input type="text" class="form-control" id="viewIdentification" name="legalIdentification" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -213,17 +221,15 @@
     tableConfig('/providers/get', '.datatable');
 
     function viewProvider(data){
-        $('#viewId').val(data[0].id);
-        $('#viewCode').val(data[0].code);
-        $('#viewName').val(data[0].name);
-        $('#viewLetter').val(data[0].rif.split('-')[0]);
-        $('#viewRif').val(data[0].rif.split('-')[1]);
-        $('#viewAddress').val(data[0].address);
-        $('#viewPhone').val(data[0].phone);
-        $('#viewPhone2').val(data[0].phone2);
-        $('#viewProviderType').val(data[0].type);
-        $('#viewCreated').val(data[0].created_at);
-        $('#viewUpdated').val(data[0].updated_at);
+        $('#viewCodePreview').val(data[0].codigo);
+        $('#viewCode').val(data[0].codigo);
+        $('#viewName').val(data[0].nombre);
+        $('#viewLetter').val(data[0].identificacion.split('-')[0]);
+        $('#viewIdentification').val(data[0].identificacion.split('-')[1]);
+        $('#viewAddress').val(data[0].direccion);
+        $('#viewPhone').val(data[0].telefono);
+        $('#viewCreated').val(data[0].creado_en);
+        $('#viewUpdated').val(data[0].actualizado_en);
     }
 </script>
 

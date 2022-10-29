@@ -7,14 +7,14 @@ use CodeIgniter\Model;
 class AuditModel extends Model
 {
 	protected $DBGroup              = 'default';
-	protected $table                = 'audits';
-	protected $primaryKey           = 'id';
+	protected $table                = 'auditoria';
+	protected $primaryKey           = 'identificacion';
 	protected $useAutoIncrement     = true;
 	protected $insertID             = 0;
 	protected $returnType           = 'array';
 	protected $useSoftDelete        = false;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["user", "module", "action", "description"];
+	protected $allowedFields        = ["usuario", "modulo", "accion", "descripcion", "creado_en"];
 
 	public function createAudit($data)
 	{
@@ -26,8 +26,8 @@ class AuditModel extends Model
 	public function getAudits()
 	{
 		$query = $this
-			->select('audits.id, name, module, action, description, audits.created_at')
-			->join('users', 'users.id = audits.user');
+			->select('auditoria.identificacion, nombre, modulo, accion, descripcion, auditoria.creado_en')
+			->join('usuarios', 'usuarios.identificacion = auditoria.usuario');
 		return $query;
 	}
 

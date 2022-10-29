@@ -6,28 +6,15 @@ use CodeIgniter\Model;
 
 class SettingModel extends Model
 {
-	protected $DBGroup              = 'default';
-	protected $table                = 'settings';
-	protected $primaryKey           = 'id';
-	protected $useAutoIncrement     = true;
-	protected $insertID             = 0;
-	protected $returnType           = 'array';
-	protected $useSoftDeletes       = true;
-	protected $protectFields        = true;
-	protected $allowedFields        = ["code", "name", "value", "table_id", "updated_at"];
-
-	// Dates
-	protected $useTimestamps        = true;
-	protected $dateFormat           = 'datetime';
-	protected $createdField         = 'created_at';
-	protected $updatedField         = 'updated_at';
-	protected $deletedField         = 'deleted_at';
-
-	public function createCoin($data)
+	public function createCoinPrice($data)
 	{
-		$query = $this
+		$db = \Config\Database::connect();
+	
+		$db
+			->table('coin_prices')
 			->insert($data);
-		return $query;
+
+		return $db;
 	}
 
 	public function getCoins()

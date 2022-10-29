@@ -7,34 +7,33 @@ use CodeIgniter\Model;
 class CustomerModel extends Model
 {
 	protected $DBGroup              = 'default';
-	protected $table                = 'customers';
-	protected $primaryKey           = 'id';
-	protected $useAutoIncrement     = true;
+	protected $table                = 'clientes';
+	protected $primaryKey           = 'identificacion';
 	protected $insertID             = 0;
 	protected $returnType           = 'array';
 	protected $useSoftDeletes       = true;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["name", "identification", "address", "phone", "updated_at", "deleted_at", "created_at"];
+	protected $allowedFields        = ["nombre", "direccion", "telefono", "estado", "actualizado_en", "creado_en"];
 
 	// Dates
 	protected $useTimestamps        = true;
 	protected $dateFormat           = 'datetime';
-	protected $createdField         = 'created_at';
-	protected $updatedField         = 'updated_at';
-	protected $deletedField         = 'deleted_at';
+	protected $createdField         = 'actualizado_en';
+	protected $updatedField         = 'creado_en';
 
 	public function createCustomer($data)
 	{
-		$query = $this
-			->insert($data);
-		return $query;
+		if($this->save($data)){
+			return true;
+		}
+		
+		return false;
 	}
 
 	public function getCustomers()
 	{
 		$query = $this
-			->select('id, name, identification, phone')
-			->where('deleted_at', NULL);
+			->select('identificacion, nombre, telefono, estado');
 		return $query;
 	}
 
@@ -44,24 +43,30 @@ class CustomerModel extends Model
 		return $query->get()->getResultArray();
 	}
 
-	public function getLastId()
-	{
-		return $this->insertID();
-	}
-
-	public function updateCustomer($data, $id)
+	public function updateCustomer($data, $identification)
 	{
 		$query = $this
-				->where('id', $id)
+				->where('identificacion', $identification)
 				->set($data)
 				->update();
 		return $query;	
 	}
 
-	public function deleteCustomer($id)
+	public function deleteCustomer($identification)
 	{
 		$query = $this
-				->delete($id);
+				->where('identificacion', $identification)
+				->set('estado', 0)
+				->update();
+		return $query;
+	}
+	
+	public function recoverCustomer($identification)
+	{
+		$query = $this
+				->where('identificacion', $identification)
+				->set('estado', 1)
+				->update();
 		return $query;
 	}
 }

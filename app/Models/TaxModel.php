@@ -7,34 +7,34 @@ use CodeIgniter\Model;
 class TaxModel extends Model
 {
 	protected $DBGroup              = 'default';
-	protected $table                = 'taxes';
-	protected $primaryKey           = 'id';
+	protected $table                = 'impuestos';
+	protected $primaryKey           = 'identificacion';
 	protected $useAutoIncrement     = true;
 	protected $insertID             = 0;
 	protected $returnType           = 'array';
 	protected $useSoftDeletes       = true;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["tax", "percentage", "updated_at", "deleted_at", "created_at"];
+	protected $allowedFields        = ["impuesto", "porcentaje", "estado", "actualizado_en", "creado_en"];
 
 	// Dates
 	protected $useTimestamps        = true;
 	protected $dateFormat           = 'datetime';
-	protected $createdField         = 'created_at';
-	protected $updatedField         = 'updated_at';
-	protected $deletedField         = 'deleted_at';
+	protected $createdField         = 'creado_en';
+	protected $updatedField         = 'actualizado_en';
 
 	public function createTax($data)
 	{
-		$query = $this
-			->insert($data);
-		return $query;
+		if($this->save($data)){
+			return true;
+		}
+		
+		return false;
 	}
 
 	public function getTaxes()
 	{
 		$query = $this
-			->select('id, tax, percentage')
-			->where('deleted_at', NULL);
+			->select('identificacion, impuesto, porcentaje, estado');
 		return $query;
 	}
 
@@ -49,19 +49,30 @@ class TaxModel extends Model
 		return $this->insertID();
 	}
 
-	public function updateTax($data, $id)
+	public function updateTax($data, $identification)
 	{
 		$query = $this
-				->where('id', $id)
+				->where('identificacion', $identification)
 				->set($data)
 				->update();
 		return $query;	
 	}
 
-	public function deleteTax($id)
+	public function deleteTax($identification)
 	{
 		$query = $this
-				->delete($id);
+				->where('identificacion', $identification)
+				->set('estado', 0)
+				->update();
+		return $query;
+	}
+
+	public function recoverTax($identification)
+	{
+		$query = $this
+				->where('identificacion', $identification)
+				->set('estado', 1)
+				->update();
 		return $query;
 	}
 }
