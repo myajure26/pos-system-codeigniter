@@ -204,7 +204,7 @@ $(document).ready(function() {
             case 'document_type':
                 return viewDocumentType(data);
             case 'privileges':
-                    return privileges(data);
+                return viewPrivileges(data);
             case 'products':
                return viewProduct(data);
             case 'customers':

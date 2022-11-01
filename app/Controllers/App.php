@@ -366,6 +366,22 @@ class App extends BaseController
 		}
 	}
 
+	public function privileges()
+	{
+		if($this->session->has('name')){
+		
+			$data = [
+				"title" => "Privilegios - $this->system"
+			];
+			return view('app/ajax/privileges', $data);
+		
+		}else{
+
+			return redirect()->to(base_url());
+		
+		}
+	}
+
 	public function logout()
 	{
 		$this->session->destroy();
