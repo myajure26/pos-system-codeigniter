@@ -303,7 +303,7 @@ class PurchaseController extends BaseController
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
 		$this->auditContent['accion'] 		= "Actualizar compra";
-		$this->auditContent['descripcion'] 	= "Se ha actualizado la compra con identificación" . $identification . " exitosamente.";
+		$this->auditContent['descripcion'] 	= "Se ha actualizado la compra con identificación #" . $identification . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -333,7 +333,7 @@ class PurchaseController extends BaseController
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
 		$this->auditContent['accion'] 		= "Eliminar compra";
-		$this->auditContent['descripcion'] 	= "Se ha eliminado la compra con identificación" . $identification . " exitosamente.";
+		$this->auditContent['descripcion'] 	= "Se ha eliminado la compra con identificación #" . $identification . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -364,14 +364,14 @@ class PurchaseController extends BaseController
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
 		$this->auditContent['accion'] 		= "Recuperar compra";
-		$this->auditContent['descripcion'] 	= "Se ha recuperado la compra con identificación " . $identification . " exitosamente.";
+		$this->auditContent['descripcion'] 	= "Se ha recuperado la compra con identificación #" . $identification . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
 		//SWEET ALERT
 		$this->successMessage['alert'] 		= "clean";
 		$this->successMessage['title'] 		= "¡Exito!";
-		$this->successMessage['text'] 		= "La compra ha sido recuperado";
+		$this->successMessage['text'] 		= "La compra ha sido recuperada";
 		return sweetAlert($this->successMessage);
 	}
 }

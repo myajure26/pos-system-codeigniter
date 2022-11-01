@@ -60,7 +60,7 @@ class BrandController extends BaseController
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
 		$this->auditContent['accion'] 		= "Crear marca";
-		$this->auditContent['descripcion'] 	= "Se ha creado la marca con ID #" . $BrandModel->getLastId() . " exitosamente.";
+		$this->auditContent['descripcion'] 	= "Se ha creado la marca con identificación #" . $BrandModel->getLastId() . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -166,7 +166,7 @@ class BrandController extends BaseController
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
 		$this->auditContent['accion'] 		= "Actualizar marca";
-		$this->auditContent['descripcion'] 	= "Se ha actualizado la marca con ID #" . $identification . " exitosamente.";
+		$this->auditContent['descripcion'] 	= "Se ha actualizado la marca con identificación #" . $identification . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -196,7 +196,7 @@ class BrandController extends BaseController
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
 		$this->auditContent['accion'] 		= "Eliminar marca";
-		$this->auditContent['descripcion'] 	= "Se ha eliminado la marca con ID #" . $identification . " exitosamente.";
+		$this->auditContent['descripcion'] 	= "Se ha eliminado la marca con identificación #" . $identification . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -227,7 +227,7 @@ class BrandController extends BaseController
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
 		$this->auditContent['accion'] 		= "Recuperar marca";
-		$this->auditContent['descripcion'] 	= "Se ha recuperado la marca con ID #" . $identification . " exitosamente.";
+		$this->auditContent['descripcion'] 	= "Se ha recuperado la marca con identificación #" . $identification . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		

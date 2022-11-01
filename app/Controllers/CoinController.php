@@ -64,7 +64,7 @@ class CoinController extends BaseController
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
 		$this->auditContent['accion'] 		= "Crear moneda";
-		$this->auditContent['descripcion'] 	= "Se ha creado la moneda con ID #" . $CoinModel->getLastId() . " exitosamente.";
+		$this->auditContent['descripcion'] 	= "Se ha creado la moneda con identificación #" . $CoinModel->getLastId() . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -174,7 +174,7 @@ class CoinController extends BaseController
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
 		$this->auditContent['accion'] 		= "Actualizar moneda";
-		$this->auditContent['descripcion'] 	= "Se ha actualizado la moneda con ID #" . $identification . " exitosamente.";
+		$this->auditContent['descripcion'] 	= "Se ha actualizado la moneda con identificación #" . $identification . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -204,7 +204,7 @@ class CoinController extends BaseController
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
 		$this->auditContent['accion'] 		= "Eliminar moneda";
-		$this->auditContent['descripcion'] 	= "Se ha eliminado la moneda con ID #" . $identification . " exitosamente.";
+		$this->auditContent['descripcion'] 	= "Se ha eliminado la moneda con identificación #" . $identification . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -235,7 +235,7 @@ class CoinController extends BaseController
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
 		$this->auditContent['accion'] 		= "Recuperar moneda";
-		$this->auditContent['descripcion'] 	= "Se ha recuperado la moneda con ID #" . $identification . " exitosamente.";
+		$this->auditContent['descripcion'] 	= "Se ha recuperado la moneda con identificación #" . $identification . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		

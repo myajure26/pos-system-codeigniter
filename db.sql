@@ -268,7 +268,7 @@ CREATE TABLE IF NOT EXISTS `sistema`.`compras` (
   `usuario` VARCHAR(10) NOT NULL,
   `fecha` DATE NOT NULL,
   `tipo_documento` INT(11) NOT NULL,
-  `referencia` VARCHAR(50) NOT NULL,
+  `referencia` VARCHAR(25) NOT NULL,
   `moneda` INT(11) NOT NULL,
   `estado` TINYINT(1) NOT NULL DEFAULT '1',
   `actualizado_en` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

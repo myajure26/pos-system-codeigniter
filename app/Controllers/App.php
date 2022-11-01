@@ -168,6 +168,22 @@ class App extends BaseController
 		}
 	}
 
+	public function inventory()
+	{
+		if($this->session->has('name')){
+			
+			$data = [
+				"title" => "Inventario - $this->system"
+			];
+			return view('app/ajax/inventory', $data);
+		
+		}else{
+
+			return redirect()->to(base_url());
+		
+		}
+	}
+
 	public function products()
 	{
 		if($this->session->has('name')){
@@ -285,7 +301,7 @@ class App extends BaseController
 			$privileges = $db
 						->table('privilegios')
 						->select('identificacion, nombre')
-						->where('estado !=', 0)
+						->where('estado', 1)
 						->get()
 						->getResult();
 		
@@ -326,6 +342,22 @@ class App extends BaseController
 				"title" => "Impuestos - $this->system"
 			];
 			return view('app/ajax/taxes', $data);
+		
+		}else{
+
+			return redirect()->to(base_url());
+		
+		}
+	}
+
+	public function document_type()
+	{
+		if($this->session->has('name')){
+		
+			$data = [
+				"title" => "Tipos de documento - $this->system"
+			];
+			return view('app/ajax/document_type', $data);
 		
 		}else{
 

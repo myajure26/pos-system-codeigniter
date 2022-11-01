@@ -181,9 +181,9 @@
 
                             <li class="menu-title" data-key="t-menu">Administrar inventario</li>
                             <li>
-                                <a href="<?=base_url('#store')?>">
+                                <a href="<?=base_url('#inventory')?>">
                                     <i data-feather="database"></i>
-                                    <span data-key="t-store">Almacén</span>
+                                    <span data-key="t-inventory">Almacén</span>
                                 </a>
                             </li>
                             <li>
@@ -240,8 +240,20 @@
                             </li>
                             <li>
                                 <a href="<?=base_url('#taxes')?>">
-                                    <i data-feather="file-text"></i>
+                                    <i data-feather="file-minus"></i>
                                     <span data-key="t-taxes">Impuesto</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?=base_url('#document_type')?>">
+                                    <i data-feather="file-text"></i>
+                                    <span data-key="t-document_type">Tipo de documento</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?=base_url('#privileges')?>">
+                                    <i data-feather="user"></i>
+                                    <span data-key="t-privileges">Privilegios</span>
                                 </a>
                             </li>
                         </ul>

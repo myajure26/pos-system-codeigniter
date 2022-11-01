@@ -30,11 +30,13 @@ function createPurchaseValidation()
 		],
 		'reference' => [
 			'label' => 'reference',
-			'rules' => 'required|numeric|is_unique[compras.referencia]',
+			'rules' => 'required|numeric|is_unique[compras.referencia]|min_length[5]|max_length[25]',
 			'errors' => [
 				'required' => 'El número de referencia es requerido',
 				'numeric' => 'El número de referencia debe contenter números solamente',
-				'is_unique' => 'El número de referencia ya existe'
+				'is_unique' => 'El número de referencia ya existe',
+				'min_length' => 'La referencia debe tener mínimo 5 números',
+				'max_length' => 'La referencia debe tener máximo 25 números'
 			]
 		],
 		'coin' => [
@@ -107,11 +109,13 @@ function updatePurchaseValidation()
 		],
 		'reference' => [
 			'label' => 'reference',
-			'rules' => 'required|numeric|is_unique[compras.referencia,identificacion,{identification}]',
+			'rules' => 'required|numeric|is_unique[compras.referencia,identificacion,{identification}]|min_length[5]|max_length[25]',
 			'errors' => [
 				'required' => 'El número de referencia es requerido',
 				'numeric' => 'El número de referencia debe contenter números solamente',
-				'is_unique' => 'El número de referencia ya existe'
+				'is_unique' => 'El número de referencia ya existe',
+				'min_length' => 'La referencia debe tener mínimo 5 números',
+				'max_length' => 'La referencia debe tener máximo 25 números'
 			]
 		],
 		'coin' => [

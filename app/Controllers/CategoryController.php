@@ -60,7 +60,7 @@ class CategoryController extends BaseController
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
 		$this->auditContent['accion'] 		= "Crear categoría";
-		$this->auditContent['descripcion'] 	= "Se ha creado la categoría con ID #" . $CategoryModel->getLastId() . " exitosamente.";
+		$this->auditContent['descripcion'] 	= "Se ha creado la categoría con identificación #" . $CategoryModel->getLastId() . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -166,7 +166,7 @@ class CategoryController extends BaseController
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
 		$this->auditContent['accion'] 		= "Actualizar categoría";
-		$this->auditContent['descripcion'] 	= "Se ha actualizado la categoría con ID #" . $id . " exitosamente.";
+		$this->auditContent['descripcion'] 	= "Se ha actualizado la categoría con identificación #" . $identification . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -196,7 +196,7 @@ class CategoryController extends BaseController
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
 		$this->auditContent['accion'] 		= "Eliminar categoría";
-		$this->auditContent['descripcion'] 	= "Se ha eliminado la categoría con ID #" . $identification . " exitosamente.";
+		$this->auditContent['descripcion'] 	= "Se ha eliminado la categoría con identificación #" . $identification . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -227,7 +227,7 @@ class CategoryController extends BaseController
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
 		$this->auditContent['accion'] 		= "Recuperar categoría";
-		$this->auditContent['descripcion'] 	= "Se ha recuperado la categoría con ID #" . $identification . " exitosamente.";
+		$this->auditContent['descripcion'] 	= "Se ha recuperado la categoría con identificación #" . $identification . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		

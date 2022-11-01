@@ -1,10 +1,10 @@
 <?php 
 namespace App\Controllers;
-use App\Models\TaxModel;
+use App\Models\DocumentTypeModel;
 use App\Models\AuditModel;
 use \Hermawan\DataTables\DataTable;
 
-class TaxController extends BaseController
+class DocumentTypeController extends BaseController
 {
 	protected $errorMessage = [
 		"alert" => "simple",
@@ -22,20 +22,20 @@ class TaxController extends BaseController
 
 	protected $auditContent = [
 		"usuario"		=> "",
-		"modulo"		=> "Impuestos",
+		"modulo"		=> "Tipos de documento",
 		"accion"		=> "",
 		"descripcion"	=> ""
 	];
 
-	public function createTax()
+	public function createDocumentType()
 	{
-		helper('taxValidation');
+		helper('documentTypeValidation');
 
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
 		}
 
-		if(!$this->validate(createTaxValidation())){
+		if(!$this->validate(createDocumentTypeValidation())){
 
 			//Mostrar errores de validación
 			$errors = $this->validator->getErrors();
@@ -47,42 +47,38 @@ class TaxController extends BaseController
 		}
 
 		$name = $this->request->getPost('name');
-		$percentage = $this->request->getPost('percentage');
 
-		$TaxModel = new TaxModel();
-		$tax = $TaxModel->createTax([
-									'impuesto' => $name,
-									'porcentaje' => $percentage
-								]);
+		$DocumentTypeModel = new DocumentTypeModel();
+		$documentType = $DocumentTypeModel->createDocumentType(['nombre' => $name]);
 
-		if(!$tax){
-			$this->errorMessage['text'] = "Error al guardar el impuesto en la base de datos";
+		if(!$documentType){
+			$this->errorMessage['text'] = "Error al guardar en la base de datos";
 			return sweetAlert($this->errorMessage);
 		}
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
-		$this->auditContent['accion'] 		= "Crear impuesto";
-		$this->auditContent['descripcion'] 	= "Se ha creado el impuesto con identificación #" . $TaxModel->getLastId() . " exitosamente.";
+		$this->auditContent['accion'] 		= "Crear tipo de documento";
+		$this->auditContent['descripcion'] 	= "Se ha creado el tipo de documento con identificación #" . $DocumentTypeModel->getLastId() . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
 		//SWEET ALERT
 		$this->successMessage['alert'] 		= "clean";
-		$this->successMessage['text'] 		= "El impuesto se ha creado correctamente";
+		$this->successMessage['text'] 		= "El tipo de documento se ha creado correctamente";
 		return sweetAlert($this->successMessage);
 	}
 
-	public function getTaxes()
+	public function getDocumentsType()
 	{
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
 		}
 
-		$TaxModel = new TaxModel();
+		$DocumentTypeModel = new DocumentTypeModel();
 				
-		return DataTable::of($TaxModel->getTaxes())
+		return DataTable::of($DocumentTypeModel->getDocumentsType())
 			->edit('estado', function($row){
 							
 				if($row->estado == 0){
@@ -94,17 +90,17 @@ class TaxController extends BaseController
 			->add('Acciones', function($row){
 				if($row->estado == 1){
 					return '<div class="btn-list"> 
-								<button type="button" class="btnView btn btn-sm btn-primary waves-effect" data-id="'.$row->identificacion.'" data-type="taxes" data-bs-toggle="modal" data-bs-target="#viewModal">
+								<button type="button" class="btnView btn btn-sm btn-primary waves-effect" data-id="'.$row->identificacion.'" data-type="document_type" data-bs-toggle="modal" data-bs-target="#viewModal">
 									<i class="far fa-eye"></i>
 								</button>
-								<button type="button" class="btnDelete btn btn-sm btn-danger waves-effect" data-id="'.$row->identificacion.'" data-type="taxes">
+								<button type="button" class="btnDelete btn btn-sm btn-danger waves-effect" data-id="'.$row->identificacion.'" data-type="document_type">
 									<i class="far fa-trash-alt"></i>
 								</button>
 							</div>';
 				}
 
 				return '<div class="btn-list"> 
-								<button type="button" class="btnRecover btn btn-sm btn-success waves-effect" data-id="'.$row->identificacion.'" data-type="taxes">
+								<button type="button" class="btnRecover btn btn-sm btn-success waves-effect" data-id="'.$row->identificacion.'" data-type="document_type">
 									<i class="fas fa-check"></i>
 								</button>
 							</div>';
@@ -122,29 +118,29 @@ class TaxController extends BaseController
 			->toJson();
 	}
 
-	public function getTaxById($identification)
+	public function getDocumentTypeById($identification)
 	{
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
 		}
 
-		$TaxModel = new TaxModel();
-		$tax = $TaxModel->getTaxById(['identificacion' => $identification]);
-		if(!$tax){
+		$DocumentTypeModel = new DocumentTypeModel();
+		$documentType = $DocumentTypeModel->getDocumentTypeById(['identificacion' => $identification]);
+		if(!$documentType){
 			return false;
 		}
-		return json_encode($tax);
+		return json_encode($documentType);
 	}
 
-	public function updateTax()
+	public function updateDocumentType()
 	{
-		helper('taxValidation');
+		helper('documentTypeValidation');
 
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
 		}
 
-		if(!$this->validate(updateTaxValidation())){
+		if(!$this->validate(updateDocumentTypeValidation())){
 
 			//Mostrar errores de validación
 			$errors = $this->validator->getErrors();
@@ -157,34 +153,30 @@ class TaxController extends BaseController
 
 		$identification = $this->request->getPost('identification');
 		$name = $this->request->getPost('name');
-		$percentage = $this->request->getPost('percentage');
 
-		$TaxModel = new TaxModel();
-		$tax = $TaxModel->updateTax([
-									"impuesto" => $name,
-									"porcentaje" => $percentage
-								], $identification);
+		$DocumentTypeModel = new DocumentTypeModel();
+		$documentType = $DocumentTypeModel->updateDocumentType(["nombre" => $name], $identification);
 
-		if(!$tax){
-			$this->errorMessage['text'] = "Error actualizar el impuesto en la base de datos";
+		if(!$documentType){
+			$this->errorMessage['text'] = "Error actualizar el tipo de documento en la base de datos";
 			return sweetAlert($this->errorMessage);
 		}
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
-		$this->auditContent['accion'] 		= "Actualizar impuesto";
-		$this->auditContent['descripcion'] 	= "Se ha actualizado el impuesto con identificación #" . $identification . " exitosamente.";
+		$this->auditContent['accion'] 		= "Actualizar tipo de documento";
+		$this->auditContent['descripcion'] 	= "Se ha actualizado el tipo de documento con identificación #" . $identification . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
 		//SWEET ALERT
 		$this->successMessage['alert'] 		= "clean";
-		$this->successMessage['text'] 		= "El impuesto se ha actualizado correctamente";
+		$this->successMessage['text'] 		= "El tipo de documento se ha actualizado correctamente";
 		return sweetAlert($this->successMessage);
 	}
 
-	public function deleteTax()
+	public function deleteDocumentType()
 	{
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
@@ -192,30 +184,30 @@ class TaxController extends BaseController
 
 		$identification = $this->request->getPost('identification');
 
-		$TaxModel = new TaxModel();
-		$deleteTax = $TaxModel->deleteTax($identification);
+		$DocumentTypeModel = new DocumentTypeModel();
+		$deleteDocumentType = $DocumentTypeModel->deleteDocumentType($identification);
 
-		if(!$deleteTax){
-			$this->errorMessage['text'] = "El impuesto no existe";
+		if(!$deleteDocumentType){
+			$this->errorMessage['text'] = "El tipo de documento no existe";
 			return sweetAlert($this->errorMessage);
 		}
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
-		$this->auditContent['accion'] 		= "Eliminar impuesto";
-		$this->auditContent['descripcion'] 	= "Se ha eliminado el impuesto con identificación #" . $identification . " exitosamente.";
+		$this->auditContent['accion'] 		= "Eliminar tipo de documento";
+		$this->auditContent['descripcion'] 	= "Se ha eliminado el tipo de documento con identificación #" . $identification . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
 		//SWEET ALERT
 		$this->successMessage['alert'] 		= "clean";
-		$this->successMessage['title'] 		= "Impuesto eliminado";
+		$this->successMessage['title'] 		= "Tipo de documento eliminado";
 		$this->successMessage['text'] 		= "Puede recuperarlo desde la papelera";
 		return sweetAlert($this->successMessage);
 	}
 
-	public function recoverTax()
+	public function recoverDocumentType()
 	{
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
@@ -223,26 +215,26 @@ class TaxController extends BaseController
 
 		$identification = $this->request->getPost('identification');
 
-		$TaxModel = new TaxModel();
-		$recoverTax = $TaxModel->recoverTax($identification);
+		$DocumentTypeModel = new DocumentTypeModel();
+		$recoverDocumentType = $DocumentTypeModel->recoverDocumentType($identification);
 
-		if(!$recoverTax){
-			$this->errorMessage['text'] = "El impuesto no existe";
+		if(!$recoverDocumentType){
+			$this->errorMessage['text'] = "El tipo de documento no existe";
 			return sweetAlert($this->errorMessage);
 		}
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
-		$this->auditContent['accion'] 		= "Recuperar impuesto";
-		$this->auditContent['descripcion'] 	= "Se ha recuperado al impuesto con identificación #" . $identification . " exitosamente.";
+		$this->auditContent['accion'] 		= "Recuperar tipo de documento";
+		$this->auditContent['descripcion'] 	= "Se ha recuperado al tipo de documento con identificación #" . $identification . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
 		//SWEET ALERT
 		$this->successMessage['alert'] 		= "clean";
 		$this->successMessage['title'] 		= "¡Exito!";
-		$this->successMessage['text'] 		= "El impuesto ha sido recuperado";
+		$this->successMessage['text'] 		= "El tipo de documento ha sido recuperado";
 		return sweetAlert($this->successMessage);
 	}
 }

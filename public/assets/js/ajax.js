@@ -201,6 +201,10 @@ $(document).ready(function() {
                return viewCoin(data);
             case 'taxes':
                return viewTax(data);
+            case 'document_type':
+                return viewDocumentType(data);
+            case 'privileges':
+                    return privileges(data);
             case 'products':
                return viewProduct(data);
             case 'customers':
