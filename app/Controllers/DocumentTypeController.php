@@ -129,6 +129,10 @@ class DocumentTypeController extends BaseController
 		if(!$documentType){
 			return false;
 		}
+
+		$documentType[0]['creado_en'] = date('d-m-Y H:i:s', strtotime($documentType[0]['creado_en']));
+		$documentType[0]['actualizado_en'] = date('d-m-Y H:i:s', strtotime($documentType[0]['actualizado_en']));
+
 		return json_encode($documentType);
 	}
 

@@ -20,6 +20,14 @@ function createBrandValidation()
 function updateBrandValidation()
 {
 	$updateBrand = [
+		'identification' => [
+			'label' => 'identification',
+			'rules' => 'required|is_not_unique[marcas.identificacion]',
+			'errors' => [
+				'required' => 'La identificación de la marca es requerida',
+				'is_not_unique' => 'La identificación de la marca no existe'
+			]
+		],
 		'name' => [
 			'label' => 'name',
 			'rules' => 'required|regex_match[/^[a-z0-9ñáéíóúüA-ZÑÁÉÍÓÚÜ ,.]*$/u]|is_unique[marcas.marca,identificacion,{identification}]',

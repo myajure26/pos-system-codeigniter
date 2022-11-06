@@ -19,6 +19,14 @@ function createDocumentTypeValidation()
 function updateDocumentTypeValidation()
 {
 	$updateDocumentType = [
+		'identification' => [
+			'label' => 'identification',
+			'rules' => 'required|is_not_unique[tipo_documento.identificacion]',
+			'errors' => [
+				'required' => 'La identificación del tipo de documento es requerida',
+				'is_not_unique' => 'La identificación del tipo de documento no existe'
+			]
+		],
 		'name' => [
 			'label' => 'name',
 			'rules' => 'required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ ,.]*$/u]|is_unique[tipo_documento.nombre,identificacion,{identification}]',

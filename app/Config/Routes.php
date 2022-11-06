@@ -149,9 +149,14 @@ $routes->group('customers', static function ($routes) {
     $routes->post('recover', 'CustomerController::recoverCustomer');
 });
 
-//SETTINGS MODULE
-$routes->group('settings', static function ($routes) {
-    $routes->post('createCoinPrice', 'SettingController::createCoinPrice');
+//COIN PRICES MODULE
+$routes->group('coinPrices', static function ($routes) {
+    $routes->post('createCoinPrice', 'ControlCenterController::createCoinPrice');
+    $routes->get('getCoinPrices', 'ControlCenterController::getCoinPrices');
+    $routes->get('getById/(:num)', 'ControlCenterController::getCoinPriceById/$1');
+    $routes->post('update', 'ControlCenterController::updateCoinPrice');
+    $routes->post('delete', 'ControlCenterController::deleteCoinPrice');
+    $routes->post('recover', 'ControlCenterController::recoverCoinPrice');
 });
 
 

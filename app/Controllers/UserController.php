@@ -209,6 +209,11 @@ class UserController extends BaseController
 		if(!$user){
 			return false;
 		}
+
+		$user[0]['ultima_sesion'] = date('d-m-Y H:i:s', strtotime($user[0]['ultima_sesion']));
+		$user[0]['creado_en'] = date('d-m-Y H:i:s', strtotime($user[0]['creado_en']));
+		$user[0]['actualizado_en'] = date('d-m-Y H:i:s', strtotime($user[0]['actualizado_en']));
+
 		return json_encode($user);
 	}
 

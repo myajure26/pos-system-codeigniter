@@ -48,7 +48,13 @@ class ProductController extends BaseController
 
 		// Dar formato al precio
 		$price = str_replace(',', '', $this->request->getPost('price'));
-		$price = floatval($price);	
+		
+		if(!is_numeric($price)) {
+			$this->errorMessage['text'] = "Por favor introduce un precio válido";
+			return sweetAlert($this->errorMessage);
+		}
+		
+		$price = floatval($price);
 
 		$ProductModel = new ProductModel();
 		$product = $ProductModel->createProduct([
@@ -146,6 +152,10 @@ class ProductController extends BaseController
 			return false;
 		}
 		$product[0]['precio'] = number_format($product[0]['precio'], 2);
+
+		$product[0]['creado_en'] = date('d-m-Y H:i:s', strtotime($product[0]['creado_en']));
+		$product[0]['actualizado_en'] = date('d-m-Y H:i:s', strtotime($product[0]['actualizado_en']));
+
 		return json_encode($product);
 	}
 
@@ -170,6 +180,12 @@ class ProductController extends BaseController
 
 		// Dar formato al precio
 		$price 	= str_replace(',', '', $this->request->getPost('price'));
+		
+		if(!is_numeric($price)) {
+			$this->errorMessage['text'] = "Por favor introduce un precio válido";
+			return sweetAlert($this->errorMessage);
+		}
+		
 		$price 	= floatval($price);
 		$code 	= $this->request->getPost('code');
 

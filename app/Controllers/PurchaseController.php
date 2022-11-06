@@ -220,6 +220,10 @@ class PurchaseController extends BaseController
 		if(!$purchase){
 			return false;
 		}
+
+		$purchase[0]['creado_en'] = date('d-m-Y H:i:s', strtotime($purchase[0]['creado_en']));
+		$purchase[0]['actualizado_en'] = date('d-m-Y H:i:s', strtotime($purchase[0]['actualizado_en']));
+
 		return json_encode($purchase);
 	}
 

@@ -79,15 +79,15 @@ class App extends BaseController
 		}
 	}
 
-	public function controlCenter()
+	public function control_center()
 	{
 		if($this->session->has('name')){
 
 			$db      	= \Config\Database::connect();
 			$coins 		= $db
-							->table('coins')
-							->select('id, coin, symbol')
-							->where('deleted_at', NULL)
+							->table('monedas')
+							->select('identificacion, moneda, simbolo')
+							->where('estado', 1)
 							->get()
 							->getResult();
 
@@ -95,7 +95,7 @@ class App extends BaseController
 				"title" => "Centro de control - $this->system",
 				"coins" => $coins
 			];
-			return view('app/ajax/controlCenter', $data);
+			return view('app/ajax/control_center', $data);
 		
 		}else{
 

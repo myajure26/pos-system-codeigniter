@@ -81,7 +81,15 @@ function createPurchaseValidation()
 
 function updatePurchaseValidation()
 {
-		$updatePurchase = [
+	$updatePurchase = [
+		'identification' => [
+			'label' => 'identification',
+			'rules' => 'required|is_not_unique[compras.identificacion]',
+			'errors' => [
+				'required' => 'La identificación de la compra es requerida',
+				'is_not_unique' => 'La identificación de la compra no existe'
+			]
+		],
 		'date' => [
 			'label' => 'date',
 			'rules' => 'required|valid_date',

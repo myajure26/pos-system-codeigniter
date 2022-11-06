@@ -215,8 +215,8 @@ $(document).ready(function() {
                return viewUser(data);
             case 'purchases':
                 return viewPurchase(data);
-            case 'configCoin':
-               return viewConfigCoin(data);
+            case 'coinPrices':
+               return viewCoinPrices(data);
         }
             
     }

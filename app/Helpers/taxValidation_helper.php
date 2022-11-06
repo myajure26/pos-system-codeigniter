@@ -28,6 +28,14 @@ function createTaxValidation()
 function updateTaxValidation()
 {
 	$updateTax = [
+		'identification' => [
+			'label' => 'identification',
+			'rules' => 'required|is_not_unique[marcas.identificacion]',
+			'errors' => [
+				'required' => 'La identificación del impuesto es requerida',
+				'is_not_unique' => 'La identificación del impuesto no existe'
+			]
+		],
 		'name' => [
 			'label' => 'name',
 			'rules' => 'required|alpha_numeric_punct|is_unique[impuestos.impuesto,identificacion,{identification}]',

@@ -140,7 +140,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="<?=base_url('#controlCenter')?>">
+                                <a href="<?=base_url('#control_center')?>">
                                     <i data-feather="tool"></i>
                                     <span data-key="t-control">Centro de control</span>
                                 </a>

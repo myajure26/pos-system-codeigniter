@@ -28,6 +28,14 @@ function createCoinValidation()
 function updateCoinValidation()
 {
 	$updateCoin = [
+		'identification' => [
+			'label' => 'identification',
+			'rules' => 'required|is_not_unique[monedas.identificacion]',
+			'errors' => [
+				'required' => 'La identificación de la moneda es requerida',
+				'is_not_unique' => 'La identificación de la moneda no existe'
+			]
+		],
 		'name' => [
 			'label' => 'name',
 			'rules' => 'required|regex_match[/^[a-z0-9ñáéíóúüA-ZÑÁÉÍÓÚÜ ,.]*$/u]|is_unique[monedas.moneda,identificacion,{identification}]',

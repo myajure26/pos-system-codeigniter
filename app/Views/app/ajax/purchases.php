@@ -153,7 +153,6 @@
                         <table class="table table-hover table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>#</th>
                                     <th>Código</th>
                                     <th>Nombre</th>
                                     <th style="width:150px">Cantidad</th>
