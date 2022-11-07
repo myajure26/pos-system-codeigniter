@@ -244,7 +244,10 @@
                         ${element.codigo}
                     </td>
                     <td>${element.nombre}</td>
-                    <td><input type="number" class="form-control form-control-sm productQuantity" name="productQuantity[]" value="${element.cantidad}" required disabled></td>
+                    <td>
+                        <input type="hidden" name="previewProductQuantity[]" value="${element.cantidad}">
+                        <input type="number" class="form-control form-control-sm productQuantity" name="productQuantity[]" value="${element.cantidad}" required disabled>
+                    </td>
                     <td><input type="text" class="form-control form-control-sm price productPrice" name="productPrice[]" value="${element.precio}" required maxlength="10" disabled></td>
                     <td class="text-center"><input type="text" class="form-control form-control-sm price totalPriceProduct" value="${totalProduct}" readonly required></td>
                 </tr>

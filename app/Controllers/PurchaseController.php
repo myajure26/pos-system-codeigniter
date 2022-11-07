@@ -264,9 +264,11 @@ class PurchaseController extends BaseController
 		$purchaseDetailsId = $this->request->getPost('purchaseDetailsId');
 		$productCode = $this->request->getPost('productCode');
 		$productQuantity = $this->request->getPost('productQuantity');
+		$previewProductQuantity = $this->request->getPost('previewProductQuantity');
 		$productPrice = $this->request->getPost('productPrice');
 
 		$purchaseDetails = [];
+		$oldQuantityProducts = [];
 
 		for($i = 0; $i < count($productCode); $i++){
 
@@ -291,12 +293,21 @@ class PurchaseController extends BaseController
 				"compra" 	=> $identification
 			];
 
+			$data2 = [
+				"producto" => $productCode[$i],
+				"cantidad" => $previewProductQuantity[$i]
+			];
+
 			array_push($purchaseDetails, $data);
+			array_push($oldQuantityProducts, $data2);
 
 		}
 
+		// $this->errorMessage['text'] = var_dump($oldQuantityProducts);
+		// 	return sweetAlert($this->errorMessage);
+
 		$PurchaseModel = new PurchaseModel();
-		$purchase = $PurchaseModel->updatePurchase($purchase, $purchaseDetails, $identification);
+		$purchase = $PurchaseModel->updatePurchase($purchase, $purchaseDetails, $identification, $oldQuantityProducts);
 
 		if(!$purchase){
 			$this->errorMessage['text'] = "Error al actualizar la compra en la base de datos";

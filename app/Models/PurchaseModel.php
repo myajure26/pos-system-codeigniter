@@ -40,6 +40,17 @@ class PurchaseModel extends Model
 
 		$db->table('detalle_compra')->insertBatch($purchaseDetails);
 
+		// Agregar al stock
+		foreach($purchaseDetails as $purchaseDetail){
+
+			$code = $purchaseDetail['producto'];
+			$quantity = $purchaseDetail['cantidad'];
+
+			$db 
+			->query("UPDATE productos SET cant_producto = cant_producto + $quantity  WHERE codigo = '$code'");
+		
+		}
+
 		$db->transComplete();
 
 		if ($db->transStatus() === false) {
@@ -74,20 +85,42 @@ class PurchaseModel extends Model
 		return $this->insertID();
 	}
 
-	public function updatePurchase($purchase, $purchaseDetails, $id)
+	public function updatePurchase($purchase, $purchaseDetails, $identification, $oldProductsQuantity)
 	{
 		$db = \Config\Database::connect();
 		$db->transStart();
 		
 		$db
 			->table('compras')
-			->where('identificacion', $id)
+			->where('identificacion', $identification)
 			->set($purchase)
 			->update();
 		
 		$db
 			->table('detalle_compra')
 			->updateBatch($purchaseDetails, 'identificacion');
+
+		// Restar al stock
+		foreach($oldProductsQuantity as $oldProductQuantity){
+
+			$code = $oldProductQuantity['producto'];
+			$quantity = $oldProductQuantity['cantidad'];
+
+			$db 
+			->query("UPDATE productos SET cant_producto = cant_producto - $quantity  WHERE codigo = '$code'");
+		
+		}
+		
+		// Agregar al stock
+		foreach($purchaseDetails as $purchaseDetail){
+
+			$code = $purchaseDetail['producto'];
+			$quantity = $purchaseDetail['cantidad'];
+
+			$db 
+			->query("UPDATE productos SET cant_producto = cant_producto + $quantity  WHERE codigo = '$code'");
+		
+		}
 		
 		$db->transComplete();
 
@@ -114,5 +147,9 @@ class PurchaseModel extends Model
 				->set('estado', 1)
 				->update();
 		return $query;
+	}
+
+	public function addStock(){
+		$sql = "UPDATE productos SET cant_producto = cant_producto + $quantity  WHERE codigo = $code";
 	}
 }
