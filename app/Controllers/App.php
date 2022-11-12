@@ -104,6 +104,53 @@ class App extends BaseController
 		}
 	}
 
+	public function newSale()
+	{
+		if($this->session->has('name')){
+
+			$db      	= \Config\Database::connect();
+			
+			$taxes 			= $db
+							->table('impuestos')
+							->select('identificacion, impuesto, porcentaje')
+							->where('estado', 1)
+							->get()
+							->getResult();
+			$paymentMethod 	= $db
+							->table('metodo_pago')
+							->select('id_metodo_pago, nombre')
+							->where('estado_metodo_pago', 1)
+							->get()
+							->getResult();
+			$coins 		= $db
+							->table('monedas')
+							->select('identificacion, moneda, simbolo')
+							->where('estado', 1)
+							->get()
+							->getResult();
+			$receipt 	= $db
+							->table('tipo_documento')
+							->select('identificacion, nombre')
+							->where('estado', 1)
+							->get()
+							->getResult();
+
+			$data = [
+				"title" 		=> "Nueva venta - $this->system",
+				"taxes" 		=> $taxes,
+				"paymentMethod" => $paymentMethod,
+				"coins"			=> $coins,
+				"receipt"		=> $receipt
+			];
+			return view('app/ajax/newSale', $data);
+		
+		}else{
+
+			return redirect()->to(base_url());
+		
+		}
+	}
+
 	public function newPurchase()
 	{
 		if($this->session->has('name')){
@@ -201,12 +248,6 @@ class App extends BaseController
 							->where('estado', 1)
 							->get()
 							->getResult();
-			$taxes = $db
-							->table('impuestos')
-							->select('identificacion, impuesto')
-							->where('estado', 1)
-							->get()
-							->getResult();
 			$coins 		= $db
 							->table('monedas')
 							->select('identificacion, moneda, simbolo')
@@ -218,7 +259,6 @@ class App extends BaseController
 				"title" 		=> "Productos - $this->system",
 				"brands" 		=> $brands,
 				"categories" 	=> $categories,
-				"taxes" 		=> $taxes,
 				"coins" 		=> $coins
 			];
 			return view('app/ajax/products', $data);

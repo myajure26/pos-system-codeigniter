@@ -64,8 +64,7 @@ class ProductController extends BaseController
 									'marca' 		=> $this->request->getPost('brand'),
 									'categoria' 	=> $this->request->getPost('category'),
 									'moneda' 		=> $this->request->getPost('coin'),
-									'precio' 		=> $price,
-									'impuesto' 		=> $this->request->getPost('tax')
+									'precio' 		=> $price
 								]);
 
 		if(!$product){
@@ -196,8 +195,7 @@ class ProductController extends BaseController
 									'marca' 		=> $this->request->getPost('brand'),
 									'categoria' 	=> $this->request->getPost('category'),
 									'moneda' 		=> $this->request->getPost('coin'),
-									'precio' 		=> $price,
-									'impuesto' 		=> $this->request->getPost('tax')
+									'precio' 		=> $price
 								], $code);
 
 		if(!$product){

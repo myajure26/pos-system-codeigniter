@@ -89,12 +89,18 @@ $(document).ready(function() {
         const response = $('.response');
         const action = form.attr('action');
         const method = form.attr('method');
+        const type = form.attr('type');
         const formdata = new FormData(this);
 
         if(formdata.get('legalIdentification')){
             const identification = formdata.get('letter') + '-' + formdata.get('legalIdentification');
             formdata.append('identification', identification);
         }
+
+        if( type === 'saveCustomerSale' ){
+            formdata.append('saveCustomerSale', type);
+        }
+
 
         $.ajax({
             type: method,
@@ -115,6 +121,16 @@ $(document).ready(function() {
                 });
             },
             success: function (data) {
+                
+                if( type === 'saveCustomerSale' ){
+                    $('#name, #phone, #address').attr('disabled', 'disabled');
+                    $('.saveCustomer').removeClass('saveCustomer').addClass('addCustomer').attr('type', 'button');
+                    $('.addCustomer i').removeClass('fas fa-user-check').addClass('fas fa-user-plus');
+                    $('#customerNext').slideDown();
+                    $('#hiddenCustomer').val(formdata.get('identification'));
+
+                }
+
                 response.html(data);
             },
             error: function (data) {
@@ -340,5 +356,182 @@ $(document).ready(function() {
             }
         });
     });    
+
+    /**
+     * AJAX SALES
+     */
+
+    // SEARCH CUSTOMER
+    $(document).on('click', '.searchCustomer', function(){ 
+        
+        const letter = $('.letter').val();
+        const numIdentification = $('.identification').val();
+        const identification = letter + '-' + numIdentification;
+
+        if(numIdentification === ''){
+            $('.identification').addClass('is-invalid');
+            return false;
+        }
+        $('.identification').removeClass('is-invalid');
+        
+        $.ajax({
+            url: url + '/customers/getById/' + identification,
+            method: "GET",
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            beforeSend: function() {
+                Swal.fire({
+                    icon: 'info',
+                    title: '<strong>Procesando...</strong>',
+                    text: 'Por favor, espera unos segundos',
+                    showConfirmButton: false,
+                    didOpen: function() {
+                        Swal.showLoading();
+                    }
+                });
+            },
+            success: function (data) {
+
+                $('#name').val(data[0].nombre);
+                $('#phone').val(data[0].telefono);
+                $('#address').val(data[0].direccion);
+                $('#hiddenCustomer').val(identification);
+                $('#customerNext').slideDown();
+                
+
+                Swal.close();
+            },
+            error: function () {
+
+                $('#name').val('');
+                $('#phone').val('');
+                $('#address').val('');
+                $('#customerNext').slideUp();
+
+                Swal.fire({
+                title: 'El usuario no existe',
+                text: 'Haz click en agregar nuevo usuario',
+                icon: 'warning'
+                });
+
+            }
+        });
+    });
+
+    $(document).on('click', '.addCustomer', function(){
+        $('#name, #phone, #address').removeAttr('disabled');
+        $('.addCustomer i').removeClass('fas fa-user-plus').addClass('fas fa-user-check');
+        $(this).removeClass('addCustomer').addClass('saveCustomer').attr('type', 'submit');
+    });
+
+    // Buscar la tasa de cambio
+    $(document).on('change', '#coinSale', function(){ 
+        
+        const identification = $(this).val();
+        
+        if(identification === '') return false;
+        
+        $.ajax({
+            url: url + '/sales/getRate/' + identification,
+            method: "GET",
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            beforeSend: function() {
+                Swal.fire({
+                    icon: 'info',
+                    title: '<strong>Procesando...</strong>',
+                    text: 'Por favor, espera unos segundos',
+                    showConfirmButton: false,
+                    didOpen: function() {
+                        Swal.showLoading();
+                    }
+                });
+            },
+            success: function (data) {
+
+                let rate = Number(data[0].precio.replace('.', ""));
+                let subtotal = Number($('.subtotal').val().replace(/,/g, "").replace('.', ""));
+                let tax = Number($('.tax').val().replace(/,/g, "").replace('.', ""));
+                let total = Number($('.total').val().replace(/,/g, "").replace('.', ""));
+
+                $('#rate').val(data[0].precio);
+                
+                rate = rate * 0.01;
+                subtotal = (subtotal * 0.01) * rate;
+                total = (total * 0.01) * rate;
+                tax = (tax * 0.01) * rate;
+
+                subtotal = subtotal.toLocaleString('en', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                total = total.toLocaleString('en', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                tax = tax.toLocaleString('en', {minimumFractionDigits: 2, maximumFractionDigits: 2})
+
+                $('.subtotal').val(subtotal);
+                $('.tax').val(tax);
+                $('.total').val(total);
+                
+
+                Swal.close();
+            },
+            error: function () {
+
+                $('#rate').val('1.00');
+                totalSaleCount();
+                Swal.close();
+
+            }
+        });
+    });
+
+    // AJAX FORM
+    $(document).on('click', '#processSale', function (e) {
+        e.preventDefault();
+
+        let data = new FormData($('#productForm')[0]);
+        let data2 = new FormData($('#saleForm')[0]);
+
+        // Obtienes las entradas del formulario X para meterlos al fomulario Y.
+        for (let [key, value] of data2.entries()) {
+            data.append(key, value);
+        }
+
+        const response = $('.response');
+        const action = $('#productForm').attr('action');
+        const method = $('#productForm').attr('method');
+
+
+        $.ajax({
+            type: method,
+            url: action,
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function() {
+                Swal.fire({
+                    icon: 'info',
+                    title: '<strong>Procesando...</strong>',
+                    text: 'Por favor, espera unos segundos',
+                    showConfirmButton: false,
+                    didOpen: function() {
+                        Swal.showLoading();
+                    }
+                });
+            },
+            success: function (data) {
+
+                response.html(data);
+                window.reload();
+            },
+            error: function (data) {
+                response.html(data);
+            }
+        });
+        return false;
+    });
+
 
 });

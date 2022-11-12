@@ -80,7 +80,7 @@
                     <div class="mb-3">
                         <label class="form-label">Cédula/Rif</label>
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-3 mb-3">
                                 <select class="form-select" name="letter">
                                     <option value="V">V</option>
                                     <option value="J">J</option>
@@ -89,7 +89,7 @@
                                     <option value="G">G</option>
                                 </select>
                             </div>
-                            <div class="col-sm-9">
+                            <div class="col-sm-9 mb-3">
                                 <input type="text" class="form-control" placeholder="Introduce el número de cédula/rif" name="legalIdentification" id="legalIdentification" required maxlength="10" minlength="7">
                             </div>
                         </div>

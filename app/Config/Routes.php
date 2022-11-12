@@ -36,6 +36,19 @@ $routes->get('/', 'App::index');
 $routes->get('/recover', 'App::recover');
 $routes->get('/audits/get', 'AuditController::getAudits');
 
+//SALES MODULE
+$routes->group('sales', static function ($routes) {
+    $routes->post('create', 'SaleController::createSale');
+    $routes->get('get', 'SaleController::getSales');
+    $routes->get('getById/(:num)', 'SaleController::getSaleById/$1');
+    $routes->get('getProducts', 'SaleController::getProducts');
+    $routes->get('getRate/(:num)', 'SaleController::getRate/$1');
+    $routes->post('update', 'SaleController::updateSale');
+    $routes->post('delete', 'SaleController::deleteSale');
+    $routes->post('recover', 'SaleController::recoverSale');
+});
+
+
 //PURCHASES MODULE
 $routes->group('purchases', static function ($routes) {
     $routes->post('create', 'PurchaseController::createPurchase');

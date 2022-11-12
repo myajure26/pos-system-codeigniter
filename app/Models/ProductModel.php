@@ -32,11 +32,10 @@ class ProductModel extends Model
 	public function getProducts()
 	{
 		$query = $this
-			->select('codigo, nombre, marcas.marca, categorias.categoria, monedas.simbolo, precio, impuestos.impuesto, productos.estado')
+			->select('codigo, nombre, marcas.marca, categorias.categoria, monedas.simbolo, precio, productos.estado')
 			->join('marcas', 'marcas.identificacion = productos.marca')
 			->join('categorias', 'categorias.identificacion = productos.categoria')
-			->join('monedas', 'monedas.identificacion = productos.moneda')
-			->join('impuestos', 'impuestos.identificacion = productos.impuesto');
+			->join('monedas', 'monedas.identificacion = productos.moneda');
 		return $query;
 	}
 

@@ -1,10 +1,10 @@
 <?php 
 namespace App\Controllers;
-use App\Models\PurchaseModel;
+use App\Models\SaleModel;
 use App\Models\AuditModel;
 use \Hermawan\DataTables\DataTable;
 
-class PurchaseController extends BaseController
+class SaleController extends BaseController
 {
 	protected $errorMessage = [
 		"alert" => "simple",
@@ -22,20 +22,20 @@ class PurchaseController extends BaseController
 
 	protected $auditContent = [
 		"usuario"		=> "",
-		"modulo"		=> "Compras",
+		"modulo"		=> "Ventas",
 		"accion"		=> "",
 		"descripcion"	=> ""
 	];
 
-	public function createPurchase()
+	public function createSale()
 	{
-		helper('purchaseValidation');
+		helper('saleValidation');
 
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
 		}
 
-		if(!$this->validate(createPurchaseValidation())){
+		if(!$this->validate(createSaleValidation())){
 
 			//Mostrar errores de validación
 			$errors = $this->validator->getErrors();
@@ -46,25 +46,23 @@ class PurchaseController extends BaseController
 
 		}
 
-		$purchase = [
-			"proveedor" 	=> $this->request->getPost('provider'),
+		$sale = [
+			"cliente" 		=> $this->request->getPost('customer'),
 			"usuario" 		=> $this->session->get('identification'),
-			"fecha" 		=> $this->request->getPost('date'),
 			"tipo_documento"=> $this->request->getPost('receipt'),
-			"referencia" => $this->request->getPost('reference'),
-			"moneda" 		=> $this->request->getPost('coin')
-		];
+			"moneda" 		=> $this->request->getPost('coin'),
+			"tasa" 			=> $this->request->getPost('rate'),
+			"impuesto" 		=> $this->request->getPost('tax'),
+			"id_metodo_pago"=> $this->request->getPost('paymentMethod'),
 
-		if(strtotime($purchase['fecha']) > strtotime(date('Y-m-d'))){
-			$this->errorMessage['text'] = "La fecha de la compra no puede ser mayor a la fecha actual";
-			return sweetAlert($this->errorMessage);
-		}
+		];
 
 		$productCode = $this->request->getPost('productCode');
 		$productQuantity = $this->request->getPost('productQuantity');
 		$productPrice = $this->request->getPost('productPrice');
+		$productStock = $this->request->getPost('productStock');
 
-		$purchaseDetails = [];
+		$saleDetails = [];
 
 		for($i = 0; $i < count($productCode); $i++){
 
@@ -81,59 +79,41 @@ class PurchaseController extends BaseController
 				return sweetAlert($this->errorMessage);
 			}
 
+			if($productQuantity[$i] > $productStock[$i]){
+				$this->errorMessage['text'] = "La cantidad supera el stock, revisa la fila #$productCode[$i]";
+				return sweetAlert($this->errorMessage);
+			}
+
 			$data = [
 				"producto"	=> $productCode[$i],
 				"cantidad"	=> $productQuantity[$i],
 				"precio"	=> $price
 			];
 
-			array_push($purchaseDetails, $data);
+			array_push($saleDetails, $data);
 
 		}
 		
-		$PurchaseModel = new PurchaseModel();
-		$purchase = $PurchaseModel->createPurchase($purchase, $purchaseDetails);
+		$SaleModel = new SaleModel();
+		$sale = $SaleModel->createSale($sale, $saleDetails);
 
-		if(!$purchase){
-			$this->errorMessage['text'] = "Error al registrar la compra, intenta nuevamente.";
+		if(!$sale){
+			$this->errorMessage['text'] = "Error al registrar la venta, intenta nuevamente.";
 			return sweetAlert($this->errorMessage);
 		}
 
 		//PARA LA AUDITORÍA
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
-		$this->auditContent['accion'] 		= "Crear compra";
-		$this->auditContent['descripcion'] 	= "Se ha creado la compra con identificacion " . $purchase . " exitosamente.";
+		$this->auditContent['accion'] 		= "Crear venta";
+		$this->auditContent['descripcion'] 	= "Se ha creado la venta con identificacion " . $sale . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
 		//SWEET ALERT
 		$this->successMessage['alert'] 		= "clean";
-		$this->successMessage['text'] 		= "La compra se ha registrado correctamente";
+		$this->successMessage['text'] 		= "La venta se ha registrado correctamente";
 		return sweetAlert($this->successMessage);
-	}
-
-	public function getProviders()
-	{
-		if(!$this->session->has('name')){
-			return redirect()->to(base_url());
-		}
-
-		$db      	= \Config\Database::connect();
-		$providers 	= $db
-						->table('proveedores')
-						->select('codigo, nombre, identificacion')
-						->where('estado', 1);
-				
-		return DataTable::of($providers)
-			->add('Seleccionar', function($row){
-				return '<div class="btn-list"> 
-							<button type="button" class="btn-select-provider btn btn-sm btn-primary waves-effect" data-id="'.$row->codigo.'" data-type="providers">
-                                <i class="fas fa-check"></i>
-                            </button>
-                        </div>';
-			}, 'first') 
-			->toJson();
 	}
 
 	public function getProducts()
@@ -145,15 +125,21 @@ class PurchaseController extends BaseController
 		$db      	= \Config\Database::connect();
 		$products 	= $db
 						->table('productos')
-						->select('productos.codigo, nombre, marcas.marca, categorias.categoria')
+						->select('productos.codigo, nombre, marcas.marca, categorias.categoria, monedas.simbolo, precio, cant_producto')
 						->join('marcas', 'marcas.identificacion = productos.marca')
 						->join('categorias', 'categorias.identificacion = productos.categoria')
+						->join('monedas', 'monedas.identificacion = productos.categoria')
 						->where('productos.estado', 1);
 				
 		return DataTable::of($products)
+			->edit('precio', function($row){
+				$price = number_format($row->precio, 2);
+				return $row->simbolo . $price;
+			})
+			->hide('simbolo')
 			->add('Seleccionar', function($row){
 				return '<div class="btn-list"> 
-							<button type="button" class="btn-select-product btn btn-sm btn-primary waves-effect" data-id="'.$row->codigo.'" data-type="products">
+							<button type="button" class="btn-select-sale-product btn btn-sm btn-primary waves-effect" data-id="'.$row->codigo.'" data-type="products">
                                 <i class="fas fa-check"></i>
                             </button>
                         </div>';
@@ -225,6 +211,25 @@ class PurchaseController extends BaseController
 		$purchase[0]['actualizado_en'] = date('d-m-Y H:i:s', strtotime($purchase[0]['actualizado_en']));
 
 		return json_encode($purchase);
+	}
+
+	public function getRate($identification)
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$SaleModel = new SaleModel();
+
+		$SaleModel = $SaleModel->getRate($identification);
+
+		if(!$SaleModel){
+			
+			return false;
+		}
+
+		return json_encode($SaleModel);
+
 	}
 
 	public function updatePurchase()

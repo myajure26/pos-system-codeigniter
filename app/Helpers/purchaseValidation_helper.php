@@ -67,10 +67,10 @@ function createPurchaseValidation()
 		],
 		'productPrice.*' => [
 			'label' => 'productPrice',
-			'rules' => 'required|max_length[10]',
+			'rules' => 'required|max_length[15]',
 			'errors' => [
 				'required' => 'El precio es requerido',
-				'max_length' => 'El precio no debe contener más de 10 carácteres'
+				'max_length' => 'El precio no debe contener más de 15 carácteres'
 			]
 		]
 		
@@ -154,10 +154,10 @@ function updatePurchaseValidation()
 		],
 		'productPrice.*' => [
 			'label' => 'productPrice',
-			'rules' => 'required|max_length[10]',
+			'rules' => 'required|max_length[15]',
 			'errors' => [
 				'required' => 'El precio es requerido',
-				'max_length' => 'El precio no debe contener más de 10 carácteres'
+				'max_length' => 'El precio no debe contener más de 15 carácteres'
 			]
 		]
 		

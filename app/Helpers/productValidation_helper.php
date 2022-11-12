@@ -51,14 +51,6 @@ function createProductValidation()
 				'required' => 'El precio es requerido',
 				'max_length' => 'El precio no debe contener más de 15 carácteres'
 			]
-		],
-		'tax' => [
-			'label' => 'tax',
-			'rules' => 'required|is_not_unique[impuestos.identificacion]',
-			'errors' => [
-				'required' => 'El impuesto es requerido',
-				'is_not_unique' => 'El impuesto no se encuentra registrado'
-			]
 		]
 	];
 
@@ -115,14 +107,6 @@ function updateProductValidation()
 			'errors' => [
 				'required' => 'El precio es requerido',
 				'max_length' => 'El precio no debe contener más de 15 carácteres'
-			]
-		],
-		'tax' => [
-			'label' => 'tax',
-			'rules' => 'required|is_not_unique[impuestos.identificacion]',
-			'errors' => [
-				'required' => 'El impuesto es requerido',
-				'is_not_unique' => 'El impuesto no se encuentra registrado'
 			]
 		]
 	];

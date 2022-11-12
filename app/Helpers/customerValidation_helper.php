@@ -32,7 +32,7 @@ function createCustomerValidation()
 		],
 		'address' => [
 			'label' => 'address',
-			'rules' => 'required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ ,.]*$/u]',
+			'rules' => 'required|regex_match[/^[a-z0-9ñáéíóúüA-ZÑÁÉÍÓÚÜ ~!#$%\&\*\-_+=|:.\/]*$/u]',
 			'errors' => [
 				'required' => 'La dirección es requerida',
 				'regex_match' => 'Para la dirección sólo se permiten carácteres alfabéticos.'
@@ -77,7 +77,7 @@ function updateCustomerValidation()
 		],
 		'address' => [
 			'label' => 'address',
-			'rules' => 'required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ ,.]*$/u]',
+			'rules' => 'required|regex_match[/^[a-z0-9ñáéíóúüA-ZÑÁÉÍÓÚÜ ~!#$%\&\*\-_+=|:.\/]*$/u]',
 			'errors' => [
 				'required' => 'La dirección es requerida',
 				'regex_match' => 'Para la dirección sólo se permiten carácteres alfabéticos.'

@@ -77,17 +77,6 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <!-- <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <label class="form-label" for="tax">Impuesto</label>
-                                                    <select class="form-select" name="tax" id="tax" required>
-                                                        <option value="" percentage="0">Seleccione el impuesto</option>
-                                                        <?php //foreach($taxes as $row)
-                                                            //echo '<option value="'.$row->id.'" percentage="'.$row->percentage.'">'.$row->tax.'</option>';
-                                                        ?>
-                                                    </select>
-                                                </div>
-                                            </div> -->
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label" for="coin">Moneda</label>

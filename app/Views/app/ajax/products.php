@@ -53,7 +53,6 @@
                                         <th>Marca</th>
                                         <th>Categoría</th>
                                         <th>Precio</th>
-                                        <th>Impuesto</th>
                                         <th>Estado</th>
                                         <th>Acciones</th>
                                     </tr>
@@ -97,30 +96,6 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label">Marca</label>
-                                <select class="form-select" name="brand" id="brand" required>
-                                    <option value="">Seleccione la marca</option>
-                                    <?php foreach($brands as $row)
-                                        echo '<option value="'.$row->identificacion.'">'.$row->marca.'</option>';
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Categoría</label>
-                                <select class="form-select" name="category" id="category" required>
-                                    <option value="">Seleccione le categoría</option>
-                                    <?php foreach($categories as $row)
-                                        echo '<option value="'.$row->identificacion.'">'.$row->categoria.'</option>';
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
                                 <label class="form-label">Precio</label>
                                 <div class="row">
                                     <div class="col-sm-4">
@@ -138,11 +113,24 @@
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label">Impuesto</label>
-                                <select class="form-select" name="tax" id="tax" required>
-                                    <option value="">Seleccione el impuesto</option>
-                                    <?php foreach($taxes as $row)
-                                        echo '<option value="'.$row->identificacion.'">'.$row->impuesto.'</option>';
+                                <label class="form-label">Categoría</label>
+                                <select class="form-select" name="category" id="category" required>
+                                    <option value="">Seleccione le categoría</option>
+                                    <?php foreach($categories as $row)
+                                        echo '<option value="'.$row->identificacion.'">'.$row->categoria.'</option>';
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">Marca</label>
+                                <select class="form-select" name="brand" id="brand" required>
+                                    <option value="">Seleccione la marca</option>
+                                    <?php foreach($brands as $row)
+                                        echo '<option value="'.$row->identificacion.'">'.$row->marca.'</option>';
                                     ?>
                                 </select>
                             </div>
@@ -186,30 +174,6 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Marca</label>
-                                <select class="form-select" name="brand" id="viewBrand" disabled required>
-                                    <option value="">Seleccione la marca</option>
-                                    <?php foreach($brands as $row)
-                                        echo '<option value="'.$row->identificacion.'">'.$row->marca.'</option>';
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Categoría</label>
-                                <select class="form-select" name="category" id="viewCategory" disabled required>
-                                    <option value="">Seleccione la categoría</option>
-                                    <?php foreach($categories as $row)
-                                        echo '<option value="'.$row->identificacion.'">'.$row->categoria.'</option>';
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
                         <div class="col -md-6">
                             <div class="mb-3">
                                 <label class="form-label">Precio</label>
@@ -229,11 +193,24 @@
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label">Impuesto</label>
-                                <select class="form-select" name="tax" id="viewTax" disabled required>
-                                    <option value="">Seleccione el impuesto</option>
-                                    <?php foreach($taxes as $row)
-                                        echo '<option value="'.$row->identificacion.'">'.$row->impuesto.'</option>';
+                                <label class="form-label">Categoría</label>
+                                <select class="form-select" name="category" id="viewCategory" disabled required>
+                                    <option value="">Seleccione la categoría</option>
+                                    <?php foreach($categories as $row)
+                                        echo '<option value="'.$row->identificacion.'">'.$row->categoria.'</option>';
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">Marca</label>
+                                <select class="form-select" name="brand" id="viewBrand" disabled required>
+                                    <option value="">Seleccione la marca</option>
+                                    <?php foreach($brands as $row)
+                                        echo '<option value="'.$row->identificacion.'">'.$row->marca.'</option>';
                                     ?>
                                 </select>
                             </div>

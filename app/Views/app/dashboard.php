@@ -317,6 +317,9 @@
         <!-- responsive datatables -->
         <script src="<?=base_url('assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js')?>"></script>
         <script src="<?=base_url('assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js')?>"></script>
+        <!-- wizard form -->
+        <script src="<?=base_url('assets/libs/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js')?>"></script>
+        <script src="<?=base_url('assets/libs/twitter-bootstrap-wizard/prettify.js')?>"></script>
         <!-- table config -->
         <script src="<?=base_url('assets/js/tableConfig.js')?>"></script>
         <!-- price format -->
@@ -324,7 +327,7 @@
         <!-- DOCUMENT -->
         <script src="<?=base_url('assets/js/app.js')?>"></script>
         <script src="<?=base_url('assets/js/ajax.js')?>"></script>
-        <script src="<?=base_url('assets/js/purchases.js')?>"></script>
+        <script src="<?=base_url('assets/js/purchaseSale.js')?>"></script>
 
     </body>
 </html>

@@ -48,8 +48,8 @@ class CustomerController extends BaseController
 		
 		$data = [
 			"identificacion" 			=> $this->request->getPost('identification'),
-			"nombre" 						=> $this->request->getPost('name'),
-			"direccion" 					=> $this->request->getPost('address'),
+			"nombre" 					=> $this->request->getPost('name'),
+			"direccion" 				=> $this->request->getPost('address'),
 			"telefono" 					=> $this->request->getPost('phone'),
 		];
 
@@ -69,6 +69,13 @@ class CustomerController extends BaseController
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
+
+		if( $this->request->getPost('saveCustomerSale') ){
+			$this->successMessage['alert'] 		= "simple";
+			$this->successMessage['text'] 		= "El cliente se ha creado correctamente";
+			return sweetAlert($this->successMessage);
+		}
+
 		//SWEET ALERT
 		$this->successMessage['alert'] 		= "clean";
 		$this->successMessage['text'] 		= "El cliente se ha creado correctamente";
