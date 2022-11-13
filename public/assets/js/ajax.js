@@ -229,6 +229,8 @@ $(document).ready(function() {
                return viewProvider(data);
             case 'users':
                return viewUser(data);
+            case 'sales':
+                return viewSale(data);
             case 'purchases':
                 return viewPurchase(data);
             case 'coinPrices':
@@ -524,7 +526,7 @@ $(document).ready(function() {
             success: function (data) {
 
                 response.html(data);
-                window.reload();
+
             },
             error: function (data) {
                 response.html(data);
@@ -532,6 +534,8 @@ $(document).ready(function() {
         });
         return false;
     });
+
+    
 
 
 });

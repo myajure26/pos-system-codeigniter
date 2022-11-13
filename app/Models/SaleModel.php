@@ -60,22 +60,25 @@ class SaleModel extends Model
 		return $saleId;
 	}
 
-	public function getPurchases()
+	public function getSales()
 	{
 		$query = $this
-			->select('compras.identificacion, proveedores.nombre, fecha, referencia, compras.estado')
-			->join('proveedores', 'proveedores.codigo = compras.proveedor');
+			->select('ventas.identificacion, clientes.identificacion as cliente, usuarios.nombre as vendedor, ventas.creado_en AS fecha, ventas.estado, monedas.simbolo, impuestos.porcentaje as impuesto')
+			->join('clientes', 'clientes.identificacion = ventas.cliente')
+			->join('usuarios', 'usuarios.identificacion = ventas.usuario')
+			->join('monedas', 'monedas.identificacion = ventas.moneda')
+			->join('impuestos', 'impuestos.identificacion = ventas.impuesto');
 		return $query;
 	}
 
-	public function getPurchaseById($data)
+	public function getSaleById($data)
 	{
 		$query = $this
-				->select('compras.identificacion as idCompra, fecha, compras.proveedor, proveedores.nombre as nombreProveedor, tipo_documento, referencia, compras.moneda, compras.actualizado_en, compras.creado_en, detalle_compra.identificacion as idDetalleCompra, detalle_compra.producto, cantidad, detalle_compra.precio, productos.codigo, productos.nombre, usuarios.nombre as usuario, compras.estado')
-				->join('detalle_compra', 'detalle_compra.compra = compras.identificacion')
-				->join('productos', 'productos.codigo = detalle_compra.producto')
-				->join('proveedores', 'proveedores.codigo = compras.proveedor')
-				->join('usuarios', 'usuarios.identificacion = compras.usuario')
+				->select('ventas.identificacion as idVenta, clientes.identificacion as clienteId, tipo_documento, tasa, impuesto, id_metodo_pago as metodoPago, ventas.moneda, ventas.actualizado_en, ventas.creado_en, detalle_ventas.identificacion as idDetalleVenta, detalle_ventas.producto, cantidad, detalle_ventas.precio, productos.codigo, productos.nombre, usuarios.nombre as vendedor, ventas.estado')
+				->join('detalle_ventas', 'detalle_ventas.venta = ventas.identificacion')
+				->join('productos', 'productos.codigo = detalle_ventas.producto')
+				->join('clientes', 'clientes.identificacion = ventas.cliente')
+				->join('usuarios', 'usuarios.identificacion = ventas.usuario')
 				->where($data);
 		return $query->get()->getResultArray();
 	}
@@ -101,43 +104,28 @@ class SaleModel extends Model
 		return $this->insertID();
 	}
 
-	public function updatePurchase($purchase, $purchaseDetails, $identification, $oldProductsQuantity)
+
+	public function deleteSale($identification)
 	{
+
 		$db = \Config\Database::connect();
 		$db->transStart();
-		
-		$db
-			->table('compras')
+
+		$stock = $db
+				->table('detalle_ventas')
+				->select('producto, cantidad')
+				->where('venta', $identification)
+				->get()->getResult();
+
+		foreach($stock as $row){
+			$db->query("UPDATE productos SET cant_producto = cant_producto + $row->cantidad  WHERE codigo = '$row->producto'");
+		}
+
+		$db->table('ventas')
 			->where('identificacion', $identification)
-			->set($purchase)
+			->set('estado', 0)
 			->update();
-		
-		$db
-			->table('detalle_compra')
-			->updateBatch($purchaseDetails, 'identificacion');
 
-		// Restar al stock
-		foreach($oldProductsQuantity as $oldProductQuantity){
-
-			$code = $oldProductQuantity['producto'];
-			$quantity = $oldProductQuantity['cantidad'];
-
-			$db 
-			->query("UPDATE productos SET cant_producto = cant_producto - $quantity  WHERE codigo = '$code'");
-		
-		}
-		
-		// Agregar al stock
-		foreach($purchaseDetails as $purchaseDetail){
-
-			$code = $purchaseDetail['producto'];
-			$quantity = $purchaseDetail['cantidad'];
-
-			$db 
-			->query("UPDATE productos SET cant_producto = cant_producto + $quantity  WHERE codigo = '$code'");
-		
-		}
-		
 		$db->transComplete();
 
 		if ($db->transStatus() === false) {
@@ -145,27 +133,7 @@ class SaleModel extends Model
 		}
 
 		return true;
+		
 	}
 
-	public function deletePurchase($identification)
-	{
-		$query = $this
-				->where('identificacion', $identification)
-				->set('estado', 0)
-				->update();
-		return $query;
-	}
-
-	public function recoverPurchase($identification)
-	{
-		$query = $this
-				->where('identificacion', $identification)
-				->set('estado', 1)
-				->update();
-		return $query;
-	}
-
-	public function addStock(){
-		$sql = "UPDATE productos SET cant_producto = cant_producto + $quantity  WHERE codigo = $code";
-	}
 }

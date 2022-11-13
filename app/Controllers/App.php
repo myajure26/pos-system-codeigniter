@@ -151,6 +151,52 @@ class App extends BaseController
 		}
 	}
 
+	public function sales()
+	{
+		if($this->session->has('name')){
+
+			$db      	= \Config\Database::connect();
+			$taxes 			= $db
+							->table('impuestos')
+							->select('identificacion, impuesto, porcentaje')
+							->where('estado', 1)
+							->get()
+							->getResult();
+			$paymentMethod 	= $db
+							->table('metodo_pago')
+							->select('id_metodo_pago, nombre')
+							->where('estado_metodo_pago', 1)
+							->get()
+							->getResult();
+			$coins 		= $db
+							->table('monedas')
+							->select('identificacion, moneda, simbolo')
+							->where('estado', 1)
+							->get()
+							->getResult();
+			$receipt 	= $db
+							->table('tipo_documento')
+							->select('identificacion, nombre')
+							->where('estado', 1)
+							->get()
+							->getResult();
+
+			$data = [
+				"title" => "Ventas - $this->system",
+				"taxes" 		=> $taxes,
+				"paymentMethod" => $paymentMethod,
+				"coins"			=> $coins,
+				"receipt"		=> $receipt
+			];
+			return view('app/ajax/sales', $data);
+		
+		}else{
+
+			return redirect()->to(base_url());
+		
+		}
+	}
+
 	public function newPurchase()
 	{
 		if($this->session->has('name')){

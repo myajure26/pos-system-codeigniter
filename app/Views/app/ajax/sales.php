@@ -9,13 +9,13 @@
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center
                     justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">Compras</h4>
+                    <h4 class="mb-sm-0 font-size-18">Ventas</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript:
-                                    void(0);">Administrar compras</a></li>
-                            <li class="breadcrumb-item active">Compras</li>
+                                    void(0);">Administrar ventas</a></li>
+                            <li class="breadcrumb-item active">Ventas</li>
                         </ol>
                     </div>
 
@@ -28,16 +28,16 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Administrar compras</h4>
-                        <p class="card-title-desc">En este módulo podrás ver, actualizar y eliminar compras.</p>
+                        <h4 class="card-title">Administrar ventas</h4>
+                        <p class="card-title-desc">En este módulo podrás ver y anular ventas.</p>
                     </div>
                     <div class="card-body">
                         <div class="mt-2 mb-4">
                             <label class="form-label" for="status">Filtros</label>
                             <select name="status" class="form-select" id="status">
-                                <option value="">Todas las compras</option>
-                                <option value="1">Compras procesadas</option>
-                                <option value="0">Compras anuladas</option>
+                                <option value="">Todas las ventas</option>
+                                <option value="1">Ventas procesadas</option>
+                                <option value="0">Ventas anuladas</option>
                             </select>
                         </div>
                         <table class="table datatable text-nowrap table-striped nowrap w-100 dt-responsive">
@@ -45,9 +45,9 @@
                                 <tr>
                                     <tr>
                                         <th>#</th>
-                                        <th>Proveedor</th>
+                                        <th>Cliente</th>
+                                        <th>Vendedor</th>
                                         <th>Fecha</th>
-                                        <th>Referencia</th>
                                         <th>Estado</th>
                                         <th>Total</th>
                                         <th>Acciones</th>
@@ -69,7 +69,7 @@
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel">Ver detalles de la compra</h5>
+                <h5 class="modal-title" id="myLargeModalLabel">Ver detalles de la venta</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form class="custom-form viewForm">
@@ -78,14 +78,16 @@
                     <div class="row">                       
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="date">Fecha de la compra</label>
-                                <input type="date" class="form-control" id="viewDate" disabled> 
+                                <label class="form-label" for="date">Número de venta</label>
+                                <input type="text" class="form-control" id="viewIdentification" disabled> 
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="provider">Proveedor</label>
-                                <input type="text" id="viewProvider" class="form-control" disabled>
+                                <label class="form-label" for="viewCustomer">Cliente</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="viewCustomer" disabled>
+                                </div>
                             </div>
                         </div>
                     </div>    
@@ -93,7 +95,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Tipo de comprobante</label>
-                                <select class="form-select" id="viewReceipt" disabled>
+                                <select class="form-select" name="receipt" id="viewReceipt" required disabled>
                                     <?php foreach($receipt as $row)
                                         echo '<option value="'.$row->identificacion.'">'.$row->nombre.'</option>';
                                     ?>
@@ -102,15 +104,19 @@
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="reference">Número de referencia</label>
-                                <input type="number" class="form-control" id="viewReference" disabled>
+                                <label class="form-label">Método de pago</label>
+                                <select class="form-select" id="viewPaymentMethod" disabled>
+                                    <?php foreach($paymentMethod as $row)
+                                        echo '<option value="'.$row->id_metodo_pago.'">'.$row->nombre.'</option>';
+                                    ?>
+                                </select>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-lg-6">
                             <div class="mb-3">
-                                <label class="form-label" for="coin">Moneda</label>
+                                <label class="form-label" for="viewCoin">Moneda</label>
                                 <select class="form-select" id="viewCoin" disabled>
                                     <?php foreach($coins as $row)
                                         echo '<option value="'.$row->identificacion.'">'.$row->moneda.'</option>';
@@ -118,26 +124,47 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6">
+
+                        <div class="col-lg-6">
                             <div class="mb-3">
-                                <label class="form-label">Usuario que registró la compra</label>
-                                <input type="text" class="form-control viewDisabled" id="viewUser" disabled>
+                                <label class="form-label" for="rate">Tasa</label>
+                                <input type="text" class="form-control" id="viewRate" value="0.00" disabled>
                             </div>
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="tax">Impuesto</label>
+                                <select class="form-select taxSelect" name="tax" id="tax" disabled>
+                                    <?php foreach($taxes as $row)
+                                        echo '<option value="'.$row->identificacion.'" percentage="'.$row->porcentaje.'">'.$row->impuesto.'</option>';
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label class="form-label">Vendedor</label>
+                                <input type="text" class="form-control" id="viewSeller" disabled>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Fecha de creación</label>
-                                <input type="text" class="form-control viewDisabled" id="viewCreated" disabled>
+                                <input type="text" class="form-control" id="viewCreated" disabled>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Fecha de actualización</label>
-                                <input type="text" class="form-control viewDisabled" id="viewUpdated" disabled>
+                                <input type="text" class="form-control" id="viewUpdated" disabled>
                             </div>
                         </div>
+                        
                     </div>
                     <h5 class="font-size-14 mb-4 mt-2"><i class="mdi mdi-arrow-right text-primary me-1"></i>Lista de compras</h5>
                     <div class="table-responsive">
@@ -158,6 +185,18 @@
                     <div class="row">
                         <div class="col-md-4 mt-2 d-block mx-auto">
                             <div class="input-group">
+                                <div class="input-group-text border-primary">Subtotal</div>
+                                <input type="text" class="form-control border-primary subtotal" readonly value="0.00">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2 d-block mx-auto">
+                            <div class="input-group">
+                                <div class="input-group-text border-primary">Impuesto</div>
+                                <input type="text" class="form-control border-primary tax" readonly value="0.00">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mt-2 d-block mx-auto">
+                            <div class="input-group">
                                 <div class="input-group-text border-primary">Total</div>
                                 <input type="text" class="form-control border-primary total" readonly value="0.00">
                             </div>
@@ -173,17 +212,20 @@
 </div><!-- /.modal -->
 
 <script>
-    tableConfig('/purchases/get', '.datatable');
+    tableConfig('/sales/get', '.datatable');
 
-    function viewPurchase(data){
-        $('#viewDate').val(data[0].fecha);
-        $('#viewProvider').val(data[0].proveedor);
+    function viewSale(data){
+        console.log(data);
+        $('#viewIdentification').val(data[0].idVenta);
+        $('#viewCustomer').val(data[0].clienteId);
         $('#viewReceipt').val(data[0].tipo_documento);
-        $('#viewReference').val(data[0].referencia);
+        $('#viewPaymentMethod').val(data[0].metodoPago);
         $('#viewCoin').val(data[0].moneda);
+        $('#viewRate').val(data[0].tasa);
+        $('#tax').val(data[0].impuesto);
+        $('#viewSeller').val(data[0].vendedor);
         $('#viewCreated').val(data[0].creado_en);
         $('#viewUpdated').val(data[0].actualizado_en);
-        $('#viewUser').val(data[0].usuario);
 
         // Para los productos
         data.forEach(element => {
@@ -191,7 +233,7 @@
             // Tenemos que quitarle los decimales para que el plugin haga su trabajo
             element.precio = element.precio.replace('.', "");
 
-            const totalProduct = (element.cantidad * element.precio);
+            let totalProduct = (element.cantidad * element.precio);
 
             $('#list').append(`
                 <tr id="${element.producto}">
@@ -200,7 +242,7 @@
                     <td>
                         <input type="number" class="form-control form-control-sm productQuantity" value="${element.cantidad}" disabled>
                     </td>
-                    <td><input type="text" class="form-control form-control-sm price productPrice" value="${element.precio}"  disabled></td>
+                    <td><input type="text" class="form-control form-control-sm price productPrice" value="${element.precio}" disabled></td>
                     <td class="text-center"><input type="text" class="form-control form-control-sm price totalPriceProduct" value="${totalProduct}" disabled></td>
                 </tr>
             `);
@@ -209,6 +251,6 @@
         $(".price").priceFormat({
             prefix: ''
         });
-        totalCount();
+        totalSaleCount();
     }
 </script>

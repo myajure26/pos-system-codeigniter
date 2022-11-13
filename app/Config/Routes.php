@@ -43,9 +43,7 @@ $routes->group('sales', static function ($routes) {
     $routes->get('getById/(:num)', 'SaleController::getSaleById/$1');
     $routes->get('getProducts', 'SaleController::getProducts');
     $routes->get('getRate/(:num)', 'SaleController::getRate/$1');
-    $routes->post('update', 'SaleController::updateSale');
     $routes->post('delete', 'SaleController::deleteSale');
-    $routes->post('recover', 'SaleController::recoverSale');
 });
 
 
@@ -54,11 +52,8 @@ $routes->group('purchases', static function ($routes) {
     $routes->post('create', 'PurchaseController::createPurchase');
     $routes->get('get', 'PurchaseController::getPurchases');
     $routes->get('getById/(:num)', 'PurchaseController::getPurchaseById/$1');
-    $routes->get('getProviders', 'PurchaseController::getProviders');
     $routes->get('getProducts', 'PurchaseController::getProducts');
-    $routes->post('update', 'PurchaseController::updatePurchase');
     $routes->post('delete', 'PurchaseController::deletePurchase');
-    $routes->post('recover', 'PurchaseController::recoverPurchase');
 });
 
 //USERS MODULE
