@@ -248,9 +248,33 @@
             `);
         });
 
+        totalSaleCount();
+
+        let rate = Number(data[0].tasa.replace('.', ""));
+        let subtotal = Number($('.subtotal').val().replace(/,/g, "").replace('.', ""));
+        let tax = Number($('.tax').val().replace(/,/g, "").replace('.', ""));
+        let total = Number($('.total').val().replace(/,/g, "").replace('.', ""));
+
+        
+        rate = rate * 0.01;
+        subtotal = (subtotal * 0.01) * rate;
+        total = (total * 0.01) * rate;
+        tax = (tax * 0.01) * rate;
+
+        // Para enseñar el error
+        // console.log({rate, subtotal, total, tax});
+
+        subtotal = subtotal.toLocaleString('en', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        total = total.toLocaleString('en', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        tax = tax.toLocaleString('en', {minimumFractionDigits: 2, maximumFractionDigits: 2})
+
+
+        $('.subtotal').val(subtotal);
+        $('.tax').val(tax);
+        $('.total').val(total);
+
         $(".price").priceFormat({
             prefix: ''
         });
-        totalSaleCount();
     }
 </script>

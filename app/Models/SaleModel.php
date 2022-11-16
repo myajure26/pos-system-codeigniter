@@ -63,7 +63,7 @@ class SaleModel extends Model
 	public function getSales()
 	{
 		$query = $this
-			->select('ventas.identificacion, clientes.identificacion as cliente, usuarios.nombre as vendedor, ventas.creado_en AS fecha, ventas.estado, monedas.simbolo, impuestos.porcentaje as impuesto')
+			->select('ventas.identificacion, clientes.identificacion as cliente, usuarios.nombre as vendedor, ventas.creado_en AS fecha, ventas.estado, monedas.simbolo, impuestos.porcentaje as impuesto, tasa')
 			->join('clientes', 'clientes.identificacion = ventas.cliente')
 			->join('usuarios', 'usuarios.identificacion = ventas.usuario')
 			->join('monedas', 'monedas.identificacion = ventas.moneda')

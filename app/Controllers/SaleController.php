@@ -170,6 +170,7 @@ class SaleController extends BaseController
 		return DataTable::of($SaleModel->getSales())
 			->hide('simbolo')
 			->hide('impuesto')
+			->hide('tasa')
 			->edit('estado', function($row){
 						
 				if($row->estado == 0){
@@ -188,6 +189,7 @@ class SaleController extends BaseController
 
 				// Calcular el impuesto
 				$total = (($db[0]['total'] * $row->impuesto) / 100) + $db[0]['total'];
+				$total = $total * $row->tasa;
 				$total = number_format($total, 2);
 				return "$row->simbolo $total";
 				

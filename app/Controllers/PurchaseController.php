@@ -113,6 +113,29 @@ class PurchaseController extends BaseController
 		return sweetAlert($this->successMessage);
 	}
 
+	public function getProviders()
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$db      	= \Config\Database::connect();
+		$providers 	= $db
+						->table('proveedores')
+						->select('codigo, nombre, identificacion')
+						->where('estado', 1);
+				
+		return DataTable::of($providers)
+			->add('Seleccionar', function($row){
+				return '<div class="btn-list"> 
+							<button type="button" class="btn-select-provider btn btn-sm btn-primary waves-effect" data-id="'.$row->codigo.'" data-type="providers">
+                                <i class="fas fa-check"></i>
+                            </button>
+                        </div>';
+			}, 'first') 
+			->toJson();
+	}
+
 	public function getProducts()
 	{
 		if(!$this->session->has('name')){
