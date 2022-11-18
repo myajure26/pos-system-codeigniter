@@ -111,8 +111,9 @@ class SaleController extends BaseController
 		$AuditModel->createAudit($this->auditContent);
 		
 		//SWEET ALERT
-		$this->successMessage['alert'] 		= "clean";
+		$this->successMessage['alert'] 		= "reload";
 		$this->successMessage['text'] 		= "La venta se ha registrado correctamente";
+		$this->successMessage['url'] 		= base_url("invoice/sale/$sale.pdf");
 		return sweetAlert($this->successMessage);
 	}
 

@@ -164,7 +164,7 @@ $routes->get('inventory', 'ReportController::getInventory');
 
 //INVOICES
 $routes->group('invoice', static function ($routes) {
-    $routes->get('sale/(:num)', 'InvoiceController::saleInvoice/$1');
+    $routes->get('sale/(:num).pdf', 'InvoiceController::saleInvoice/$1');
 });
 
 /*

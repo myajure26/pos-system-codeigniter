@@ -12,7 +12,7 @@ $(document).ready(function(){
 
         if(type === 'sales'){
             
-            window.open(url + '/invoice/sale/' + id, '_blank');
+            window.open(url + '/invoice/sale/' + id + '.pdf', '_blank');
         }
 
     });
@@ -28,6 +28,15 @@ $(document).ready(function(){
     $(document).on('click', '.btn-select-product', function(){
         const code = $(this).closest('tr').find('td:eq(1)').text();
         const name = $(this).closest('tr').find('td:eq(2)').text();
+
+        if($('#'+code).length > 0){
+            Swal.fire({
+                icon: 'info',
+                title: 'Oops',
+                text: 'Ya has ingresado el producto a la compra',
+            });
+            return false;
+        }
 
         let totalProduct = 0.00;
 
@@ -111,6 +120,15 @@ $(document).ready(function(){
         const name = $(this).closest('tr').find('td:eq(2)').text();
         let stock = Number($(this).closest('tr').find('td:eq(6)').text());
         let price = $(this).closest('tr').find('td:eq(5)').text();
+
+        if($('#'+code).length > 0){
+            Swal.fire({
+                icon: 'info',
+                title: 'Oops',
+                text: 'Ya has ingresado el producto a la venta',
+            });
+            return false;
+        }
         
         // Tenemos que quitarle el simbolo de la moneda que trae el precio
         price = price.slice(1);
