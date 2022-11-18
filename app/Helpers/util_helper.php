@@ -78,6 +78,8 @@ function sweetAlert($data)
                     confirmButtonText: 'OK'
                     }).then(function(){
 	                    $('form')[0].reset();
+	                    $('form')[1].reset();
+	                    $('form')[2].reset();
 	                    $('.img').attr('src', '../../assets/images/users/anonymous.png');
                         $('.modal').modal('hide');
                         reloadTable();

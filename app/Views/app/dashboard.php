@@ -253,12 +253,6 @@
                                     <span data-key="t-document_type">Tipo de documento</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="<?=base_url('#privileges')?>">
-                                    <i data-feather="user"></i>
-                                    <span data-key="t-privileges">Privilegios</span>
-                                </a>
-                            </li>
                         </ul>
                     </div>
                     <!-- Sidebar -->

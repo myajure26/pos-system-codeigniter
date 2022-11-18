@@ -119,16 +119,6 @@ $routes->group('document_type', static function ($routes) {
     $routes->post('recover', 'DocumentTypeController::recoverDocumentType');
 });
 
-//PRIVILEGES MODULE
-$routes->group('privileges', static function ($routes) {
-    $routes->post('create', 'PrivilegeController::createPrivilege');
-    $routes->get('get', 'PrivilegeController::getPrivileges');
-    $routes->get('getById/(:num)', 'PrivilegeController::getPrivilegeById/$1');
-    $routes->post('update', 'PrivilegeController::updatePrivilege');
-    $routes->post('delete', 'PrivilegeController::deletePrivilege');
-    $routes->post('recover', 'PrivilegeController::recoverPrivilege');
-});
-
 //PRODUCTS MODULE
 $routes->group('products', static function ($routes) {
     $routes->post('create', 'ProductController::createProduct');
