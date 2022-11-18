@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+
 	$('.photo').on('change', function(){
 
         var img = $(this).prop('files')[0]
@@ -45,6 +46,12 @@ $(document).ready(function(){
 			});
 
         }
+    });
+
+    $('.deletePhoto').on('click', function(){
+        $('.img').attr('src', '../../assets/images/users/anonymous.png');
+        $('#viewPhotoPreview').val('');
+        $('.photo').val('');
     });
 
 });

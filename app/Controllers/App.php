@@ -468,6 +468,39 @@ class App extends BaseController
 		}
 	}
 
+	public function profile()
+	{
+		if($this->session->has('name')){
+
+			$db      	= \Config\Database::connect();
+			$privileges = $db
+						->table('privilegios')
+						->select('identificacion, nombre')
+						->where('estado', 1)
+						->get()
+						->getResult();
+			$user		= $db
+						->table('usuarios')
+						->select()
+						->where('identificacion', $this->session->get('identification'))
+						->get()
+						->getResult();
+			$user 		= $user[0];
+
+			$data = [
+				"title" => "Perfil - $this->system",
+				"privileges" => $privileges,
+				"user"		=> $user
+			];
+			return view('app/ajax/profile', $data);
+		
+		}else{
+
+			return redirect()->to(base_url());
+		
+		}
+	}
+
 	public function logout()
 	{
 		$this->session->destroy();

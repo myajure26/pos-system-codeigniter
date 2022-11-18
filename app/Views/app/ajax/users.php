@@ -126,8 +126,9 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <img src="<?=base_url('assets/images/users/anonymous.png')?>" class="rounded-circle img d-block mx-auto" width="150px">
+                            <img src="<?=base_url('assets/images/users/anonymous.png')?>" class="rounded-circle img d-block mx-auto" id="newPhoto" width="150px">
                             <div class="badge text-info mt-2 d-block mx-auto">Tamaño máximo: 3MB</div>
+                            <button type="button" class="btn btn-danger btn-sm mt-2 d-block mx-auto deletePhoto">Eliminar foto</button>
                         </div>
                     </div>
                 </div>
@@ -207,7 +208,7 @@
                             <div class="mb-3">
                                 <img src="<?=base_url('assets/images/users/anonymous.png')?>" class="rounded-circle img d-block mx-auto" width="150px" id="viewPhoto">
                                 <span class="badge text-info mt-2 d-block mx-auto">Tamaño máximo: 3MB</span>
-                                
+                                <button type="button" class="btn btn-danger btn-sm mt-2 d-block mx-auto deletePhoto btn-disabled" disabled>Eliminar foto</button>
                             </div>
                         </div>
                     </div> 

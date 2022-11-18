@@ -174,7 +174,7 @@ class SaleController extends BaseController
 			->edit('estado', function($row){
 						
 				if($row->estado == 0){
-					return '<div class="mt-sm-1 d-block"><a href="javascript:void(0)" class="badge bg-soft-danger text-danger p-2 px-3">Cancelada</a></div>';
+					return '<div class="mt-sm-1 d-block"><a href="javascript:void(0)" class="badge bg-soft-danger text-danger p-2 px-3">Anulada</a></div>';
 				}
 
 				return '<div class="mt-sm-1 d-block"><a href="javascript:void(0)" class="badge bg-soft-success text-success p-2 px-3">Procesada</a></div>';
@@ -200,16 +200,22 @@ class SaleController extends BaseController
 								<button type="button" class="btnView btn btn-sm btn-primary waves-effect" data-id="'.$row->identificacion.'" data-type="sales" data-bs-toggle="modal" data-bs-target="#viewModal">
 									<i class="far fa-eye"></i>
 								</button>
+								<button type="button" class="btnPrint btn btn-sm btn-primary waves-effect" data-id="'.$row->identificacion.'" data-type="sales"> 
+									<i class="fa fa-print"></i>
+								</button> 
 								<button type="button" class="btnDelete btn btn-sm btn-danger waves-effect" data-id="'.$row->identificacion.'" data-type="sales">
 									<i class="fas fa-times"></i>
 								</button>
 							</div>';
 				}
 
-				return '<div class="btn-list"> 
+				return '<div class="btn-list">
 								<button type="button" class="btnView btn btn-sm btn-primary waves-effect" data-id="'.$row->identificacion.'" data-type="sales" data-bs-toggle="modal" data-bs-target="#viewModal">
 									<i class="far fa-eye"></i>
 								</button>
+								<button type="button" class="btnPrint btn btn-sm btn-primary waves-effect" data-id="'.$row->identificacion.'" data-type="sales"> 
+									<i class="fa fa-print"></i>
+								</button> 
 							</div>';
 
 			}, 'last') 

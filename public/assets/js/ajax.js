@@ -1,7 +1,7 @@
 const url = $(location).attr('origin');
 
 // MENU
-$(document).on("click", ".metismenu li a, .navbar-nav  li a", function(e) {
+$(document).on("click", ".metismenu li a, .navbar-nav  li a, .profile", function(e) {
 	e.preventDefault();
 
 	var page = $(this).attr("href").split('/')[3];
@@ -50,8 +50,7 @@ $(document).on("click", ".metismenu li a, .navbar-nav  li a", function(e) {
 function call_ajax_page(page) {
 
 	page = page.split('#')[1];
-	var origin = $(location).attr('origin');
-	var path = origin + "/app/" + page;
+	var path = url + "/app/" + page;
 	
 	$.ajax({
 		url: path,
@@ -152,6 +151,7 @@ $(document).ready(function() {
             $('.btnSubmit').hide();
             $('.btnUpdate').show();
             $('.viewForm input, .viewForm textarea, .viewForm select, .viewForm .btn-disabled').attr('disabled', 'true');
+            $('#newPhoto').attr('src', url + "/assets/images/users/anonymous.png");
         });
     });
 
@@ -534,8 +534,5 @@ $(document).ready(function() {
         });
         return false;
     });
-
-    
-
 
 });

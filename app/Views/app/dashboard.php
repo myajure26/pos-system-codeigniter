@@ -100,12 +100,9 @@
                             </button>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <!-- item-->
-                                <a class="dropdown-item" href="#"><i class="mdi
+                                <a class="dropdown-item profile" href="<?=base_url('#profile')?>"><i class="mdi
                                         mdi-face-profile font-size-16
                                         align-middle me-1"></i> Perfil</a>
-                                <a class="dropdown-item" href="#"><i class="mdi
-                                        mdi-account-settings font-size-16
-                                        align-middle me-1"></i> Opciones</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="<?=base_url('app/logout')?>"><i class="mdi
                                         mdi-logout font-size-16 align-middle
@@ -159,9 +156,9 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="<?=base_url('#reports')?>">
+                                <a href="<?=base_url('#Salereports')?>">
                                     <i data-feather="pie-chart"></i>
-                                    <span data-key="t-reports">Reportes</span>
+                                    <span data-key="t-reports">Reportes de ventas</span>
                                 </a>
                             </li>
 
@@ -176,6 +173,12 @@
                                 <a href="<?=base_url('#purchases')?>">
                                     <i data-feather="credit-card"></i>
                                     <span data-key="t-purchases">Compras</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?=base_url('#purchaseReports')?>">
+                                    <i data-feather="pie-chart"></i>
+                                    <span data-key="t-reports">Reportes de compras</span>
                                 </a>
                             </li>
 

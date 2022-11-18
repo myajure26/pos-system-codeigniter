@@ -64,6 +64,7 @@ $routes->group('users', static function ($routes) {
     $routes->get('get', 'UserController::getUsers');
     $routes->get('getById/(:num)', 'UserController::getUserById/$1');
     $routes->post('update', 'UserController::updateUser');
+    $routes->post('updateCurrentUser', 'UserController::updateCurrentUser');
     $routes->post('delete', 'UserController::deleteUser');
     $routes->post('recover', 'UserController::recoverUser');
 });
@@ -171,6 +172,10 @@ $routes->group('coinPrices', static function ($routes) {
 // INVENTORY MODULE
 $routes->get('inventory', 'ReportController::getInventory');
 
+//INVOICES
+$routes->group('invoice', static function ($routes) {
+    $routes->get('sale/(:num)', 'InvoiceController::saleInvoice/$1');
+});
 
 /*
  * --------------------------------------------------------------------

@@ -53,6 +53,11 @@ class UserController extends BaseController
 			return sweetAlert($this->errorMessage);
 		}
 
+		if($user[0]['estado'] == 0){
+			$this->errorMessage['text'] = "Su usuario se encuentra desactivado";
+			return sweetAlert($this->errorMessage);
+		}
+
 		$userData = [
 			"identification"		=> $user[0]["identificacion"],
 			"name" 					=> $user[0]["nombre"],
@@ -61,6 +66,7 @@ class UserController extends BaseController
 		];
 		$date = date("Y-m-d H:i:s");
 		$UserModel->updateUser(["ultima_sesion" => $date], $identification);
+
 
 		$this->session->set($userData);
 
@@ -124,7 +130,10 @@ class UserController extends BaseController
 		$user = $UserModel->createUser($userData);
 
 		if(!$user){
-			$this->errorMessage['text'] = $user;
+			if($userData['foto'] != NULL){
+				self::deletePhoto($userData['foto']);
+			}
+			$this->errorMessage['text'] = 'Ha ocurrido un error al crear al usuario';
 			return sweetAlert($this->errorMessage);
 		}
 
@@ -237,7 +246,7 @@ class UserController extends BaseController
 	
 		$identification = $this->request->getPost('identification');
 		(empty($this->request->getPost('password')))
-		?$password = $this->request->getPost('updatePasswordPreview')
+		?$password = $this->request->getPost('viewPasswordPreview')
 		:$password = crypt($this->request->getPost('password'), '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
 
 		$userData = [
@@ -260,6 +269,18 @@ class UserController extends BaseController
 			$userData["foto"] = $photoUpload;
 		}
 
+		// Para asegurarnos de eliminar la foto (si el usuario le da al botón de eliminar foto)
+		if($this->request->getPost('viewPhotoPreview') == ''){
+
+			$db		= \Config\Database::connect();
+			$foto 	= $db
+					->table('usuarios')
+					->select('foto')
+					->where('identificacion', $identification)
+					->get()->getResult();
+			self::deletePhoto($foto[0]->foto);
+		}
+
 		$UserModel = new UserModel();
 		$user = $UserModel->updateUser($userData, $identification);
 
@@ -279,6 +300,85 @@ class UserController extends BaseController
 		//SWEET ALERT
 		$this->successMessage['alert'] 		= "clean";
 		$this->successMessage['text'] 		= "El usuario se ha actualizado correctamente";
+		return sweetAlert($this->successMessage);
+	}
+
+	public function updateCurrentUser()
+	{
+		helper('userValidation');
+
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		if(!$this->validate(updateCurrentUserValidation())){
+			
+			//Mostrar errores de validación
+			$errors = $this->validator->getErrors();
+			foreach ($errors as $error) {
+				$this->errorMessage['text'] = esc($error);
+				return sweetAlert($this->errorMessage);
+			}
+		}
+	
+		$identification = $this->session->get('identification');
+		(empty($this->request->getPost('password')))
+		?$password = $this->request->getPost('viewPasswordPreview')
+		:$password = crypt($this->request->getPost('password'), '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
+
+		$userData = [
+			"identificacion"=> $identification,
+			"nombre" 		=> $this->request->getPost('name'),
+			"correo" 		=> $this->request->getPost('email'),
+			"clave" 		=> $password,
+			"foto" 			=> $this->request->getPost('viewPhotoPreview')
+		];
+
+		if($this->request->getFile('photo') != ''){
+			self::deletePhoto($userData['foto']);
+			$photoUpload = self::photoUpload($this->request->getFile('photo'), $identification);
+			if(!$photoUpload){
+				$this->errorMessage['text'] = "Ha ocurrido un error al subir la foto";
+				return sweetAlert($this->errorMessage);
+			}
+
+			$userData["foto"] = $photoUpload;
+		}
+
+		// Para asegurarnos de eliminar la foto (si el usuario le da al botón de eliminar foto)
+		if($this->request->getPost('viewPhotoPreview') == ''){
+
+			$db		= \Config\Database::connect();
+			$foto 	= $db
+					->table('usuarios')
+					->select('foto')
+					->where('identificacion', $identification)
+					->get()->getResult();
+			self::deletePhoto($foto[0]->foto);
+		}
+		
+		$UserModel = new UserModel();
+		$user = $UserModel->updateUser($userData, $identification);
+		
+		if(!$user){
+			$this->errorMessage['text'] = "Ha ocurrido un error al guardar los datos";
+			return sweetAlert($this->errorMessage);
+		}
+		
+		$this->session->set('photo', $userData['foto']);
+		$this->session->set('name', $userData['nombre']);
+		//PARA LA AUDITORÍA
+		$auditUserId = $this->session->get('identification');
+		$this->auditContent['usuario'] 		= $auditUserId;
+		$this->auditContent['accion'] 		= "Actualizar usuario";
+		$this->auditContent['descripcion'] 	= "El usuario con identificación " . $identification . " ha actualizado su perfil exitosamente.";
+		$AuditModel = new AuditModel();
+		$AuditModel->createAudit($this->auditContent);
+		
+		//SWEET ALERT
+		$this->successMessage['alert'] 		= "reload";
+		$this->successMessage['text'] 		= "El usuario se ha actualizado correctamente";
+		$this->successMessage['url'] 		= base_url();
 		return sweetAlert($this->successMessage);
 	}
 
@@ -356,7 +456,7 @@ class UserController extends BaseController
 			unlink(ROOTPATH.'public/uploads/users/'.$photoName);
 		}
 
-		if ($photo->isValid() && ! $photo->hasMoved()) {
+		if ($photo->isValid() && !$photo->hasMoved()) {
 		    $photo->move(ROOTPATH . 'public/uploads', $photoName);
 
 		    //Redimensionar la foto
@@ -373,7 +473,7 @@ class UserController extends BaseController
 		return false;
 	}
 
-	public function deletePhoto($src){
+	public function deletePhoto($src, $id = false){
 		if(!empty($src)){
 			$img = explode('/', $src);
 			$img = end($img);

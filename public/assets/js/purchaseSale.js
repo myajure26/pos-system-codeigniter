@@ -4,6 +4,19 @@ $(document).ready(function(){
      * COMPRAS y VENTAS
      */
 
+    // Imprimir facturas
+    $(document).on('click', '.btnPrint', function(){
+
+        const id = $(this).attr('data-id');
+        const type = $(this).attr('data-type');
+
+        if(type === 'sales'){
+            
+            window.open(url + '/invoice/sale/' + id, '_blank');
+        }
+
+    });
+
     // Seleccionar al proveedor
     $(document).on('click', '.btn-select-provider', function(){
         $('#providerInput').val($(this).closest('tr').find('td:eq(2)').text());
