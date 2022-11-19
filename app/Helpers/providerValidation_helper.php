@@ -47,12 +47,10 @@ function createProviderValidation()
 		],
 		'phone' => [
 			'label' => 'phone',
-			'rules' => 'required|numeric|max_length[11]|min_length[11]',
+			'rules' => 'required|regex_match[^(0414|0424|0412|0416|0426|0251)[0-9]{7}$]',
 			'errors' => [
 				'required' => 'El teléfono es requerido',
-				'max_length' => 'Introduce un número válido',
-				'min_length' => 'Introduce un número válido',
-				'numeric' => 'Para el teléfono sólo se permiten números.'
+				'regex_match' => 'Ingresa un número de teléfono válido: 04121534253'
 			]
 		]
 	];
@@ -107,12 +105,10 @@ function updateProviderValidation()
 		],
 		'phone' => [
 			'label' => 'phone',
-			'rules' => 'required|numeric|max_length[11]|min_length[11]',
+			'rules' => 'required|regex_match[^(0414|0424|0412|0416|0426|0251)[0-9]{7}$]',
 			'errors' => [
 				'required' => 'El teléfono es requerido',
-				'max_length' => 'Introduce un número válido',
-				'min_length' => 'Introduce un número válido',
-				'numeric' => 'Para el teléfono sólo se permiten números.'
+				'regex_match' => 'Ingresa un número de teléfono válido: 04121534253'
 			]
 		]
 	];
