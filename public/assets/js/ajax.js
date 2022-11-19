@@ -369,7 +369,6 @@ $(document).ready(function() {
         $('#name').attr('disabled', 'disabled');
         $('#phone').attr('disabled', 'disabled');
         $('#address').attr('disabled', 'disabled');
-        $('#hiddenCustomer').attr('disabled', 'disabled');
         
         const letter = $('.letter').val();
         const numIdentification = $('.identification').val();
@@ -401,10 +400,10 @@ $(document).ready(function() {
             },
             success: function (data) {
 
-                $('#name').val(data[0].nombre).attr('disabled');
-                $('#phone').val(data[0].telefono).attr('disabled');
-                $('#address').val(data[0].direccion).attr('disabled');
-                $('#hiddenCustomer').val(identification).attr('disabled');
+                $('#name').val(data[0].nombre);
+                $('#phone').val(data[0].telefono);
+                $('#address').val(data[0].direccion);
+                $('#hiddenCustomer').val(identification);
                 $('#customerNext').slideDown();
                 
 

@@ -40,14 +40,14 @@
                             <ul class="twitter-bs-wizard-nav nav nav-pills nav-justified">
                                 <li class="nav-item">
                                     <a href="#progress-seller-details" class="nav-link" data-toggle="tab">
-                                        <div class="step-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Seller Details">
+                                        <div class="step-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Cliente">
                                             <i class="bx bx-list-ul"></i>
                                         </div>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#progress-company-document" class="nav-link" data-toggle="tab">
-                                        <div class="step-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Company Document">
+                                        <div class="step-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Productos">
                                             <i class="bx bx-book-bookmark"></i>
                                         </div>
                                     </a>
@@ -55,7 +55,7 @@
                                 
                                 <li class="nav-item">
                                     <a href="#progress-bank-detail" class="nav-link" data-toggle="tab">
-                                        <div class="step-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Bank Details">
+                                        <div class="step-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Venta">
                                             <i class="bx bxs-bank"></i>
                                         </div>
                                     </a>
@@ -221,7 +221,6 @@
                                                     <div class="mb-3">
                                                         <label class="form-label">Método de pago</label>
                                                         <select class="form-select" name="paymentMethod" required>
-                                                            <option value="">Selecciona un método de pago</option>
                                                             <?php foreach($paymentMethod as $row)
                                                                 echo '<option value="'.$row->id_metodo_pago.'">'.$row->nombre.'</option>';
                                                             ?>
@@ -254,7 +253,6 @@
                                                     <div class="mb-3">
                                                         <label class="form-label">Tipo de comprobante</label>
                                                         <select class="form-select" name="receipt" id="receipt" required>
-                                                            <option value="">Seleccione el comprobante</option>
                                                             <?php foreach($receipt as $row)
                                                                 echo '<option value="'.$row->identificacion.'">'.$row->nombre.'</option>';
                                                             ?>
