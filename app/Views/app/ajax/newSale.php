@@ -90,7 +90,7 @@
                                                         <input type="text" class="form-control identification" placeholder="Introduce el número de cédula/rif" name="legalIdentification" id="legalIdentification" required maxlength="10" minlength="7">
                                                         <div class="input-group-btn">
                                                             <button type="button" class="btn btn-primary waves-effect searchCustomer"><i class="fas fa-search"></i></button>
-                                                            <button type="button" class="btn btn-primary waves-effect addCustomer"><i class="fas fa-user-plus"></i></button>
+                                                            <button type="button" class="btn btn-primary waves-effect addCustomer" disabled><i class="fas fa-user-plus"></i></button>
                                                         </div>
                                                     </div>
                                                 </div>
