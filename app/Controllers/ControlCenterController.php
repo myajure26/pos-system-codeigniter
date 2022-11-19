@@ -98,9 +98,6 @@ class ControlCenterController extends BaseController
 		$ControlCenterModel = new ControlCenterModel();
 				
 		return DataTable::of($ControlCenterModel->getCoinPrices())
-			->edit('creado_en', function($row){
-				return date('d-m-Y H:i:s', strtotime($row->creado_en));
-			})
 			->edit('estado', function($row){
 								
 				if($row->estado == 0){
@@ -151,9 +148,6 @@ class ControlCenterController extends BaseController
 		if(!$coinPrices){
 			return false;
 		}
-
-		$coinPrices[0]['creado_en'] = date('d-m-Y H:i:s', strtotime($coinPrices[0]['creado_en']));
-		$coinPrices[0]['actualizado_en'] = date('d-m-Y H:i:s', strtotime($coinPrices[0]['actualizado_en']));
 
 		return json_encode($coinPrices);
 	}

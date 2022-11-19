@@ -197,9 +197,6 @@ class PurchaseController extends BaseController
 								<button type="button" class="btnView btn btn-sm btn-primary waves-effect" data-id="'.$row->identificacion.'" data-type="purchases" data-bs-toggle="modal" data-bs-target="#viewModal">
 									<i class="far fa-eye"></i>
 								</button>
-								<button type="button" class="btnPrint btn btn-sm btn-primary waves-effect" data-id="'.$row->identificacion.'">
-									<i class="fa fa-print"></i>
-								</button>
 								<button type="button" class="btnDelete btn btn-sm btn-danger waves-effect" data-id="'.$row->identificacion.'" data-type="purchases">
 									<i class="fas fa-times"></i>
 								</button>
@@ -209,9 +206,6 @@ class PurchaseController extends BaseController
 				return '<div class="btn-list"> 
 							<button type="button" class="btnView btn btn-sm btn-primary waves-effect" data-id="'.$row->identificacion.'" data-type="purchases" data-bs-toggle="modal" data-bs-target="#viewModal">
 								<i class="far fa-eye"></i>
-							</button>
-							<button type="button" class="btnPrint btn btn-sm btn-primary waves-effect" data-id="'.$row->identificacion.'">
-								<i class="fa fa-print"></i>
 							</button>
 						</div>';
 
@@ -239,9 +233,6 @@ class PurchaseController extends BaseController
 		if(!$purchase){
 			return false;
 		}
-
-		$purchase[0]['creado_en'] = date('d-m-Y H:i:s', strtotime($purchase[0]['creado_en']));
-		$purchase[0]['actualizado_en'] = date('d-m-Y H:i:s', strtotime($purchase[0]['actualizado_en']));
 
 		return json_encode($purchase);
 	}

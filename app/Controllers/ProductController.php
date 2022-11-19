@@ -152,9 +152,6 @@ class ProductController extends BaseController
 		}
 		$product[0]['precio'] = number_format($product[0]['precio'], 2);
 
-		$product[0]['creado_en'] = date('d-m-Y H:i:s', strtotime($product[0]['creado_en']));
-		$product[0]['actualizado_en'] = date('d-m-Y H:i:s', strtotime($product[0]['actualizado_en']));
-
 		return json_encode($product);
 	}
 

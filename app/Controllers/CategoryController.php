@@ -130,9 +130,6 @@ class CategoryController extends BaseController
 			return false;
 		}
 
-		$category[0]['creado_en'] = date('d-m-Y H:i:s', strtotime($category[0]['creado_en']));
-		$category[0]['actualizado_en'] = date('d-m-Y H:i:s', strtotime($category[0]['actualizado_en']));
-
 		return json_encode($category);
 	}
 
