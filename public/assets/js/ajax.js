@@ -191,14 +191,13 @@ $(document).ready(function() {
 
             },
             error: function (data) {
-                Swal.close();
-                $('#updateModal').modal('hide');
                 
                 Swal.fire({
-                   title: '¡Oops!',
-                   text: 'Ocurrió un error',
-                   icon: 'error'
+                    title: '¡Oops!',
+                    text: 'Ocurrió un error',
+                    icon: 'error'
                 });
+                $('#viewModal').modal('hide');
             }
         });
         return false;

@@ -159,25 +159,21 @@ class App extends BaseController
 			$taxes 			= $db
 							->table('impuestos')
 							->select('identificacion, impuesto, porcentaje')
-							->where('estado', 1)
 							->get()
 							->getResult();
 			$paymentMethod 	= $db
 							->table('metodo_pago')
 							->select('id_metodo_pago, nombre')
-							->where('estado_metodo_pago', 1)
 							->get()
 							->getResult();
 			$coins 		= $db
 							->table('monedas')
 							->select('identificacion, moneda, simbolo')
-							->where('estado', 1)
 							->get()
 							->getResult();
 			$receipt 	= $db
 							->table('tipo_documento')
 							->select('identificacion, nombre')
-							->where('estado', 1)
 							->get()
 							->getResult();
 
@@ -237,13 +233,11 @@ class App extends BaseController
 			$coins 		= $db
 							->table('monedas')
 							->select('identificacion, moneda, simbolo')
-							->where('estado', 1)
 							->get()
 							->getResult();
 			$receipt 	= $db
 							->table('tipo_documento')
 							->select('identificacion, nombre')
-							->where('estado', 1)
 							->get()
 							->getResult();
 			
