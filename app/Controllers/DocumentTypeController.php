@@ -108,11 +108,9 @@ class DocumentTypeController extends BaseController
 			}, 'last') 
 			->filter(function ($builder, $request) {
 		
-				if ($request->status == ''){
-					return true;
+				if($request->status != ''){
+					$builder->where('estado', $request->status);
 				}
-				
-				return $builder->where('estado', $request->status);
 		
 			})
 			->toJson();

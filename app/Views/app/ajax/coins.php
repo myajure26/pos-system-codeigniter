@@ -37,11 +37,11 @@
                     </div>
                     <div class="card-body">
                         <div class="mt-2 mb-4">
-                            <label class="form-label" for="status">Filtros</label>
-                            <select name="status" class="form-select" id="status">
+                            <label class="form-label">Filtros</label>
+                            <select class="form-select" id="status_db">
                                 <option value="">Todas las monedas</option>
                                 <option value="1">Monedas activadas</option>
-                                <option value="0">Monedas desactivadas (Papelera)</option>
+                                <option value="0">Monedas desactivadas</option>
                             </select>
                         </div>
                         <table class="table datatable text-nowrap table-striped nowrap w-100 dt-responsive">

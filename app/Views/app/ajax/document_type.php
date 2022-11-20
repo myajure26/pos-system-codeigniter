@@ -37,11 +37,11 @@
                     </div>
                     <div class="card-body">
                         <div class="mt-2 mb-4">
-                            <label class="form-label" for="status">Filtros</label>
-                            <select name="status" class="form-select" id="status">
-                                <option value="">Todas los tipos de documentos</option>
-                                <option value="1">Tipos de documentos activadas</option>
-                                <option value="0">Tipos de documentos desactivadas (Papelera)</option>
+                            <label class="form-label">Filtros</label>
+                            <select class="form-select" id="status_db">
+                                <option value="">Todos los tipos de documentos</option>
+                                <option value="1">Tipos de documentos activados</option>
+                                <option value="0">Tipos de documentos desactivados</option>
                             </select>
                         </div>
                         <table class="table datatable text-nowrap table-striped nowrap w-100 dt-responsive">

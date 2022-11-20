@@ -31,6 +31,10 @@
                         <p class="card-title-desc">Aquí podrás ver todos los movimientos realizados en el sistema</p>
                     </div>
                     <div class="card-body">
+                        <div class="mt-2 mb-4">
+                            <label class="form-label">Rango de fecha</label>
+                            <input type="text" class="form-control" placeholder="Selecciona una fecha" id="range">
+                        </div>
                         <table class="table datatable text-nowrap table-striped nowrap w-100 dt-responsive">
                             <thead>
                                 <tr>
@@ -55,4 +59,9 @@
 
 <script>
     tableConfig('/audits/get', '.datatable');
+    $("#range").flatpickr({
+        locale: 'es',
+        mode: 'range',
+        maxDate: 'today'
+    });
 </script>

@@ -221,13 +221,25 @@ class SaleController extends BaseController
 
 			}, 'last') 
 			->filter(function ($builder, $request) {
-		
-				if ($request->status == ''){
-					return true;
+				
+				if($request->range != ''){
+
+					if(!empty(explode(' a ', $request->range)[1])){
+						$from = explode(' a ', $request->range)[0];
+						$to = explode(' a ', $request->range)[1];
+						$where = "DATE_FORMAT(ventas.creado_en, '%Y-%m-%d') BETWEEN '$from' AND '$to'";
+						$builder->where($where);
+					}else{
+						$where = "DATE_FORMAT(ventas.creado_en, '%Y-%m-%d') = '$request->range'";
+						$builder->where($where);
+					}
+					
+				}
+
+				if($request->status != ''){
+					$builder->where('ventas.estado', $request->status);
 				}
 				
-				return $builder->where('ventas.estado', $request->status);
-		
 			})
 			->toJson();
 	}

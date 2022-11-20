@@ -8,6 +8,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- App favicon -->
         <link rel="shortcut icon" href="<?=base_url()?>/favicon.ico">
+        <!-- Bootstrap Css -->
+        <link href="<?=base_url('assets/css/bootstrap.min.css')?>" rel="stylesheet" type="text/css" />
         <!-- Datatables -->
         <link href="<?=base_url('assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css')?>" rel="stylesheet" type="text/css" />
         <link href="<?=base_url('assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css')?>" rel="stylesheet" type="text/css" />
@@ -16,8 +18,8 @@
         <link href="<?=base_url('assets/libs/sweetalert2/sweetalert2.min.css')?>" rel="stylesheet" type="text/css" />
         <!-- preloader css -->
         <link href="<?=base_url('assets/css/preloader.min.css')?>" rel="stylesheet" type="text/css" />
-        <!-- Bootstrap Css -->
-        <link href="<?=base_url('assets/css/bootstrap.min.css')?>" rel="stylesheet" type="text/css" />
+        <!-- datepicker css -->
+        <link rel="stylesheet" href="<?=base_url('assets/libs/flatpickr/flatpickr.min.css')?>">
         <!-- Icons Css -->
         <link href="<?=base_url('assets/css/icons.min.css')?>" rel="stylesheet" type="text/css" />
         <!-- App Css-->
@@ -321,6 +323,9 @@
         <script src="<?=base_url('assets/js/tableConfig.js')?>"></script>
         <!-- price format -->
         <script src="<?=base_url('assets/libs/price-format/priceformat.min.js')?>"></script>
+        <!-- datepicker js -->
+        <script src="<?=base_url('assets/libs/flatpickr/flatpickr.min.js')?>"></script>
+        <script src="<?=base_url('assets/libs/flatpickr/l10n/es.js')?>"></script>
         <!-- DOCUMENT -->
         <script src="<?=base_url('assets/js/app.js')?>"></script>
         <script src="<?=base_url('assets/js/ajax.js')?>"></script>

@@ -32,13 +32,19 @@
                         <p class="card-title-desc">En este módulo podrás ver y anular ventas.</p>
                     </div>
                     <div class="card-body">
-                        <div class="mt-2 mb-4">
-                            <label class="form-label" for="status">Filtros</label>
-                            <select name="status" class="form-select" id="status">
-                                <option value="">Todas las ventas</option>
-                                <option value="1">Ventas procesadas</option>
-                                <option value="0">Ventas anuladas</option>
-                            </select>
+                        <div class="row">
+                            <div class="col-md-6 mt-2 mb-4">
+                                <label class="form-label">Filtros</label>
+                                <select class="form-select" id="status_db">
+                                    <option value="">Todas las ventas</option>
+                                    <option value="1">Ventas procesadas</option>
+                                    <option value="0">Ventas anuladas</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mt-2 mb-4">
+                                <label class="form-label">Rango de fecha</label>
+                                <input type="text" class="form-control" placeholder="Selecciona una fecha" id="range">
+                            </div>
                         </div>
                         <table class="table datatable text-nowrap table-striped nowrap w-100 dt-responsive">
                             <thead>
@@ -277,4 +283,11 @@
             prefix: ''
         });
     }
+
+    $("#range").flatpickr({
+        locale: 'es',
+        mode: 'range',
+        maxDate: 'today'
+    });
+    
 </script>

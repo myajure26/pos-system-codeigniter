@@ -51,13 +51,19 @@
                         <!-- Tab panes -->
                         <div class="tab-content p-3 text-muted">
                             <div class="tab-pane active" id="price" role="tabpanel">
-                                <div class="mt-2 mb-4">
-                                    <label class="form-label" for="status">Filtros</label>
-                                    <select name="status" class="form-select" id="status">
-                                        <option value="">Todos los precios</option>
-                                        <option value="1">Precios activados</option>
-                                        <option value="0">Precios desactivados (Papelera)</option>
-                                    </select>
+                                <div class="row">
+                                    <div class="col-md-6 mt-2 mb-4">
+                                        <label class="form-label">Filtros</label>
+                                        <select class="form-select" id="status_db">
+                                            <option value="">Todos los precios</option>
+                                            <option value="1">Precios activados</option>
+                                            <option value="0">Precios desactivados</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mt-2 mb-4">
+                                        <label class="form-label">Rango de fecha</label>
+                                        <input type="text" class="form-control" placeholder="Selecciona una fecha" id="range">
+                                    </div>
                                 </div>
                                 <table class="table datatable text-nowrap table-striped nowrap w-100 dt-responsive">
                                     <thead>
@@ -218,4 +224,9 @@
         $('#viewCreated').val(data[0].creado_en);
         $('#viewUpdated').val(data[0].actualizado_en);
     }
+    $("#range").flatpickr({
+        locale: 'es',
+        mode: 'range',
+        maxDate: 'today'
+    });
 </script>
