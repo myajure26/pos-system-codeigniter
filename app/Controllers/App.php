@@ -446,6 +446,22 @@ class App extends BaseController
 		}
 	}
 
+	public function payment_method()
+	{
+		if($this->session->has('name')){
+		
+			$data = [
+				"title" => "Métodos de pago - $this->system"
+			];
+			return view('app/ajax/payment_method', $data);
+		
+		}else{
+
+			return redirect()->to(base_url());
+		
+		}
+	}
+
 	public function privileges()
 	{
 		if($this->session->has('name')){

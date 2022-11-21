@@ -218,6 +218,8 @@ $(document).ready(function() {
                return viewTax(data);
             case 'document_type':
                 return viewDocumentType(data);
+            case 'payment_method':
+                    return viewPaymentMethod(data);
             case 'privileges':
                 return viewPrivileges(data);
             case 'products':

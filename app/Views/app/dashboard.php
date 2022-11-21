@@ -255,6 +255,12 @@
                                     <span data-key="t-document_type">Tipo de documento</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="<?=base_url('#payment_method')?>">
+                                    <i data-feather="credit-card"></i>
+                                    <span data-key="t-payment_method">Métodos de pago</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                     <!-- Sidebar -->

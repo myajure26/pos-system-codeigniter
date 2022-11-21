@@ -13,13 +13,13 @@
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center
                     justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">Tipos de documento</h4>
+                    <h4 class="mb-sm-0 font-size-18">Métodos de pago</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript:
                                     void(0);">Configuraciones del sistema</a></li>
-                            <li class="breadcrumb-item active">Tipos de documento</li>
+                            <li class="breadcrumb-item active">Métodos de pago</li>
                         </ol>
                     </div>
 
@@ -32,16 +32,16 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Administrar tipos de documentos</h4>
-                        <p class="card-title-desc">En este módulo podrás ver, agregar, actualizar y eliminar los diferentes tipos de documentos.</p>
+                        <h4 class="card-title">Administrar métodos de pago</h4>
+                        <p class="card-title-desc">En este módulo podrás ver, agregar, actualizar y eliminar los diferentes métodos de pago.</p>
                     </div>
                     <div class="card-body">
                         <div class="mt-2 mb-4">
                             <label class="form-label">Filtros</label>
                             <select class="form-select" id="status_db">
-                                <option value="">Todos los tipos de documentos</option>
-                                <option value="1">Tipos de documentos activados</option>
-                                <option value="0">Tipos de documentos desactivados</option>
+                                <option value="">Todos los métodos de pago</option>
+                                <option value="1">Métodos de pago activados</option>
+                                <option value="0">Métodos de pago desactivados</option>
                             </select>
                         </div>
                         <table class="table datatable text-nowrap table-striped nowrap w-100 dt-responsive">
@@ -64,21 +64,21 @@
 </div>
 <!-- End Page-content -->
 
-<!--  add document type -->
+<!--  add payment method -->
 <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel">Nueva moneda</h5>
+                <h5 class="modal-title" id="myLargeModalLabel">Nuevo método de pago</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="custom-form" action="<?=base_url('document_type/create')?>" method="POST">
+            <form class="custom-form" action="<?=base_url('payment_method/create')?>" method="POST">
                 <div class="modal-body">
                     <div class="response"></div>
                     <div class="mb-3">
                         <label class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="name" placeholder="Introduce el nombre de la moneda" name="name" required>
+                        <input type="text" class="form-control" id="name" placeholder="Introduce el nombre del método de pago" name="name" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -90,16 +90,16 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!-- view document type -->
+<!-- view payment method -->
 <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel">Ver detalles de moneda</h5>
+                <h5 class="modal-title" id="myLargeModalLabel">Ver detalles del método de pago</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="custom-form viewForm" action="<?=base_url('document_type/update')?>" method="POST">
+            <form class="custom-form viewForm" action="<?=base_url('payment_method/update')?>" method="POST">
                 <div class="modal-body">
                     <div class="response"></div>
                     <input type="hidden" id="viewIdentification" name="identification" value="">
@@ -133,10 +133,10 @@
 </div><!-- /.modal -->
 
 <script>
-    tableConfig('/document_type/get', '.datatable');
+    tableConfig('/payment_method/get', '.datatable');
 
-    function viewDocumentType(data){
-        $('#viewIdentification').val(data[0].identificacion);
+    function viewPaymentMethod(data){
+        $('#viewIdentification').val(data[0].id_metodo_pago);
         $('#viewName').val(data[0].nombre);
         $('#viewCreated').val(data[0].creado_en);
         $('#viewUpdated').val(data[0].actualizado_en);

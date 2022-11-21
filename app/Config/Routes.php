@@ -119,6 +119,16 @@ $routes->group('document_type', static function ($routes) {
     $routes->post('recover', 'DocumentTypeController::recoverDocumentType');
 });
 
+//PAYMENT METHOD MODULE
+$routes->group('payment_method', static function ($routes) {
+    $routes->post('create', 'PaymentMethodController::createPaymentMethod');
+    $routes->get('get', 'PaymentMethodController::getPaymentMethods');
+    $routes->get('getById/(:num)', 'PaymentMethodController::getPaymentMethodById/$1');
+    $routes->post('update', 'PaymentMethodController::updatePaymentMethod');
+    $routes->post('delete', 'PaymentMethodController::deletePaymentMethod');
+    $routes->post('recover', 'PaymentMethodController::recoverPaymentMethod');
+});
+
 //PRODUCTS MODULE
 $routes->group('products', static function ($routes) {
     $routes->post('create', 'ProductController::createProduct');
