@@ -51,4 +51,78 @@ class ReportController extends BaseController
 			})
 			->toJson();
 	}
+
+	public function getDetailedPurchases()
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$ReportModel = new ReportModel();
+				
+		return DataTable::of($ReportModel->getDetailedPurchases())
+			->edit('precio', function($row){
+				return number_format($row->precio, 2);
+			})
+			->add('total', function($row){
+				
+				return number_format($row->cantidad * $row->precio, 2);
+
+			}, 'last')
+			->filter(function ($builder, $request) {
+        
+				if($request->range != ''){
+
+					if(!empty(explode(' a ', $request->range)[1])){
+						$from = explode(' a ', $request->range)[0];
+						$to = explode(' a ', $request->range)[1];
+						$where = "DATE_FORMAT(compras.creado_en, '%Y-%m-%d') BETWEEN '$from' AND '$to'";
+						$builder->where($where);
+					}else{
+						$where = "DATE_FORMAT(compras.creado_en, '%Y-%m-%d') = '$request->range'";
+						$builder->where($where);
+					}
+					
+				}
+		
+			})
+			->toJson();
+	}
+
+	public function getDetailedSales()
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$ReportModel = new ReportModel();
+				
+		return DataTable::of($ReportModel->getDetailedSales())
+			->edit('precio', function($row){
+				return number_format($row->precio, 2);
+			})
+			->add('total', function($row){
+				
+				return number_format($row->cantidad * $row->precio, 2);
+
+			}, 'last')
+			->filter(function ($builder, $request) {
+        
+				if($request->range != ''){
+
+					if(!empty(explode(' a ', $request->range)[1])){
+						$from = explode(' a ', $request->range)[0];
+						$to = explode(' a ', $request->range)[1];
+						$where = "DATE_FORMAT(ventas.creado_en, '%Y-%m-%d') BETWEEN '$from' AND '$to'";
+						$builder->where($where);
+					}else{
+						$where = "DATE_FORMAT(ventas.creado_en, '%Y-%m-%d') = '$request->range'";
+						$builder->where($where);
+					}
+					
+				}
+		
+			})
+			->toJson();
+	}
 }

@@ -169,8 +169,10 @@ $routes->group('coinPrices', static function ($routes) {
     $routes->post('recover', 'ControlCenterController::recoverCoinPrice');
 });
 
-// INVENTORY MODULE
+// REPORTS MODULE
 $routes->get('inventory', 'ReportController::getInventory');
+$routes->get('detailed_purchases', 'ReportController::getDetailedPurchases');
+$routes->get('detailed_sales', 'ReportController::getDetailedSales');
 
 //INVOICES
 $routes->group('invoice', static function ($routes) {

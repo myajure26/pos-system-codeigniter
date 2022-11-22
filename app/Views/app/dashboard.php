@@ -152,16 +152,22 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="<?=base_url('#sales')?>">
-                                    <i data-feather="shopping-bag"></i>
-                                    <span data-key="t-sales">Ventas</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="<?=base_url('#Salereports')?>">
+                                <a href="javascript: void(0);" class="has-arrow">
                                     <i data-feather="pie-chart"></i>
                                     <span data-key="t-reports">Reportes de ventas</span>
                                 </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li>
+                                        <a href="<?=base_url('#sales')?>">
+                                            <span data-key="t-sales">Ventas generales</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?=base_url('#detailed_sales')?>">
+                                            <span data-key="t-sales">Ventas detalladas</span>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
 
                             <li class="menu-title" data-key="t-menu">Administrar compras</li>
@@ -172,16 +178,22 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="<?=base_url('#purchases')?>">
-                                    <i data-feather="credit-card"></i>
-                                    <span data-key="t-purchases">Compras</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="<?=base_url('#purchaseReports')?>">
+                                <a href="javascript: void(0);" class="has-arrow">
                                     <i data-feather="pie-chart"></i>
                                     <span data-key="t-reports">Reportes de compras</span>
                                 </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li>
+                                        <a href="<?=base_url('#purchases')?>">
+                                            <span data-key="t-purchases">Compras generales</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?=base_url('#detailed_purchases')?>">
+                                            <span data-key="t-purchases">Compras detalladas</span>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
 
                             <li class="menu-title" data-key="t-menu">Administrar inventario</li>

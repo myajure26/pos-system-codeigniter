@@ -9,7 +9,8 @@ $(document).on("click", ".metismenu li a, .navbar-nav  li a, .profile", function
 	if ($(this).attr("target") == "_self") {window.location.href= page; return true};
 	if ($(this).attr("target") == "_blank") window.open(page, "_blank");
 
-	 if (page == "javascript: void(0);") return false;
+	if (page == "javascript: void(0);") return false;
+    if (page == undefined) return false;
 
 	window.location.hash = page;
 

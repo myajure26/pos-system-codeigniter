@@ -271,6 +271,38 @@ class App extends BaseController
 		}
 	}
 
+	public function detailed_purchases()
+	{
+		if($this->session->has('name')){
+			
+			$data = [
+				"title" => "Reportes detallados de compras - $this->system"
+			];
+			return view('app/ajax/detailed_purchases', $data);
+		
+		}else{
+
+			return redirect()->to(base_url());
+		
+		}
+	}
+
+	public function detailed_sales()
+	{
+		if($this->session->has('name')){
+			
+			$data = [
+				"title" => "Reportes detallados de ventas - $this->system"
+			];
+			return view('app/ajax/detailed_sales', $data);
+		
+		}else{
+
+			return redirect()->to(base_url());
+		
+		}
+	}
+
 	public function products()
 	{
 		if($this->session->has('name')){
