@@ -287,6 +287,22 @@ class App extends BaseController
 		}
 	}
 
+	public function general_purchase_reports()
+	{
+		if($this->session->has('name')){
+			
+			$data = [
+				"title" => "Reportes de toma de decisión - $this->system"
+			];
+			return view('app/ajax/general_purchase_reports', $data);
+		
+		}else{
+
+			return redirect()->to(base_url());
+		
+		}
+	}
+
 	public function detailed_sales()
 	{
 		if($this->session->has('name')){

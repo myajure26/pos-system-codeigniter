@@ -172,7 +172,9 @@ $routes->group('coinPrices', static function ($routes) {
 // REPORTS MODULE
 $routes->get('inventory', 'ReportController::getInventory');
 $routes->get('detailed_purchases', 'ReportController::getDetailedPurchases');
+$routes->post('general_purchase_reports', 'ReportController::getGeneralReports');
 $routes->get('detailed_sales', 'ReportController::getDetailedSales');
+$routes->get('reports/purchase/(:any)', 'ReportController::getPurchaseReportExcel/$1');
 
 //INVOICES
 $routes->group('invoice', static function ($routes) {

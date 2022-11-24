@@ -193,6 +193,11 @@
                                             <span data-key="t-purchases">Compras detalladas</span>
                                         </a>
                                     </li>
+                                    <li>
+                                        <a href="<?=base_url('#general_purchase_reports')?>">
+                                            <span data-key="t-purchases">Reportes de toma de decisión</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
 
@@ -341,13 +346,16 @@
         <script src="<?=base_url('assets/js/tableConfig.js')?>"></script>
         <!-- price format -->
         <script src="<?=base_url('assets/libs/price-format/priceformat.min.js')?>"></script>
-        <!-- datepicker js -->
+        <!-- flatpicker js -->
         <script src="<?=base_url('assets/libs/flatpickr/flatpickr.min.js')?>"></script>
         <script src="<?=base_url('assets/libs/flatpickr/l10n/es.js')?>"></script>
+        <!-- apexcharts js -->
+        <script src="<?=base_url('assets/libs/apexcharts/apexcharts.min.js')?>"></script>
         <!-- DOCUMENT -->
         <script src="<?=base_url('assets/js/app.js')?>"></script>
         <script src="<?=base_url('assets/js/ajax.js')?>"></script>
         <script src="<?=base_url('assets/js/purchaseSale.js')?>"></script>
+        <script src="<?=base_url('assets/js/charts.js')?>"></script>
 
     </body>
 </html>

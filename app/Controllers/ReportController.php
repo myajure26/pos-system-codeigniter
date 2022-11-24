@@ -125,4 +125,164 @@ class ReportController extends BaseController
 			})
 			->toJson();
 	}
+
+	public function getGeneralReports(){
+
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$range = $this->request->getPost('range');
+
+		$ReportModel = new ReportModel();
+		$generalReports = [];
+		
+		if(!empty(explode(' a ', $range)[1])){
+			
+			$from = explode(' a ', $range)[0];
+			$to	= explode(' a ', $range)[1];
+
+			// Total compras;
+			$generalPurchase = $ReportModel->generalPurchase($from, $to);
+			$generalReports[0] = $generalPurchase;
+
+			// Proveedores más comprados
+			$generalProvidersPurchase = $ReportModel->generalProvidersPurchase($from, $to);
+			$generalReports[1] = $generalProvidersPurchase;
+
+			// Proveedores menos comprados
+			$generalNegativeProvidersPurchase = $ReportModel->generalNegativeProvidersPurchase($from, $to);
+			$generalReports[2] = $generalNegativeProvidersPurchase;
+
+			
+
+		}else{
+		
+			return false;
+		
+		}
+		
+
+		echo json_encode($generalReports);
+
+	}
+
+	public function getPurchaseReportExcel($range)
+	{
+		if(empty(explode('a', $range)[1])){
+			
+			return "Error";
+		}
+
+		$from = explode('a', $range)[0];
+		$to	= explode('a', $range)[1];
+
+		$ReportModel = new ReportModel();
+		$getPurchaseReportExcel = $ReportModel->getPurchaseReportExcel($from, $to);
+
+		// foreach ($getPurchaseReportExcel as $row => $item){
+
+		// 	echo utf8_decode("<tr>
+		// 					<td style='border:1px solid #eee;'>".$item->identificacion."</td> 
+		// 					<td style='border:1px solid #eee;'>".$item->referencia."</td> 
+		// 					<td style='border:1px solid #eee;'>".$item->proveedor."</td>
+		// 					<td style='border:1px solid #eee;'>".$item->usuario."</td>
+		// 					<td style='border:1px solid #eee;'>".$item->tipo_documento."</td>
+		// 					<td style='border:1px solid #eee;'>".$item->moneda."</td>
+		// 					<td style='border:1px solid #eee;'>");
+
+		// 	$getPurchaseDetailReportExcel = $ReportModel->getPurchaseDetailReportExcel($item->identificacion);
+			
+		// 	foreach ($getPurchaseDetailReportExcel as $row2 => $item2){
+
+		// 		echo $item2->cantidad . ' ';
+
+		// 	}
+			
+		// }
+
+		// return true;
+
+
+
+		$name = "reporte-compras-$from-$to.xls";
+
+		header("Pragma: public");
+		header("Expires: 0");
+		header("Content-type: application/x-msdownload");
+		header("Content-Disposition: attachment; filename=$name");
+		header("Pragma: no-cache");
+		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+
+		echo utf8_decode("<table border='0'> 
+
+		<tr> 
+			<td style='font-weight:bold; border:1px solid #eee;'>REFERENCIA</td> 
+			<td style='font-weight:bold; border:1px solid #eee;'>PROVEEDOR</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>USUARIO</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>TIPO DE DOCUMENTO</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>MONEDA</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>CÓDIGO</td>	
+			<td style='font-weight:bold; border:1px solid #eee;'>PRODUCTO</td>	
+			<td style='font-weight:bold; border:1px solid #eee;'>CANTIDAD</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>PRECIO</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>TOTAL</td>			
+			<td style='font-weight:bold; border:1px solid #eee;'>FECHA</td>		
+		</tr>");
+
+			foreach ($getPurchaseReportExcel as $row => $item){
+
+
+				echo utf8_decode("<tr>
+							<td style='border:1px solid #eee;'>".$item->referencia."</td> 
+							<td style='border:1px solid #eee;'>".$item->proveedor."</td>
+							<td style='border:1px solid #eee;'>".$item->usuario."</td>
+							<td style='border:1px solid #eee;'>".$item->tipo_documento."</td>
+							<td style='border:1px solid #eee;'>".$item->moneda."</td>
+							<td style='border:1px solid #eee;'>");
+
+
+				$getPurchaseDetailReportExcel = $ReportModel->getPurchaseDetailReportExcel($item->identificacion);
+
+
+
+				foreach ($getPurchaseDetailReportExcel as $row2 => $item2){
+
+					echo utf8_decode($item2->codigo."<br>");
+					
+				}
+
+				echo utf8_decode("</td><td style='border:1px solid #eee;'>");
+
+				foreach ($getPurchaseDetailReportExcel as $row2 => $item2){
+
+						echo utf8_decode($item2->nombreProducto."<br>");
+				}
+
+				echo utf8_decode("</td><td style='border:1px solid #eee;'>");
+
+				foreach ($getPurchaseDetailReportExcel as $row2 => $item2){
+
+						echo utf8_decode($item2->cantidad."<br>");
+
+				}
+
+				echo utf8_decode("</td><td style='border:1px solid #eee;'>");
+
+				foreach ($getPurchaseDetailReportExcel as $row2 => $item2){
+
+					echo utf8_decode($item2->precio."<br>");
+
+				}
+
+			echo utf8_decode("</td>	
+					<td style='border:1px solid #eee;'>$ AQUI VA EL TOTAL</td>
+					<td style='border:1px solid #eee;'>".$item->fecha."</td>		
+						</tr>");
+		}
+
+
+			echo "</table>";
+
+	}
 }

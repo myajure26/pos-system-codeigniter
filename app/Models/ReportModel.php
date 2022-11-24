@@ -8,7 +8,7 @@ class ReportModel extends Model
 {
 	public function getInventory()
 	{
-        $db      	= \Config\Database::connect();
+        $db = \Config\Database::connect();
         
 		$db = $db
             ->table('productos')
@@ -19,7 +19,7 @@ class ReportModel extends Model
 	}
 	public function getDetailedPurchases()
 	{
-        $db      	= \Config\Database::connect();
+        $db = \Config\Database::connect();
         
 		$db = $db
             ->table('compras')
@@ -34,7 +34,7 @@ class ReportModel extends Model
 
 	public function getDetailedSales()
 	{
-        $db      	= \Config\Database::connect();
+        $db = \Config\Database::connect();
         
 		$db = $db
             ->table('ventas')
@@ -45,6 +45,81 @@ class ReportModel extends Model
 			->join('monedas', 'monedas.identificacion = ventas.moneda')
 			->join('impuestos', 'impuestos.identificacion = ventas.impuesto')
 			->where('ventas.estado', 1);
+		return $db;
+	}
+
+	public function generalPurchase($from, $to)
+	{
+        $db = \Config\Database::connect();
+		$where = "fecha BETWEEN '$from' AND '$to'";
+		$db = $db
+			->table('compras')
+			->select('COUNT(*) as total, fecha')
+			->where($where)
+			->groupBy('fecha')
+			->get()->getResult();
+		return $db;
+
+		// ->select('SUM(detalle_compra.precio * detalle_compra.cantidad) as total, fecha')
+	}
+
+	public function generalProvidersPurchase($from, $to)
+	{
+        $db = \Config\Database::connect();
+		$where = "fecha BETWEEN '$from' AND '$to'";
+		$db = $db
+			->table('compras')
+			->select('COUNT(*) as total, proveedor')
+			->where($where)
+			->where('estado', 1)
+			->groupBy('proveedor')
+			->orderBy('total', 'DESC')
+			->limit(10)
+			->get()->getResult();
+		return $db;
+	}
+
+	public function generalNegativeProvidersPurchase($from, $to)
+	{
+        $db = \Config\Database::connect();
+		$where = "fecha BETWEEN '$from' AND '$to'";
+		$db = $db
+			->table('compras')
+			->select('COUNT(*) as total, proveedor')
+			->where($where)
+			->where('estado', 1)
+			->groupBy('proveedor')
+			->orderBy('total', 'ASC')
+			->limit(10)
+			->get()->getResult();
+		return $db;
+	}
+
+	public function getPurchaseReportExcel($from, $to)
+	{
+        $db = \Config\Database::connect();
+		$where = "fecha BETWEEN '$from' AND '$to'";
+		$db = $db
+            ->table('compras')
+			->select('compras.identificacion, referencia, fecha, usuario, proveedor, tipo_documento.nombre as tipo_documento, monedas.moneda')
+			->join('tipo_documento', 'tipo_documento.identificacion = compras.tipo_documento')
+			->join('monedas', 'monedas.identificacion = compras.moneda')
+			->where($where)
+			->where('compras.estado', 1)
+			->orderBy('fecha', 'ASC')
+			->get()->getResult();
+		return $db;
+	}
+
+	public function getPurchaseDetailReportExcel($id)
+	{
+        $db = \Config\Database::connect();
+		$db = $db
+            ->table('detalle_compra')
+			->select('productos.codigo as codigo, productos.nombre as nombreProducto, detalle_compra.cantidad, detalle_compra.precio')
+			->join('productos', 'productos.codigo = detalle_compra.producto')
+			->where('compra', $id)
+			->get()->getResult();
 		return $db;
 	}
 }
