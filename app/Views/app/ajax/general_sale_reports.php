@@ -9,13 +9,13 @@
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center
                     justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">Reportes generales de compras</h4>
+                    <h4 class="mb-sm-0 font-size-18">Reportes generales de ventas</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript:
                                     void(0);">Administrar ventas</a></li>
-                            <li class="breadcrumb-item active">Reportes generales de compras</li>
+                            <li class="breadcrumb-item active">Reportes generales de ventas</li>
                         </ol>
                     </div>
 
@@ -28,26 +28,26 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Administrar compras</h4>
-                        <p class="card-title-desc">En este módulo podrás ver todos los reportes de toma de decisión de las compras.</p>
+                        <h4 class="card-title">Administrar ventas</h4>
+                        <p class="card-title-desc">En este módulo podrás ver todos los reportes de toma de decisión de las ventas.</p>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 mt-2 mb-4">
-                                <input type="text" class="form-control" placeholder="Selecciona una fecha" id="reports-range" data-type="general_purchase_reports">
+                                <input type="text" class="form-control" placeholder="Selecciona una fecha" id="reports-range" data-type="general_sale_reports">
                             </div>
                             <div class="col-md-6 mt-2 mb-4">
                                 <button class="btn btn-primary w-100" id="report-chart-submit">Buscar</button>
                             </div>
                             <div class="col-md-6 mt-2 mb-4 d-block mx-auto">
-                                <button class="btn btn-success w-100" id="btn-report" style="display: none">Generar reporte de compras</button>
+                                <button class="btn btn-success w-100" id="btn-report" style="display: none">Generar reporte de ventas</button>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h4 class="card-title mb-0">Gráfico de compras</h4>
+                                        <h4 class="card-title mb-0">Gráfico de ventas</h4>
                                     </div>
                                     <div class="card-body">
                                         <div id="spline_area" class="apex-charts"></div>                      
@@ -57,7 +57,7 @@
                             <div class="col-md-6">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h4 class="card-title mb-0">Proveedores más comprados</h4>
+                                        <h4 class="card-title mb-0">Productos más vendidos</h4>
                                     </div>
                                     <div class="card-body">
                                         <div id="donut" class="apex-charts"></div>                      
@@ -67,7 +67,7 @@
                             <div class="col-md-6">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h4 class="card-title mb-0">Proveedores menos comprados</h4>
+                                        <h4 class="card-title mb-0">Productos menos vendidos</h4>
                                     </div>
                                     <div class="card-body">
                                         <div id="donut2" class="apex-charts"></div>                      

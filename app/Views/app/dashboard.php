@@ -167,6 +167,11 @@
                                             <span data-key="t-sales">Ventas detalladas</span>
                                         </a>
                                     </li>
+                                    <li>
+                                        <a href="<?=base_url('#general_sale_reports')?>">
+                                            <span data-key="t-sales">Reportes de toma de decisión</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
 

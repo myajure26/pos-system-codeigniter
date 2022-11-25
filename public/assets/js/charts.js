@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
     // Generar xls
-    $(document).on('click', '#purchase-report', function(){
+    $(document).on('click', '#btn-report', function(){
 
         let range = $(this).attr('range');
         const type = $('#reports-range').attr('data-type');
@@ -16,6 +16,12 @@ $(document).ready(function(){
 
         }
 
+        if(type === 'general_sale_reports'){
+            
+            window.open(url + '/reports/sale/' + range, '_blank');
+
+        }
+
     });
 
     $(document).on('click', '#report-chart-submit', function(){
@@ -23,8 +29,8 @@ $(document).ready(function(){
         const range = $('#reports-range').val();
         const type = $('#reports-range').attr('data-type');
 
-        $('#purchase-report').attr('range', range);
-        $('#purchase-report').slideDown();
+        $('#btn-report').attr('range', range);
+        $('#btn-report').slideDown();
     
 
         if(range == ''){
@@ -34,7 +40,7 @@ $(document).ready(function(){
                 title: 'Oops',
                 text: 'Tienes que seleccionar una fecha'
             });
-            $('#purchase-report').slideUp();
+            $('#btn-report').slideUp();
             return false;
 
         }
@@ -70,7 +76,7 @@ $(document).ready(function(){
                         title: 'Oops',
                         text: 'Tienes que seleccionar un rango de fecha'
                     });
-                    $('#purchase-report').slideUp();
+                    $('#btn-report').slideUp();
                     return false;
                 }
                 
@@ -80,15 +86,23 @@ $(document).ready(function(){
                 
                 if(type == 'general_purchase_reports'){
 
-                    generalPurchase(data[0]);
+                    generalPurchases(data[0]);
                     generalProviders(data[1]);
                     generalNegativeProviders(data[2]);
 
                 }
 
+                if(type == 'general_sale_reports'){
+
+                    generalSales(data[0]);
+                    generalProducts(data[1]);
+                    generalNegativeProducts(data[2]);
+
+                }
+
             },
             error: function (data) {
-                $('#purchase-report').slideUp();
+                $('#btn-report').slideUp();
                 Swal.close();
             }
         });
@@ -96,7 +110,7 @@ $(document).ready(function(){
 
     });
 
-    const generalPurchase = (data) => {
+    const generalPurchases = (data) => {
 
         const compras = [];
         const fechas = [];
@@ -153,6 +167,62 @@ $(document).ready(function(){
         });
     }
 
+    const generalSales= (data) => {
+
+        const ventas = [];
+        const fechas = [];
+
+        data.forEach(element => {
+            ventas.push(element.total);
+            fechas.push(element.fecha);
+        });
+
+        // Actualizar la gráfica
+        chart.updateOptions({
+            series: [{
+                name: 'Ventas',
+                data: ventas,
+                color: '#5156be'
+            }],
+            xaxis: {
+              categories: fechas
+            }
+        });
+    }
+
+    const generalProducts = (data) => {
+
+        const productos = [];
+        const total = [];
+
+        data.forEach(element => {
+            total.push(Number(element.total));
+            productos.push(element.producto);
+        });
+
+        // Actualizar la gráfica
+        donutChart.updateOptions({
+            series: total,
+            labels: productos,
+        });
+    }
+
+    const generalNegativeProducts = (data) => {
+
+        const productos = [];
+        const total = [];
+
+        data.forEach(element => {
+            total.push(Number(element.total));
+            productos.push(element.producto);
+        });
+
+        // Actualizar la gráfica
+        donutChart2.updateOptions({
+            series: total,
+            labels: productos,
+        });
+    }
 
 });
 
