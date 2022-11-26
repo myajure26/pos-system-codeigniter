@@ -238,6 +238,66 @@ class ReportController extends BaseController
 		header("Pragma: no-cache");
 		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 
+		echo utf8_decode("
+		
+		<table>
+		
+		<tr>
+			
+			<td style='width:150px;'>
+                <h2 style='font-size: 20px'>Digenca</h2>
+            </td>
+
+			<td style='background-color:white; width:210px'>
+				
+				<div style='font-size:12px; text-align:right; line-height:15px;'>
+					
+					<br>
+					<strong>RIF:</strong> J-285346256
+
+					<br>
+					<strong>Dirección:</strong> Av. Venezuela con calle 37
+
+				</div>
+
+			</td>
+
+			<td style='background-color:white; width:140px'>
+
+				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
+					
+					<br>
+					Teléfono: 04121546367
+					
+					<br>
+					digencacom@example.com
+
+				</div>
+				
+			</td>
+
+			<td style='background-color:white; width:140px'>
+
+				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
+					
+					<br>
+					Reporte de compras
+					
+					<br>
+					$from a $to
+
+				</div>
+				
+			</td>
+
+		</tr>
+
+	</table>
+
+		");
+		
+		echo "<br>";
+
 		echo utf8_decode("<table border='0'> 
 
 		<tr> 
@@ -335,6 +395,65 @@ class ReportController extends BaseController
 		header("Content-Disposition: attachment; filename=$name");
 		header("Pragma: no-cache");
 		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+
+		echo utf8_decode("
+		
+		<table>
+		
+		<tr>
+			
+			<td style='width:150px;'>
+                <h2 style='font-size: 20px'>Digenca</h2>
+            </td>
+
+			<td style='background-color:white; width:210px'>
+				
+				<div style='font-size:12px; text-align:right; line-height:15px;'>
+					
+					<br>
+					<strong>RIF:</strong> J-285346256
+
+					<br>
+					<strong>Dirección:</strong> Av. Venezuela con calle 37
+
+				</div>
+
+			</td>
+
+			<td style='background-color:white; width:140px'>
+
+				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
+					
+					<br>
+					Teléfono: 04121546367
+					
+					<br>
+					digencacom@example.com
+
+				</div>
+				
+			</td>
+			<td style='background-color:white; width:140px'>
+
+				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
+					
+					<br>
+					Reporte de ventas
+					
+					<br>
+					$from a $to
+
+				</div>
+				
+			</td>
+
+		</tr>
+
+	</table>
+
+		");
+		
+		echo "<br>";
 
 		echo utf8_decode("<table border='0'> 
 
