@@ -44,6 +44,7 @@ class BaseController extends Controller
 
 		//Llamar a las funciones de Util
 		helper('util');
+		date_default_timezone_set("America/Caracas");
 
 		//--------------------------------------------------------------------
 		// Preload any models, libraries, etc, here.

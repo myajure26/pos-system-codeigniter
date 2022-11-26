@@ -32,19 +32,16 @@ class ReportModel extends Model
 		return $db;
 	}
 
-	public function getDetailedSales()
+	public function getSalesPerCustomer()
 	{
         $db = \Config\Database::connect();
-        
 		$db = $db
             ->table('ventas')
-			->select('ventas.identificacion as idVenta, ventas.creado_en, usuario, cliente, tipo_documento.nombre as tipo_documento, productos.nombre, detalle_ventas.producto, monedas.moneda, impuestos.porcentaje, detalle_ventas.cantidad, detalle_ventas.precio ')
-			->join('tipo_documento', 'tipo_documento.identificacion = ventas.tipo_documento')
+			->select('ventas.identificacion, ventas.creado_en as fecha, cliente, usuario, impuestos.porcentaje as impuesto, SUM(detalle_ventas.cantidad * detalle_ventas.precio) as subtotal')
 			->join('detalle_ventas', 'detalle_ventas.venta = ventas.identificacion')
-			->join('productos', 'productos.codigo = detalle_ventas.producto')
-			->join('monedas', 'monedas.identificacion = ventas.moneda')
 			->join('impuestos', 'impuestos.identificacion = ventas.impuesto')
-			->where('ventas.estado', 1);
+			->where('ventas.estado', 1)
+			->groupBy('ventas.identificacion');
 		return $db;
 	}
 

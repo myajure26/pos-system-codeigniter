@@ -163,8 +163,8 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="<?=base_url('#detailed_sales')?>">
-                                            <span data-key="t-sales">Ventas detalladas</span>
+                                        <a href="<?=base_url('#sales_per_customer')?>">
+                                            <span data-key="t-sales">Ventas por cliente</span>
                                         </a>
                                     </li>
                                     <li>
@@ -352,7 +352,7 @@
         <script src="<?=base_url('assets/js/ajax.js')?>"></script>
         <script src="<?=base_url('assets/js/validation.js')?>"></script>
         <script src="<?=base_url('assets/js/purchaseSale.js')?>"></script>
-        <script src="<?=base_url('assets/js/charts.js')?>"></script>
+        <script src="<?=base_url('assets/js/reports.js')?>"></script>
 
     </body>
 </html>

@@ -82,6 +82,7 @@
 		
 			<td style="background-color:white; width:540px; padding: 5px;"> 
                 <p><strong>Moneda:</strong> <?= $venta[0]->moneda?></p>
+                <p><strong>Tasa:</strong> <?= $venta[0]->tasa?></p>
             </td>
 
             <td style="background-color:white; width:150px; text-align:right; padding: 5px;">
@@ -100,8 +101,8 @@
 		
             <td style="border-bottom: 1px solid #666; background-color:white; width:260px; text-align:center; padding: 5px">Producto</td>
             <td style="border-bottom: 1px solid #666; background-color:white; width:80px; text-align:center; padding: 5px">Cantidad</td>
-            <td style="border-bottom: 1px solid #666; background-color:white; width:150px; text-align:center; padding: 5px">Valor Unit.</td>
-            <td style="border-bottom: 1px solid #666; background-color:white; width:150px; text-align:center; padding: 5px">Valor Total</td>
+            <td style="border-bottom: 1px solid #666; background-color:white; width:150px; text-align:center; padding: 5px">Precio Unitario</td>
+            <td style="border-bottom: 1px solid #666; background-color:white; width:150px; text-align:center; padding: 5px">Total</td>
 
 		</tr>
         
@@ -157,8 +158,9 @@
 		
 			<td style="border: 1px solid #666; color:#333; background-color:white; width:200px; text-align:center; padding: 5px"">
                 <?php 
-                    $tax = number_format(($subtotal * $venta[0]->porcentaje)/100, 2);
-                    echo $row->simbolo . ' ' . $tax;
+                    $tax = ($subtotal * $venta[0]->porcentaje)/100;
+                    echo $row->simbolo . ' ' . number_format($tax, 2);
+					$total = number_format($subtotal + $tax , 2);
                 ?>
 			</td>
 
@@ -173,7 +175,8 @@
 			</td>
 			
 			<td style="border: 1px solid #666; color:#333; background-color:white; width:200px; text-align:center; padding: 5px"">
-                <?= $row->simbolo . ' ' . number_format($subtotal + $tax, 2)?>
+
+                <?= $row->simbolo . ' ' . $total?>
 			</td>
 
 		</tr>

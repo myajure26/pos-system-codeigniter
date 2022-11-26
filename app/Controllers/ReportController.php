@@ -89,7 +89,7 @@ class ReportController extends BaseController
 			->toJson();
 	}
 
-	public function getDetailedSales()
+	public function getSalesPerCustomer()
 	{
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
@@ -97,13 +97,19 @@ class ReportController extends BaseController
 
 		$ReportModel = new ReportModel();
 				
-		return DataTable::of($ReportModel->getDetailedSales())
-			->edit('precio', function($row){
-				return number_format($row->precio, 2);
+		return DataTable::of($ReportModel->getSalesPerCustomer())
+			->edit('fecha', function($row){
+				return date('Y-m-d', strtotime($row->fecha));
+			})
+			->edit('subtotal', function($row){
+				return number_format($row->subtotal, 2);
+			})
+			->add('total_impuesto', function($row){
+				return number_format((($row->subtotal*$row->impuesto)/100), 2);
 			})
 			->add('total', function($row){
 				
-				return number_format($row->cantidad * $row->precio, 2);
+				return '$ ' . number_format(((($row->subtotal*$row->impuesto)/100)+$row->subtotal), 2);
 
 			}, 'last')
 			->filter(function ($builder, $request) {
@@ -120,6 +126,12 @@ class ReportController extends BaseController
 						$builder->where($where);
 					}
 					
+				}
+
+				if($request->searchById != ''){
+
+					$builder->where('ventas.cliente', $request->searchById);
+
 				}
 		
 			})
@@ -208,8 +220,35 @@ class ReportController extends BaseController
 
 	}
 
-	/**
-	 * GENERAR REPORTES EN EXCEL
+	/** 
+	 * * OBTENER LOS DATOS DE SELECCIÓN
+	 */
+	public function getSalesCustomer()
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$db      	= \Config\Database::connect();
+		$customers 	= $db
+						->table('clientes')
+						->select('identificacion, nombre, direccion, telefono')
+						->where('estado', 1);
+				
+		return DataTable::of($customers)
+			->add('Seleccionar', function($row){
+				return '<div class="btn-list"> 
+							<button type="button" class="btn-select-customer btn btn-sm btn-primary waves-effect" data-id="'.$row->identificacion.'" data-type="customers">
+                                <i class="fas fa-check"></i>
+                            </button>
+                        </div>';
+			}, 'first') 
+			->toJson();
+
+	}
+
+	/** 
+	 * * GENERAR REPORTES EN EXCEL
 	 */
 
 	public function getPurchaseReportExcel($range)
@@ -290,6 +329,20 @@ class ReportController extends BaseController
 				
 			</td>
 
+			<td style='background-color:white; width:140px'>
+
+				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
+					
+					<br>
+					Generado
+					
+					<br>
+					". date('Y-m-d H:i:s') . "
+
+				</div>
+				
+			</td>
+
 		</tr>
 
 	</table>
@@ -309,7 +362,7 @@ class ReportController extends BaseController
 			<td style='font-weight:bold; border:1px solid #eee;'>CÓDIGO</td>	
 			<td style='font-weight:bold; border:1px solid #eee;'>PRODUCTO</td>	
 			<td style='font-weight:bold; border:1px solid #eee;'>CANTIDAD</td>
-			<td style='font-weight:bold; border:1px solid #eee;'>PRECIO</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>PRECIO UNITARIO</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>TOTAL</td>			
 			<td style='font-weight:bold; border:1px solid #eee;'>FECHA</td>		
 		</tr>");
@@ -447,6 +500,20 @@ class ReportController extends BaseController
 				
 			</td>
 
+			<td style='background-color:white; width:140px'>
+
+				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
+					
+					<br>
+					Generado
+					
+					<br>
+					". date('Y-m-d H:i:s') . "
+
+				</div>
+				
+			</td>
+
 		</tr>
 
 	</table>
@@ -469,7 +536,7 @@ class ReportController extends BaseController
 			<td style='font-weight:bold; border:1px solid #eee;'>CÓDIGO</td>	
 			<td style='font-weight:bold; border:1px solid #eee;'>PRODUCTO</td>	
 			<td style='font-weight:bold; border:1px solid #eee;'>CANTIDAD</td>
-			<td style='font-weight:bold; border:1px solid #eee;'>PRECIO</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>PRECIO UNITARIO</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>SUBTOTAL</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>IMPUESTO</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>TOTAL</td>			
@@ -540,5 +607,153 @@ class ReportController extends BaseController
 
 			echo "</table>";
 
+	}
+
+	public function getSalePerCustomerReportExcel($customer, $range = NULL)
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$ReportModel = new ReportModel();
+		$ReportModel = $ReportModel->getSalesPerCustomer();
+
+		$ReportModel = $ReportModel->where('cliente', $customer);
+
+		$name = "reporte-ventas-por-cliente.xls";
+		$nameHeader = "Todas las ventas por cliente";
+
+		if ( $range != NULL ){
+			
+			if(!empty(explode('a', $range)[1])){
+				$from = explode('a', $range)[0];
+				$to = explode('a', $range)[1];
+				$where = "DATE_FORMAT(ventas.creado_en, '%Y-%m-%d') BETWEEN '$from' AND '$to'";
+				$ReportModel = $ReportModel->where($where);
+				$name = "reporte-ventas-por-cliente-$from-$to.xls";
+				$nameHeader = "$from a $to";
+			}else{
+				$where = "DATE_FORMAT(ventas.creado_en, '%Y-%m-%d') = '$range'";
+				$ReportModel = $ReportModel->where($where);
+				$name = "reporte-ventas-por-cliente-$range.xls";
+				$nameHeader = "Del día $range";
+			}
+
+		}
+
+		$ReportModel = $ReportModel->get()->getResult();
+
+		header("Pragma: public");
+		header("Expires: 0");
+		header("Content-type: application/x-msdownload");
+		header("Content-Disposition: attachment; filename=$name");
+		header("Pragma: no-cache");
+		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+
+		echo utf8_decode("
+		
+		<table>
+		
+		<tr>
+			
+			<td style='width:150px;'>
+                <h2 style='font-size: 20px'>Digenca</h2>
+            </td>
+
+			<td style='background-color:white; width:210px'>
+				
+				<div style='font-size:12px; text-align:right; line-height:15px;'>
+					
+					<br>
+					<strong>RIF:</strong> J-285346256
+
+					<br>
+					<strong>Dirección:</strong> Av. Venezuela con calle 37
+
+				</div>
+
+			</td>
+
+			<td style='background-color:white; width:140px'>
+
+				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
+					
+					<br>
+					Teléfono: 04121546367
+					
+					<br>
+					digencacom@example.com
+
+				</div>
+				
+			</td>
+			<td style='background-color:white; width:140px'>
+
+				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
+					
+					<br>
+					Reporte de ventas
+					
+					<br>
+					
+					$nameHeader
+
+				</div>
+				
+			</td>
+
+			<td style='background-color:white; width:140px'>
+
+				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
+					
+					<br>
+					Generado
+					
+					<br>
+					". date('Y-m-d H:i:s') . "
+
+				</div>
+				
+			</td>
+
+		</tr>
+
+	</table>
+
+		");
+		
+		echo "<br>";
+
+		echo utf8_decode("<table border='0'> 
+
+		<tr> 
+			<td style='font-weight:bold; border:1px solid #eee;'>FACTURA</td> 
+			<td style='font-weight:bold; border:1px solid #eee;'>FECHA</td>		
+			<td style='font-weight:bold; border:1px solid #eee;'>CLIENTE</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>VENDEDOR</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>IMPUESTO</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>SUBTOTAL</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>TOTAL IMPUESTO</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>TOTAL</td>			
+		</tr>");
+
+		foreach ($ReportModel as $row => $item){
+
+			$tax = ($item->subtotal * $item->impuesto) / 100;
+			$total = $item->subtotal + $tax;
+
+			echo utf8_decode("<tr>
+						<td style='border:1px solid #eee;'>".$item->identificacion."</td>
+						<td style='border:1px solid #eee;'>".date('Y-m-d', strtotime($item->fecha))."</td> 
+						<td style='border:1px solid #eee;'>".$item->cliente."</td>
+						<td style='border:1px solid #eee;'>".$item->usuario."</td>
+						<td style='border:1px solid #eee;'>".$item->impuesto."</td>
+						<td style='border:1px solid #eee;'>".$item->subtotal."</td>
+						<td style='border:1px solid #eee;'>".number_format($tax, 2)."</td>
+						<td style='border:1px solid #eee;'>".number_format($total, 2)."</td>
+						<td style='border:1px solid #eee;'>");
+
+		}
+			echo "</table>";
 	}
 }

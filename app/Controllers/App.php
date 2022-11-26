@@ -184,7 +184,7 @@ class App extends BaseController
 				"coins"			=> $coins,
 				"receipt"		=> $receipt
 			];
-			return view('app/ajax/sales', $data);
+			return view('app/reports/sales', $data);
 		
 		}else{
 
@@ -246,7 +246,7 @@ class App extends BaseController
 				"receipt" 	=> $receipt,
 				"coins"		=> $coins
 			];
-			return view('app/ajax/purchases', $data);
+			return view('app/reports/purchases', $data);
 		
 		}else{
 
@@ -278,7 +278,7 @@ class App extends BaseController
 			$data = [
 				"title" => "Reportes detallados de compras - $this->system"
 			];
-			return view('app/ajax/detailed_purchases', $data);
+			return view('app/reports/detailed_purchases', $data);
 		
 		}else{
 
@@ -294,7 +294,7 @@ class App extends BaseController
 			$data = [
 				"title" => "Reportes de toma de decisión - $this->system"
 			];
-			return view('app/ajax/general_purchase_reports', $data);
+			return view('app/reports/general_purchase_reports', $data);
 		
 		}else{
 
@@ -303,14 +303,14 @@ class App extends BaseController
 		}
 	}
 
-	public function detailed_sales()
+	public function sales_per_customer()
 	{
 		if($this->session->has('name')){
 			
 			$data = [
-				"title" => "Reportes detallados de ventas - $this->system"
+				"title" => "Reportes de ventas por cliente - $this->system"
 			];
-			return view('app/ajax/detailed_sales', $data);
+			return view('app/reports/sales_per_customer', $data);
 		
 		}else{
 
@@ -326,7 +326,7 @@ class App extends BaseController
 			$data = [
 				"title" => "Reportes de toma de decisión - $this->system"
 			];
-			return view('app/ajax/general_sale_reports', $data);
+			return view('app/reports/general_sale_reports', $data);
 		
 		}else{
 

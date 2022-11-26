@@ -2,26 +2,50 @@ $(document).ready(function(){
 
     // Generar xls
     $(document).on('click', '#btn-report', function(){
-
+        
         let range = $(this).attr('range');
-        const type = $('#reports-range').attr('data-type');
+        const type = $('#reports-range, #range').attr('data-type');
+        
+        // * Quitar los espacios
+        // ? / significa el inicio de una expresión regular y g de global
+        
+        if (range) range = range.replace(/ /g, '');
 
-        // Quitar los espacios
-        // / significa el inicio de una expresión regular y g de global
-        range = range.replace(/ /g, '');
-
-        if(type === 'general_purchase_reports'){
+        
+        if (type === 'general_purchase_reports'){
             
             window.open(url + '/reports/purchase/' + range, '_blank');
-
+            
         }
 
-        if(type === 'general_sale_reports'){
+        if (type === 'general_sale_reports'){
             
             window.open(url + '/reports/sale/' + range, '_blank');
+            
+        }
+
+        if (type === 'sales_per_customer'){
+            const customer = $('#searchById').val();
+            if(range){
+                window.open(url + '/reports/sales_per_customer/' + customer + '/' + range, '_blank');
+            }else{
+                window.open(url + '/reports/sales_per_customer/' + customer, '_blank');
+            }
 
         }
 
+    });
+
+    // * Seleccionar al cliente
+    $(document).on('click', '.btn-select-customer', function(){
+        $('#searchById').val($(this).closest('tr').find('td:eq(1)').text());
+        $('#searchCustomerModal').modal('hide');
+        $('#btn-report').slideDown();
+    });
+
+    // * Guardar el rango cada vez que se seleccione
+    $(document).on('change', '.range', function(){
+        $('#btn-report').attr('range', $(this).val());
     });
 
     $(document).on('click', '#report-chart-submit', function(){

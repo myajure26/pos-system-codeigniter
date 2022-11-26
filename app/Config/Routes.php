@@ -35,7 +35,7 @@ $routes->setAutoRoute(true);
 $routes->get('/', 'App::index');
 $routes->get('/audits/get', 'AuditController::getAudits');
 
-//SALES MODULE
+// ? SALES MODULE
 $routes->group('sales', static function ($routes) {
     $routes->post('create', 'SaleController::createSale');
     $routes->get('get', 'SaleController::getSales');
@@ -46,7 +46,7 @@ $routes->group('sales', static function ($routes) {
 });
 
 
-//PURCHASES MODULE
+// ? PURCHASES MODULE
 $routes->group('purchases', static function ($routes) {
     $routes->post('create', 'PurchaseController::createPurchase');
     $routes->get('get', 'PurchaseController::getPurchases');
@@ -56,7 +56,7 @@ $routes->group('purchases', static function ($routes) {
     $routes->post('delete', 'PurchaseController::deletePurchase');
 });
 
-//USERS MODULE
+// ? USERS MODULE
 $routes->group('users', static function ($routes) {
     $routes->post('signin', 'UserController::signin');
     $routes->post('create', 'UserController::createUser');
@@ -68,7 +68,7 @@ $routes->group('users', static function ($routes) {
     $routes->post('recover', 'UserController::recoverUser');
 });
 
-//CATEGORIES MODULE
+// ? CATEGORIES MODULE
 $routes->group('categories', static function ($routes) {
     $routes->post('create', 'CategoryController::createCategory');
     $routes->get('get', 'CategoryController::getCategories');
@@ -78,7 +78,7 @@ $routes->group('categories', static function ($routes) {
     $routes->post('recover', 'CategoryController::recoverCategory');
 });
 
-//BRANDS MODULE
+// ? BRANDS MODULE
 $routes->group('brands', static function ($routes) {
     $routes->post('create', 'BrandController::createBrand');
     $routes->get('get', 'BrandController::getBrands');
@@ -88,7 +88,7 @@ $routes->group('brands', static function ($routes) {
     $routes->post('recover', 'BrandController::recoverBrand');
 });
 
-//COINS MODULE
+// ? COINS MODULE
 $routes->group('coins', static function ($routes) {
     $routes->post('create', 'CoinController::createCoin');
     $routes->get('get', 'CoinController::getCoins');
@@ -98,7 +98,7 @@ $routes->group('coins', static function ($routes) {
     $routes->post('recover', 'CoinController::recoverCoin');
 });
 
-//TAXES MODULE
+// ? TAXES MODULE
 $routes->group('taxes', static function ($routes) {
     $routes->post('create', 'TaxController::createTax');
     $routes->get('get', 'TaxController::getTaxes');
@@ -108,7 +108,7 @@ $routes->group('taxes', static function ($routes) {
     $routes->post('recover', 'TaxController::recoverTax');
 });
 
-//DOCUMENT TYPE MODULE
+// ? DOCUMENT TYPE MODULE
 $routes->group('document_type', static function ($routes) {
     $routes->post('create', 'DocumentTypeController::createDocumentType');
     $routes->get('get', 'DocumentTypeController::getDocumentsType');
@@ -118,7 +118,7 @@ $routes->group('document_type', static function ($routes) {
     $routes->post('recover', 'DocumentTypeController::recoverDocumentType');
 });
 
-//PAYMENT METHOD MODULE
+// ? PAYMENT METHOD MODULE
 $routes->group('payment_method', static function ($routes) {
     $routes->post('create', 'PaymentMethodController::createPaymentMethod');
     $routes->get('get', 'PaymentMethodController::getPaymentMethods');
@@ -128,7 +128,7 @@ $routes->group('payment_method', static function ($routes) {
     $routes->post('recover', 'PaymentMethodController::recoverPaymentMethod');
 });
 
-//PRODUCTS MODULE
+// ? PRODUCTS MODULE
 $routes->group('products', static function ($routes) {
     $routes->post('create', 'ProductController::createProduct');
     $routes->get('get', 'ProductController::getProducts');
@@ -138,7 +138,7 @@ $routes->group('products', static function ($routes) {
     $routes->post('recover', 'ProductController::recoverProduct');
 });
 
-//PROVIDERS MODULE
+// ? PROVIDERS MODULE
 $routes->group('providers', static function ($routes) {
     $routes->post('create', 'ProviderController::createProvider');
     $routes->get('get', 'ProviderController::getProviders');
@@ -148,7 +148,7 @@ $routes->group('providers', static function ($routes) {
     $routes->post('recover', 'ProviderController::recoverProvider');
 });
 
-//CUSTOMERS MODULE
+// ? CUSTOMERS MODULE
 $routes->group('customers', static function ($routes) {
     $routes->post('create', 'CustomerController::createCustomer');
     $routes->get('get', 'CustomerController::getCustomers');
@@ -158,7 +158,7 @@ $routes->group('customers', static function ($routes) {
     $routes->post('recover', 'CustomerController::recoverCustomer');
 });
 
-//COIN PRICES MODULE
+// ? COIN PRICES MODULE
 $routes->group('coinPrices', static function ($routes) {
     $routes->post('createCoinPrice', 'ControlCenterController::createCoinPrice');
     $routes->get('getCoinPrices', 'ControlCenterController::getCoinPrices');
@@ -168,20 +168,26 @@ $routes->group('coinPrices', static function ($routes) {
     $routes->post('recover', 'ControlCenterController::recoverCoinPrice');
 });
 
-// REPORTS MODULE
+// ? REPORTS MODULE
 $routes->get('inventory', 'ReportController::getInventory');
 
-$routes->get('detailed_purchases', 'ReportController::getDetailedPurchases');
+$routes->get('purchases_per_provider', 'ReportController::getPurchasesPerProvider');
 $routes->post('general_purchase_reports', 'ReportController::getGeneralPurchaseReports');
 
-$routes->get('detailed_sales', 'ReportController::getDetailedSales');
+$routes->get('sales_per_customer', 'ReportController::getSalesPerCustomer');
 $routes->post('general_sale_reports', 'ReportController::getGeneralSaleReports');
 
-// Excel
-$routes->get('reports/purchase/(:any)', 'ReportController::getPurchaseReportExcel/$1');
-$routes->get('reports/sale/(:any)', 'ReportController::getSaleReportExcel/$1');
+// ? SELECCIÓN
+$routes->get('purchases_provider', 'ReportController::getPurchasesProvider');
+$routes->get('sales_customer', 'ReportController::getSalesCustomer');
 
-//INVOICES
+// ? Excel
+$routes->get('reports/purchase/(:any)', 'ReportController::getPurchaseReportExcel/$1');
+
+$routes->get('reports/sale/(:any)', 'ReportController::getSaleReportExcel/$1');
+$routes->get('reports/sales_per_customer/(:any)', 'ReportController::getSalePerCustomerReportExcel/$1/$2');
+
+// ? INVOICES
 $routes->group('invoice', static function ($routes) {
     $routes->get('sale/(:num).pdf', 'InvoiceController::saleInvoice/$1');
 });

@@ -35,6 +35,7 @@ function tableConfig(ajaxUrl, selector){
             data: function (d) {
                 d.status = $('#status_db').val();
                 d.range = $('#range').val();
+                d.searchById = $('#searchById').val();
             }
         },
         search: 1000,
@@ -48,6 +49,9 @@ function tableConfig(ajaxUrl, selector){
         $(`${selector}`).DataTable().ajax.reload();
     });
     $('#range').change(function(event) {
+        $(`${selector}`).DataTable().ajax.reload();
+    });
+    $(document).on('click', '.btn-select-customer', function(){
         $(`${selector}`).DataTable().ajax.reload();
     });
 }
