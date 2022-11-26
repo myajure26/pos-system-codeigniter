@@ -171,21 +171,24 @@ $routes->group('coinPrices', static function ($routes) {
 // ? REPORTS MODULE
 $routes->get('inventory', 'ReportController::getInventory');
 
-$routes->get('purchases_per_provider', 'ReportController::getPurchasesPerProvider');
 $routes->post('general_purchase_reports', 'ReportController::getGeneralPurchaseReports');
+$routes->get('purchases_per_provider', 'ReportController::getPurchasesPerProvider');
 
-$routes->get('sales_per_customer', 'ReportController::getSalesPerCustomer');
 $routes->post('general_sale_reports', 'ReportController::getGeneralSaleReports');
+$routes->get('sales_per_customer', 'ReportController::getSalesPerCustomer');
+$routes->get('sales_per_product', 'ReportController::getSalesPerProduct');
 
 // ? SELECCIÓN
 $routes->get('purchases_provider', 'ReportController::getPurchasesProvider');
 $routes->get('sales_customer', 'ReportController::getSalesCustomer');
+$routes->get('sales_products', 'ReportController::getSalesProducts');
 
 // ? Excel
 $routes->get('reports/purchase/(:any)', 'ReportController::getPurchaseReportExcel/$1');
 
 $routes->get('reports/sale/(:any)', 'ReportController::getSaleReportExcel/$1');
 $routes->get('reports/sales_per_customer/(:any)', 'ReportController::getSalePerCustomerReportExcel/$1/$2');
+$routes->get('reports/sales_per_product/(:any)', 'ReportController::getSalePerProductReportExcel/$1/$2');
 
 // ? INVOICES
 $routes->group('invoice', static function ($routes) {

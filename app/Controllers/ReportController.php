@@ -138,6 +138,52 @@ class ReportController extends BaseController
 			->toJson();
 	}
 
+	public function getSalesPerProduct()
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$ReportModel = new ReportModel();
+				
+		return DataTable::of($ReportModel->getSalesPerProduct())
+			->edit('fecha', function($row){
+				return date('Y-m-d', strtotime($row->fecha));
+			})
+			->edit('precio', function($row){
+				return number_format($row->precio, 2);
+			})
+			->edit('total', function($row){
+				
+				return '$ ' . number_format($row->total, 2);
+
+			})
+			->filter(function ($builder, $request) {
+        
+				if($request->range != ''){
+
+					if(!empty(explode(' a ', $request->range)[1])){
+						$from = explode(' a ', $request->range)[0];
+						$to = explode(' a ', $request->range)[1];
+						$where = "DATE_FORMAT(ventas.creado_en, '%Y-%m-%d') BETWEEN '$from' AND '$to'";
+						$builder->where($where);
+					}else{
+						$where = "DATE_FORMAT(ventas.creado_en, '%Y-%m-%d') = '$request->range'";
+						$builder->where($where);
+					}
+					
+				}
+
+				if($request->searchById != ''){
+
+					$builder->where('detalle_ventas.producto', $request->searchById);
+
+				}
+		
+			})
+			->toJson();
+	}
+
 	public function getGeneralPurchaseReports(){
 
 		if(!$this->session->has('name')){
@@ -245,6 +291,31 @@ class ReportController extends BaseController
 			}, 'first') 
 			->toJson();
 
+	}
+
+	public function getSalesProducts()
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$db      	= \Config\Database::connect();
+		$products 	= $db
+						->table('productos')
+						->select('productos.codigo, nombre, marcas.marca, categorias.categoria')
+						->join('marcas', 'marcas.identificacion = productos.marca')
+						->join('categorias', 'categorias.identificacion = productos.categoria')
+						->where('productos.estado', 1);
+				
+		return DataTable::of($products)
+			->add('Seleccionar', function($row){
+				return '<div class="btn-list"> 
+							<button type="button" class="btn-select-product btn btn-sm btn-primary waves-effect" data-id="'.$row->codigo.'" data-type="products">
+                                <i class="fas fa-check"></i>
+                            </button>
+                        </div>';
+			}, 'first') 
+			->toJson();
 	}
 
 	/** 
@@ -737,10 +808,16 @@ class ReportController extends BaseController
 			<td style='font-weight:bold; border:1px solid #eee;'>TOTAL</td>			
 		</tr>");
 
+		$grandSubTotal = 0;
+		$grandTax = 0;
+		$grandTotal = 0;
 		foreach ($ReportModel as $row => $item){
 
 			$tax = ($item->subtotal * $item->impuesto) / 100;
 			$total = $item->subtotal + $tax;
+			$grandSubTotal += $item->subtotal;
+			$grandTax += $tax;
+			$grandTotal += $total;
 
 			echo utf8_decode("<tr>
 						<td style='border:1px solid #eee;'>".$item->identificacion."</td>
@@ -751,9 +828,180 @@ class ReportController extends BaseController
 						<td style='border:1px solid #eee;'>".$item->subtotal."</td>
 						<td style='border:1px solid #eee;'>".number_format($tax, 2)."</td>
 						<td style='border:1px solid #eee;'>".number_format($total, 2)."</td>
-						<td style='border:1px solid #eee;'>");
+						</tr>");
 
 		}
-			echo "</table>";
+		echo utf8_decode("<tr>
+					<td style='border:1px solid #eee;'></td>
+					<td style='border:1px solid #eee;'></td> 
+					<td style='border:1px solid #eee;'></td>
+					<td style='border:1px solid #eee;'></td>
+					<td style='border:1px solid #eee;'></td>
+					<td style='border:1px solid #eee;'>".number_format($grandSubTotal, 2)."</td>
+					<td style='border:1px solid #eee;'>".number_format($grandTax, 2)."</td>
+					<td style='border:1px solid #eee;'>".number_format($grandTotal, 2)."</td>
+					</tr>");
+		
+		echo "</table>";
+	}
+
+	public function getSalePerProductReportExcel($product, $range = NULL)
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$ReportModel = new ReportModel();
+		$ReportModel = $ReportModel->getSalesPerProduct();
+
+		$ReportModel = $ReportModel->where('detalle_ventas.producto', $product);
+
+		$name = "reporte-ventas-por-producto.xls";
+		$nameHeader = "Todas las ventas por producto";
+
+		if ( $range != NULL ){
+			
+			if(!empty(explode('a', $range)[1])){
+				$from = explode('a', $range)[0];
+				$to = explode('a', $range)[1];
+				$where = "DATE_FORMAT(ventas.creado_en, '%Y-%m-%d') BETWEEN '$from' AND '$to'";
+				$ReportModel = $ReportModel->where($where);
+				$name = "reporte-ventas-por-producto-$from-$to.xls";
+				$nameHeader = "$from a $to";
+			}else{
+				$where = "DATE_FORMAT(ventas.creado_en, '%Y-%m-%d') = '$range'";
+				$ReportModel = $ReportModel->where($where);
+				$name = "reporte-ventas-por-producto-$range.xls";
+				$nameHeader = "Del día $range";
+			}
+
+		}
+
+		$ReportModel = $ReportModel->get()->getResult();
+
+		header("Pragma: public");
+		header("Expires: 0");
+		header("Content-type: application/x-msdownload");
+		header("Content-Disposition: attachment; filename=$name");
+		header("Pragma: no-cache");
+		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+
+		echo utf8_decode("
+		
+		<table>
+		
+		<tr>
+			
+			<td style='width:150px;'>
+                <h2 style='font-size: 20px'>Digenca</h2>
+            </td>
+
+			<td style='background-color:white; width:210px'>
+				
+				<div style='font-size:12px; text-align:right; line-height:15px;'>
+					
+					<br>
+					<strong>RIF:</strong> J-285346256
+
+					<br>
+					<strong>Dirección:</strong> Av. Venezuela con calle 37
+
+				</div>
+
+			</td>
+
+			<td style='background-color:white; width:140px'>
+
+				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
+					
+					<br>
+					Teléfono: 04121546367
+					
+					<br>
+					digencacom@example.com
+
+				</div>
+				
+			</td>
+			<td style='background-color:white; width:140px'>
+
+				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
+					
+					<br>
+					Reporte de ventas
+					
+					<br>
+					
+					$nameHeader
+
+				</div>
+				
+			</td>
+
+			<td style='background-color:white; width:140px'>
+
+				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
+					
+					<br>
+					Generado
+					
+					<br>
+					". date('Y-m-d H:i:s') . "
+
+				</div>
+				
+			</td>
+
+		</tr>
+
+	</table>
+
+		");
+		
+		echo "<br>";
+
+		echo utf8_decode("<table border='0'> 
+
+		<tr> 
+			<td style='font-weight:bold; border:1px solid #eee;'>FACTURA</td> 
+			<td style='font-weight:bold; border:1px solid #eee;'>FECHA</td>		
+			<td style='font-weight:bold; border:1px solid #eee;'>CÓDIGO DE PRODUCTO</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>PRODUCTO</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>CANTIDAD</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>PRECIO UNITARIO</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>TOTAL</td>			
+		</tr>");
+
+		$cantidad = 0;
+		$total = 0;
+
+		foreach ($ReportModel as $row => $item){
+
+			echo utf8_decode("<tr>
+						<td style='border:1px solid #eee;'>".$item->identificacion."</td>
+						<td style='border:1px solid #eee;'>".date('Y-m-d', strtotime($item->fecha))."</td> 
+						<td style='border:1px solid #eee;'>".$item->codigo."</td>
+						<td style='border:1px solid #eee;'>".$item->producto."</td>
+						<td style='border:1px solid #eee;'>".$item->cantidad."</td>
+						<td style='border:1px solid #eee;'>".number_format($item->precio, 2)."</td>
+						<td style='border:1px solid #eee;'>".number_format($item->total, 2)."</td>
+						</tr>");
+
+			$cantidad += $item->cantidad;
+			$total += $item->total;
+
+		}
+
+		echo utf8_decode("<tr>
+						<td style='border:1px solid #eee;'></td>
+						<td style='border:1px solid #eee;'></td> 
+						<td style='border:1px solid #eee;'></td>
+						<td style='border:1px solid #eee;'>Total</td>
+						<td style='border:1px solid #eee;'>".$cantidad."</td>
+						<td style='border:1px solid #eee;'>".number_format($item->precio, 2)."</td>
+						<td style='border:1px solid #eee;'>".number_format($total, 2)."</td>
+						</tr>");
+		
+		echo "</table>";
 	}
 }

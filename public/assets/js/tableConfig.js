@@ -51,7 +51,7 @@ function tableConfig(ajaxUrl, selector){
     $('#range').change(function(event) {
         $(`${selector}`).DataTable().ajax.reload();
     });
-    $(document).on('click', '.btn-select-customer', function(){
+    $(document).on('click', '.btn-select-customer, .btn-select-product', function(){
         $(`${selector}`).DataTable().ajax.reload();
     });
 }

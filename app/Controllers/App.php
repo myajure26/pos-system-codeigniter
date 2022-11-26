@@ -319,6 +319,22 @@ class App extends BaseController
 		}
 	}
 
+	public function sales_per_product()
+	{
+		if($this->session->has('name')){
+			
+			$data = [
+				"title" => "Reportes de ventas por producto - $this->system"
+			];
+			return view('app/reports/sales_per_product', $data);
+		
+		}else{
+
+			return redirect()->to(base_url());
+		
+		}
+	}
+
 	public function general_sale_reports()
 	{
 		if($this->session->has('name')){

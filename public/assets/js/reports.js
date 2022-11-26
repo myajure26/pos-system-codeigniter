@@ -34,12 +34,29 @@ $(document).ready(function(){
 
         }
 
+        if (type === 'sales_per_product'){
+            const product = $('#searchById').val();
+            if(range){
+                window.open(url + '/reports/sales_per_product/' + product + '/' + range, '_blank');
+            }else{
+                window.open(url + '/reports/sales_per_product/' + product, '_blank');
+            }
+
+        }
+
     });
 
     // * Seleccionar al cliente
     $(document).on('click', '.btn-select-customer', function(){
         $('#searchById').val($(this).closest('tr').find('td:eq(1)').text());
         $('#searchCustomerModal').modal('hide');
+        $('#btn-report').slideDown();
+    });
+
+    // * Seleccionar el producto
+    $(document).on('click', '.btn-select-product', function(){
+        $('#searchById').val($(this).closest('tr').find('td:eq(1)').text());
+        $('#searchProductModal').modal('hide');
         $('#btn-report').slideDown();
     });
 
