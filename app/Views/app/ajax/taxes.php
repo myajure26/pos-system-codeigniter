@@ -79,13 +79,15 @@
                     <div class="response"></div>
                     <div class="mb-3">
                         <label class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="name" placeholder="Introduce el nombre del impuesto" name="name" required>
+                        <input type="text" class="form-control name-tax" id="name" placeholder="Introduce el nombre del impuesto" name="name" required>
+                        <div class="invalid-feedback"></div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Porcentaje</label>
                         <div class="input-group">
-                            <input type="number" class="form-control" id="percentage" placeholder="Introduce el porcentaje del impuesto" name="percentage" maxlength="2" required> 
+                            <input type="number" class="form-control percentaje" id="percentage" placeholder="Introduce el porcentaje del impuesto" name="percentage" required> 
                             <div class="input-group-text">%</div>
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
                 </div>
@@ -113,13 +115,15 @@
                     <input type="hidden" id="viewIdentification" name="identification" value="">
                     <div class="mb-3">
                         <label class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="viewName" name="name" disabled required>
+                        <input type="text" class="form-control name-tax" id="viewName" name="name" disabled required>
+                        <div class="invalid-feedback"></div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Porcentaje</label>
                         <div class="input-group">
-                            <input type="number" class="form-control" id="viewPercentage" name="percentage" maxlength="2" disabled required>
+                            <input type="number" class="form-control percentaje" id="viewPercentage" name="percentage" maxlength="2" disabled required>
                             <div class="input-group-text">%</div>
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="row">

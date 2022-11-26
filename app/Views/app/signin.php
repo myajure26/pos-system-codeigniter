@@ -45,24 +45,20 @@
                                             <div class="response"></div>
                                             <div class="mb-3">
                                                 <label class="form-label">Cédula</label>
-                                                <input type="text" minlength="7" maxlength="8" class="form-control" id="identification" placeholder="Introduce tu cédula" name="identification" >
+                                                <input type="number" class="form-control userIdentification" id="identification" placeholder="Introduce tu cédula" name="identification" required pattern="^(([1-9]){1}[0-9]{6,7})$">
+                                                <div class="invalid-feedback"></div>
                                             </div>
                                             <div class="mb-3">
                                                 <div class="d-flex align-items-start">
                                                     <div class="flex-grow-1">
                                                         <label class="form-label">Contraseña</label>
                                                     </div>
-                                                    <div class="flex-shrink-0">
-                                                        <div class="">
-                                                            <a href="<?=base_url('recover')?>" class="text-muted">¿Olvidaste tu contraseña?</a>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                                 
                                                 <div class="input-group auth-pass-inputgroup">
-                                                    <input type="password" class="form-control" placeholder="Introduce tu contraseña" aria-label="Password" aria-describedby="password-addon" name="password" >
-                                                    
+                                                    <input type="password" class="form-control password" placeholder="Introduce tu contraseña" aria-label="Password" aria-describedby="password-addon" name="password" required>
                                                     <button class="btn btn-light ms-0" type="button" id="password-addon"><i class="mdi mdi-eye-outline"></i></button>
+                                                    <div class="invalid-feedback"></div>
                                                 </div>
                                             </div>
                                             <div class="mb-3">
@@ -71,7 +67,7 @@
                                         </form>
                                     </div>
                                     <div class="mt-4 mt-md-5 text-center">
-                                        <p class="mb-0">© <script>document.write(new Date().getFullYear())</script> <a href="<?=base_url()?>"><?=$system?></a> | Desarrollado con <span class="fa fa-heart text-danger"></span> por <a href="https://github.com/DramaQueeen26" target="_blank"> DramaQueeen26 </a> | Todos los derechos reservados.</p>
+                                        <p class="mb-0">© <script>document.write(new Date().getFullYear())</script> <a href="<?=base_url()?>"><?=$system?></a> | Desarrollado para DIGENCA | Todos los derechos reservados.</p>
                                     </div>
                                 </div>
                             </div>
@@ -104,84 +100,7 @@
                                                 <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
                                                 <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
                                             </div>
-                                            <!-- end carouselIndicators -->
-                                            <div class="carousel-inner">
-                                                <div class="carousel-item active">
-                                                    <div class="testi-contain text-white">
-                                                        <i class="bx bxs-quote-alt-left text-success display-6"></i>
 
-                                                        <h4 class="mt-4 fw-medium lh-base text-white">“I feel confident
-                                                            imposing change
-                                                            on myself. It's a lot more progressing fun than looking back.
-                                                            That's why
-                                                            I ultricies enim
-                                                            at malesuada nibh diam on tortor neaded to throw curve balls.”
-                                                        </h4>
-                                                        <div class="mt-4 pt-3 pb-5">
-                                                            <div class="d-flex align-items-start">
-                                                                <div class="flex-shrink-0">
-                                                                    <img src="<?=base_url()?>/assets/images/users/avatar-1.jpg" class="avatar-md img-fluid rounded-circle" alt="...">
-                                                                </div>
-                                                                <div class="flex-grow-1 ms-3 mb-4">
-                                                                    <h5 class="font-size-18 text-white">Richard Drews
-                                                                    </h5>
-                                                                    <p class="mb-0 text-white-50">Web Designer</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="carousel-item">
-                                                    <div class="testi-contain text-white">
-                                                        <i class="bx bxs-quote-alt-left text-success display-6"></i>
-
-                                                        <h4 class="mt-4 fw-medium lh-base text-white">“Our task must be to
-                                                            free ourselves by widening our circle of compassion to embrace
-                                                            all living
-                                                            creatures and
-                                                            the whole of quis consectetur nunc sit amet semper justo. nature
-                                                            and its beauty.”</h4>
-                                                        <div class="mt-4 pt-3 pb-5">
-                                                            <div class="d-flex align-items-start">
-                                                                <div class="flex-shrink-0">
-                                                                    <img src="<?=base_url()?>/assets/images/users/avatar-2.jpg" class="avatar-md img-fluid rounded-circle" alt="...">
-                                                                </div>
-                                                                <div class="flex-grow-1 ms-3 mb-4">
-                                                                    <h5 class="font-size-18 text-white">Rosanna French
-                                                                    </h5>
-                                                                    <p class="mb-0 text-white-50">Web Developer</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="carousel-item">
-                                                    <div class="testi-contain text-white">
-                                                        <i class="bx bxs-quote-alt-left text-success display-6"></i>
-
-                                                        <h4 class="mt-4 fw-medium lh-base text-white">“I've learned that
-                                                            people will forget what you said, people will forget what you
-                                                            did,
-                                                            but people will never forget
-                                                            how donec in efficitur lectus, nec lobortis metus you made them
-                                                            feel.”</h4>
-                                                        <div class="mt-4 pt-3 pb-5">
-                                                            <div class="d-flex align-items-start">
-                                                                <img src="<?=base_url()?>/assets/images/users/avatar-3.jpg"
-                                                                    class="avatar-md img-fluid rounded-circle" alt="...">
-                                                                <div class="flex-1 ms-3 mb-4">
-                                                                    <h5 class="font-size-18 text-white">Ilse R. Eaton</h5>
-                                                                    <p class="mb-0 text-white-50">Manager
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- end carousel-inner -->
                                         </div>
                                         <!-- end review carousel -->
                                     </div>
@@ -209,8 +128,8 @@
         <script src="<?=base_url('assets/libs/pace-js/pace.min.js')?>"></script>
         <!-- password addon init -->
         <script src="<?=base_url('assets/js/pages/pass-addon.init.js')?>"></script>
-        <!-- ajax -->
-        <!-- <script src="<?=base_url('assets/js/ajax.js')?>"></script> -->
+        <script src="<?=base_url('assets/js/validation.js')?>"></script>
+        
 
         <script>
             // AJAX FORM

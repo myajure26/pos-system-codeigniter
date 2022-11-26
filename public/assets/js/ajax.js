@@ -153,6 +153,8 @@ $(document).ready(function() {
             $('.btnUpdate').show();
             $('.viewForm input, .viewForm textarea, .viewForm select, .viewForm .btn-disabled').attr('disabled', 'true');
             $('#newPhoto').attr('src', url + "/assets/images/users/anonymous.png");
+            $('.invalid-feedback').hide();
+            $('input').removeClass('is-invalid');
         });
     });
 
@@ -194,7 +196,7 @@ $(document).ready(function() {
             error: function (data) {
                 
                 Swal.fire({
-                    title: '¡Oops!',
+                    title: 'Alerta',
                     text: 'Ocurrió un error',
                     icon: 'error'
                 });

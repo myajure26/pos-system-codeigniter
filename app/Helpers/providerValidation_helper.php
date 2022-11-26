@@ -31,7 +31,7 @@ function createProviderValidation()
 		],
 		'name' => [
 			'label' => 'name',
-			'rules' => 'required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ ,.]*$/u]',
+			'rules' => 'required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ ]*$/u]',
 			'errors' => [
 				'required' => 'El nombre es requerido',
 				'regex_match' => 'Para el nombre sólo se permiten carácteres alfabéticos.'
@@ -39,10 +39,10 @@ function createProviderValidation()
 		],
 		'address' => [
 			'label' => 'address',
-			'rules' => 'required|regex_match[/^[a-z0-9ñáéíóúüA-ZÑÁÉÍÓÚÜ ~!#$%\&\*\-_+=|:.\/]*$/u]',
+			'rules' => 'required|regex_match[/^[a-z0-9ñáéíóúüA-ZÑÁÉÍÓÚÜ .,-]*$/u]',
 			'errors' => [
 				'required' => 'La dirección es requerida',
-				'regex_match' => 'Para la dirección sólo se permiten carácteres alfabéticos.'
+				'regex_match' => 'Para la dirección sólo se permiten carácteres alfabéticos y guiones.'
 			]
 		],
 		'phone' => [
@@ -89,7 +89,7 @@ function updateProviderValidation()
 		],
 		'name' => [
 			'label' => 'name',
-			'rules' => 'required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ ,.]*$/u]',
+			'rules' => 'required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ ]*$/u]',
 			'errors' => [
 				'required' => 'El nombre es requerido',
 				'regex_match' => 'Para el nombre sólo se permiten carácteres alfabéticos.'
@@ -97,10 +97,10 @@ function updateProviderValidation()
 		],
 		'address' => [
 			'label' => 'address',
-			'rules' => 'required|regex_match[/^[a-z0-9ñáéíóúüA-ZÑÁÉÍÓÚÜ ~!#$%\&\*\-_+=|:.\/]*$/u]',
+			'rules' => 'required|regex_match[/^[a-z0-9ñáéíóúüA-ZÑÁÉÍÓÚÜ .,-]*$/u]',
 			'errors' => [
 				'required' => 'La dirección es requerida',
-				'regex_match' => 'Para la dirección sólo se permiten carácteres alfabéticos.'
+				'regex_match' => 'Para la dirección sólo se permiten carácteres alfabéticos y guiones.'
 			]
 		],
 		'phone' => [

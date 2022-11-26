@@ -65,10 +65,10 @@ function createSaleValidation()
 		],
 		'productQuantity.*' => [
 			'label' => 'productQuantity',
-			'rules' => 'required|numeric',
+			'rules' => 'required|integer',
 			'errors' => [
 				'required' => 'La cantidad del producto es requerida',
-				'numeric' => 'Solo se permiten números para la cantidad'
+				'integer' => 'Solo se permiten números enteros para la cantidad'
 			]
 		],
 		'productPrice.*' => [

@@ -1,5 +1,6 @@
 <script>
     document.title = "<?= $title ?>";
+    // TODO: Verificar los campos deshabilitados
 </script>
 <div class="page-content">
     <div class="container-fluid">
@@ -87,11 +88,12 @@
                                                 </div>
                                                 <div class="col-md-9">
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control identification" placeholder="Introduce el número de cédula/rif" name="legalIdentification" id="legalIdentification" required maxlength="10" minlength="7">
+                                                        <input type="number" class="form-control ci-rif identification" placeholder="Introduce el número de cédula/rif" name="legalIdentification" id="legalIdentification" required>
                                                         <div class="input-group-btn">
                                                             <button type="button" class="btn btn-primary waves-effect searchCustomer"><i class="fas fa-search"></i></button>
                                                             <button type="button" class="btn btn-primary waves-effect addCustomer" disabled><i class="fas fa-user-plus"></i></button>
                                                         </div>
+                                                        <div class="invalid-feedback"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -101,19 +103,22 @@
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Nombre</label>
-                                                    <input type="text" class="form-control" id="name" placeholder="Nombre del cliente" name="name" required disabled>
+                                                    <input type="text" class="form-control name" id="name" placeholder="Nombre del cliente" name="name" required disabled>
+                                                    <div class="invalid-feedback"></div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Teléfono</label>
-                                                    <input type="text" class="form-control" id="phone" placeholder="Teléfono del cliente" name="phone" required maxlength="11" minlength="11" disabled>
+                                                    <input type="number" class="form-control phone" id="phone" placeholder="Teléfono del cliente" name="phone" required disabled>
+                                                    <div class="invalid-feedback"></div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">Dirección</label>
-                                            <textarea class="form-control" id="address" placeholder="Dirección del cliente" name="address" required cols="2" disabled></textarea>
+                                            <textarea class="form-control address" id="address" placeholder="Dirección del cliente" name="address" required cols="2" disabled></textarea>
+                                            <div class="invalid-feedback"></div>
                                         </div>
                                     </form>
                                     <ul class="pager wizard twitter-bs-wizard-pager-link">

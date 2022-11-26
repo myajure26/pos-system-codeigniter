@@ -24,7 +24,7 @@ function createCustomerValidation()
 		],
 		'name' => [
 			'label' => 'name',
-			'rules' => 'required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ ,.]*$/u]',
+			'rules' => 'required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ ]*$/u]',
 			'errors' => [
 				'required' => 'El nombre es requerido',
 				'regex_match' => 'Para el nombre sólo se permiten carácteres alfabéticos.'
@@ -32,15 +32,15 @@ function createCustomerValidation()
 		],
 		'address' => [
 			'label' => 'address',
-			'rules' => 'required|regex_match[/^[a-z0-9ñáéíóúüA-ZÑÁÉÍÓÚÜ ~!#$%\&\*\-_+=|:.\/]*$/u]',
+			'rules' => 'required|regex_match[/^[a-z0-9ñáéíóúüA-ZÑÁÉÍÓÚÜ .,-]*$/u]',
 			'errors' => [
 				'required' => 'La dirección es requerida',
-				'regex_match' => 'Para la dirección sólo se permiten carácteres alfabéticos.'
+				'regex_match' => 'Para la dirección sólo se permiten carácteres alfabéticos y guiones.'
 			]
 		],
 		'phone' => [
 			'label' => 'phone',
-			'rules' => 'required|regex_match[^(0414|0424|0412|0416|0426|0251)[-][0-9]{7}$]',
+			'rules' => 'required|regex_match[^(0414|0424|0412|0416|0426|0251)[0-9]{7}$]',
 			'errors' => [
 				'required' => 'El teléfono es requerido',
 				'regex_match' => 'Ingresa un número de teléfono válido: 04121534253'
@@ -67,7 +67,7 @@ function updateCustomerValidation()
 		],
 		'name' => [
 			'label' => 'name',
-			'rules' => 'required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ ,.]*$/u]',
+			'rules' => 'required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ ]*$/u]',
 			'errors' => [
 				'required' => 'El nombre es requerido',
 				'regex_match' => 'Para el nombre sólo se permiten carácteres alfabéticos.'
@@ -75,10 +75,10 @@ function updateCustomerValidation()
 		],
 		'address' => [
 			'label' => 'address',
-			'rules' => 'required|regex_match[/^[a-z0-9ñáéíóúüA-ZÑÁÉÍÓÚÜ ~!#$%\&\*\-_+=|:.\/]*$/u]',
+			'rules' => 'required|regex_match[/^[a-z0-9ñáéíóúüA-ZÑÁÉÍÓÚÜ .,-]*$/u]',
 			'errors' => [
 				'required' => 'La dirección es requerida',
-				'regex_match' => 'Para la dirección sólo se permiten carácteres alfabéticos.'
+				'regex_match' => 'Para la dirección sólo se permiten carácteres alfabéticos y guiones.'
 			]
 		],
 		'phone' => [

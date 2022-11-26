@@ -14,10 +14,10 @@ function createProductValidation()
 		],
 		'name' => [
 			'label' => 'name',
-			'rules' => 'required|regex_match[/^[a-z0-9ñáéíóúüA-ZÑÁÉÍÓÚÜ ~!#$%\&\*\-_+=|:.\/]*$/u]',
+			'rules' => 'required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ ]*$/u]',
 			'errors' => [
 				'required' => 'El nombre es requerido',
-				'regex_match' => 'Para el nombre sólo se permiten carácteres alfabéticos y un conjunto limitado de signos.'
+				'regex_match' => 'Para el nombre sólo se permiten carácteres alfabéticos'
 			]
 		],
 		'brand' => [
@@ -71,10 +71,10 @@ function updateProductValidation()
 		],
 		'name' => [
 			'label' => 'name',
-			'rules' => 'required|regex_match[/^[a-z0-9ñáéíóúüA-ZÑÁÉÍÓÚÜ ~!#$%\&\*\-_+=|:.\/]*$/u]',
+			'rules' => 'required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ ]*$/u]',
 			'errors' => [
 				'required' => 'El nombre es requerido',
-				'regex_match' => 'Para el nombre sólo se permiten carácteres alfabéticos y un número limitado de signos'
+				'regex_match' => 'Para el nombre sólo se permiten carácteres alfabéticos'
 			]
 		],
 		'brand' => [

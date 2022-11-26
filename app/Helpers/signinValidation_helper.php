@@ -19,7 +19,7 @@ function signinValidation()
 			'rules' => 'required|min_length[8]',
 			'errors' => [
 				'required' => 'La contraseña es requerida',
-				'min_length' => 'La contraseña debe tener una longitud mínima de 8 carácteres'
+				'min_length' => 'La contraseña debe contener más de 8 carácteres'
 			]
 		]
 	];

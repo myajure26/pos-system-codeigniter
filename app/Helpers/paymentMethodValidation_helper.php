@@ -5,7 +5,7 @@ function createPaymentMethodValidation()
 	$paymentMethod = [
 		'name' => [
 			'label' => 'name',
-			'rules' => 'required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ ,.]*$/u]|is_unique[metodo_pago.nombre]',
+			'rules' => 'required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ ]*$/u]|is_unique[metodo_pago.nombre]',
 			'errors' => [
 				'required' => 'El nombre del método de pago es requerido',
 				'regex_match' => 'Para el nombre sólo se permiten carácteres alfabéticos.',
@@ -29,7 +29,7 @@ function updatePaymentMethodValidation()
 		],
 		'name' => [
 			'label' => 'name',
-			'rules' => 'required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ ,.]*$/u]|is_unique[metodo_pago.nombre,id_metodo_pago,{identification}]',
+			'rules' => 'required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ ]*$/u]|is_unique[metodo_pago.nombre,id_metodo_pago,{identification}]',
 			'errors' => [
 				'required' => 'El nombre del método de pago es requerido',
 				'regex_match' => 'Para el nombre sólo se permiten carácteres alfabéticos.',

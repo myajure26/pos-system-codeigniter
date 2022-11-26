@@ -104,7 +104,8 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" placeholder="Introduce el número de cédula/rif" name="legalIdentification" id="legalIdentification" required maxlength="9" minlength="7">
+                                        <input type="number" class="form-control ci-rif" placeholder="Introduce el número de cédula/rif" name="legalIdentification" id="legalIdentification" required>
+                                        <div class="invalid-feedback"></div>
                                     </div>
                                 </div>
                             </div>
@@ -114,19 +115,22 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="name" placeholder="Introduce el nombre del proveedor" name="name" required>
+                                <input type="text" class="form-control name" id="name" placeholder="Introduce el nombre del proveedor" name="name" required>
+                                <div class="invalid-feedback"></div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Teléfono</label>
-                                <input type="text" class="form-control" id="phone" placeholder="Introduce el teléfono del proveedor" name="phone" required maxlength="11" minlength="11">
+                                <input type="numer" class="form-control phone" id="phone" placeholder="Introduce el teléfono del proveedor" name="phone" required>
+                                <div class="invalid-feedback"></div>
                             </div>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Dirección</label>
-                        <textarea class="form-control" id="address" placeholder="Introduce la dirección del proveedor" name="address" required cols="2"></textarea>
+                        <textarea class="form-control address" id="address" placeholder="Introduce la dirección del proveedor" name="address" required cols="2"></textarea>
+                        <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -171,7 +175,8 @@
                                         </select>
                                     </div>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" id="viewIdentification" name="legalIdentification" disabled>
+                                        <input type="text" class="form-control ci-rif" id="viewIdentification" name="legalIdentification" disabled>
+                                        <div class="invalid-feedback"></div>
                                     </div>
                                 </div>
                             </div>
@@ -182,20 +187,23 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="viewName" name="name" disabled>
+                                <input type="text" class="form-control name" id="viewName" name="name" disabled>
+                                <div class="invalid-feedback"></div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Teléfono</label>
-                                <input type="text" class="form-control" id="viewPhone" name="phone" disabled>
+                                <input type="number" class="form-control phone" id="viewPhone" name="phone" disabled>
+                                <div class="invalid-feedback"></div>
                             </div>
                         </div>
                     </div>
                     
                     <div class="mb-3">
                         <label class="form-label">Dirección</label>
-                        <textarea class="form-control" id="viewAddress" name="address" disabled></textarea>
+                        <textarea class="form-control address" id="viewAddress" name="address" disabled></textarea>
+                        <div class="invalid-feedback"></div>
                     </div>
 
                     <div class="row">

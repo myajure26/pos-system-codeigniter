@@ -305,7 +305,7 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="text-sm-end d-none d-sm-block">
-                                Desarrollado con <span class="fa fa-heart text-danger"></span> por <a href="https://github.com/DramaQueeen26" target="_blank"> DramaQueeen26 </a> | Todos los derechos reservados
+                                <a href="<?=base_url()?>"><?=$system?></a> | Desarrollado para DIGENCA | Todos los derechos reservados.
                             </div>
                         </div>
                     </div>
@@ -332,15 +332,6 @@
         <!-- Required datatable js -->
         <script src="<?=base_url('assets/libs/datatables.net/js/jquery.dataTables.min.js')?>"></script>
         <script src="<?=base_url('assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js')?>"></script>
-        <!-- buttton datatable -->
-        <script src="<?=base_url('assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js')?>"></script>
-        <script src="<?=base_url('assets/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js')?>"></script>
-        <script src="<?=base_url('assets/libs/jszip/jszip.min.js')?>"></script>
-        <script src="<?=base_url('assets/libs/pdfmake/build/pdfmake.min.js')?>"></script>
-        <script src="<?=base_url('assets/libs/pdfmake/build/vfs_fonts.js')?>"></script>
-        <script src="<?=base_url('assets/libs/datatables.net-buttons/js/buttons.html5.min.js')?>"></script>
-        <script src="<?=base_url('assets/libs/datatables.net-buttons/js/buttons.print.min.js')?>"></script>
-        <script src="<?=base_url('assets/libs/datatables.net-buttons/js/buttons.colVis.min.js')?>"></script>
         <!-- responsive datatables -->
         <script src="<?=base_url('assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js')?>"></script>
         <script src="<?=base_url('assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js')?>"></script>
@@ -359,6 +350,7 @@
         <!-- DOCUMENT -->
         <script src="<?=base_url('assets/js/app.js')?>"></script>
         <script src="<?=base_url('assets/js/ajax.js')?>"></script>
+        <script src="<?=base_url('assets/js/validation.js')?>"></script>
         <script src="<?=base_url('assets/js/purchaseSale.js')?>"></script>
         <script src="<?=base_url('assets/js/charts.js')?>"></script>
 

@@ -88,13 +88,15 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Cédula</label>
-                                <input type="text" class="form-control" id="identification" placeholder="Introduce el número de cédula" name="identification" minlength="7" maxlength="8" required>
+                                <input type="number" class="form-control userIdentification" id="identification" placeholder="Introduce el número de cédula" name="identification" required>
+                                <div class="invalid-feedback"></div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="name" placeholder="Introduce el nombre del usuario" name="name" required>
+                                <input type="text" class="form-control name" id="name" placeholder="Introduce el nombre del usuario" name="name" required>
+                                <div class="invalid-feedback"></div>
                             </div>
                         </div>
                     </div>
@@ -122,8 +124,9 @@
                             <div class="mb-3">
                                 <label class="form-label">Introduce la contraseña</label>
                                 <div class="input-group auth-pass-inputgroup">
-                                    <input type="password" class="form-control" placeholder="Introduce la contraseña" aria-label="Password" aria-describedby="password-addon" name="password" required>
+                                    <input type="password" class="form-control password" placeholder="Introduce la contraseña" aria-label="Password" aria-describedby="password-addon" name="password" required>
                                     <button class="btn btn-light ms-0" type="button" id="password-addon"><i class="mdi mdi-eye-outline"></i></button>
+                                    <div class="invalid-feedback"></div>
                                 </div>
                             </div>
                             <div class="mb-3">
@@ -164,13 +167,14 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Cédula</label>
-                                <input type="text" class="form-control viewReadonly" id="viewIdentification" placeholder="Introduce el número de cédula" minlength="7" maxlength="8" disabled required>
+                                <input type="number" class="form-control userIdentification viewReadonly" id="viewIdentification" placeholder="Introduce el número de cédula" disabled required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="viewName" placeholder="Introduce el nombre del usuario" name="name" disabled required>
+                                <input type="text" class="form-control name" id="viewName" placeholder="Introduce el nombre del usuario" name="name" disabled required>
+                                <div class="invalid-feedback"></div>
                             </div>
                         </div>
                     </div>
@@ -200,8 +204,9 @@
                             <div class="mb-3">
                                 <label class="form-label">Contraseña</label>
                                 <div class="input-group auth-pass-inputgroup">
-                                    <input type="password" class="form-control" placeholder="Dejar en blanco si no va a actualizar la contraseña" aria-label="Password" aria-describedby="password-addon" name="password" id="viewPassword" disabled>
+                                    <input type="password" class="form-control password" placeholder="Dejar en blanco si no va a actualizar la contraseña" aria-label="Password" aria-describedby="password-addon" name="password" id="viewPassword" disabled>
                                     <button class="btn btn-light ms-0" type="button" id="password-addon2"><i class="mdi mdi-eye-outline"></i></button>
+                                    <div class="invalid-feedback"></div>
                                 </div>
                             </div>
                             <div class="mb-3">

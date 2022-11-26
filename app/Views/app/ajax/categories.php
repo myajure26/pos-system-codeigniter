@@ -84,7 +84,8 @@
                     <div class="response"></div>
                     <div class="mb-3">
                         <label class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="name" placeholder="Introduce el nombre de la categoría" name="name" required>
+                        <input type="text" class="form-control name-with-number" id="name" placeholder="Introduce el nombre de la categoría" name="name" required>
+                        <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -111,7 +112,8 @@
                     <input type="hidden" id="viewIdentification" name="identification" value="">
                     <div class="mb-3">
                         <label class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="viewName" name="name" disabled required>
+                        <input type="text" class="form-control name-with-number" id="viewName" name="name" disabled required>
+                        <div class="invalid-feedback"></div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">

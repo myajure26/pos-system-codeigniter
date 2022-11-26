@@ -49,9 +49,9 @@ $(document).ready(function(){
     });
 
     $('.deletePhoto').on('click', function(){
-        $('.img').attr('src', '../../assets/images/users/anonymous.png');
         $('#viewPhotoPreview').val('');
         $('.photo').val('');
+        $('.img').attr('src', '../../assets/images/users/anonymous.png');
     });
 
 });

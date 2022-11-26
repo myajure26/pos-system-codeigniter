@@ -95,7 +95,8 @@
                         <div class="col-md-6">    
                             <div class="mb-3">
                                 <label class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="name" placeholder="Introduce el nombre del producto" name="name" required>
+                                <input type="text" class="form-control name" id="name" placeholder="Introduce el nombre del producto" name="name" required>
+                                <div class="invalid-feedback"></div>
                             </div>
                         </div>
                     </div>
@@ -130,7 +131,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Marca</label>
                                 <select class="form-select" name="brand" id="brand" required>
@@ -175,7 +176,8 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="viewName" name="name" disabled required>
+                                <input type="text" class="form-control name" id="viewName" name="name" disabled required>
+                                <div class="invalid-feedback"></div>
                             </div>
                         </div>
                     </div>
@@ -210,7 +212,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Marca</label>
                                 <select class="form-select" name="brand" id="viewBrand" disabled required>

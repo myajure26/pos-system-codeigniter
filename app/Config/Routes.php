@@ -33,7 +33,6 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'App::index');
-$routes->get('/recover', 'App::recover');
 $routes->get('/audits/get', 'AuditController::getAudits');
 
 //SALES MODULE

@@ -16,7 +16,7 @@ function createUserValidation()
 		],
 		'name' => [
 			'label' => 'name',
-			'rules' => 'required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ ,.]*$/u]',
+			'rules' => 'required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ ]*$/u]',
 			'errors' => [
 				'required' => 'El nombre es requerido',
 				'regex_match' => 'Para el nombre sólo se permiten carácteres alfabéticos.'
@@ -36,7 +36,7 @@ function createUserValidation()
 			'rules' => 'required|min_length[8]',
 			'errors' => [
 				'required' => 'La contraseña es requerida',
-				'min_length' => 'La contraseña debe tener una longitud mínima de 8 carácteres'
+				'min_length' => 'La contraseña debe contener más de 8 carácteres'
 			]
 		],
 		'privilege' => [
@@ -75,7 +75,7 @@ function updateUserValidation()
 		],
 		'name' => [
 			'label' => 'name',
-			'rules' => 'required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ ,.]*$/u]',
+			'rules' => 'required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ ]*$/u]',
 			'errors' => [
 				'required' => 'El nombre es requerido',
 				'regex_match' => 'Para el nombre sólo se permiten carácteres alfabéticos.'
@@ -85,7 +85,7 @@ function updateUserValidation()
 			'label' => 'password',
 			'rules' => 'permit_empty|min_length[8]',
 			'errors' => [
-				'min_length' => 'La contraseña debe tener una longitud mínima de 8 carácteres'
+				'min_length' => 'La contraseña debe contener más de 8 carácteres'
 			]
 		],
 		'email' => [
@@ -122,7 +122,7 @@ function updateCurrentUserValidation()
 	$updateCurrentUser = [
 		'name' => [
 			'label' => 'name',
-			'rules' => 'required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ ,.]*$/u]',
+			'rules' => 'required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ ]*$/u]',
 			'errors' => [
 				'required' => 'El nombre es requerido',
 				'regex_match' => 'Para el nombre sólo se permiten carácteres alfabéticos.'
@@ -132,7 +132,7 @@ function updateCurrentUserValidation()
 			'label' => 'password',
 			'rules' => 'permit_empty|min_length[8]',
 			'errors' => [
-				'min_length' => 'La contraseña debe tener una longitud mínima de 8 carácteres'
+				'min_length' => 'La contraseña debe contener más de 8 carácteres'
 			]
 		],
 		'email' => [

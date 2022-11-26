@@ -32,7 +32,7 @@ $(document).ready(function(){
         if($('#'+code).length > 0){
             Swal.fire({
                 icon: 'info',
-                title: 'Oops',
+                title: 'Alerta',
                 text: 'Ya has ingresado el producto a la compra',
             });
             return false;
@@ -69,12 +69,13 @@ $(document).ready(function(){
     });
     
     //Calcular al ingresar la cantidad o el precio del producto tanto en venta como en compra
-    $(document).on('input', '.productPrice, .productQuantity', function(){
-        $(this).closest('tr').find('.productQuantity').removeClass('is-invalid');
-        $('#productsNext').slideDown();
+    $(document).on('input', '.productPrice, .productQuantity', function(e){
+    
+
+
         let quantity = $(this).closest('tr').find('.productQuantity').val();
         let price = $(this).closest('tr').find('.productPrice').val();
-
+        
         //Quitar las comas y puntos
         price = price.replace(/,/g, "");
         price = price.replace('.', "");
@@ -83,7 +84,14 @@ $(document).ready(function(){
         price = Number(price);
         quantity = Number(quantity);
 
-        // Validar que la cantidad no sobrepase el stock
+        // ? Validar solamente números enteros
+        if( !Number.isInteger(quantity) ){
+            $(this).closest('tr').find('.productQuantity').addClass('is-invalid');
+            console.log(Number.isInteger(quantity) + quantity);
+            return false;
+        }
+        
+        // ? Validar que la cantidad no sobrepase el stock
         if($(this).closest('tr').find('.productQuantity').attr('data-type') === 'sale'){
             if(quantity > Number($(this).closest('tr').find('.productQuantity').attr('max')) || quantity < 1){
                 $(this).closest('tr').find('.productQuantity').addClass('is-invalid');
@@ -92,8 +100,16 @@ $(document).ready(function(){
                 $('#productsNext').slideUp();
                 return false;
             }
+        }else{
+            if( quantity < 1 ){
+                $(this).closest('tr').find('.productQuantity').addClass('is-invalid');
+                totalCount();
+                return false;
+            }
         }
-        
+        $(this).closest('tr').find('.productQuantity').removeClass('is-invalid');
+        $('#productsNext').slideDown();
+
         //Calcular
         const count = quantity * price;
         
@@ -124,8 +140,17 @@ $(document).ready(function(){
         if($('#'+code).length > 0){
             Swal.fire({
                 icon: 'info',
-                title: 'Oops',
+                title: 'Alerta',
                 text: 'Ya has ingresado el producto a la venta',
+            });
+            return false;
+        }
+
+        if(stock == 0){
+            Swal.fire({
+                icon: 'info',
+                title: 'Alerta',
+                text: 'El producto no está disponible',
             });
             return false;
         }

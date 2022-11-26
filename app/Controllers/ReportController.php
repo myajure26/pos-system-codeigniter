@@ -9,7 +9,7 @@ class ReportController extends BaseController
 	protected $errorMessage = [
 		"alert" => "simple",
 		"type" => "error",
-		"title" => "¡Oops!",
+		"title" => "Alerta",
 		"text" => ""
 	];
 

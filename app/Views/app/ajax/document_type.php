@@ -70,7 +70,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel">Nueva moneda</h5>
+                <h5 class="modal-title" id="myLargeModalLabel">Nuevo tipo de documento</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form class="custom-form" action="<?=base_url('document_type/create')?>" method="POST">
@@ -78,7 +78,8 @@
                     <div class="response"></div>
                     <div class="mb-3">
                         <label class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="name" placeholder="Introduce el nombre de la moneda" name="name" required>
+                        <input type="text" class="form-control name" id="name" placeholder="Introduce el nombre de la moneda" name="name" required>
+                        <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -96,7 +97,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel">Ver detalles de moneda</h5>
+                <h5 class="modal-title" id="myLargeModalLabel">Ver detalles de tipo de documento</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form class="custom-form viewForm" action="<?=base_url('document_type/update')?>" method="POST">
@@ -105,7 +106,8 @@
                     <input type="hidden" id="viewIdentification" name="identification" value="">
                     <div class="mb-3">
                         <label class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="viewName" name="name" disabled required>
+                        <input type="text" class="form-control name" id="viewName" name="name" disabled required>
+                        <div class="invalid-feedback"></div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">

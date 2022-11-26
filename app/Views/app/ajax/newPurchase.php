@@ -72,7 +72,8 @@
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label" for="reference">Número de referencia</label>
-                                                    <input type="number" class="form-control" id="reference" placeholder="Ingresa el número de referencia" name="reference" required>
+                                                    <input type="number" class="form-control ref" id="reference" placeholder="Ingresa el número de referencia" name="reference" required>
+                                                    <div class="invalid-feedback"></div>
                                                 </div>
                                             </div>
                                         </div>
