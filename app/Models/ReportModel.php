@@ -71,7 +71,22 @@ class ReportModel extends Model
 			->where('ventas.estado', 1)
 			->groupBy('productos.codigo')
 			->orderBy('total', 'DESC')
-			->limit(0);
+			->limit(10);
+		return $db;
+	}
+
+	public function getLessSoldProducts()
+	{
+        $db = \Config\Database::connect();
+		$db = $db
+            ->table('detalle_ventas')
+			->select('productos.codigo, productos.nombre, SUM(detalle_ventas.cantidad) as cantidad, SUM(detalle_ventas.cantidad*detalle_ventas.precio) as total')
+			->join('productos', 'productos.codigo = detalle_ventas.producto')
+			->join('ventas', 'ventas.identificacion = detalle_ventas.venta')
+			->where('ventas.estado', 1)
+			->groupBy('productos.codigo')
+			->orderBy('total', 'ASC')
+			->limit(10);
 		return $db;
 	}
 

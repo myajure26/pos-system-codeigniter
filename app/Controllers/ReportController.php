@@ -346,6 +346,40 @@ class ReportController extends BaseController
 			->toJson();
 	}
 
+	public function getLessSoldProducts()
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$ReportModel = new ReportModel();
+				
+		return DataTable::of($ReportModel->getLessSoldProducts())
+			->edit('total', function($row){
+				
+				return '$ ' . number_format($row->total, 2);
+
+			})
+			->filter(function ($builder, $request) {
+        
+				if($request->range != ''){
+
+					if(!empty(explode(' a ', $request->range)[1])){
+						$from = explode(' a ', $request->range)[0];
+						$to = explode(' a ', $request->range)[1];
+						$where = "DATE_FORMAT(ventas.creado_en, '%Y-%m-%d') BETWEEN '$from' AND '$to'";
+						$builder->where($where);
+					}else{
+						$where = "DATE_FORMAT(ventas.creado_en, '%Y-%m-%d') = '$request->range'";
+						$builder->where($where);
+					}
+					
+				}
+		
+			})
+			->toJson();
+	}
+
 	public function getGeneralPurchaseReports(){
 
 		if(!$this->session->has('name')){
@@ -1682,6 +1716,171 @@ class ReportController extends BaseController
 				$where = "DATE_FORMAT(ventas.creado_en, '%Y-%m-%d') BETWEEN '$from' AND '$to'";
 				$ReportModel = $ReportModel->where($where);
 				$name = "reporte-productos-más-vendidos-$from-$to.xls";
+				$nameHeader = "Desde $from hasta $to";
+			}else{
+				$where = "DATE_FORMAT(ventas.creado_en, '%Y-%m-%d') = '$range'";
+				$ReportModel = $ReportModel->where($where);
+				$name = "reporte-productos-más-vendidos-$range.xls";
+				$nameHeader = "Del día $range";
+			}
+
+		}
+
+		$ReportModel = $ReportModel->get()->getResult();
+
+		if(!$ReportModel){
+			var_dump($ReportModel);
+		}
+
+
+		header("Pragma: public");
+		header("Expires: 0");
+		header("Content-type: application/x-msdownload");
+		header("Content-Disposition: attachment; filename=$name");
+		header("Pragma: no-cache");
+		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+
+		echo utf8_decode("
+		
+		<table>
+			<tr>
+
+				<td style='background-color:white; width:350px'>
+					
+					<div style='font-size:12px; text-align:left; line-height:15px; margin-left: 20px'>
+						
+						<br>
+						<strong style='font-size: 22px'>Reporte de productos más vendidos</strong>
+						<br>
+						<strong>$nameHeader</strong>
+
+					</div>
+
+				</td>
+
+				<td style='width:150px;'>
+					
+				</td>
+
+				<td style='background-color:white; width:140px'>
+
+				
+					
+				</td>
+
+				<td style='background-color:white; width:140px'>
+
+					<div style='font-size:12px; text-align:right; margin-left: 50px'>
+						<br>
+						<strong style='font-size: 18px'>Generado:</strong>
+						<br>
+						". date('d-m-Y H:i') . "
+
+					</div>
+					
+				</td>
+
+			</tr>
+		</table>
+		
+		");
+
+		echo utf8_decode("
+		
+		<table>
+		
+		<tr>
+			
+			<td style='width:150px; margin-left: 20px'>
+				<div style='font-size:12px; text-align: center; line-height:15px; margin-left: 50px'>
+					
+					<br>
+					<strong style='font-size: 20px'>DIGENCA</strong>
+					
+					<br>
+
+				</div>
+
+            </td>
+
+			<td style='background-color:white; width:210px'>
+				
+				<div style='font-size:12px; text-align:right; line-height:15px;'>
+					
+					<br>
+					<strong>RIF:</strong> J-285346256
+
+					<br>
+					<strong>Dirección:</strong> Av. Venezuela con calle 37
+
+				</div>
+
+			</td>
+
+			<td style='background-color:white; width:140px'>
+
+				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
+					
+					<br>
+					<strong>Teléfono:</strong> 02512736478
+					
+					<br>
+					digencacom@example.com
+
+				</div>
+				
+			</td>
+
+		</tr>
+
+	</table>
+
+		");
+		
+		echo "<br>";
+		echo utf8_decode("<table border='0'> 
+
+		<tr> 
+			<td style='font-weight:bold; border:1px solid #eee;'>CÓDIGO</td> 
+			<td style='font-weight:bold; border:1px solid #eee;'>NOMBRE</td>		
+			<td style='font-weight:bold; border:1px solid #eee;'>CANTIDAD</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>TOTAL</td>		
+		</tr>");
+
+		foreach ($ReportModel as $row => $item){
+
+
+			echo utf8_decode("<tr>
+						<td style='border:1px solid #eee;'>".$item->codigo."</td>
+						<td style='border:1px solid #eee;'>".$item->nombre)."</td>
+						<td style='border:1px solid #eee;'>".$item->cantidad."</td>
+						<td style='border:1px solid #eee;'>".number_format($item->total, 2)."</td></tr>";
+		}
+
+		
+		echo "</table>";
+	}
+
+	public function getLessSoldProductsReportExcel($range = NULL)
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$ReportModel = new ReportModel();
+		$ReportModel = $ReportModel->getLessSoldProducts();
+
+		$name = "reporte-productos-menos-vendidos.xls";
+		$nameHeader = "Todas los productos menos vendidos";
+
+		if ( $range != NULL && $range != ''){
+			
+			if(!empty(explode('a', $range)[1])){
+				$from = explode('a', $range)[0];
+				$to = explode('a', $range)[1];
+				$where = "DATE_FORMAT(ventas.creado_en, '%Y-%m-%d') BETWEEN '$from' AND '$to'";
+				$ReportModel = $ReportModel->where($where);
+				$name = "reporte-productos-menos-vendidos-$from-$to.xls";
 				$nameHeader = "Desde $from hasta $to";
 			}else{
 				$where = "DATE_FORMAT(ventas.creado_en, '%Y-%m-%d') = '$range'";

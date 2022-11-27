@@ -351,6 +351,22 @@ class App extends BaseController
 		}
 	}
 
+	public function less_sold_products()
+	{
+		if($this->session->has('name')){
+			
+			$data = [
+				"title" => "Reportes de productos más vendidos - $this->system"
+			];
+			return view('app/reports/less_sold_products', $data);
+		
+		}else{
+
+			return redirect()->to(base_url());
+		
+		}
+	}
+
 	public function general_sale_reports()
 	{
 		if($this->session->has('name')){

@@ -64,6 +64,16 @@ $(document).ready(function(){
 
         }
 
+        if (type === 'less_sold_products'){
+            if(range){
+                window.open(url + '/reports/less_sold_products/' + range, '_blank');
+
+            }else{
+                window.open(url + '/reports/less_sold_products', '_blank');
+            }
+
+        }
+
     });
 
     $(document).on('change', '.range', function(){
