@@ -65,12 +65,14 @@ class ReportModel extends Model
         $db = \Config\Database::connect();
 		$db = $db
             ->table('detalle_ventas')
-			->select('productos.codigo, productos.nombre, SUM(detalle_ventas.cantidad) as cantidad, SUM(detalle_ventas.cantidad*detalle_ventas.precio) as total')
+			->select('productos.codigo, productos.nombre, categorias.categoria, marcas.marca, SUM(detalle_ventas.cantidad) as cantidad, SUM(detalle_ventas.cantidad*detalle_ventas.precio) as total')
 			->join('productos', 'productos.codigo = detalle_ventas.producto')
+			->join('categorias', 'categorias.identificacion = productos.categoria')
+			->join('marcas', 'marcas.identificacion = productos.marca')
 			->join('ventas', 'ventas.identificacion = detalle_ventas.venta')
 			->where('ventas.estado', 1)
 			->groupBy('productos.codigo')
-			->orderBy('total', 'DESC')
+			->orderBy('cantidad', 'DESC')
 			->limit(10);
 		return $db;
 	}
@@ -80,12 +82,29 @@ class ReportModel extends Model
         $db = \Config\Database::connect();
 		$db = $db
             ->table('detalle_ventas')
-			->select('productos.codigo, productos.nombre, SUM(detalle_ventas.cantidad) as cantidad, SUM(detalle_ventas.cantidad*detalle_ventas.precio) as total')
+			->select('productos.codigo, productos.nombre, categorias.categoria, marcas.marca, SUM(detalle_ventas.cantidad) as cantidad, SUM(detalle_ventas.cantidad*detalle_ventas.precio) as total')
 			->join('productos', 'productos.codigo = detalle_ventas.producto')
+			->join('categorias', 'categorias.identificacion = productos.categoria')
+			->join('marcas', 'marcas.identificacion = productos.marca')
 			->join('ventas', 'ventas.identificacion = detalle_ventas.venta')
 			->where('ventas.estado', 1)
 			->groupBy('productos.codigo')
-			->orderBy('total', 'ASC')
+			->orderBy('cantidad', 'ASC')
+			->limit(10);
+		return $db;
+	}
+
+	public function getBestCustomers()
+	{
+        $db = \Config\Database::connect();
+		$db = $db
+            ->table('detalle_ventas')
+			->select('clientes.identificacion, clientes.nombre, clientes.telefono, clientes.direccion, SUM(detalle_ventas.cantidad) as cantidad, SUM(detalle_ventas.cantidad*detalle_ventas.precio) as total')
+			->join('ventas', 'ventas.identificacion = detalle_ventas.venta')
+			->join('clientes', 'clientes.identificacion = ventas.cliente')
+			->where('ventas.estado', 1)
+			->groupBy('clientes.identificacion')
+			->orderBy('total', 'DESC')
 			->limit(10);
 		return $db;
 	}

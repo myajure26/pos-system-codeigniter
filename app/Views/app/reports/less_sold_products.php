@@ -139,6 +139,8 @@
                                     <tr>
                                         <th>Código</th>
                                         <th>Nombre</th>
+                                        <th>Categoría</th>
+                                        <th>Marca</th>
                                         <th>Cantidad</th>
                                         <th>Total</th>
                                     </tr>

@@ -9,13 +9,13 @@
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center
                     justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">Reportes productos más vendidos</h4>
+                    <h4 class="mb-sm-0 font-size-18">Reporte de mejores clientes</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript:
                                     void(0);">Administrar ventas</a></li>
-                            <li class="breadcrumb-item active">Reportes productos más vendidos</li>
+                            <li class="breadcrumb-item active">Reporte de mejores clientes</li>
                         </ol>
                     </div>
 
@@ -29,15 +29,15 @@
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">Administrar ventas</h4>
-                        <p class="card-title-desc">En este módulo podrás ver los productos más vendidos.</p>
+                        <p class="card-title-desc">En este módulo podrás ver los mejores clientes.</p>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="mt-2 mb-4 col-md-6">
-                                <input type="text" class="form-control range" placeholder="Selecciona una fecha" id="range" data-type="most_selled_products">
+                                <input type="text" class="form-control range" placeholder="Selecciona una fecha" id="range" data-type="best_customers">
                             </div>
                             <div class="col-md-6 mt-2 mb-4 d-block mx-auto">
-                                <button class="btn btn-success w-100" id="btn-report">Generar reporte de los productos más vendidos</button>
+                                <button class="btn btn-success w-100" id="btn-report">Generar reporte de los mejores clientes</button>
                             </div>
                         </div>
 
@@ -50,7 +50,7 @@
                                     <div style='font-size:14px; text-align:left; line-height:15px; margin-left: 20px'>
                                         
                                         <br><br>
-                                        <strong style='font-size: 23px'>Reporte de productos más vendidos</strong>
+                                        <strong style='font-size: 23px'>Reporte de mejores clientes</strong>
                                         <br><br>
                                         <p class="report-date"></p>
 
@@ -137,12 +137,12 @@
                             <thead>
                                 <tr>
                                     <tr>
-                                        <th>Código</th>
+                                        <th>Identificación</th>
                                         <th>Nombre</th>
-                                        <th>Categoría</th>
-                                        <th>Marca</th>
-                                        <th>Cantidad</th>
-                                        <th>Total</th>
+                                        <th>Teléfono</th>
+                                        <th>Dirección</th>
+                                        <th>Cantidad de productos</th>
+                                        <th>Total pagado</th>
                                     </tr>
                                 </tr>
                             </thead>
@@ -156,7 +156,7 @@
 <!-- End Page-content -->
 
 <script>
-    tableConfig('/most_selled_products', '.datatable');
+    tableConfig('/best_customers', '.datatable');
 
     $("#range").flatpickr({
         locale: 'es',

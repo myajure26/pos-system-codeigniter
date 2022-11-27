@@ -184,6 +184,11 @@
                                         </a>
                                     </li>
                                     <li>
+                                        <a href="<?=base_url('#best_customers')?>">
+                                            <span data-key="t-sales">Mejores clientes</span>
+                                        </a>
+                                    </li>
+                                    <li>
                                         <a href="<?=base_url('#general_sale_reports')?>">
                                             <span data-key="t-sales">Reportes de toma de decisión</span>
                                         </a>

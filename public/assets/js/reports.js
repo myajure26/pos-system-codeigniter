@@ -74,6 +74,16 @@ $(document).ready(function(){
 
         }
 
+        if (type === 'best_customers'){
+            if(range){
+                window.open(url + '/reports/best_customers/' + range, '_blank');
+
+            }else{
+                window.open(url + '/reports/best_customers', '_blank');
+            }
+
+        }
+
     });
 
     $(document).on('change', '.range', function(){
