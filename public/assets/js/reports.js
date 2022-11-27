@@ -54,6 +54,16 @@ $(document).ready(function(){
 
         }
 
+        if (type === 'most_selled_products'){
+            if(range){
+                window.open(url + '/reports/most_selled_products/' + range, '_blank');
+
+            }else{
+                window.open(url + '/reports/most_selled_products', '_blank');
+            }
+
+        }
+
     });
 
     $(document).on('change', '.range', function(){

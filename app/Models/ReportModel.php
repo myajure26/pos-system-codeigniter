@@ -60,6 +60,21 @@ class ReportModel extends Model
 		return $db;
 	}
 
+	public function getMostSelledProducts()
+	{
+        $db = \Config\Database::connect();
+		$db = $db
+            ->table('detalle_ventas')
+			->select('productos.codigo, productos.nombre, SUM(detalle_ventas.cantidad) as cantidad, SUM(detalle_ventas.cantidad*detalle_ventas.precio) as total')
+			->join('productos', 'productos.codigo = detalle_ventas.producto')
+			->join('ventas', 'ventas.identificacion = detalle_ventas.venta')
+			->where('ventas.estado', 1)
+			->groupBy('productos.codigo')
+			->orderBy('total', 'DESC')
+			->limit(0);
+		return $db;
+	}
+
 	public function generalPurchase($from, $to)
 	{
         $db = \Config\Database::connect();
@@ -157,7 +172,7 @@ class ReportModel extends Model
 	}
 
 	/**
-	 * GENERAR REPORTES EN EXCEL
+	 * * GENERAR REPORTES EN EXCEL
 	 */
 
 	public function getPurchaseReportExcel($from, $to)

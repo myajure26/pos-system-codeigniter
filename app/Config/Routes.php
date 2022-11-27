@@ -177,6 +177,7 @@ $routes->get('purchases_per_provider', 'ReportController::getPurchasesPerProvide
 $routes->post('general_sale_reports', 'ReportController::getGeneralSaleReports');
 $routes->get('sales_per_customer', 'ReportController::getSalesPerCustomer');
 $routes->get('sales_per_product', 'ReportController::getSalesPerProduct');
+$routes->get('most_selled_products', 'ReportController::getMostSelledProducts');
 
 // ? SELECCIÓN
 $routes->get('purchases_provider', 'ReportController::getPurchasesProvider');
@@ -190,6 +191,8 @@ $routes->get('reports/purchases_per_provider/(:any)', 'ReportController::getPurc
 $routes->get('reports/sale/(:any)', 'ReportController::getSaleReportExcel/$1');
 $routes->get('reports/sales_per_customer/(:any)', 'ReportController::getSalePerCustomerReportExcel/$1/$2');
 $routes->get('reports/sales_per_product/(:any)', 'ReportController::getSalePerProductReportExcel/$1/$2');
+$routes->get('reports/most_selled_products/(:any)', 'ReportController::getMostSelledProductsReportExcel/$1');
+$routes->get('reports/most_selled_products', 'ReportController::getMostSelledProductsReportExcel');
 
 // ? INVOICES
 $routes->group('invoice', static function ($routes) {

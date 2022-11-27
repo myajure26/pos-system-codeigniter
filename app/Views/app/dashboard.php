@@ -173,6 +173,12 @@
                                             <span data-key="t-sales">Ventas por producto</span>
                                         </a>
                                     </li>
+                                    
+                                    <li>
+                                        <a href="<?=base_url('#most_selled_products')?>">
+                                            <span data-key="t-sales">Productos más vendidos</span>
+                                        </a>
+                                    </li>
                                     <li>
                                         <a href="<?=base_url('#general_sale_reports')?>">
                                             <span data-key="t-sales">Reportes de toma de decisión</span>
