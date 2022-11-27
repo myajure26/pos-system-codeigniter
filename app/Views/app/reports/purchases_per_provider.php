@@ -197,8 +197,10 @@
                                         <th>Factura</th>
                                         <th>Fecha</th>
                                         <th>Usuario</th>
+                                        <th>Productos</th>
                                         <th>Cantidad</th>
-                                        <th>Total</th>
+                                        <th>Precio producto</th>
+                                        <th>Total compra</th>
                                     </tr>
                                 </tr>
                             </thead>
