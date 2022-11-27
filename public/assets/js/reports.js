@@ -13,14 +13,23 @@ $(document).ready(function(){
 
         
         if (type === 'general_purchase_reports'){
+
+            if(range){
+                window.open(url + '/reports/purchase/' + range, '_blank');
+            }else{
+                window.open(url + '/reports/purchase', '_blank');
+            }
             
-            window.open(url + '/reports/purchase/' + range, '_blank');
             
         }
 
         if (type === 'general_sale_reports'){
             
-            window.open(url + '/reports/sale/' + range, '_blank');
+            if(range){
+                window.open(url + '/reports/sale/' + range, '_blank');
+            }else{
+                window.open(url + '/reports/sale', '_blank');
+            }
             
         }
 
@@ -83,6 +92,16 @@ $(document).ready(function(){
             }
 
         }
+
+        if (type === 'best_providers'){
+            if(range){
+                window.open(url + '/reports/best_providers/' + range, '_blank');
+
+            }else{
+                window.open(url + '/reports/best_providers', '_blank');
+            }
+        }
+
 
     });
 

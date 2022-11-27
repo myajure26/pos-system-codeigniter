@@ -31,6 +31,21 @@ class ReportModel extends Model
 		return $db;
 	}
 
+	public function getBestProviders()
+	{
+        $db = \Config\Database::connect();
+		$db = $db
+            ->table('detalle_compra')
+			->select('proveedores.codigo as identificacion, proveedores.nombre, proveedores.telefono, proveedores.direccion, SUM(detalle_compra.cantidad) as cantidad, SUM(detalle_compra.cantidad*detalle_compra.precio) as total')
+			->join('compras', 'compras.identificacion = detalle_compra.compra')
+			->join('proveedores', 'proveedores.codigo = compras.proveedor')
+			->where('compras.estado', 1)
+			->groupBy('proveedores.codigo')
+			->orderBy('cantidad', 'DESC')
+			->limit(10);
+		return $db;
+	}
+
 	public function getSalesPerCustomer()
 	{
         $db = \Config\Database::connect();
@@ -209,19 +224,17 @@ class ReportModel extends Model
 	 * * GENERAR REPORTES EN EXCEL
 	 */
 
-	public function getPurchaseReportExcel($from, $to)
+	public function getPurchaseReportExcel()
 	{
         $db = \Config\Database::connect();
-		$where = "fecha BETWEEN '$from' AND '$to'";
 		$db = $db
             ->table('compras')
-			->select('compras.identificacion, referencia, fecha, usuario, proveedor, tipo_documento.nombre as tipo_documento, monedas.moneda')
+			->select('compras.identificacion, referencia, fecha, usuario, proveedores.codigo, proveedores.nombre, tipo_documento.nombre as tipo_documento, monedas.moneda')
 			->join('tipo_documento', 'tipo_documento.identificacion = compras.tipo_documento')
 			->join('monedas', 'monedas.identificacion = compras.moneda')
-			->where($where)
+			->join('proveedores', 'proveedores.codigo = compras.proveedor')
 			->where('compras.estado', 1)
-			->orderBy('fecha', 'ASC')
-			->get()->getResult();
+			->orderBy('fecha', 'ASC');
 		return $db;
 	}
 
@@ -237,21 +250,19 @@ class ReportModel extends Model
 		return $db;
 	}
 
-	public function getSaleReportExcel($from, $to)
+	public function getSaleReportExcel()
 	{
         $db = \Config\Database::connect();
-		$where = "ventas.creado_en BETWEEN '$from 00:00:00' AND '$to 23:59:59'";
 		$db = $db
             ->table('ventas')
-			->select('ventas.identificacion, cliente, usuario, tipo_documento.nombre as tipo_documento, monedas.moneda, tasa, impuestos.porcentaje as impuesto, metodo_pago.nombre as metodo_pago, ventas.creado_en as fecha')
+			->select('ventas.identificacion, clientes.identificacion as cliente, clientes.nombre, usuario, tipo_documento.nombre as tipo_documento, monedas.moneda, tasa, impuestos.porcentaje as impuesto, metodo_pago.nombre as metodo_pago, ventas.creado_en as fecha')
 			->join('tipo_documento', 'tipo_documento.identificacion = ventas.tipo_documento')
+			->join('clientes', 'clientes.identificacion = ventas.cliente')
 			->join('monedas', 'monedas.identificacion = ventas.moneda')
 			->join('impuestos', 'impuestos.identificacion = ventas.impuesto')
 			->join('metodo_pago', 'metodo_pago.id_metodo_pago = ventas.id_metodo_pago')
-			->where($where)
 			->where('ventas.estado', 1)
-			->orderBy('fecha', 'ASC')
-			->get()->getResult();
+			->orderBy('fecha', 'ASC');
 		return $db;
 	}
 

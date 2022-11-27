@@ -287,6 +287,22 @@ class App extends BaseController
 		}
 	}
 
+	public function best_providers()
+	{
+		if($this->session->has('name')){
+			
+			$data = [
+				"title" => "Reportes de los mejores proveedores - $this->system"
+			];
+			return view('app/reports/best_providers', $data);
+		
+		}else{
+
+			return redirect()->to(base_url());
+		
+		}
+	}
+
 	public function general_purchase_reports()
 	{
 		if($this->session->has('name')){
@@ -356,7 +372,7 @@ class App extends BaseController
 		if($this->session->has('name')){
 			
 			$data = [
-				"title" => "Reportes de productos más vendidos - $this->system"
+				"title" => "Reportes de productos menos vendidos - $this->system"
 			];
 			return view('app/reports/less_sold_products', $data);
 		
@@ -372,7 +388,7 @@ class App extends BaseController
 		if($this->session->has('name')){
 			
 			$data = [
-				"title" => "Reportes de productos más vendidos - $this->system"
+				"title" => "Reportes de mejores clientes - $this->system"
 			];
 			return view('app/reports/best_customers', $data);
 		

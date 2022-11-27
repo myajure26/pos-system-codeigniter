@@ -134,15 +134,9 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="<?=base_url('#audits')?>">
-                                    <i data-feather="bar-chart-2"></i>
-                                    <span data-key="t-audit">Auditoría</span>
-                                </a>
-                            </li>
-                            <li>
                                 <a href="<?=base_url('#control_center')?>">
                                     <i data-feather="tool"></i>
-                                    <span data-key="t-control">Centro de control</span>
+                                    <span data-key="t-control">Precio de monedas</span>
                                 </a>
                             </li>
                             <li class="menu-title" data-key="t-menu">Administrar ventas</li>
@@ -220,6 +214,11 @@
                                         </a>
                                     </li>
                                     <li>
+                                        <a href="<?=base_url('#best_providers')?>">
+                                            <span data-key="t-sales">Mejores proveedores</span>
+                                        </a>
+                                    </li>
+                                    <li>
                                         <a href="<?=base_url('#general_purchase_reports')?>">
                                             <span data-key="t-purchases">Reportes de toma de decisión</span>
                                         </a>
@@ -274,35 +273,50 @@
                             </li>
 
                             <li class="menu-title" data-key="t-menu">Configuraciones del sistema</li>
+                            
                             <li>
-                                <a href="<?=base_url('#settings')?>">
-                                    <i data-feather="settings"></i>
-                                    <span data-key="t-settings">Configuración general</span>
+                                <a href="javascript: void(0);" class="has-arrow">
+                                    <i data-feather="pie-chart"></i>
+                                    <span data-key="t-maintenance">Mantenimiento</span>
                                 </a>
-                            </li>
-                            <li>
-                                <a href="<?=base_url('#coins')?>">
-                                    <i data-feather="dollar-sign"></i>
-                                    <span data-key="t-coins">Monedas</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="<?=base_url('#taxes')?>">
-                                    <i data-feather="file-minus"></i>
-                                    <span data-key="t-taxes">Impuesto</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="<?=base_url('#document_type')?>">
-                                    <i data-feather="file-text"></i>
-                                    <span data-key="t-document_type">Tipo de documento</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="<?=base_url('#payment_method')?>">
-                                    <i data-feather="credit-card"></i>
-                                    <span data-key="t-payment_method">Métodos de pago</span>
-                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li>
+                                        <a href="<?=base_url('#settings')?>">
+                                            <i data-feather="settings"></i>
+                                            <span data-key="t-settings">Configuración general</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?=base_url('#coins')?>">
+                                            <i data-feather="dollar-sign"></i>
+                                            <span data-key="t-coins">Monedas</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?=base_url('#taxes')?>">
+                                            <i data-feather="file-minus"></i>
+                                            <span data-key="t-taxes">Impuesto</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?=base_url('#document_type')?>">
+                                            <i data-feather="file-text"></i>
+                                            <span data-key="t-document_type">Tipo de documento</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?=base_url('#payment_method')?>">
+                                            <i data-feather="credit-card"></i>
+                                            <span data-key="t-payment_method">Métodos de pago</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?=base_url('#audits')?>">
+                                            <i data-feather="bar-chart-2"></i>
+                                            <span data-key="t-audit">Auditoría</span>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </div>

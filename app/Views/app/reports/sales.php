@@ -43,7 +43,10 @@
                             </div>
                             <div class="col-md-6 mt-2 mb-4">
                                 <label class="form-label">Rango de fecha</label>
-                                <input type="text" class="form-control" placeholder="Selecciona una fecha" id="range">
+                                <input type="text" class="form-control range" placeholder="Selecciona una fecha" id="range" data-type="general_sale_reports">
+                            </div>
+                            <div class="col-md-6 mt-2 mb-4 d-block mx-auto">
+                                <button class="btn btn-success w-100" id="btn-report">Generar reporte de ventas</button>
                             </div>
                         </div>
                         <table class="table datatable text-nowrap table-striped nowrap w-100 dt-responsive">
