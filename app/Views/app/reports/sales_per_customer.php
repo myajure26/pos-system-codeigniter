@@ -50,13 +50,198 @@
                                 <button class="btn btn-success w-100" id="btn-report" style="display: none">Generar reporte de ventas por cliente</button>
                             </div>
                         </div>
+
+
+                        <table class="table-report" style="display: none">
+                            <tr>
+
+                                <td style='background-color:white; width:350px'>
+                                    
+                                    <div style='font-size:14px; text-align:left; line-height:15px; margin-left: 20px'>
+                                        
+                                        <br><br>
+                                        <strong style='font-size: 23px'>Reporte de ventas por cliente</strong>
+                                        <br><br>
+                                        <p class="report-date"></p>
+
+                                    </div>
+
+                                </td>
+
+                                <td style='width:150px;'>
+                                    
+                                </td>
+
+                                <td style='background-color:white; width:500px'>
+
+                                
+                                    
+                                </td>
+
+                                <td style='background-color:white; width:180px'>
+
+                                    <div style='font-size:14px; text-align:right; margin-left: 50px'>
+                                        <br>
+                                        <strong style='font-size: 23px'>Generado:</strong>
+                                        <br>
+                                        <?= date('d-m-Y H:i')?>
+
+                                    </div>
+                                    
+                                </td>
+
+                            </tr>
+                        </table>
+
+                        <table class="table-report" style="display: none">
+		
+                            <tr>
+                                
+                                <td style='width:350px; margin-left: 20px'>
+                                    <div style='font-size:14px; text-align:left; line-height:15px; margin-left: 120px'>
+                                        
+                                        <br><br>
+                                        <img src="<?=base_url('assets/images/brands/logo_digenca.jpg')?>" width="150px">
+                                        
+                                        <br><br>
+
+                                    </div>
+
+                                </td>
+
+                                <td style='background-color:white; width:250px'>
+                                    
+                                    <div style='font-size:14px; text-align:right; line-height:23px;'>
+                                        
+                                        <br>
+                                        <strong>RIF:</strong> J-285346256
+
+                                        <br>
+                                        <strong>Dirección:</strong> Av. Venezuela con calle 37
+
+                                    </div>
+
+                                </td>
+
+                                <td style='background-color:white; width:250px'>
+
+                                    <div style='font-size:14px; text-align:right; line-height:23px; margin-left: 50px'>
+                                        
+                                        <br>
+                                        <strong>Teléfono:</strong> 02512736478
+                                        
+                                        <br>
+                                        digencacom@example.com
+
+                                    </div>
+                                    
+                                </td>
+
+                            </tr>
+
+                        </table>
+
+                        <table class="table-report" style="display: none">
+		
+                            <tr>
+                                
+                                <td style='width:350px; margin-left: 20px'>
+                                    <div style='font-size:14px; text-align:center; line-height:15px; margin-left: 20px'>
+                                        
+                                        <br><br>
+                                        <strong style='font-size: 23px'>Cliente</strong>                                   
+
+                                        <br><br>
+
+                                    </div>
+
+                                </td>
+
+                                <td style='background-color:white; width:250px'>
+                                    
+                                    <div style='font-size:14px; text-align:right; line-height:23px;'>
+                                        
+                                        <br>
+                                        <strong>Identificación:</strong> <span id="identification-report"></span>
+
+                                        <br>
+                                        <strong>Nombre:</strong> <span id="name-report"></span></td>
+
+                                    </div>
+
+                                </td>
+
+                                <td style='background-color:white; width:250px'>
+
+                                    <div style='font-size:14px; text-align:right; line-height:23px; margin-left: 50px'>
+                                        
+                                        <br>
+                                        <strong>Teléfono:</strong> <span id="phone-report"></span>
+
+                                        <br>
+                                        <strong>Dirección:</strong> <span id="address-report"></span></td>
+
+                                    </div>
+                                    
+                                </td>
+
+                            </tr>
+
+                        </table>
+                        <br>
+                        <hr>
+
+                        <!-- <table id="factura_head" style="display:none">
+                            <tr>
+                                <td class="logo_factura">
+                                    <div>
+                                        <img src="<?=base_url('assets/images/brands/logo_digenca.jpg')?>" width="250px">
+                                    </div>
+                                </td>
+                                <td class="info_empresa">
+                                    <div>
+                                        <span class="h2">Reporte de ventas por cliente</span>
+                                        <p class="report-date"></p>
+                                        <p>Av. Venezuela con calle 37</p>
+                                        <p>Teléfono: 04126738475</p>
+                                        <p>Email: digencacom@example.com</p>
+                                    </div>
+                                </td>
+                                <td class="info_factura">
+                                    <div class="round">
+                                        <span class="h3">Reporte</span>
+                                        <p>Generado: <strong id='report-date-now'></strong></p>
+                                        <p>Hora: <strong id='report-hour'></strong></p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <table id="factura_cliente" style="display:none">
+                            <tr>
+                                <td class="info_cliente">
+                                    <div class="round">
+                                        <span class="h3">Cliente</span>
+                                        <table class="datos_cliente">
+                                            <tr>
+                                                <td><label>Identificación:</label><p id="identification-report"></p></td>
+                                                <td><label>Teléfono:</label> <p id="phone-report"></p></td>
+                                            </tr>
+                                            <tr>
+                                                <td><label>Nombre:</label> <p id="name-report"></p></td>
+                                                <td><label>Dirección:</label> <p id="address-report"></p></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+
+                            </tr>
+                        </table> -->
                         <table class="table datatable text-nowrap table-striped nowrap w-100 dt-responsive">
                             <thead>
                                 <tr>
                                     <tr>
-                                        <th>#</th>
+                                        <th>Factura</th>
                                         <th>Fecha</th>
-                                        <th>Cliente</th>
                                         <th>Vendedor</th>
                                         <th>Impuesto</th>
                                         <th>Subtotal</th>
@@ -109,7 +294,7 @@
 
 <script>
     tableConfig('/sales_customer', '.getCustomer');
-    tableConfig('/sales_per_customer', '.datatable');
+    // tableConfig('/sales_per_customer', '.datatable');
 
     $("#range").flatpickr({
         locale: 'es',
