@@ -49,9 +49,11 @@ class ReportModel extends Model
         $db = \Config\Database::connect();
 		$db = $db
             ->table('ventas')
-			->select('ventas.identificacion, ventas.creado_en as fecha, detalle_ventas.producto as codigo, productos.nombre as producto, detalle_ventas.cantidad, detalle_ventas.precio, (detalle_ventas.cantidad*detalle_ventas.precio) as total')
+			->select('ventas.identificacion, ventas.creado_en as fecha, detalle_ventas.producto as codigo, productos.nombre as producto, marcas.marca, categorias.categoria, detalle_ventas.cantidad, detalle_ventas.precio, (detalle_ventas.cantidad*detalle_ventas.precio) as total')
 			->join('detalle_ventas', 'detalle_ventas.venta = ventas.identificacion')
 			->join('productos', 'productos.codigo = detalle_ventas.producto')
+			->join('marcas', 'marcas.identificacion = productos.marca')
+			->join('categorias', 'categorias.identificacion = productos.categoria')
 			->where('ventas.estado', 1)
 			->orderBy('ventas.identificacion');
 		return $db;

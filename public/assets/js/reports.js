@@ -61,8 +61,6 @@ $(document).ready(function(){
         $('#name-report').text($(this).closest('tr').find('td:eq(2)').text());
         $('#address-report').text($(this).closest('tr').find('td:eq(3)').text());
         
-        
-        
         $('#btn-report').slideDown();
     });
 
@@ -70,6 +68,13 @@ $(document).ready(function(){
     $(document).on('click', '.btn-select-product', function(){
         $('#searchById').val($(this).closest('tr').find('td:eq(1)').text());
         $('#searchProductModal').modal('hide');
+        $('.table-report').show();
+
+        $('#identification-report').text($(this).closest('tr').find('td:eq(1)').text());
+        $('#name-report').text($(this).closest('tr').find('td:eq(2)').text());
+        $('#brand-report').text($(this).closest('tr').find('td:eq(3)').text());
+        $('#category-report').text($(this).closest('tr').find('td:eq(4)').text());
+
         $('#btn-report').slideDown();
     });
 

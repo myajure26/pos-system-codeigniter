@@ -150,6 +150,10 @@ class ReportController extends BaseController
 		$ReportModel = new ReportModel();
 				
 		return DataTable::of($ReportModel->getSalesPerProduct())
+			->hide('codigo')
+			->hide('producto')
+			->hide('categoria')
+			->hide('marca')
 			->edit('fecha', function($row){
 				return date('Y-m-d', strtotime($row->fecha));
 			})
@@ -992,11 +996,64 @@ class ReportController extends BaseController
 		echo utf8_decode("
 		
 		<table>
+			<tr>
+
+				<td style='background-color:white; width:350px'>
+					
+					<div style='font-size:12px; text-align:left; line-height:15px; margin-left: 20px'>
+						
+						<br>
+						<strong style='font-size: 22px'>Reporte de ventas por producto</strong>
+						<br>
+						<strong>$nameHeader</strong>
+
+					</div>
+
+				</td>
+
+				<td style='width:150px;'>
+					
+				</td>
+
+				<td style='background-color:white; width:140px'>
+
+				
+					
+				</td>
+
+				<td style='background-color:white; width:140px'>
+
+					<div style='font-size:12px; text-align:right; margin-left: 50px'>
+						<br>
+						<strong style='font-size: 18px'>Generado:</strong>
+						<br>
+						". date('d-m-Y H:i') . "
+
+					</div>
+					
+				</td>
+
+			</tr>
+		</table>
+		
+		");
+
+		echo utf8_decode("
+		
+		<table>
 		
 		<tr>
 			
-			<td style='width:150px;'>
-                <h2 style='font-size: 20px'>Digenca</h2>
+			<td style='width:150px; margin-left: 20px'>
+				<div style='font-size:12px; text-align: center; line-height:15px; margin-left: 50px'>
+					
+					<br>
+					<strong style='font-size: 20px'>DIGENCA</strong>
+					
+					<br>
+
+				</div>
+
             </td>
 
 			<td style='background-color:white; width:210px'>
@@ -1018,7 +1075,7 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
 					
 					<br>
-					Teléfono: 04121546367
+					<strong>Teléfono:</strong> 02512736478
 					
 					<br>
 					digencacom@example.com
@@ -1026,19 +1083,44 @@ class ReportController extends BaseController
 				</div>
 				
 			</td>
-			<td style='background-color:white; width:140px'>
 
-				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
+		</tr>
+
+	</table>
+
+		");
+
+	echo utf8_decode("
+		
+		<table>
+		
+		<tr>
+			
+			<td style='width:150px; margin-left: 20px'>
+				<div style='font-size:12px; text-align: center; line-height:15px; margin-left: 50px'>
 					
 					<br>
-					Reporte de ventas
+					<strong style='font-size: 20px'>Producto</strong>
 					
 					<br>
-					
-					$nameHeader
 
 				</div>
+
+            </td>
+
+			<td style='background-color:white; width:210px'>
 				
+				<div style='font-size:12px; text-align:right; line-height:15px;'>
+				
+					<br>
+					<strong>Código:</strong> ".$ReportModel[0]->codigo."
+
+					<br>
+					<strong>Descripción:</strong> ".$ReportModel[0]->producto."
+
+
+				</div>
+
 			</td>
 
 			<td style='background-color:white; width:140px'>
@@ -1046,10 +1128,11 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
 					
 					<br>
-					Generado
+					<strong>Categoría:</strong> ".$ReportModel[0]->categoria."
 					
 					<br>
-					". date('Y-m-d H:i:s') . "
+					<strong>Marca:</strong> ".$ReportModel[0]->marca."
+					
 
 				</div>
 				
@@ -1068,8 +1151,6 @@ class ReportController extends BaseController
 		<tr> 
 			<td style='font-weight:bold; border:1px solid #eee;'>FACTURA</td> 
 			<td style='font-weight:bold; border:1px solid #eee;'>FECHA</td>		
-			<td style='font-weight:bold; border:1px solid #eee;'>CÓDIGO DE PRODUCTO</td>
-			<td style='font-weight:bold; border:1px solid #eee;'>PRODUCTO</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>CANTIDAD</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>PRECIO UNITARIO</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>TOTAL</td>			
@@ -1083,8 +1164,6 @@ class ReportController extends BaseController
 			echo utf8_decode("<tr>
 						<td style='border:1px solid #eee;'>".$item->identificacion."</td>
 						<td style='border:1px solid #eee;'>".date('Y-m-d', strtotime($item->fecha))."</td> 
-						<td style='border:1px solid #eee;'>".$item->codigo."</td>
-						<td style='border:1px solid #eee;'>".$item->producto."</td>
 						<td style='border:1px solid #eee;'>".$item->cantidad."</td>
 						<td style='border:1px solid #eee;'>".number_format($item->precio, 2)."</td>
 						<td style='border:1px solid #eee;'>".number_format($item->total, 2)."</td>
@@ -1097,11 +1176,9 @@ class ReportController extends BaseController
 
 		echo utf8_decode("<tr>
 						<td style='border:1px solid #eee;'></td>
-						<td style='border:1px solid #eee;'></td> 
-						<td style='border:1px solid #eee;'></td>
-						<td style='border:1px solid #eee;'>Total</td>
+						<td style='border:1px solid #eee; text-align: right'>Total</td>
 						<td style='border:1px solid #eee;'>".$cantidad."</td>
-						<td style='border:1px solid #eee;'>".number_format($item->precio, 2)."</td>
+						<td style='border:1px solid #eee;'></td>
 						<td style='border:1px solid #eee;'>".number_format($total, 2)."</td>
 						</tr>");
 		

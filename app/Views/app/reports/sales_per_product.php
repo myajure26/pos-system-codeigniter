@@ -50,14 +50,150 @@
                                 <button class="btn btn-success w-100" id="btn-report" style="display: none">Generar reporte de ventas por producto</button>
                             </div>
                         </div>
+                        <table class="table-report" style="display: none">
+                            <tr>
+
+                                <td style='background-color:white; width:350px'>
+                                    
+                                    <div style='font-size:14px; text-align:left; line-height:15px; margin-left: 20px'>
+                                        
+                                        <br><br>
+                                        <strong style='font-size: 23px'>Reporte de ventas por producto</strong>
+                                        <br><br>
+                                        <p class="report-date"></p>
+
+                                    </div>
+
+                                </td>
+
+                                <td style='width:150px;'>
+                                    
+                                </td>
+
+                                <td style='background-color:white; width:500px'>
+
+                                
+                                    
+                                </td>
+
+                                <td style='background-color:white; width:180px'>
+
+                                    <div style='font-size:14px; text-align:right; margin-left: 50px'>
+                                        <br>
+                                        <strong style='font-size: 23px'>Generado:</strong>
+                                        <br>
+                                        <?= date('d-m-Y H:i')?>
+
+                                    </div>
+                                    
+                                </td>
+
+                            </tr>
+                        </table>
+
+                        <table class="table-report" style="display: none">
+		
+                            <tr>
+                                
+                                <td style='width:350px; margin-left: 20px'>
+                                    <div style='font-size:14px; text-align:left; line-height:15px; margin-left: 120px'>
+                                        
+                                        <br><br>
+                                        <img src="<?=base_url('assets/images/brands/logo_digenca.jpg')?>" width="150px">
+                                        
+                                        <br><br>
+
+                                    </div>
+
+                                </td>
+
+                                <td style='background-color:white; width:250px'>
+                                    
+                                    <div style='font-size:14px; text-align:right; line-height:23px;'>
+                                        
+                                        <br>
+                                        <strong>RIF:</strong> J-285346256
+
+                                        <br>
+                                        <strong>Dirección:</strong> Av. Venezuela con calle 37
+
+                                    </div>
+
+                                </td>
+
+                                <td style='background-color:white; width:250px'>
+
+                                    <div style='font-size:14px; text-align:right; line-height:23px; margin-left: 50px'>
+                                        
+                                        <br>
+                                        <strong>Teléfono:</strong> 02512736478
+                                        
+                                        <br>
+                                        digencacom@example.com
+
+                                    </div>
+                                    
+                                </td>
+
+                            </tr>
+
+                        </table>
+
+                        <table class="table-report" style="display: none">
+		
+                            <tr>
+                                
+                                <td style='width:350px; margin-left: 20px'>
+                                    <div style='font-size:14px; text-align:center; line-height:15px; margin-left: 20px'>
+                                        
+                                        <br><br>
+                                        <strong style='font-size: 23px'>Producto</strong>                                   
+
+                                        <br><br>
+
+                                    </div>
+
+                                </td>
+
+                                <td style='background-color:white; width:250px'>
+                                    
+                                    <div style='font-size:14px; text-align:right; line-height:23px;'>
+                                        
+                                        <br>
+                                        <strong>Código:</strong> <span id="identification-report"></span>
+
+                                        <br>
+                                        <strong>Descripción:</strong> <span id="name-report"></span></td>
+
+                                    </div>
+
+                                </td>
+
+                                <td style='background-color:white; width:250px'>
+
+                                    <div style='font-size:14px; text-align:right; line-height:23px; margin-left: 50px'>
+                                        
+                                        <br>
+                                        <strong>Categoría:</strong> <span id="category-report"></span>
+
+                                        <br>
+                                        <strong>Marca:</strong> <span id="brand-report"></span></td>
+
+                                    </div>
+                                    
+                                </td>
+
+                            </tr>
+
+                        </table>
+                        <br>
+                        <hr>
                         <table class="table datatable text-nowrap table-striped nowrap w-100 dt-responsive">
                             <thead>
                                 <tr>
                                     <tr>
                                         <th>Factura</th>
                                         <th>Fecha</th>
-                                        <th>Código de producto</th>
-                                        <th>Producto</th>
                                         <th>Cantidad</th>
                                         <th>Precio unitario</th>
                                         <th>Total</th>
@@ -108,7 +244,7 @@
 
 <script>
     tableConfig('/sales_products', '.getProducts');
-    tableConfig('/sales_per_product', '.datatable');
+    
 
     $("#range").flatpickr({
         locale: 'es',

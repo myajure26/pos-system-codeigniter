@@ -51,9 +51,15 @@ function tableConfig(ajaxUrl, selector){
     $('#range').change(function(event) {
         $(`${selector}`).DataTable().ajax.reload();
     });
-    $(document).on('click', '.btn-select-customer, .btn-select-product', function(){
+    $(document).on('click', '.btn-select-customer', function(){
         if(!$.fn.dataTable.isDataTable( '.datatable' )){
             tableConfig('/sales_per_customer', '.datatable');
+        }
+        $(`${selector}`).DataTable().ajax.reload();
+    });
+    $(document).on('click', '.btn-select-product', function(){
+        if(!$.fn.dataTable.isDataTable( '.datatable' )){
+            tableConfig('/sales_per_product', '.datatable');
         }
         $(`${selector}`).DataTable().ajax.reload();
     });

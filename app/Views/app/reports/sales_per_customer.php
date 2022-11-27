@@ -190,52 +190,6 @@
                         </table>
                         <br>
                         <hr>
-
-                        <!-- <table id="factura_head" style="display:none">
-                            <tr>
-                                <td class="logo_factura">
-                                    <div>
-                                        <img src="<?=base_url('assets/images/brands/logo_digenca.jpg')?>" width="250px">
-                                    </div>
-                                </td>
-                                <td class="info_empresa">
-                                    <div>
-                                        <span class="h2">Reporte de ventas por cliente</span>
-                                        <p class="report-date"></p>
-                                        <p>Av. Venezuela con calle 37</p>
-                                        <p>Teléfono: 04126738475</p>
-                                        <p>Email: digencacom@example.com</p>
-                                    </div>
-                                </td>
-                                <td class="info_factura">
-                                    <div class="round">
-                                        <span class="h3">Reporte</span>
-                                        <p>Generado: <strong id='report-date-now'></strong></p>
-                                        <p>Hora: <strong id='report-hour'></strong></p>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                        <table id="factura_cliente" style="display:none">
-                            <tr>
-                                <td class="info_cliente">
-                                    <div class="round">
-                                        <span class="h3">Cliente</span>
-                                        <table class="datos_cliente">
-                                            <tr>
-                                                <td><label>Identificación:</label><p id="identification-report"></p></td>
-                                                <td><label>Teléfono:</label> <p id="phone-report"></p></td>
-                                            </tr>
-                                            <tr>
-                                                <td><label>Nombre:</label> <p id="name-report"></p></td>
-                                                <td><label>Dirección:</label> <p id="address-report"></p></td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </td>
-
-                            </tr>
-                        </table> -->
                         <table class="table datatable text-nowrap table-striped nowrap w-100 dt-responsive">
                             <thead>
                                 <tr>
