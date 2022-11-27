@@ -157,15 +157,83 @@ class ReportController extends BaseController
 			->edit('fecha', function($row){
 				return date('Y-m-d', strtotime($row->fecha));
 			})
-			->edit('subtotal', function($row){
-				return number_format($row->subtotal, 2);
+			->add('productos', function($row){
+				$products = '';
+
+				$ReportModel = new ReportModel();
+				$detail = $ReportModel->getSaleDetailReportExcel($row->identificacion);
+
+				foreach($detail as $item){
+					$products = $products . "$item->nombreProducto <br>";
+				}
+
+				return $products;
+			})
+			->add('cantidad', function($row){
+				$quantity = '';
+
+				$ReportModel = new ReportModel();
+				$detail = $ReportModel->getSaleDetailReportExcel($row->identificacion);
+
+				foreach($detail as $item){
+					$quantity = $quantity . "$item->cantidad <br>";
+				}
+
+				return $quantity;
+			})
+			->add('precio', function($row){
+				$price = '';
+
+				$ReportModel = new ReportModel();
+				$detail = $ReportModel->getSaleDetailReportExcel($row->identificacion);
+
+				foreach($detail as $item){
+					$price = $price . number_format($item->precio, 2) . "<br>";
+				}
+
+				return $price;
+			})
+			->add('subtotal', function($row){
+				$subtotal = 0;
+
+				$ReportModel = new ReportModel();
+				$detail = $ReportModel->getSaleDetailReportExcel($row->identificacion);
+
+				foreach($detail as $item){
+					$subtotal += $item->precio * $item->cantidad;
+				}
+
+				return number_format($subtotal, 2);
 			})
 			->add('total_impuesto', function($row){
-				return number_format((($row->subtotal*$row->impuesto)/100), 2);
+				$subtotal = 0;
+
+				$ReportModel = new ReportModel();
+				$detail = $ReportModel->getSaleDetailReportExcel($row->identificacion);
+
+				foreach($detail as $item){
+					$subtotal += $item->precio * $item->cantidad;
+				}
+
+				$tax = ($subtotal * $row->impuesto)/100;
+
+				return number_format($tax, 2);
 			})
 			->add('total', function($row){
+				$subtotal = 0;
+
+				$ReportModel = new ReportModel();
+				$detail = $ReportModel->getSaleDetailReportExcel($row->identificacion);
+
+				foreach($detail as $item){
+					$subtotal += $item->precio * $item->cantidad;
+				}
+
+				$tax = ($subtotal * $row->impuesto)/100;
+				$total = $subtotal + $tax;
+
+				return number_format($total, 2);
 				
-				return '$ ' . number_format(((($row->subtotal*$row->impuesto)/100)+$row->subtotal), 2);
 
 			}, 'last')
 			->filter(function ($builder, $request) {
@@ -810,12 +878,12 @@ class ReportController extends BaseController
 			return "Error";
 		}
 
-		header("Pragma: public");
-		header("Expires: 0");
-		header("Content-type: application/x-msdownload");
-		header("Content-Disposition: attachment; filename=$name");
-		header("Pragma: no-cache");
-		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+		// header("Pragma: public");
+		// header("Expires: 0");
+		// header("Content-type: application/x-msdownload");
+		// header("Content-Disposition: attachment; filename=$name");
+		// header("Pragma: no-cache");
+		// header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 
 		echo utf8_decode("
 		
@@ -976,6 +1044,9 @@ class ReportController extends BaseController
 			<td style='font-weight:bold; border:1px solid #eee;'>FECHA</td>		
 			<td style='font-weight:bold; border:1px solid #eee;'>VENDEDOR</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>IMPUESTO</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>PRODUCTOS</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>CANTIDAD</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>PRECIO PRODUCTO</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>SUBTOTAL</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>TOTAL IMPUESTO</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>TOTAL</td>			
@@ -986,26 +1057,64 @@ class ReportController extends BaseController
 		$grandTotal = 0;
 		foreach ($ReportModel as $row => $item){
 
-			$tax = ($item->subtotal * $item->impuesto) / 100;
-			$total = $item->subtotal + $tax;
-			$grandSubTotal += $item->subtotal;
-			$grandTax += $tax;
-			$grandTotal += $total;
+			$detail = new ReportModel();
+			$detail = $detail->getSaleDetailReportExcel($item->identificacion);
+			$subtotal = 0;
+			
 
 			echo utf8_decode("<tr>
 						<td style='border:1px solid #eee;'>".$item->identificacion."</td>
 						<td style='border:1px solid #eee;'>".date('Y-m-d', strtotime($item->fecha))."</td>
 						<td style='border:1px solid #eee;'>".$item->usuario."</td>
 						<td style='border:1px solid #eee;'>".$item->impuesto."</td>
-						<td style='border:1px solid #eee;'>".$item->subtotal."</td>
-						<td style='border:1px solid #eee;'>".number_format($tax, 2)."</td>
-						<td style='border:1px solid #eee;'>".number_format($total, 2)."</td>
-						</tr>");
+						<td style='border:1px solid #eee;'>");
+
+			
+			foreach($detail as $row){
+				echo utf8_decode("<br>".$row->nombreProducto."<br>");
+				$subtotal += $row->precio * $row->cantidad;
+			}
+
+			$grandSubTotal += $subtotal;
+
+			$tax = ($subtotal * $item->impuesto) / 100;
+			$grandTax += $tax;
+			$total = $subtotal + $tax;
+			$grandTotal += $total;
+
+
+			echo utf8_decode("</td>");
+			echo utf8_decode("<td style='border:1px solid #eee;'>");
+			foreach($detail as $row){
+				echo utf8_decode("<br>".$row->cantidad."<br>");
+			}
+
+			echo utf8_decode("</td>");
+
+			echo utf8_decode("<td style='border:1px solid #eee;'>");
+			
+			foreach($detail as $row){
+				
+				echo utf8_decode("<br>".$row->precio."<br>");
+			}
+
+			echo utf8_decode("</td>");
+
+			echo utf8_decode("
+				<td style='border:1px solid #eee;'>".number_format($subtotal, 2)."</td>
+				<td style='border:1px solid #eee;'>".number_format($tax, 2)."</td>
+				<td style='border:1px solid #eee;'>".number_format($total, 2)."</td>
+			</tr>
+			");
 
 		}
+
+		
 		echo utf8_decode("<tr>
 					<td style='border:1px solid #eee;'></td>
 					<td style='border:1px solid #eee;'></td> 
+					<td style='border:1px solid #eee;'></td>
+					<td style='border:1px solid #eee;'></td>
 					<td style='border:1px solid #eee;'></td>
 					<td style='border:1px solid #eee;'></td>
 					<td style='border:1px solid #eee;'></td>

@@ -198,9 +198,12 @@
                                         <th>Fecha</th>
                                         <th>Vendedor</th>
                                         <th>Impuesto</th>
+                                        <th>Productos</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio producto</th>
                                         <th>Subtotal</th>
                                         <th>Total impuesto</th>
-                                        <th>Total</th>
+                                        <th>Total venta</th>
                                     </tr>
                                 </tr>
                             </thead>
