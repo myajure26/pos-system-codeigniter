@@ -63,6 +63,13 @@ function tableConfig(ajaxUrl, selector){
         }
         $(`${selector}`).DataTable().ajax.reload();
     });
+    $(document).on('click', '.btn-select-prov', function(){
+        if(!$.fn.dataTable.isDataTable( '.datatable' )){
+            
+            tableConfig('/purchases_per_provider', '.datatable');
+        }
+        $(`${selector}`).DataTable().ajax.reload();
+    });
 }
 
 function reloadTable(){

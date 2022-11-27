@@ -23,8 +23,9 @@ class ReportModel extends Model
         
 		$db = $db
             ->table('compras')
-			->select('compras.identificacion, fecha, proveedor, usuario, SUM(detalle_compra.cantidad), SUM(detalle_compra.cantidad * detalle_compra.precio) as total')
+			->select('compras.identificacion, fecha, proveedores.codigo, proveedores.nombre, proveedores.identificacion as idProveedor, proveedores.direccion, proveedores.telefono, usuario, SUM(detalle_compra.cantidad) as cantidad, SUM(detalle_compra.cantidad * detalle_compra.precio) as total')
 			->join('detalle_compra', 'detalle_compra.compra = compras.identificacion')
+			->join('proveedores', 'proveedores.codigo = compras.proveedor')
 			->where('compras.estado', 1)
 			->groupBy('compras.identificacion');
 		return $db;

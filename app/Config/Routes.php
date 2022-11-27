@@ -185,6 +185,7 @@ $routes->get('sales_products', 'ReportController::getSalesProducts');
 
 // ? Excel
 $routes->get('reports/purchase/(:any)', 'ReportController::getPurchaseReportExcel/$1');
+$routes->get('reports/purchases_per_provider/(:any)', 'ReportController::getPurchasePerProviderReportExcel/$1/$2');
 
 $routes->get('reports/sale/(:any)', 'ReportController::getSaleReportExcel/$1');
 $routes->get('reports/sales_per_customer/(:any)', 'ReportController::getSalePerCustomerReportExcel/$1/$2');

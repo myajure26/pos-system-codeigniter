@@ -44,6 +44,16 @@ $(document).ready(function(){
 
         }
 
+        if (type === 'purchases_per_provider'){
+            const provider = $('#searchById').val();
+            if(range){
+                window.open(url + '/reports/purchases_per_provider/' + provider + '/' + range, '_blank');
+            }else{
+                window.open(url + '/reports/purchases_per_provider/' + provider, '_blank');
+            }
+
+        }
+
     });
 
     $(document).on('change', '.range', function(){
@@ -57,9 +67,9 @@ $(document).ready(function(){
         $('.table-report').show();
 
         $('#identification-report').text($(this).closest('tr').find('td:eq(1)').text());
-        $('#phone-report').text($(this).closest('tr').find('td:eq(4)').text());
         $('#name-report').text($(this).closest('tr').find('td:eq(2)').text());
         $('#address-report').text($(this).closest('tr').find('td:eq(3)').text());
+        $('#phone-report').text($(this).closest('tr').find('td:eq(4)').text());
         
         $('#btn-report').slideDown();
     });
@@ -80,8 +90,15 @@ $(document).ready(function(){
 
     // * Seleccionar el proveedor
     $(document).on('click', '.btn-select-prov', function(){
-        $('#searchById').val($(this).closest('tr').find('td:eq(1)').text());
+        $('#searchById').val($(this).closest('tr').find('td:eq(5)').text());
         $('#searchProviderModal').modal('hide');
+        $('.table-report').show();
+
+        $('#identification-report').text($(this).closest('tr').find('td:eq(1)').text());
+        $('#name-report').text($(this).closest('tr').find('td:eq(2)').text());
+        $('#address-report').text($(this).closest('tr').find('td:eq(3)').text());
+        $('#phone-report').text($(this).closest('tr').find('td:eq(4)').text());
+
         $('#btn-report').slideDown();
     });
 

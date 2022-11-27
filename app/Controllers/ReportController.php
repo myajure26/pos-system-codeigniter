@@ -61,11 +61,16 @@ class ReportController extends BaseController
 		$ReportModel = new ReportModel();
 				
 		return DataTable::of($ReportModel->getPurchasesPerProvider())
+			->hide('codigo')
+			->hide('nombre')
+			->hide('direccion')
+			->hide('telefono')
+			->hide('idProveedor')
 			->edit('total', function($row){
 				
-				return number_format($row->cantidad * $row->precio, 2);
+				return number_format($row->total, 2);
 
-			}, 'last')
+			})
 			->filter(function ($builder, $request) {
         
 				if($request->range != ''){
@@ -80,6 +85,12 @@ class ReportController extends BaseController
 						$builder->where($where);
 					}
 					
+				}
+
+				if($request->searchById != ''){
+
+					$builder->where('compras.proveedor', $request->searchById);
+
 				}
 		
 			})
@@ -133,8 +144,6 @@ class ReportController extends BaseController
 
 					$builder->where('ventas.cliente', $request->searchById);
 
-				}else{
-					return false;
 				}
 		
 			})
@@ -286,13 +295,13 @@ class ReportController extends BaseController
 		$db      	= \Config\Database::connect();
 		$providers 	= $db
 						->table('proveedores')
-						->select('codigo, nombre, identificacion')
+						->select('identificacion, nombre, direccion, telefono, codigo')
 						->where('estado', 1);
 				
 		return DataTable::of($providers)
 			->add('Seleccionar', function($row){
 				return '<div class="btn-list"> 
-							<button type="button" class="btn-select-prov btn btn-sm btn-primary waves-effect" data-id="'.$row->codigo.'" data-type="providers">
+							<button type="button" class="btn-select-prov btn btn-sm btn-primary waves-effect" data-id="'.$row->identificacion.'" data-type="providers">
                                 <i class="fas fa-check"></i>
                             </button>
                         </div>';
@@ -369,6 +378,10 @@ class ReportController extends BaseController
 
 		$ReportModel = new ReportModel();
 		$getPurchaseReportExcel = $ReportModel->getPurchaseReportExcel($from, $to);
+
+		if(!$getPurchaseReportExcel){
+			return "Error";
+		}
 
 		$name = "reporte-compras-$from-$to.xls";
 
@@ -541,6 +554,10 @@ class ReportController extends BaseController
 
 		$ReportModel = new ReportModel();
 		$getSaleReportExcel = $ReportModel->getSaleReportExcel($from, $to);
+
+		if(!$getSaleReportExcel){
+			return "Error";
+		}
 
 		$name = "reporte-ventas-$from-$to.xls";
 
@@ -744,6 +761,10 @@ class ReportController extends BaseController
 		}
 
 		$ReportModel = $ReportModel->get()->getResult();
+
+		if(!$ReportModel){
+			return "Error";
+		}
 
 		header("Pragma: public");
 		header("Expires: 0");
@@ -974,7 +995,7 @@ class ReportController extends BaseController
 				$where = "DATE_FORMAT(ventas.creado_en, '%Y-%m-%d') BETWEEN '$from' AND '$to'";
 				$ReportModel = $ReportModel->where($where);
 				$name = "reporte-ventas-por-producto-$from-$to.xls";
-				$nameHeader = "$from a $to";
+				$nameHeader = "Desde $from hasta $to";
 			}else{
 				$where = "DATE_FORMAT(ventas.creado_en, '%Y-%m-%d') = '$range'";
 				$ReportModel = $ReportModel->where($where);
@@ -985,6 +1006,10 @@ class ReportController extends BaseController
 		}
 
 		$ReportModel = $ReportModel->get()->getResult();
+		
+		if(!$ReportModel){
+			return "Error";
+		}
 
 		header("Pragma: public");
 		header("Expires: 0");
@@ -1181,6 +1206,239 @@ class ReportController extends BaseController
 						<td style='border:1px solid #eee;'></td>
 						<td style='border:1px solid #eee;'>".number_format($total, 2)."</td>
 						</tr>");
+		
+		echo "</table>";
+	}
+
+	public function getPurchasePerProviderReportExcel($provider, $range = NULL)
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$ReportModel = new ReportModel();
+		$ReportModel = $ReportModel->getPurchasesPerProvider();
+
+		$ReportModel = $ReportModel->where('compras.proveedor', $provider);
+
+		$name = "reporte-compras-por-proveedor.xls";
+		$nameHeader = "Todas las compras por proveedor";
+
+		if ( $range != NULL ){
+			
+			if(!empty(explode('a', $range)[1])){
+				$from = explode('a', $range)[0];
+				$to = explode('a', $range)[1];
+				$where = "DATE_FORMAT(compras.creado_en, '%Y-%m-%d') BETWEEN '$from' AND '$to'";
+				$ReportModel = $ReportModel->where($where);
+				$name = "reporte-compras-por-cliente-$from-$to.xls";
+				$nameHeader = "Desde $from hasta $to";
+			}else{
+				$where = "DATE_FORMAT(compras.creado_en, '%Y-%m-%d') = '$range'";
+				$ReportModel = $ReportModel->where($where);
+				$name = "reporte-compras-por-cliente-$range.xls";
+				$nameHeader = "Del día $range";
+			}
+
+		}
+
+		$ReportModel = $ReportModel->get()->getResult();
+
+		if(!$ReportModel){
+			return "Error";
+		}
+
+
+		header("Pragma: public");
+		header("Expires: 0");
+		header("Content-type: application/x-msdownload");
+		header("Content-Disposition: attachment; filename=$name");
+		header("Pragma: no-cache");
+		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+
+		echo utf8_decode("
+		
+		<table>
+			<tr>
+
+				<td style='background-color:white; width:350px'>
+					
+					<div style='font-size:12px; text-align:left; line-height:15px; margin-left: 20px'>
+						
+						<br>
+						<strong style='font-size: 22px'>Reporte de compras por proveedor</strong>
+						<br>
+						<strong>$nameHeader</strong>
+
+					</div>
+
+				</td>
+
+				<td style='width:150px;'>
+					
+				</td>
+
+				<td style='background-color:white; width:140px'>
+
+				
+					
+				</td>
+
+				<td style='background-color:white; width:140px'>
+
+					<div style='font-size:12px; text-align:right; margin-left: 50px'>
+						<br>
+						<strong style='font-size: 18px'>Generado:</strong>
+						<br>
+						". date('d-m-Y H:i') . "
+
+					</div>
+					
+				</td>
+
+			</tr>
+		</table>
+		
+		");
+
+		echo utf8_decode("
+		
+		<table>
+		
+		<tr>
+			
+			<td style='width:150px; margin-left: 20px'>
+				<div style='font-size:12px; text-align: center; line-height:15px; margin-left: 50px'>
+					
+					<br>
+					<strong style='font-size: 20px'>DIGENCA</strong>
+					
+					<br>
+
+				</div>
+
+            </td>
+
+			<td style='background-color:white; width:210px'>
+				
+				<div style='font-size:12px; text-align:right; line-height:15px;'>
+					
+					<br>
+					<strong>RIF:</strong> J-285346256
+
+					<br>
+					<strong>Dirección:</strong> Av. Venezuela con calle 37
+
+				</div>
+
+			</td>
+
+			<td style='background-color:white; width:140px'>
+
+				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
+					
+					<br>
+					<strong>Teléfono:</strong> 02512736478
+					
+					<br>
+					digencacom@example.com
+
+				</div>
+				
+			</td>
+
+		</tr>
+
+	</table>
+
+		");
+
+		echo utf8_decode("
+		
+		<table>
+		
+		<tr>
+			
+			<td style='width:150px; margin-left: 20px'>
+				<div style='font-size:12px; text-align: center; line-height:15px; margin-left: 50px'>
+					
+					<br>
+					<strong style='font-size: 20px'>Proveedor</strong>
+					
+					<br>
+
+				</div>
+
+            </td>
+
+			<td style='background-color:white; width:210px'>
+				
+				<div style='font-size:12px; text-align:right; line-height:15px;'>
+				
+					<br>
+					<strong>Identificación:</strong> ".$ReportModel[0]->idProveedor."
+
+					<br>
+					<strong>Nombre:</strong> ".$ReportModel[0]->nombre."
+
+
+				</div>
+
+			</td>
+
+			<td style='background-color:white; width:140px'>
+
+				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
+					
+					<br>
+					<strong>Teléfono:</strong> ".$ReportModel[0]->telefono."
+					
+					<br>
+					<strong>Dirección:</strong> ".$ReportModel[0]->direccion."
+					
+
+				</div>
+				
+			</td>
+
+		</tr>
+
+	</table>
+
+		");
+		
+		echo "<br>";
+		echo utf8_decode("<table border='0'> 
+
+		<tr> 
+			<td style='font-weight:bold; border:1px solid #eee; width: 50px;'>FACTURA</td> 
+			<td style='font-weight:bold; border:1px solid #eee;'>FECHA</td>		
+			<td style='font-weight:bold; border:1px solid #eee;'>USUARIO</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>CANTIDAD</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>TOTAL</td>			
+		</tr>");
+
+		$grandTotal = 0;
+		foreach ($ReportModel as $row => $item){
+
+			$grandTotal += $item->total;
+
+			echo utf8_decode("<tr>
+						<td style='border:1px solid #eee;'>".$item->identificacion."</td>
+						<td style='border:1px solid #eee;'>".date('Y-m-d', strtotime($item->fecha))."</td>
+						<td style='border:1px solid #eee;'>".$item->usuario."</td>
+						<td style='border:1px solid #eee;'>".$item->cantidad."</td>
+						<td style='border:1px solid #eee;'>".number_format($item->total, 2)."</td>
+						</tr>");
+
+		}
+		echo utf8_decode("<tr>
+					<td style='border:1px solid #eee;'></td>
+					<td style='border:1px solid #eee;'></td>
+					<td style='border:1px solid #eee;'></td>
+					<td style='border:1px solid #eee;'></td>
+					<td style='border:1px solid #eee;'>".number_format($grandTotal, 2)."</td>
+					</tr>");
 		
 		echo "</table>";
 	}
