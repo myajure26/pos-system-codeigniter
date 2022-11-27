@@ -34,6 +34,7 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'App::index');
 $routes->get('/audits/get', 'AuditController::getAudits');
+$routes->post('/settings/update', 'AuditController::settingsUpdate');
 
 // ? SALES MODULE
 $routes->group('sales', static function ($routes) {

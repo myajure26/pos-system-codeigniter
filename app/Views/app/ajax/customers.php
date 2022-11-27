@@ -157,7 +157,7 @@
                                 </select>
                             </div>
                             <div class="col-md-9">
-                                <input type="text" class="form-control ci-rif viewDisabled" id="viewIdentification" disabled>
+                                <input type="number" class="form-control ci-rif viewDisabled" id="viewIdentification" disabled>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>

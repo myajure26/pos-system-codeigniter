@@ -686,6 +686,41 @@ class App extends BaseController
 		
 		}
 	}
+	
+	public function settings()
+	{
+		if($this->session->has('name')){
+
+			$db      	= \Config\Database::connect();
+			$coins 		= $db
+							->table('monedas')
+							->select('identificacion, moneda')
+							->where('estado', 1)
+							->get()
+							->getResult();
+			$configuracion 		= $db
+							->table('configuracion')
+							->select('valor_configuracion');
+
+			$data = [
+				"title" 		=> "Cofiguraciones del sistema - $this->system",
+				"coins" 		=> $coins,
+				"systemName" 	=> $this->system,
+				"principalCoin" => $this->principalCoin,
+				"name" 			=> $this->businessName,
+				"identification"=> $this->businessIdentification,
+				"address" 		=> $this->businessAddress,
+				"phone" 		=> $this->businessPhone
+
+			];
+			return view('app/ajax/settings', $data);
+		
+		}else{
+
+			return redirect()->to(base_url());
+		
+		}
+	}
 
 	public function logout()
 	{

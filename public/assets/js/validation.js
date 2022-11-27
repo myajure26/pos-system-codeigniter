@@ -46,7 +46,29 @@ $(document).on('input', '.ci-rif', function(){
 
     if( !$(this).val().match(patternInput) || $(this).val() == ''){
         $(this).addClass('is-invalid');
-        feedback.text('Introduce una cédula válida. Ejemplo: 22374834');
+        feedback.text('Introduce una cédula/rif válida. Ejemplo: 22374834');
+        feedback.show();
+        return false;
+
+    }
+
+    $(this).removeClass('is-invalid');
+    feedback.hide();
+
+});
+
+$(document).on('input', '.rif', function(){
+
+    if($(this).val().length > 9){
+        $(this).val($(this).val().slice(0,9));
+    }
+
+    let patternInput = new RegExp('^(([1-9]){1}[0-9]{8})$');
+    let feedback =  $(this).parent().children('.invalid-feedback');
+
+    if( !$(this).val().match(patternInput) || $(this).val() == ''){
+        $(this).addClass('is-invalid');
+        feedback.text('Introduce un rif válido. Ejemplo: J-284567534');
         feedback.show();
         return false;
 
@@ -89,7 +111,7 @@ $(document).on('input', '.phone', function(){
         $(this).val($(this).val().slice(0,11));
     }
 
-    let patternInput = new RegExp('^(0414|0424|0412|0416|0426|020)[0-9]{7}$');
+    let patternInput = new RegExp('^(0414|0424|0412|0416|0426|0251)[0-9]{7}$');
     let feedback =  $(this).parent().children('.invalid-feedback');
 
     if( !$(this).val().match(patternInput) || $(this).val() == ''){
