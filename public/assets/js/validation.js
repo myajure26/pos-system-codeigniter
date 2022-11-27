@@ -253,3 +253,29 @@ $(document).on('input', '.percentaje', function(){
     feedback.hide();
 
 });
+
+$(document).on('input', '.number', function(){
+    
+    let patternInput = new RegExp('^[0-9]*$');
+    let feedback =  $(this).parent().children('.invalid-feedback');
+    
+    if($(this).val().length > 3){
+        $(this).val($(this).val().slice(0,3));
+        $(this).addClass('is-invalid');
+        feedback.text('El número no debe contener más de 3 carácteres');
+        feedback.show();
+        return false;
+    }
+
+    if( !$(this).val().match(patternInput) || $(this).val() == ''){
+        $(this).addClass('is-invalid');
+        feedback.text('El número no debe ir vacío ni contener carácteres especiales o letras');
+        feedback.show();
+        return false;
+
+    }
+
+    $(this).removeClass('is-invalid');
+    feedback.hide();
+
+});

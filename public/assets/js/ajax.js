@@ -214,6 +214,10 @@ $(document).ready(function() {
                return viewCategory(data);
             case 'brands':
                return viewBrand(data);
+            case 'highRubber':
+                return viewHighRubber(data);
+            case 'wideRubber':
+                return viewWideRubber(data);
             case 'coins':
                return viewCoin(data);
             case 'taxes':

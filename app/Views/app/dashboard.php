@@ -251,6 +251,18 @@
                                     <span data-key="t-brand">Marcas</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="<?=base_url('#high_rubber')?>">
+                                    <i data-feather="sliders"></i>
+                                    <span data-key="t-brand">Alto caucho</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?=base_url('#wide_rubber')?>">
+                                    <i data-feather="globe"></i>
+                                    <span data-key="t-brand">Ancho caucho</span>
+                                </a>
+                            </li>
 
                             <li class="menu-title" data-key="t-menu">Administrar usuarios</li>
                             <li>

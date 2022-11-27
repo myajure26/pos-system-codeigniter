@@ -88,6 +88,28 @@ $routes->group('brands', static function ($routes) {
     $routes->post('recover', 'BrandController::recoverBrand');
 });
 
+// ? HIGH RUBBER MODULE
+$routes->group('highRubber', static function ($routes) {
+    $routes->post('create', 'HighRubberController::createHighRubber');
+    $routes->get('get', 'HighRubberController::getHighRubbers');
+    $routes->get('getById/(:num)', 'HighRubberController::getHighRubberById/$1');
+    $routes->post('update', 'HighRubberController::updateHighRubber');
+    $routes->post('delete', 'HighRubberController::deleteHighRubber');
+    $routes->post('recover', 'HighRubberController::recoverHighRubber');
+});
+
+
+// ? WIDE RUBBER MODULE
+$routes->group('wideRubber', static function ($routes) {
+    $routes->post('create', 'WideRubberController::createWideRubber');
+    $routes->get('get', 'WideRubberController::getWideRubbers');
+    $routes->get('getById/(:num)', 'WideRubberController::getWideRubberById/$1');
+    $routes->post('update', 'WideRubberController::updateWideRubber');
+    $routes->post('delete', 'WideRubberController::deleteWideRubber');
+    $routes->post('recover', 'WideRubberController::recoverWideRubber');
+});
+
+
 // ? COINS MODULE
 $routes->group('coins', static function ($routes) {
     $routes->post('create', 'CoinController::createCoin');

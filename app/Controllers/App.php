@@ -486,6 +486,38 @@ class App extends BaseController
 		}
 	}
 
+	public function high_rubber()
+	{
+		if($this->session->has('name')){
+			
+			$data = [
+				"title" => "Alto caucho - $this->system"
+			];
+			return view('app/ajax/high_rubber', $data);
+		
+		}else{
+
+			return redirect()->to(base_url());
+		
+		}
+	}
+
+	public function wide_rubber()
+	{
+		if($this->session->has('name')){
+			
+			$data = [
+				"title" => "Ancho caucho - $this->system"
+			];
+			return view('app/ajax/wide_rubber', $data);
+		
+		}else{
+
+			return redirect()->to(base_url());
+		
+		}
+	}
+
 	public function customers()
 	{
 		if($this->session->has('name')){
