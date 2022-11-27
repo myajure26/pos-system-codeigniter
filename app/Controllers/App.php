@@ -271,14 +271,14 @@ class App extends BaseController
 		}
 	}
 
-	public function detailed_purchases()
+	public function purchases_per_provider()
 	{
 		if($this->session->has('name')){
 			
 			$data = [
-				"title" => "Reportes detallados de compras - $this->system"
+				"title" => "Reportes de compras por proveedor - $this->system"
 			];
-			return view('app/reports/detailed_purchases', $data);
+			return view('app/reports/purchases_per_provider', $data);
 		
 		}else{
 

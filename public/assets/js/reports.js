@@ -46,10 +46,23 @@ $(document).ready(function(){
 
     });
 
+    $(document).on('change', '.range', function(){
+        $('.report-date').text($(this).val());
+    });
+
     // * Seleccionar al cliente
     $(document).on('click', '.btn-select-customer', function(){
         $('#searchById').val($(this).closest('tr').find('td:eq(1)').text());
         $('#searchCustomerModal').modal('hide');
+        $('.table-report').show();
+
+        $('#identification-report').text($(this).closest('tr').find('td:eq(1)').text());
+        $('#phone-report').text($(this).closest('tr').find('td:eq(4)').text());
+        $('#name-report').text($(this).closest('tr').find('td:eq(2)').text());
+        $('#address-report').text($(this).closest('tr').find('td:eq(3)').text());
+        
+        
+        
         $('#btn-report').slideDown();
     });
 
@@ -57,6 +70,13 @@ $(document).ready(function(){
     $(document).on('click', '.btn-select-product', function(){
         $('#searchById').val($(this).closest('tr').find('td:eq(1)').text());
         $('#searchProductModal').modal('hide');
+        $('#btn-report').slideDown();
+    });
+
+    // * Seleccionar el proveedor
+    $(document).on('click', '.btn-select-prov', function(){
+        $('#searchById').val($(this).closest('tr').find('td:eq(1)').text());
+        $('#searchProviderModal').modal('hide');
         $('#btn-report').slideDown();
     });
 

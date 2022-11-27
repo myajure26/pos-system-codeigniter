@@ -52,6 +52,9 @@ function tableConfig(ajaxUrl, selector){
         $(`${selector}`).DataTable().ajax.reload();
     });
     $(document).on('click', '.btn-select-customer, .btn-select-product', function(){
+        if(!$.fn.dataTable.isDataTable( '.datatable' )){
+            tableConfig('/sales_per_customer', '.datatable');
+        }
         $(`${selector}`).DataTable().ajax.reload();
     });
 }

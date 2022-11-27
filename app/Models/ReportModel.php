@@ -17,18 +17,16 @@ class ReportModel extends Model
 			->join('categorias', 'categorias.identificacion = productos.categoria');
 		return $db;
 	}
-	public function getDetailedPurchases()
+	public function getPurchasesPerProvider()
 	{
         $db = \Config\Database::connect();
         
 		$db = $db
             ->table('compras')
-			->select('referencia, fecha, usuario, proveedor, tipo_documento.nombre as tipo_documento, productos.nombre, detalle_compra.producto, monedas.moneda, detalle_compra.cantidad, detalle_compra.precio ')
-			->join('tipo_documento', 'tipo_documento.identificacion = compras.tipo_documento')
+			->select('compras.identificacion, fecha, proveedor, usuario, SUM(detalle_compra.cantidad), SUM(detalle_compra.cantidad * detalle_compra.precio) as total')
 			->join('detalle_compra', 'detalle_compra.compra = compras.identificacion')
-			->join('productos', 'productos.codigo = detalle_compra.producto')
-			->join('monedas', 'monedas.identificacion = compras.moneda')
-			->where('compras.estado', 1);
+			->where('compras.estado', 1)
+			->groupBy('compras.identificacion');
 		return $db;
 	}
 
@@ -37,8 +35,9 @@ class ReportModel extends Model
         $db = \Config\Database::connect();
 		$db = $db
             ->table('ventas')
-			->select('ventas.identificacion, ventas.creado_en as fecha, cliente, usuario, impuestos.porcentaje as impuesto, SUM(detalle_ventas.cantidad * detalle_ventas.precio) as subtotal')
+			->select('ventas.identificacion, ventas.creado_en as fecha, clientes.nombre as cliente, clientes.identificacion as idCliente, clientes.telefono as tlfCliente, clientes.direccion as direcCliente, usuario, impuestos.porcentaje as impuesto, SUM(detalle_ventas.cantidad * detalle_ventas.precio) as subtotal')
 			->join('detalle_ventas', 'detalle_ventas.venta = ventas.identificacion')
+			->join('clientes', 'clientes.identificacion = ventas.cliente')
 			->join('impuestos', 'impuestos.identificacion = ventas.impuesto')
 			->where('ventas.estado', 1)
 			->groupBy('ventas.identificacion');

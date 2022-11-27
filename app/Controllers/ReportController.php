@@ -52,7 +52,7 @@ class ReportController extends BaseController
 			->toJson();
 	}
 
-	public function getDetailedPurchases()
+	public function getPurchasesPerProvider()
 	{
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
@@ -60,11 +60,8 @@ class ReportController extends BaseController
 
 		$ReportModel = new ReportModel();
 				
-		return DataTable::of($ReportModel->getDetailedPurchases())
-			->edit('precio', function($row){
-				return number_format($row->precio, 2);
-			})
-			->add('total', function($row){
+		return DataTable::of($ReportModel->getPurchasesPerProvider())
+			->edit('total', function($row){
 				
 				return number_format($row->cantidad * $row->precio, 2);
 
@@ -98,6 +95,10 @@ class ReportController extends BaseController
 		$ReportModel = new ReportModel();
 				
 		return DataTable::of($ReportModel->getSalesPerCustomer())
+			->hide('cliente')
+			->hide('tlfCliente')
+			->hide('direcCliente')
+			->hide('idCliente')
 			->edit('fecha', function($row){
 				return date('Y-m-d', strtotime($row->fecha));
 			})
@@ -132,6 +133,8 @@ class ReportController extends BaseController
 
 					$builder->where('ventas.cliente', $request->searchById);
 
+				}else{
+					return false;
 				}
 		
 			})
@@ -269,6 +272,30 @@ class ReportController extends BaseController
 	/** 
 	 * * OBTENER LOS DATOS DE SELECCIÓN
 	 */
+
+	public function getPurchasesProvider()
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$db      	= \Config\Database::connect();
+		$providers 	= $db
+						->table('proveedores')
+						->select('codigo, nombre, identificacion')
+						->where('estado', 1);
+				
+		return DataTable::of($providers)
+			->add('Seleccionar', function($row){
+				return '<div class="btn-list"> 
+							<button type="button" class="btn-select-prov btn btn-sm btn-primary waves-effect" data-id="'.$row->codigo.'" data-type="providers">
+                                <i class="fas fa-check"></i>
+                            </button>
+                        </div>';
+			}, 'first') 
+			->toJson();
+	}
+
 	public function getSalesCustomer()
 	{
 		if(!$this->session->has('name')){
@@ -702,7 +729,7 @@ class ReportController extends BaseController
 				$where = "DATE_FORMAT(ventas.creado_en, '%Y-%m-%d') BETWEEN '$from' AND '$to'";
 				$ReportModel = $ReportModel->where($where);
 				$name = "reporte-ventas-por-cliente-$from-$to.xls";
-				$nameHeader = "$from a $to";
+				$nameHeader = "Desde $from hasta $to";
 			}else{
 				$where = "DATE_FORMAT(ventas.creado_en, '%Y-%m-%d') = '$range'";
 				$ReportModel = $ReportModel->where($where);
@@ -724,11 +751,64 @@ class ReportController extends BaseController
 		echo utf8_decode("
 		
 		<table>
+			<tr>
+
+				<td style='background-color:white; width:350px'>
+					
+					<div style='font-size:12px; text-align:left; line-height:15px; margin-left: 20px'>
+						
+						<br>
+						<strong style='font-size: 22px'>Reporte de ventas por cliente</strong>
+						<br>
+						<strong>$nameHeader</strong>
+
+					</div>
+
+				</td>
+
+				<td style='width:150px;'>
+					
+				</td>
+
+				<td style='background-color:white; width:140px'>
+
+				
+					
+				</td>
+
+				<td style='background-color:white; width:140px'>
+
+					<div style='font-size:12px; text-align:right; margin-left: 50px'>
+						<br>
+						<strong style='font-size: 18px'>Generado:</strong>
+						<br>
+						". date('d-m-Y H:i') . "
+
+					</div>
+					
+				</td>
+
+			</tr>
+		</table>
+		
+		");
+
+		echo utf8_decode("
+		
+		<table>
 		
 		<tr>
 			
-			<td style='width:150px;'>
-                <h2 style='font-size: 20px'>Digenca</h2>
+			<td style='width:150px; margin-left: 20px'>
+				<div style='font-size:12px; text-align: center; line-height:15px; margin-left: 50px'>
+					
+					<br>
+					<strong style='font-size: 20px'>DIGENCA</strong>
+					
+					<br>
+
+				</div>
+
             </td>
 
 			<td style='background-color:white; width:210px'>
@@ -750,7 +830,7 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
 					
 					<br>
-					Teléfono: 04121546367
+					<strong>Teléfono:</strong> 02512736478
 					
 					<br>
 					digencacom@example.com
@@ -758,19 +838,44 @@ class ReportController extends BaseController
 				</div>
 				
 			</td>
-			<td style='background-color:white; width:140px'>
 
-				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
+		</tr>
+
+	</table>
+
+		");
+
+		echo utf8_decode("
+		
+		<table>
+		
+		<tr>
+			
+			<td style='width:150px; margin-left: 20px'>
+				<div style='font-size:12px; text-align: center; line-height:15px; margin-left: 50px'>
 					
 					<br>
-					Reporte de ventas
+					<strong style='font-size: 20px'>Cliente</strong>
 					
 					<br>
-					
-					$nameHeader
 
 				</div>
+
+            </td>
+
+			<td style='background-color:white; width:210px'>
 				
+				<div style='font-size:12px; text-align:right; line-height:15px;'>
+				
+					<br>
+					<strong>Identificación:</strong> ".$ReportModel[0]->idCliente."
+
+					<br>
+					<strong>Nombre:</strong> ".$ReportModel[0]->cliente."
+
+
+				</div>
+
 			</td>
 
 			<td style='background-color:white; width:140px'>
@@ -778,10 +883,11 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
 					
 					<br>
-					Generado
+					<strong>Teléfono:</strong> ".$ReportModel[0]->tlfCliente."
 					
 					<br>
-					". date('Y-m-d H:i:s') . "
+					<strong>Dirección:</strong> ".$ReportModel[0]->direcCliente."
+					
 
 				</div>
 				
@@ -794,13 +900,11 @@ class ReportController extends BaseController
 		");
 		
 		echo "<br>";
-
 		echo utf8_decode("<table border='0'> 
 
 		<tr> 
-			<td style='font-weight:bold; border:1px solid #eee;'>FACTURA</td> 
+			<td style='font-weight:bold; border:1px solid #eee; width: 50px;'>FACTURA</td> 
 			<td style='font-weight:bold; border:1px solid #eee;'>FECHA</td>		
-			<td style='font-weight:bold; border:1px solid #eee;'>CLIENTE</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>VENDEDOR</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>IMPUESTO</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>SUBTOTAL</td>
@@ -821,8 +925,7 @@ class ReportController extends BaseController
 
 			echo utf8_decode("<tr>
 						<td style='border:1px solid #eee;'>".$item->identificacion."</td>
-						<td style='border:1px solid #eee;'>".date('Y-m-d', strtotime($item->fecha))."</td> 
-						<td style='border:1px solid #eee;'>".$item->cliente."</td>
+						<td style='border:1px solid #eee;'>".date('Y-m-d', strtotime($item->fecha))."</td>
 						<td style='border:1px solid #eee;'>".$item->usuario."</td>
 						<td style='border:1px solid #eee;'>".$item->impuesto."</td>
 						<td style='border:1px solid #eee;'>".$item->subtotal."</td>

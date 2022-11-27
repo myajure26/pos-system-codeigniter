@@ -26,6 +26,7 @@
         <link href="<?=base_url('assets/css/app.min.css')?>" rel="stylesheet" type="text/css" />
         <!-- Custom Css -->
         <link href="<?=base_url('assets/css/custom.css')?>" rel="stylesheet" type="text/css" />
+        <!-- <link href="<?=base_url('assets/css/invoice.css')?>" rel="stylesheet" type="text/css" /> -->
     
     </head>
 
@@ -199,8 +200,8 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="<?=base_url('#detailed_purchases')?>">
-                                            <span data-key="t-purchases">Compras detalladas</span>
+                                        <a href="<?=base_url('#purchases_per_provider')?>">
+                                            <span data-key="t-purchases">Compras por proveedor</span>
                                         </a>
                                     </li>
                                     <li>
