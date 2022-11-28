@@ -89,7 +89,8 @@ class App extends BaseController
 
 			$data = [
 				"title" => "Centro de control - $this->system",
-				"coins" => $coins
+				"coins" => $coins,
+				"principalCoin" => $this->principalCoin
 			];
 			return view('app/ajax/control_center', $data);
 		
@@ -136,7 +137,8 @@ class App extends BaseController
 				"taxes" 		=> $taxes,
 				"paymentMethod" => $paymentMethod,
 				"coins"			=> $coins,
-				"receipt"		=> $receipt
+				"receipt"		=> $receipt,
+				"principalCoin"	=> $this->principalCoin
 			];
 			return view('app/ajax/newSale', $data);
 		

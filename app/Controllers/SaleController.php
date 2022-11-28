@@ -273,6 +273,10 @@ class SaleController extends BaseController
 
 		$SaleModel = new SaleModel();
 
+		if($identification == $this->principalCoin){
+			return json_encode(["precio" => "1.00"]);
+		}
+
 		$SaleModel = $SaleModel->getRate($identification);
 
 		if(!$SaleModel){

@@ -88,7 +88,7 @@
                                         <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label class="form-label" for="principal-coin">Moneda principal</label>
-                                                <select class="form-select" name="principalCoin" id="principal-coin" required>
+                                                <select class="form-select" name="principalCoin" id="principal-coin" required disabled>
                                                     <option value="">Selecciona la moneda</option>
                                                     <?php foreach($coins as $row)
                                                         echo '<option value="'.$row->identificacion.'">'.$row->moneda.'</option>';
@@ -102,7 +102,9 @@
                                                 <select class="form-select" name="secondaryCoin" id="secondary-coin" required>
                                                     <option value="">Selecciona la moneda</option>
                                                     <?php foreach($coins as $row)
-                                                        echo '<option value="'.$row->identificacion.'">'.$row->moneda.'</option>';
+                                                       if($row->identificacion != $principalCoin){
+                                                            echo '<option value="'.$row->identificacion.'">'.$row->moneda.'</option>';
+                                                        }
                                                     ?>
                                                 </select>
                                             </div>
@@ -229,4 +231,6 @@
         mode: 'range',
         maxDate: 'today'
     });
+    let coin = <?=$principalCoin?>;
+    $('#principal-coin').val(coin);
 </script>

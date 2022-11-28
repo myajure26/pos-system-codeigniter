@@ -237,7 +237,7 @@
                                                 <div class="col-lg-6">
                                                     <div class="mb-3">
                                                         <label class="form-label" for="coinSale">Moneda</label>
-                                                        <select class="form-select" name="coin" id="coinSale" required>
+                                                        <select class="form-select" name="coin" id="coinSale" principalCoin="<?=$principalCoin?>" required>
                                                             <option value="">Seleccione la moneda</option>
                                                             <?php foreach($coins as $row)
                                                                 echo '<option value="'.$row->identificacion.'">'.$row->moneda.'</option>';

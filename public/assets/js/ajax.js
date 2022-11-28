@@ -444,6 +444,11 @@ $(document).ready(function() {
     $(document).on('change', '#coinSale', function(){ 
         
         const identification = $(this).val();
+
+        if(identification == $(this).attr('principalCoin')){
+            $('#rate').val('1.00');
+            return false;
+        }
         
         if(identification === '') return false;
         
@@ -468,6 +473,7 @@ $(document).ready(function() {
             success: function (data) {
 
                 let rate = Number(data[0].precio.replace('.', ""));
+                
                 let subtotal = Number($('.subtotal').val().replace(/,/g, "").replace('.', ""));
                 let tax = Number($('.tax').val().replace(/,/g, "").replace('.', ""));
                 let total = Number($('.total').val().replace(/,/g, "").replace('.', ""));
@@ -492,9 +498,13 @@ $(document).ready(function() {
             },
             error: function () {
 
-                $('#rate').val('1.00');
+                Swal.fire({
+                    title: 'Alerta',
+                    text: 'No ha actualizado los precios de las monedas de hoy',
+                    icon: 'warning'
+                });
+                $('#rate').val('');
                 totalSaleCount();
-                Swal.close();
 
             }
         });
