@@ -56,8 +56,8 @@
                                     <tr>
                                         <th>Código</th>
                                         <th>Nombre</th>
-                                        <th>Marca</th>
                                         <th>Categoría</th>
+                                        <th>Marca</th>
                                         <th>Precio</th>
                                         <th>Estado</th>
                                         <th>Acciones</th>
@@ -86,36 +86,11 @@
                 <div class="modal-body">
                     <div class="response"></div>
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Código</label>
-                                <input type="text" class="form-control" id="code" placeholder="Introduce el código del producto" name="code" required>
-                            </div>
-                        </div>
                         <div class="col-md-6">    
                             <div class="mb-3">
                                 <label class="form-label">Nombre</label>
                                 <input type="text" class="form-control name" id="name" placeholder="Introduce el nombre del producto" name="name" required>
                                 <div class="invalid-feedback"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Precio</label>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <select class="form-select" name="coin" id="coin" required>
-                                        <?php foreach($coins as $row)
-                                            echo '<option value="'.$row->identificacion.'">'.$row->simbolo.'</option>';
-                                        ?>
-                                        </select>
-                                    </div>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control price" id="price" placeholder="Introduce el precio del producto" name="price" required value="0.00" maxlength="14">
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -133,6 +108,30 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
+                                <label class="form-label">Ancho caucho</label>
+                                <select class="form-select" name="wide" id="wide" required>
+                                    <option value="">Seleccione el ancho del caucho</option>
+                                    <?php foreach($wide as $row)
+                                        echo '<option value="'.$row->id_ancho_caucho.'">'.$row->ancho_numero.'</option>';
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Alto caucho</label>
+                                <select class="form-select" name="high" id="high" required>
+                                    <option value="">Seleccione la altura del caucho</option>
+                                    <?php foreach($high as $row)
+                                        echo '<option value="'.$row->id_alto_caucho.'">'.$row->alto_numero.'</option>';
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
                                 <label class="form-label">Marca</label>
                                 <select class="form-select" name="brand" id="brand" required>
                                     <option value="">Seleccione la marca</option>
@@ -140,6 +139,19 @@
                                         echo '<option value="'.$row->identificacion.'">'.$row->marca.'</option>';
                                     ?>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Precio</label>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" readonly value="<?=$coin?>">
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control price" id="price" placeholder="Introduce el precio del producto" name="price" required value="0.00" maxlength="14">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -182,23 +194,30 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col -md-6">
+                        <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label">Precio</label>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <select class="form-select" name="coin" id="viewCoin" disabled required>
-                                        <?php foreach($coins as $row)
-                                            echo '<option value="'.$row->identificacion.'">'.$row->simbolo.'</option>';
-                                        ?>
-                                        </select>
-                                    </div>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control price" id="viewPrice" name="price" disabled required maxlength="14">
-                                    </div>
-                                </div>
+                                <label class="form-label">Ancho caucho</label>
+                                <select class="form-select" name="wide" id="viewWide" required disabled>
+                                    <option value="">Seleccione el ancho del caucho</option>
+                                    <?php foreach($wide as $row)
+                                        echo '<option value="'.$row->id_ancho_caucho.'">'.$row->ancho_numero.'</option>';
+                                    ?>
+                                </select>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Alto caucho</label>
+                                <select class="form-select" name="high" id="viewHigh" required disabled>
+                                    <option value="">Seleccione la altura del caucho</option>
+                                    <?php foreach($high as $row)
+                                        echo '<option value="'.$row->id_alto_caucho.'">'.$row->alto_numero.'</option>';
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Categoría</label>
@@ -210,8 +229,6 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Marca</label>
@@ -221,6 +238,21 @@
                                         echo '<option value="'.$row->identificacion.'">'.$row->marca.'</option>';
                                     ?>
                                 </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col -md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Precio</label>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" readonly value="<?=$coin?>">
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control price" id="viewPrice" name="price" disabled required maxlength="14">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -259,6 +291,8 @@
         $('#viewIdentification').val(data[0].codigo);
         $('#viewCode').val(data[0].codigo);
         $('#viewName').val(data[0].nombre);
+        $('#viewWide').val(data[0].id_ancho_caucho);
+        $('#viewHigh').val(data[0].id_alto_caucho);
         $('#viewBrand').val(data[0].marca);
         $('#viewCategory').val(data[0].categoria);
         $('#viewCoin').val(data[0].moneda);

@@ -12,7 +12,7 @@ class ProductModel extends Model
 	protected $returnType           = 'array';
 	protected $useSoftDeletes       = true;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["codigo", "nombre", "marca", "categoria", "moneda", "precio", "impuesto", "estado", "actualizado_en", "creado_en"];
+	protected $allowedFields        = ["codigo", "nombre", "id_ancho_caucho", "id_alto_caucho", "marca", "categoria", "precio", "impuesto", "estado", "actualizado_en", "creado_en"];
 
 	// Dates
 	protected $useTimestamps        = true;
@@ -32,10 +32,11 @@ class ProductModel extends Model
 	public function getProducts()
 	{
 		$query = $this
-			->select('codigo, nombre, marcas.marca, categorias.categoria, monedas.simbolo, precio, productos.estado')
+			->select('codigo, nombre, ancho_caucho.ancho_numero, alto_caucho.alto_numero, categorias.categoria, marcas.marca, precio, productos.estado')
+			->join('ancho_caucho', 'ancho_caucho.id_ancho_caucho = productos.id_ancho_caucho')
+			->join('alto_caucho', 'alto_caucho.id_alto_caucho = productos.id_alto_caucho')
 			->join('marcas', 'marcas.identificacion = productos.marca')
-			->join('categorias', 'categorias.identificacion = productos.categoria')
-			->join('monedas', 'monedas.identificacion = productos.moneda');
+			->join('categorias', 'categorias.identificacion = productos.categoria');
 		return $query;
 	}
 

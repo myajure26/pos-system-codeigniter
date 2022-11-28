@@ -58,13 +58,13 @@ class ProductController extends BaseController
 
 		$ProductModel = new ProductModel();
 		$product = $ProductModel->createProduct([
-									'codigo' 		=> $this->request->getPost('code'),
-									'nombre' 		=> $this->request->getPost('name'),
-									'descripcion' 	=> $this->request->getPost('description'),
-									'marca' 		=> $this->request->getPost('brand'),
-									'categoria' 	=> $this->request->getPost('category'),
-									'moneda' 		=> $this->request->getPost('coin'),
-									'precio' 		=> $price
+									'codigo' 			=> $this->request->getPost('code'),
+									'nombre' 			=> $this->request->getPost('name'),
+									'id_ancho_caucho' 	=> $this->request->getPost('wide'),
+									'id_alto_caucho' 	=> $this->request->getPost('high'),
+									'marca' 			=> $this->request->getPost('brand'),
+									'categoria' 		=> $this->request->getPost('category'),
+									'precio' 			=> $price
 								]);
 
 		if(!$product){
@@ -97,9 +97,13 @@ class ProductController extends BaseController
 		return DataTable::of($ProductModel->getProducts())
 			->edit('precio', function($row){
 				$price = number_format($row->precio, 2);
-				return $row->simbolo . $price;
+				return $this->symbol . $price;
 			})
-			->hide('simbolo')
+			->hide('ancho_numero')
+			->hide('alto_numero')
+			->edit('nombre', function($row){
+				return "$row->nombre $row->ancho_numero/$row->alto_numero";
+			})
 			->edit('estado', function($row){
 						
 				if($row->estado == 0){
@@ -199,12 +203,12 @@ class ProductController extends BaseController
 
 		$ProductModel = new ProductModel();
 		$product = $ProductModel->updateProduct([
-									'nombre' 		=> $this->request->getPost('name'),
-									'descripcion' 	=> $this->request->getPost('description'),
-									'marca' 		=> $this->request->getPost('brand'),
-									'categoria' 	=> $this->request->getPost('category'),
-									'moneda' 		=> $this->request->getPost('coin'),
-									'precio' 		=> $price
+									'nombre' 			=> $this->request->getPost('name'),
+									'id_ancho_caucho' 	=> $this->request->getPost('wide'),
+									'id_alto_caucho' 	=> $this->request->getPost('high'),
+									'marca' 			=> $this->request->getPost('brand'),
+									'categoria' 		=> $this->request->getPost('category'),
+									'precio' 			=> $price
 								], $code);
 
 		if(!$product){

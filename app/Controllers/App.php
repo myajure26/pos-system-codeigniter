@@ -432,10 +432,16 @@ class App extends BaseController
 							->where('estado', 1)
 							->get()
 							->getResult();
-			$coins 		= $db
-							->table('monedas')
-							->select('identificacion, moneda, simbolo')
-							->where('estado', 1)
+			$high 		= $db
+							->table('alto_caucho')
+							->select('id_alto_caucho, alto_numero')
+							->where('estado_alto_caucho', 1)
+							->get()
+							->getResult();
+			$wide 		= $db
+							->table('ancho_caucho')
+							->select('id_ancho_caucho, ancho_numero')
+							->where('estado_ancho_caucho', 1)
 							->get()
 							->getResult();
 			
@@ -443,7 +449,9 @@ class App extends BaseController
 				"title" 		=> "Productos - $this->system",
 				"brands" 		=> $brands,
 				"categories" 	=> $categories,
-				"coins" 		=> $coins
+				"coin" 			=> $this->symbol,
+				"high" 			=> $high,
+				"wide" 			=> $wide
 			];
 			return view('app/ajax/products', $data);
 		

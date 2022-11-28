@@ -30,6 +30,7 @@ class BaseController extends Controller
 	protected $helpers = [];
 	protected $system = "";
 	protected $principalCoin = "";
+	protected $symbol = "";
 	protected $businessName = "";
 	protected $businessIdentification = "";
 	protected $businessAddress = "";
@@ -61,6 +62,7 @@ class BaseController extends Controller
 		if($this->session->has('system')){
 			$this->system = $this->session->get('system');
 			$this->principalCoin = $this->session->get('principalCoin');
+			$this->symbol = $this->session->get('symbol');
 			$this->businessName = $this->session->get('businessName');
 			$this->businessIdentification = $this->session->get('businessIdentification');
 			$this->businessAddress = $this->session->get('businessAddress');
@@ -73,13 +75,24 @@ class BaseController extends Controller
 			
 			$systemName = $configuracion->where('nom_configuracion', 'sistema_nombre')->get()->getResult();
 			$principalCoin = $configuracion->where('nom_configuracion', 'moneda_principal')->get()->getResult();
+			$this->symbol = $this->session->get('symbol');
 			$businessName = $configuracion->where('nom_configuracion', 'empresa_nombre')->get()->getResult();
 			$businessIdentification = $configuracion->where('nom_configuracion', 'empresa_rif')->get()->getResult();
 			$businessAddress = $configuracion->where('nom_configuracion', 'empresa_direccion')->get()->getResult();
 			$businessPhone = $configuracion->where('nom_configuracion', 'empresa_telefono')->get()->getResult();
 
+			$db = $db
+					->table('monedas')
+					->select('simbolo')
+					->where('identificacion', $principalCoin[0]->valor_configuracion)
+					->where('estado', 1)
+					->get()
+					->getResult();
+			
+
 			$this->session->set(['system' 					=> $systemName[0]->valor_configuracion]);
 			$this->session->set(['principalCoin' 			=> $principalCoin[0]->valor_configuracion]);
+			$this->session->set(['symbol' 					=> $db[0]->simbolo]);
 			$this->session->set(['businessName' 			=> $businessName[0]->valor_configuracion]);
 			$this->session->set(['businessIdentification' 	=> $businessIdentification[0]->valor_configuracion]);
 			$this->session->set(['businessAddress' 			=> $businessAddress[0]->valor_configuracion]);
@@ -87,6 +100,7 @@ class BaseController extends Controller
 
 			$this->system = $this->session->get('system');
 			$this->principalCoin = $this->session->get('principalCoin');
+			$this->symbol = $this->session->get('symbol');
 			$this->businessName = $this->session->get('businessName');
 			$this->businessIdentification = $this->session->get('businessIdentification');
 			$this->businessAddress = $this->session->get('businessAddress');

@@ -3,21 +3,28 @@
 function createProductValidation()
 {
 	$product = [
-		'code' => [
-			'label' => 'code',
-			'rules' => 'required|alpha_numeric_punct|is_unique[productos.codigo]',
-			'errors' => [
-				'required' => 'El código es requerido',
-				'alpha_numeric_punct' => 'Para el código sólo se permiten carácteres alfanuméricos y guiones',
-				'is_unique' => 'El código ya se encuentra registrado'
-			]
-		],
 		'name' => [
 			'label' => 'name',
 			'rules' => 'required|regex_match[/^[a-zñáéíóúüA-ZÑÁÉÍÓÚÜ ]*$/u]',
 			'errors' => [
 				'required' => 'El nombre es requerido',
 				'regex_match' => 'Para el nombre sólo se permiten carácteres alfabéticos'
+			]
+		],
+		'high' => [
+			'label' => 'high',
+			'rules' => 'required|is_not_unique[alto_caucho.id_alto_caucho]',
+			'errors' => [
+				'required' => 'La altura es requerida',
+				'is_not_unique' => 'La altura no se encuentra registrada'
+			]
+		],
+		'wide' => [
+			'label' => 'wide',
+			'rules' => 'required|is_not_unique[ancho_caucho.id_ancho_caucho]',
+			'errors' => [
+				'required' => 'El ancho es requerido',
+				'is_not_unique' => 'El ancho no se encuentra registrado'
 			]
 		],
 		'brand' => [
@@ -34,14 +41,6 @@ function createProductValidation()
 			'errors' => [
 				'required' => 'La categoría es requerida',
 				'is_not_unique' => 'La categoría no se encuentra registrada'
-			]
-		],
-		'coin' => [
-			'label' => 'coin',
-			'rules' => 'required|is_not_unique[monedas.identificacion]',
-			'errors' => [
-				'required' => 'La moneda es requerida',
-				'is_not_unique' => 'La moneda no se encuentra registrada'
 			]
 		],
 		'price' => [
@@ -62,10 +61,9 @@ function updateProductValidation()
 	$updateProduct = [
 		'code' => [
 			'label' => 'code',
-			'rules' => 'required|alpha_numeric_punct|is_not_unique[productos.codigo]',
+			'rules' => 'required|is_not_unique[productos.codigo]',
 			'errors' => [
 				'required' => 'El código es requerido',
-				'alpha_numeric_punct' => 'Para el código sólo se permiten carácteres alfanuméricos',
 				'is_not_unique' => 'El código no se encuentra registrado'
 			]
 		],
@@ -75,6 +73,22 @@ function updateProductValidation()
 			'errors' => [
 				'required' => 'El nombre es requerido',
 				'regex_match' => 'Para el nombre sólo se permiten carácteres alfabéticos'
+			]
+		],
+		'high' => [
+			'label' => 'high',
+			'rules' => 'required|is_not_unique[alto_caucho.id_alto_caucho]',
+			'errors' => [
+				'required' => 'La altura es requerida',
+				'is_not_unique' => 'La altura no se encuentra registrada'
+			]
+		],
+		'wide' => [
+			'label' => 'wide',
+			'rules' => 'required|is_not_unique[ancho_caucho.id_ancho_caucho]',
+			'errors' => [
+				'required' => 'El ancho es requerido',
+				'is_not_unique' => 'El ancho no se encuentra registrado'
 			]
 		],
 		'brand' => [
@@ -91,14 +105,6 @@ function updateProductValidation()
 			'errors' => [
 				'required' => 'La categoría es requerida',
 				'is_not_unique' => 'La categoría no se encuentra registrada'
-			]
-		],
-		'coin' => [
-			'label' => 'coin',
-			'rules' => 'required|is_not_unique[monedas.identificacion]',
-			'errors' => [
-				'required' => 'La moneda es requerida',
-				'is_not_unique' => 'La moneda no se encuentra registrada'
 			]
 		],
 		'price' => [
