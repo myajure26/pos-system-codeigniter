@@ -3,22 +3,12 @@
 function createCoinPriceValidation()
 {
 	$coinPrice = [
-		'principalCoin' => [
-			'label' => 'principalCoin',
-			'rules' => 'required|is_not_unique[monedas.identificacion]|differs[secondaryCoin]',
-			'errors' => [
-				'required' => 'La moneda principal es requerida',
-				'is_not_unique' => 'La moneda principal no se encuentra registrada',
-				'differs'	=> 'Las monedas tienen que ser diferentes'
-			]
-		],
 		'secondaryCoin' => [
 			'label' => 'secondaryCoin',
-			'rules' => 'required|is_not_unique[monedas.identificacion]|differs[principalCoin]',
+			'rules' => 'required|is_not_unique[monedas.identificacion]',
 			'errors' => [
 				'required' => 'La moneda secundaria es requerida',
-				'is_not_unique' => 'La moneda secundaria no se encuentra registrada',
-				'differs'	=> 'Las monedas tienen que ser diferentes'
+				'is_not_unique' => 'La moneda secundaria no se encuentra registrada'
 			]
 		],
 		'price' => [
@@ -37,22 +27,20 @@ function createCoinPriceValidation()
 function updateCoinPriceValidation()
 {
 	$updateCoinPrice = [
-		'principalCoin' => [
-			'label' => 'principalCoin',
-			'rules' => 'required|is_not_unique[monedas.identificacion]|differs[secondaryCoin]',
+		'identification' => [
+			'label' => 'identification',
+			'rules' => 'required|is_not_unique[precio_monedas.identificacion]',
 			'errors' => [
-				'required' => 'La moneda principal es requerida',
-				'is_not_unique' => 'La moneda principal no se encuentra registrada',
-				'differs'	=> 'Las monedas tienen que ser diferentes'
+				'required' => 'La identificación de la transacción es requerida',
+				'is_not_unique' => 'La identificación de la transacción no existe'
 			]
 		],
 		'secondaryCoin' => [
 			'label' => 'secondaryCoin',
-			'rules' => 'required|is_not_unique[monedas.identificacion]|differs[principalCoin]',
+			'rules' => 'required|is_not_unique[monedas.identificacion]',
 			'errors' => [
 				'required' => 'La moneda secundaria es requerida',
-				'is_not_unique' => 'La moneda secundaria no se encuentra registrada',
-				'differs'	=> 'Las monedas tienen que ser diferentes'
+				'is_not_unique' => 'La moneda secundaria no se encuentra registrada'
 			]
 		],
 		'price' => [

@@ -71,9 +71,13 @@ class PurchaseModel extends Model
 	public function getPurchaseById($data)
 	{
 		$query = $this
-				->select('fecha, proveedor, tipo_documento, referencia, compras.moneda, compras.actualizado_en, compras.creado_en, detalle_compra.producto, cantidad, detalle_compra.precio, productos.codigo, productos.nombre, usuarios.nombre as usuario, compras.estado')
+				->select('fecha, proveedor, tipo_documento, referencia, compras.moneda, compras.actualizado_en, compras.creado_en, detalle_compra.producto, ancho_caucho.ancho_numero, alto_caucho.alto_numero, categorias.categoria, marcas.marca, cantidad, detalle_compra.precio, productos.codigo, productos.nombre, usuarios.nombre as usuario, compras.estado')
 				->join('detalle_compra', 'detalle_compra.compra = compras.identificacion')
 				->join('productos', 'productos.codigo = detalle_compra.producto')
+				->join('ancho_caucho', 'ancho_caucho.id_ancho_caucho = productos.id_ancho_caucho')
+				->join('alto_caucho', 'alto_caucho.id_alto_caucho = productos.id_alto_caucho')
+				->join('marcas', 'marcas.identificacion = productos.marca')
+				->join('categorias', 'categorias.identificacion = productos.categoria')
 				->join('usuarios', 'usuarios.identificacion = compras.usuario')
 				->where($data);
 		return $query->get()->getResultArray();

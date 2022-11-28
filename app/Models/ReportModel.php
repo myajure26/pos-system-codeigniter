@@ -25,9 +25,9 @@ class ReportModel extends Model
         
 		$db = $db
             ->table('compras')
-			->select('compras.identificacion, fecha, proveedores.codigo, proveedores.nombre, proveedores.identificacion as idProveedor, proveedores.direccion, proveedores.telefono, usuario')
+			->select('compras.identificacion, referencia, fecha, proveedores.nombre, proveedores.identificacion as idProveedor, proveedores.direccion, proveedores.telefono, usuario')
 			->join('detalle_compra', 'detalle_compra.compra = compras.identificacion')
-			->join('proveedores', 'proveedores.codigo = compras.proveedor')
+			->join('proveedores', 'proveedores.identificacion = compras.proveedor')
 			->where('compras.estado', 1)
 			->groupBy('compras.identificacion');
 		return $db;
@@ -38,11 +38,11 @@ class ReportModel extends Model
         $db = \Config\Database::connect();
 		$db = $db
             ->table('detalle_compra')
-			->select('proveedores.codigo as identificacion, proveedores.nombre, proveedores.telefono, proveedores.direccion, SUM(detalle_compra.cantidad) as cantidad, SUM(detalle_compra.cantidad*detalle_compra.precio) as total')
+			->select('proveedores.identificacion, proveedores.nombre, proveedores.telefono, proveedores.direccion, SUM(detalle_compra.cantidad) as cantidad, SUM(detalle_compra.cantidad*detalle_compra.precio) as total')
 			->join('compras', 'compras.identificacion = detalle_compra.compra')
-			->join('proveedores', 'proveedores.codigo = compras.proveedor')
+			->join('proveedores', 'proveedores.identificacion = compras.proveedor')
 			->where('compras.estado', 1)
-			->groupBy('proveedores.codigo')
+			->groupBy('proveedores.identificacion')
 			->orderBy('cantidad', 'DESC')
 			->limit(10);
 		return $db;
@@ -53,10 +53,11 @@ class ReportModel extends Model
         $db = \Config\Database::connect();
 		$db = $db
             ->table('ventas')
-			->select('ventas.identificacion, ventas.creado_en as fecha, clientes.nombre as cliente, clientes.identificacion as idCliente, clientes.telefono as tlfCliente, clientes.direccion as direcCliente, usuario, impuestos.porcentaje as impuesto')
+			->select('ventas.identificacion, ventas.creado_en as fecha, clientes.nombre as cliente, clientes.identificacion as idCliente, clientes.telefono as tlfCliente, clientes.direccion as direcCliente, usuario, metodo_pago.nombre as metodo_pago, impuestos.porcentaje as impuesto')
 			->join('detalle_ventas', 'detalle_ventas.venta = ventas.identificacion')
 			->join('clientes', 'clientes.identificacion = ventas.cliente')
 			->join('impuestos', 'impuestos.identificacion = ventas.impuesto')
+			->join('metodo_pago', 'metodo_pago.id_metodo_pago = ventas.id_metodo_pago')
 			->where('ventas.estado', 1)
 			->groupBy('ventas.identificacion');
 		return $db;
@@ -67,10 +68,12 @@ class ReportModel extends Model
         $db = \Config\Database::connect();
 		$db = $db
             ->table('ventas')
-			->select('ventas.identificacion, ventas.creado_en as fecha, detalle_ventas.producto as codigo, productos.nombre as producto, marcas.marca, categorias.categoria, detalle_ventas.cantidad, detalle_ventas.precio, (detalle_ventas.cantidad*detalle_ventas.precio) as total')
+			->select('ventas.identificacion, ventas.creado_en as fecha, detalle_ventas.producto as codigo, productos.nombre as producto, ancho_caucho.ancho_numero, alto_caucho.alto_numero, marcas.marca, categorias.categoria, detalle_ventas.cantidad, detalle_ventas.precio, (detalle_ventas.cantidad*detalle_ventas.precio) as total')
 			->join('detalle_ventas', 'detalle_ventas.venta = ventas.identificacion')
 			->join('productos', 'productos.codigo = detalle_ventas.producto')
 			->join('marcas', 'marcas.identificacion = productos.marca')
+			->join('ancho_caucho', 'ancho_caucho.id_ancho_caucho = productos.id_ancho_caucho')
+			->join('alto_caucho', 'alto_caucho.id_alto_caucho = productos.id_alto_caucho')
 			->join('categorias', 'categorias.identificacion = productos.categoria')
 			->where('ventas.estado', 1)
 			->orderBy('ventas.identificacion');
@@ -82,11 +85,13 @@ class ReportModel extends Model
         $db = \Config\Database::connect();
 		$db = $db
             ->table('detalle_ventas')
-			->select('productos.codigo, productos.nombre, categorias.categoria, marcas.marca, SUM(detalle_ventas.cantidad) as cantidad, SUM(detalle_ventas.cantidad*detalle_ventas.precio) as total')
+			->select('productos.codigo, productos.nombre, ancho_caucho.ancho_numero, alto_caucho.alto_numero, categorias.categoria, marcas.marca, SUM(detalle_ventas.cantidad) as cantidad, SUM(detalle_ventas.cantidad*detalle_ventas.precio) as total')
 			->join('productos', 'productos.codigo = detalle_ventas.producto')
 			->join('categorias', 'categorias.identificacion = productos.categoria')
 			->join('marcas', 'marcas.identificacion = productos.marca')
 			->join('ventas', 'ventas.identificacion = detalle_ventas.venta')
+			->join('ancho_caucho', 'ancho_caucho.id_ancho_caucho = productos.id_ancho_caucho')
+			->join('alto_caucho', 'alto_caucho.id_alto_caucho = productos.id_alto_caucho')
 			->where('ventas.estado', 1)
 			->groupBy('productos.codigo')
 			->orderBy('cantidad', 'DESC')
@@ -99,11 +104,13 @@ class ReportModel extends Model
         $db = \Config\Database::connect();
 		$db = $db
             ->table('detalle_ventas')
-			->select('productos.codigo, productos.nombre, categorias.categoria, marcas.marca, SUM(detalle_ventas.cantidad) as cantidad, SUM(detalle_ventas.cantidad*detalle_ventas.precio) as total')
+			->select('productos.codigo, productos.nombre, ancho_caucho.ancho_numero, alto_caucho.alto_numero, categorias.categoria, marcas.marca, SUM(detalle_ventas.cantidad) as cantidad, SUM(detalle_ventas.cantidad*detalle_ventas.precio) as total')
 			->join('productos', 'productos.codigo = detalle_ventas.producto')
 			->join('categorias', 'categorias.identificacion = productos.categoria')
 			->join('marcas', 'marcas.identificacion = productos.marca')
 			->join('ventas', 'ventas.identificacion = detalle_ventas.venta')
+			->join('ancho_caucho', 'ancho_caucho.id_ancho_caucho = productos.id_ancho_caucho')
+			->join('alto_caucho', 'alto_caucho.id_alto_caucho = productos.id_alto_caucho')
 			->where('ventas.estado', 1)
 			->groupBy('productos.codigo')
 			->orderBy('cantidad', 'ASC')
@@ -231,10 +238,10 @@ class ReportModel extends Model
         $db = \Config\Database::connect();
 		$db = $db
             ->table('compras')
-			->select('compras.identificacion, referencia, fecha, usuario, proveedores.codigo, proveedores.nombre, tipo_documento.nombre as tipo_documento, monedas.moneda')
+			->select('compras.identificacion as idCompra, referencia, fecha, usuario, proveedores.identificacion, proveedores.nombre, tipo_documento.nombre as tipo_documento, monedas.moneda')
 			->join('tipo_documento', 'tipo_documento.identificacion = compras.tipo_documento')
 			->join('monedas', 'monedas.identificacion = compras.moneda')
-			->join('proveedores', 'proveedores.codigo = compras.proveedor')
+			->join('proveedores', 'proveedores.identificacion = compras.proveedor')
 			->where('compras.estado', 1)
 			->orderBy('fecha', 'ASC');
 		return $db;
@@ -245,8 +252,12 @@ class ReportModel extends Model
         $db = \Config\Database::connect();
 		$db = $db
             ->table('detalle_compra')
-			->select('productos.codigo as codigo, productos.nombre as nombreProducto, detalle_compra.cantidad, detalle_compra.precio')
+			->select('productos.codigo as codigo, productos.nombre as nombreProducto, ancho_caucho.ancho_numero, alto_caucho.alto_numero, categorias.categoria, marcas.marca, detalle_compra.cantidad, detalle_compra.precio')
 			->join('productos', 'productos.codigo = detalle_compra.producto')
+			->join('ancho_caucho', 'ancho_caucho.id_ancho_caucho = productos.id_ancho_caucho')
+			->join('alto_caucho', 'alto_caucho.id_alto_caucho = productos.id_alto_caucho')
+			->join('marcas', 'marcas.identificacion = productos.marca')
+			->join('categorias', 'categorias.identificacion = productos.categoria')
 			->where('compra', $id)
 			->get()->getResult();
 		return $db;
@@ -273,8 +284,12 @@ class ReportModel extends Model
         $db = \Config\Database::connect();
 		$db = $db
             ->table('detalle_ventas')
-			->select('productos.codigo as codigo, productos.nombre as nombreProducto, detalle_ventas.cantidad, detalle_ventas.precio')
+			->select('productos.codigo as codigo, productos.nombre as nombreProducto, ancho_caucho.ancho_numero, alto_caucho.alto_numero, categorias.categoria, marcas.marca, detalle_ventas.cantidad, detalle_ventas.precio')
 			->join('productos', 'productos.codigo = detalle_ventas.producto')
+			->join('ancho_caucho', 'ancho_caucho.id_ancho_caucho = productos.id_ancho_caucho')
+			->join('alto_caucho', 'alto_caucho.id_alto_caucho = productos.id_alto_caucho')
+			->join('marcas', 'marcas.identificacion = productos.marca')
+			->join('categorias', 'categorias.identificacion = productos.categoria')
 			->where('venta', $id)
 			->get()->getResult();
 		return $db;

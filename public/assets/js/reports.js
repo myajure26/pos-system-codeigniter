@@ -139,7 +139,7 @@ $(document).ready(function(){
 
     // * Seleccionar el proveedor
     $(document).on('click', '.btn-select-prov', function(){
-        $('#searchById').val($(this).closest('tr').find('td:eq(5)').text());
+        $('#searchById').val($(this).closest('tr').find('td:eq(1)').text());
         $('#searchProviderModal').modal('hide');
         $('.table-report').show();
 

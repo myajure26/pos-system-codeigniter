@@ -74,9 +74,13 @@ class SaleModel extends Model
 	public function getSaleById($data)
 	{
 		$query = $this
-				->select('ventas.identificacion as idVenta, clientes.identificacion as clienteId, tipo_documento, tasa, impuesto, id_metodo_pago as metodoPago, ventas.moneda, ventas.actualizado_en, ventas.creado_en, detalle_ventas.identificacion as idDetalleVenta, detalle_ventas.producto, cantidad, detalle_ventas.precio, productos.codigo, productos.nombre, usuarios.nombre as vendedor, ventas.estado')
+				->select('ventas.identificacion as idVenta, clientes.identificacion as clienteId, tipo_documento, tasa, impuesto, id_metodo_pago as metodoPago, ventas.moneda, ventas.actualizado_en, ventas.creado_en, detalle_ventas.identificacion as idDetalleVenta, detalle_ventas.producto, cantidad, detalle_ventas.precio, productos.codigo, productos.nombre,ancho_caucho.ancho_numero, alto_caucho.alto_numero, categorias.categoria, marcas.marca, usuarios.nombre as vendedor, ventas.estado')
 				->join('detalle_ventas', 'detalle_ventas.venta = ventas.identificacion')
 				->join('productos', 'productos.codigo = detalle_ventas.producto')
+				->join('ancho_caucho', 'ancho_caucho.id_ancho_caucho = productos.id_ancho_caucho')
+				->join('alto_caucho', 'alto_caucho.id_alto_caucho = productos.id_alto_caucho')
+				->join('marcas', 'marcas.identificacion = productos.marca')
+				->join('categorias', 'categorias.identificacion = productos.categoria')
 				->join('clientes', 'clientes.identificacion = ventas.cliente')
 				->join('usuarios', 'usuarios.identificacion = ventas.usuario')
 				->where($data);

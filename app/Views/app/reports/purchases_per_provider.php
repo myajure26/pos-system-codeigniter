@@ -195,6 +195,7 @@
                                 <tr>
                                     <tr>
                                         <th>Factura</th>
+                                        <th>Referencia</th>
                                         <th>Fecha</th>
                                         <th>Usuario</th>
                                         <th>Productos</th>
@@ -233,7 +234,6 @@
                                     <th>Nombre</th>
                                     <th>Dirección</th>
                                     <th>Teléfono</th>
-                                    <th>Código</th>
                                 </tr>
                             </tr>
                         </thead>

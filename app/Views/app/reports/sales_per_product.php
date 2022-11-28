@@ -161,9 +161,9 @@
                                         
                                         <br>
                                         <strong>Código:</strong> <span id="identification-report"></span>
-
                                         <br>
-                                        <strong>Descripción:</strong> <span id="name-report"></span></td>
+                                        <strong>Categoría:</strong> <span id="category-report"></span>
+                                        
 
                                     </div>
 
@@ -174,7 +174,7 @@
                                     <div style='font-size:14px; text-align:right; line-height:23px; margin-left: 50px'>
                                         
                                         <br>
-                                        <strong>Categoría:</strong> <span id="category-report"></span>
+                                        <strong>Descripción:</strong> <span id="name-report"></span>
 
                                         <br>
                                         <strong>Marca:</strong> <span id="brand-report"></span></td>

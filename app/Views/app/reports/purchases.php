@@ -205,7 +205,7 @@
             $('#list').append(`
                 <tr id="${element.producto}">
                     <td>${element.codigo}</td>
-                    <td>${element.nombre}</td>
+                    <td>${element.nombre} ${element.ancho_numero}/${element.alto_numero} ${element.categoria} Marca ${element.marca}</td>
                     <td>
                         <input type="number" class="form-control form-control-sm productQuantity" value="${element.cantidad}" disabled>
                     </td>

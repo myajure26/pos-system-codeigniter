@@ -122,13 +122,13 @@ class PurchaseController extends BaseController
 		$db      	= \Config\Database::connect();
 		$providers 	= $db
 						->table('proveedores')
-						->select('codigo, nombre, identificacion')
+						->select('identificacion, nombre, telefono, direccion')
 						->where('estado', 1);
 				
 		return DataTable::of($providers)
 			->add('Seleccionar', function($row){
 				return '<div class="btn-list"> 
-							<button type="button" class="btn-select-provider btn btn-sm btn-primary waves-effect" data-id="'.$row->codigo.'" data-type="providers">
+							<button type="button" class="btn-select-provider btn btn-sm btn-primary waves-effect" data-id="'.$row->identificacion.'" data-type="providers">
                                 <i class="fas fa-check"></i>
                             </button>
                         </div>';

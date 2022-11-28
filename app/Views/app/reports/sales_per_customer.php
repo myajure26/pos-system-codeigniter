@@ -197,6 +197,7 @@
                                         <th>Factura</th>
                                         <th>Fecha</th>
                                         <th>Vendedor</th>
+                                        <th>Método de pago</th>
                                         <th>Impuesto</th>
                                         <th>Productos</th>
                                         <th>Cantidad</th>

@@ -54,9 +54,10 @@
                             <thead>
                                 <tr>
                                     <tr>
-                                        <th>Código</th>
+                                        <th>Identificación</th>
                                         <th>Nombre</th>
-                                        <th>Cédula/Rif</th>
+                                        <th>Teléfono</th>
+                                        <th>Dirección</th>
                                         <th>Estado</th>
                                         <th>Acciones</th>
                                     </tr>
@@ -84,13 +85,7 @@
                 <div class="modal-body">
                     <div class="response"></div>
                     <div class="row">
-                        <div class="col-md-5">
-                            <div class="mb-3">
-                                <label class="form-label">Código</label>
-                                <input type="text" class="form-control" id="code" placeholder="Introduce el código del proveedor" name="code" id="name" required>
-                            </div>
-                        </div>
-                        <div class="col-md-7">
+                        <div class="col-md-12">
                             <div class="mb-3">
                                 <label class="form-label">Cédula/Rif</label>
                                 <div class="row">
@@ -153,20 +148,14 @@
             <form class="custom-form viewForm" action="<?=base_url('providers/update')?>" method="POST">
                 <div class="modal-body">
                     <div class="response"></div>
-                    <input type="hidden" id="viewCodePreview" name="code" value="">
+                    <input type="hidden" id="viewIdentificationPreview" name="identification" value="">
                     <div class="row">
-                        <div class="col-md-5">
-                            <div class="mb-3">
-                                <label class="form-label">Código</label>
-                                <input type="text" class="form-control viewDisabled" id="viewCode" disabled>
-                            </div>
-                        </div>
-                        <div class="col-md-7">
+                        <div class="col-md-12">
                             <div class="mb-3">
                                 <label class="form-label">Cédula/Rif</label>
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <select class="form-select" name="letter" id="viewLetter" disabled>
+                                        <select class="form-select viewDisabled" name="letter" id="viewLetter" disabled>
                                             <option value="V">V</option>
                                             <option value="J">J</option>
                                             <option value="E">E</option>
@@ -175,7 +164,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control ci-rif" id="viewIdentification" name="legalIdentification" disabled>
+                                        <input type="text" class="form-control ci-rif viewDisabled" id="viewIdentification" name="legalIdentification" disabled>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                 </div>
@@ -235,8 +224,7 @@
     tableConfig('/providers/get', '.datatable');
 
     function viewProvider(data){
-        $('#viewCodePreview').val(data[0].codigo);
-        $('#viewCode').val(data[0].codigo);
+        $('#viewIdentificationPreview').val(data[0].identificacion);
         $('#viewName').val(data[0].nombre);
         $('#viewLetter').val(data[0].identificacion.split('-')[0]);
         $('#viewIdentification').val(data[0].identificacion.split('-')[1]);

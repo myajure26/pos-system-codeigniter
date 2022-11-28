@@ -12,7 +12,7 @@ class ProviderModel extends Model
 	protected $returnType           = 'array';
 	protected $useSoftDeletes       = true;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["codigo", "nombre", "identificacion", "direccion", "telefono", "estado", "actualizado_en", "creado_en"];
+	protected $allowedFields        = ["identificacion", "nombre", "direccion", "telefono", "estado", "actualizado_en", "creado_en"];
 
 	// Dates
 	protected $useTimestamps        = true;
@@ -32,7 +32,7 @@ class ProviderModel extends Model
 	public function getProviders()
 	{
 		$query = $this
-			->select('codigo, nombre, identificacion, estado');
+			->select('identificacion, nombre, telefono, direccion, estado');
 		return $query;
 	}
 
@@ -42,28 +42,28 @@ class ProviderModel extends Model
 		return $query->get()->getResultArray();
 	}
 
-	public function updateProvider($data, $code)
+	public function updateProvider($data, $identification)
 	{
 		$query = $this
-				->where('codigo', $code)
+				->where('identificacion', $identification)
 				->set($data)
 				->update();
 		return $query;	
 	}
 
-	public function deleteProvider($code)
+	public function deleteProvider($identification)
 	{
 		$query = $this
-				->where('codigo', $code)
+				->where('identificacion', $identification)
 				->set('estado', 0)
 				->update();
 		return $query;
 	}
 
-	public function recoverProvider($code)
+	public function recoverProvider($identification)
 	{
 		$query = $this
-				->where('codigo', $code)
+				->where('identificacion', $identification)
 				->set('estado', 1)
 				->update();
 		return $query;

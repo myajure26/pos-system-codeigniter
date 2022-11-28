@@ -150,9 +150,10 @@
                             <tr>
                                 <tr>
                                     <th>Seleccionar</th>
-                                    <th>Código</th>
-                                    <th>Nombre</th>
                                     <th>Cédula/Rif</th>
+                                    <th>Nombre</th>
+                                    <th>Teléfono</th>
+                                    <th>Dirección</th>
                                 </tr>
                             </tr>
                         </thead>

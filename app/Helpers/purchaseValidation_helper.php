@@ -13,7 +13,7 @@ function createPurchaseValidation()
 		],
 		'provider' => [
 			'label' => 'provider',
-			'rules' => 'required|alpha_numeric_punct|is_not_unique[proveedores.codigo]',
+			'rules' => 'required|alpha_numeric_punct|is_not_unique[proveedores.identificacion]',
 			'errors' => [
 				'required' => 'El proveedor es requerido',
 				'alpha_numeric_punct' => 'Ingresa un proveedor válido',

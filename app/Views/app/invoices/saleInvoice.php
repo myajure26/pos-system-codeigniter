@@ -82,7 +82,7 @@
 		
 			<td style="background-color:white; width:540px; padding: 5px;"> 
                 <p><strong>Moneda:</strong> <?= $venta[0]->moneda?></p>
-                <p><strong>Tasa:</strong> <?= $venta[0]->tasa?></p>
+                <!-- <p><strong>Tasa:</strong> <?= $venta[0]->tasa?></p> -->
             </td>
 
             <td style="background-color:white; width:150px; text-align:right; padding: 5px;">

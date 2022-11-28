@@ -65,7 +65,7 @@ class ControlCenterController extends BaseController
 
 		$ControlCenterModel = new ControlCenterModel();
 		$createCoinPrice = $ControlCenterModel->createCoinPrice([
-														"moneda_principal" 	=> $principalCoin,
+														"moneda_principal" 	=> $this->principalCoin,
 														"moneda_secundaria" => $secondaryCoin,
 														"precio" 			=> $price,
 													]);
@@ -187,7 +187,7 @@ class ControlCenterController extends BaseController
 		$principalCoin = $this->request->getPost('principalCoin');
 		$secondaryCoin = $this->request->getPost('secondaryCoin');
 				
-		// Comprobar las fechas, ya que si es diferente a la actual no se pueden actualizar
+		// ? Comprobar las fechas, ya que si es diferente a la actual no se pueden actualizar
 		$date = $this->request->getPost('date');
 		$date = date('Y-m-d', strtotime($date));
 		$today = date('Y-m-d');
@@ -214,7 +214,6 @@ class ControlCenterController extends BaseController
 
 		$ControlCenterModel = new ControlCenterModel();
 		$coinPrice = $ControlCenterModel->updateCoinPrice([
-										"moneda_principal" => $principalCoin,
 										"moneda_secundaria" => $secondaryCoin,
 										"precio"			=> $price
 									], $identification);

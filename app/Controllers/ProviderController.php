@@ -47,9 +47,8 @@ class ProviderController extends BaseController
 		}
 		
 		$data = [
-			"codigo" 			=> $this->request->getPost('code'),
-			"nombre" 			=> $this->request->getPost('name'),
 			"identificacion" 	=> $this->request->getPost('identification'),
+			"nombre" 			=> $this->request->getPost('name'),
 			"direccion" 		=> $this->request->getPost('address'),
 			"telefono" 			=> $this->request->getPost('phone')
 		];
@@ -66,7 +65,7 @@ class ProviderController extends BaseController
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
 		$this->auditContent['accion'] 		= "Crear proveedor";
-		$this->auditContent['descripcion'] 	= "Se ha creado al proveedor con código " . $data['codigo'] . " exitosamente.";
+		$this->auditContent['descripcion'] 	= "Se ha creado al proveedor con identificación " . $data['identificacion'] . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -96,17 +95,17 @@ class ProviderController extends BaseController
 			->add('Acciones', function($row){
 				if($row->estado == 1){
 					return '<div class="btn-list"> 
-								<button type="button" class="btnView btn btn-sm btn-primary waves-effect" data-id="'.$row->codigo.'" data-type="providers" data-bs-toggle="modal" data-bs-target="#viewModal">
+								<button type="button" class="btnView btn btn-sm btn-primary waves-effect" data-id="'.$row->identificacion.'" data-type="providers" data-bs-toggle="modal" data-bs-target="#viewModal">
 									<i class="far fa-eye"></i>
 								</button>
-								<button type="button" class="btnDelete btn btn-sm btn-danger waves-effect" data-id="'.$row->codigo.'" data-type="providers">
+								<button type="button" class="btnDelete btn btn-sm btn-danger waves-effect" data-id="'.$row->identificacion.'" data-type="providers">
 									<i class="far fa-trash-alt"></i>
 								</button>
 							</div>';
 				}
 
 				return '<div class="btn-list"> 
-								<button type="button" class="btnRecover btn btn-sm btn-success waves-effect" data-id="'.$row->codigo.'" data-type="providers">
+								<button type="button" class="btnRecover btn btn-sm btn-success waves-effect" data-id="'.$row->identificacion.'" data-type="providers">
 									<i class="fas fa-check"></i>
 								</button>
 							</div>';
@@ -143,7 +142,7 @@ class ProviderController extends BaseController
 		}
 
 		$ProviderModel = new ProviderModel();
-		$provider = $ProviderModel->getProviderById(['codigo' => $identification]);
+		$provider = $ProviderModel->getProviderById(['identificacion' => $identification]);
 		if(!$provider){
 			return false;
 		}
@@ -169,18 +168,14 @@ class ProviderController extends BaseController
 			}
 
 		}
-
-		$code = $this->request->getPost('code');
 		$data = [
-			"codigo" 		=> $this->request->getPost('code'),
 			"nombre" 		=> $this->request->getPost('name'),
-			"identificacion"=> $this->request->getPost('identification'),
 			"direccion" 	=> $this->request->getPost('address'),
 			"telefono" 		=> $this->request->getPost('phone')
 		];
 
 		$ProviderModel = new ProviderModel();
-		$provider = $ProviderModel->updateProvider($data, $code);
+		$provider = $ProviderModel->updateProvider($data, $this->request->getPost('identification'));
 
 		if(!$provider){
 			$this->errorMessage['text'] = "Error actualizar al proveedor en la base de datos";
@@ -191,7 +186,7 @@ class ProviderController extends BaseController
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
 		$this->auditContent['accion'] 		= "Actualizar proveedor";
-		$this->auditContent['descripcion'] 	= "Se ha actualizado al proveedor con código " . $data['codigo'] . " exitosamente.";
+		$this->auditContent['descripcion'] 	= "Se ha actualizado al proveedor con código " . $this->request->getPost('identification') . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -207,10 +202,10 @@ class ProviderController extends BaseController
 			return redirect()->to(base_url());
 		}
 
-		$code = $this->request->getPost('identification');
+		$identificacion = $this->request->getPost('identification');
 
 		$ProviderModel = new ProviderModel();
-		$deleteProvider = $ProviderModel->deleteProvider($code);
+		$deleteProvider = $ProviderModel->deleteProvider($identificacion);
 
 		if(!$deleteProvider){
 			$this->errorMessage['text'] = "El proveedor no existe";
@@ -221,7 +216,7 @@ class ProviderController extends BaseController
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
 		$this->auditContent['accion'] 		= "Eliminar proveedor";
-		$this->auditContent['descripcion'] 	= "Se ha eliminado al proveedor con código " . $code . " exitosamente.";
+		$this->auditContent['descripcion'] 	= "Se ha eliminado al proveedor con código " . $identificacion . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -238,10 +233,10 @@ class ProviderController extends BaseController
 			return redirect()->to(base_url());
 		}
 
-		$code = $this->request->getPost('identification');
+		$identificacion = $this->request->getPost('identification');
 
 		$ProviderModel = new ProviderModel();
-		$recoverProvider = $ProviderModel->recoverProvider($code);
+		$recoverProvider = $ProviderModel->recoverProvider($identificacion);
 
 		if(!$recoverProvider){
 			$this->errorMessage['text'] = "El proveedor no existe";
@@ -252,7 +247,7 @@ class ProviderController extends BaseController
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
 		$this->auditContent['accion'] 		= "Recuperar proveedor";
-		$this->auditContent['descripcion'] 	= "Se ha recuperado al proveedor con código " . $code . " exitosamente.";
+		$this->auditContent['descripcion'] 	= "Se ha recuperado al proveedor con código " . $identificacion . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		

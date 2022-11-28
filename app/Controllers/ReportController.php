@@ -66,7 +66,6 @@ class ReportController extends BaseController
 		$ReportModel = new ReportModel();
 				
 		return DataTable::of($ReportModel->getPurchasesPerProvider())
-			->hide('codigo')
 			->hide('nombre')
 			->hide('direccion')
 			->hide('telefono')
@@ -78,7 +77,7 @@ class ReportController extends BaseController
 				$detail = $ReportModel->getPurchaseDetailReportExcel($row->identificacion);
 
 				foreach($detail as $item){
-					$products = $products . "$item->nombreProducto <br>";
+					$products = $products . "$item->nombreProducto $item->ancho_numero/$item->alto_numero $item->categoria Marca $item->marca<br>";
 				}
 
 				return $products;
@@ -203,7 +202,7 @@ class ReportController extends BaseController
 				$detail = $ReportModel->getSaleDetailReportExcel($row->identificacion);
 
 				foreach($detail as $item){
-					$products = $products . "$item->nombreProducto <br>";
+					$products = $products . "$item->nombreProducto $item->ancho_numero/$item->alto_numero $item->categoria Marca $item->marca <br>";
 				}
 
 				return $products;
@@ -360,6 +359,11 @@ class ReportController extends BaseController
 		$ReportModel = new ReportModel();
 				
 		return DataTable::of($ReportModel->getMostSelledProducts())
+			->hide('ancho_numero')
+			->hide('alto_numero')
+			->edit('nombre', function($row){
+				return "$row->nombre $row->ancho_numero/$row->alto_numero";
+			})
 			->edit('total', function($row){
 				
 				return '$ ' . number_format($row->total, 2);
@@ -394,6 +398,11 @@ class ReportController extends BaseController
 		$ReportModel = new ReportModel();
 				
 		return DataTable::of($ReportModel->getLessSoldProducts())
+			->hide('ancho_numero')
+			->hide('alto_numero')
+			->edit('nombre', function($row){
+				return "$row->nombre $row->ancho_numero/$row->alto_numero";
+			})
 			->edit('total', function($row){
 				
 				return '$ ' . number_format($row->total, 2);
@@ -548,7 +557,7 @@ class ReportController extends BaseController
 		$db      	= \Config\Database::connect();
 		$providers 	= $db
 						->table('proveedores')
-						->select('identificacion, nombre, direccion, telefono, codigo')
+						->select('identificacion, nombre, direccion, telefono')
 						->where('estado', 1);
 				
 		return DataTable::of($providers)
@@ -595,12 +604,19 @@ class ReportController extends BaseController
 		$db      	= \Config\Database::connect();
 		$products 	= $db
 						->table('productos')
-						->select('productos.codigo, nombre, marcas.marca, categorias.categoria')
+						->select('productos.codigo, nombre, ancho_caucho.ancho_numero, alto_caucho.alto_numero, marcas.marca, categorias.categoria')
 						->join('marcas', 'marcas.identificacion = productos.marca')
 						->join('categorias', 'categorias.identificacion = productos.categoria')
+						->join('ancho_caucho', 'ancho_caucho.id_ancho_caucho = productos.id_ancho_caucho')
+						->join('alto_caucho', 'alto_caucho.id_alto_caucho = productos.id_alto_caucho')
 						->where('productos.estado', 1);
 				
 		return DataTable::of($products)
+			->hide('ancho_numero')
+			->hide('alto_numero')
+			->edit('nombre', function($row){
+				return "$row->nombre $row->ancho_numero/$row->alto_numero";
+			})
 			->add('Seleccionar', function($row){
 				return '<div class="btn-list"> 
 							<button type="button" class="btn-select-product btn btn-sm btn-primary waves-effect" data-id="'.$row->codigo.'" data-type="products">
@@ -760,6 +776,7 @@ class ReportController extends BaseController
 		echo utf8_decode("<table border='0'> 
 
 		<tr> 
+			<td style='font-weight:bold; border:1px solid #eee;'>NÚMERO DE COMPRA</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>REFERENCIA</td> 
 			<td style='font-weight:bold; border:1px solid #eee;'>IDENTIFICACIÓN PROVEEDOR</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>NOMBRE PROVEEDOR</td>
@@ -778,8 +795,9 @@ class ReportController extends BaseController
 
 
 				echo utf8_decode("<tr>
+							<td style='border:1px solid #eee;'>".$item->idCompra."</td>
 							<td style='border:1px solid #eee;'>".$item->referencia."</td> 
-							<td style='border:1px solid #eee;'>".$item->codigo."</td>
+							<td style='border:1px solid #eee;'>".$item->identificacion."</td>
 							<td style='border:1px solid #eee;'>".$item->nombre."</td>
 							<td style='border:1px solid #eee;'>".$item->usuario."</td>
 							<td style='border:1px solid #eee;'>".$item->tipo_documento."</td>
@@ -787,7 +805,7 @@ class ReportController extends BaseController
 							<td style='border:1px solid #eee;'>");
 
 
-				$getPurchaseDetailReportExcel = $ReportModel->getPurchaseDetailReportExcel($item->identificacion);
+				$getPurchaseDetailReportExcel = $ReportModel->getPurchaseDetailReportExcel($item->idCompra);
 
 				$total = 0;
 
@@ -801,7 +819,7 @@ class ReportController extends BaseController
 
 				foreach ($getPurchaseDetailReportExcel as $row2 => $item2){
 
-						echo utf8_decode($item2->nombreProducto."<br>");
+						echo utf8_decode("$item2->nombreProducto $item2->ancho_numero/$item2->alto_numero $item2->categoria Marca $item2->marca<br>");
 				}
 
 				echo utf8_decode("</td><td style='border:1px solid #eee;'>");
@@ -1026,7 +1044,7 @@ class ReportController extends BaseController
 
 				foreach ($getSaleDetailReportExcel as $row2 => $item2){
 
-						echo utf8_decode($item2->nombreProducto."<br>");
+						echo utf8_decode("$item2->nombreProducto $item2->ancho_numero/$item2->alto_numero $item2->categoria Marca $item2->marca<br>");
 				}
 
 				echo utf8_decode("</td><td style='border:1px solid #eee;'>");
@@ -1265,6 +1283,7 @@ class ReportController extends BaseController
 			<td style='font-weight:bold; border:1px solid #eee; width: 50px;'>FACTURA</td> 
 			<td style='font-weight:bold; border:1px solid #eee;'>FECHA</td>		
 			<td style='font-weight:bold; border:1px solid #eee;'>VENDEDOR</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>MÉTODO DE PAGO</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>IMPUESTO</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>PRODUCTOS</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>CANTIDAD</td>
@@ -1288,12 +1307,13 @@ class ReportController extends BaseController
 						<td style='border:1px solid #eee;'>".$item->identificacion."</td>
 						<td style='border:1px solid #eee;'>".date('Y-m-d', strtotime($item->fecha))."</td>
 						<td style='border:1px solid #eee;'>".$item->usuario."</td>
+						<td style='border:1px solid #eee;'>".$item->metodo_pago."</td>
 						<td style='border:1px solid #eee;'>".$item->impuesto."</td>
 						<td style='border:1px solid #eee;'>");
 
 			
 			foreach($detail as $row){
-				echo utf8_decode("<br>".$row->nombreProducto."<br>");
+				echo utf8_decode("<br> $row->nombreProducto $row->ancho_numero/$row->alto_numero $row->categoria Marca $row->marca <br>");
 				$subtotal += $row->precio * $row->cantidad;
 			}
 
@@ -1516,7 +1536,7 @@ class ReportController extends BaseController
 					<strong>Código:</strong> ".$ReportModel[0]->codigo."
 
 					<br>
-					<strong>Descripción:</strong> ".$ReportModel[0]->producto."
+					<strong>Categoría:</strong> ".$ReportModel[0]->categoria."
 
 
 				</div>
@@ -1528,7 +1548,7 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
 					
 					<br>
-					<strong>Categoría:</strong> ".$ReportModel[0]->categoria."
+					<strong>Descripción:</strong> ".$ReportModel[0]->producto . " ". $ReportModel[0]->ancho_numero."/". $ReportModel[0]->alto_numero."
 					
 					<br>
 					<strong>Marca:</strong> ".$ReportModel[0]->marca."
@@ -1786,7 +1806,8 @@ class ReportController extends BaseController
 		echo utf8_decode("<table border='0'> 
 
 		<tr> 
-			<td style='font-weight:bold; border:1px solid #eee; width: 50px;'>FACTURA</td> 
+			<td style='font-weight:bold; border:1px solid #eee; width: 50px;'>NÚMERO DE COMPRA</td>
+			<td style='font-weight:bold; border:1px solid #eee; width: 50px;'>REFERENCIA</td> 
 			<td style='font-weight:bold; border:1px solid #eee;'>FECHA</td>		
 			<td style='font-weight:bold; border:1px solid #eee;'>USUARIO</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>PRODUCTOS</td>
@@ -1803,13 +1824,14 @@ class ReportController extends BaseController
 
 			echo utf8_decode("<tr>
 						<td style='border:1px solid #eee;'>".$item->identificacion."</td>
+						<td style='border:1px solid #eee;'>".$item->referencia."</td>
 						<td style='border:1px solid #eee;'>".date('Y-m-d', strtotime($item->fecha))."</td>
 						<td style='border:1px solid #eee;'>".$item->usuario."</td>
 						<td style='border:1px solid #eee;'>");
 			
 
 			foreach($detail as $row){
-				echo utf8_decode("<br>".$row->nombreProducto."<br>");
+				echo utf8_decode("<br> $row->nombreProducto $row->ancho_numero/$row->alto_numero $row->categoria Marca $row->marca <br>");
 				$totalCompra += $row->precio * $row->cantidad;
 				$total += $totalCompra;
 			}
@@ -2052,7 +2074,7 @@ class ReportController extends BaseController
 		$ReportModel = $ReportModel->get()->getResult();
 
 		if(!$ReportModel){
-			var_dump($ReportModel);
+			return "Error";
 		}
 
 
@@ -2177,7 +2199,7 @@ class ReportController extends BaseController
 
 			echo utf8_decode("<tr>
 						<td style='border:1px solid #eee;'>".$item->codigo."</td>
-						<td style='border:1px solid #eee;'>".$item->nombre."</td>
+						<td style='border:1px solid #eee;'>$item->nombre $item->ancho_numero/$item->alto_numero</td>
 						<td style='border:1px solid #eee;'>".$item->categoria."</td>
 						<td style='border:1px solid #eee;'>".$item->marca."</td>
 						<td style='border:1px solid #eee;'>".$item->cantidad."</td>
@@ -2346,7 +2368,7 @@ class ReportController extends BaseController
 
 			echo utf8_decode("<tr>
 						<td style='border:1px solid #eee;'>".$item->codigo."</td>
-						<td style='border:1px solid #eee;'>".$item->nombre."</td>
+						<td style='border:1px solid #eee;'>$item->nombre $item->ancho_numero/$item->alto_numero</td>
 						<td style='border:1px solid #eee;'>".$item->categoria."</td>
 						<td style='border:1px solid #eee;'>".$item->marca."</td>
 						<td style='border:1px solid #eee;'>".$item->cantidad."</td>
