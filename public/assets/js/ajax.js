@@ -442,7 +442,7 @@ $(document).ready(function() {
 
     // Buscar la tasa de cambio
     $(document).on('change', '#coinSale', function(){ 
-        
+        totalSaleCount();
         const identification = $(this).val();
 
         if(identification == $(this).attr('principalCoin')){

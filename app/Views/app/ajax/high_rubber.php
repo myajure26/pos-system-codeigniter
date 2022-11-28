@@ -84,7 +84,7 @@
                     <div class="response"></div>
                     <div class="mb-3">
                         <label class="form-label">Medida</label>
-                        <input type="text" class="form-control number" id="highNumber" placeholder="Introduce el valor de la medida" name="highNumber" required>
+                        <input type="number" class="form-control number" id="highNumber" placeholder="Introduce el valor de la medida" name="highNumber" required>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -112,7 +112,7 @@
                     <input type="hidden" id="viewIdentification" name="identification" value="">
                     <div class="mb-3">
                         <label class="form-label">Medida</label>
-                        <input type="text" class="form-control number" id="viewHighNumber" name="highNumber" disabled required>
+                        <input type="number" class="form-control number" id="viewHighNumber" name="highNumber" disabled required>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="row">
