@@ -257,8 +257,38 @@ class App extends BaseController
 	{
 		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 3){
 			
+			$db      	= \Config\Database::connect();
+			$brands 	= $db
+							->table('marcas')
+							->select('identificacion, marca')
+							->where('estado', 1)
+							->get()
+							->getResult();
+			$categories = $db
+							->table('categorias')
+							->select('identificacion, categoria')
+							->where('estado', 1)
+							->get()
+							->getResult();
+			$high 		= $db
+							->table('alto_caucho')
+							->select('id_alto_caucho, alto_numero')
+							->where('estado_alto_caucho', 1)
+							->get()
+							->getResult();
+			$wide 		= $db
+							->table('ancho_caucho')
+							->select('id_ancho_caucho, ancho_numero')
+							->where('estado_ancho_caucho', 1)
+							->get()
+							->getResult();
+
 			$data = [
-				"title" => "Inventario - $this->system"
+				"title" => "Inventario - $this->system",
+				"brands" 		=> $brands,
+				"categories" 	=> $categories,
+				"high" 			=> $high,
+				"wide" 			=> $wide
 			];
 			return view('app/ajax/inventory', $data);
 		

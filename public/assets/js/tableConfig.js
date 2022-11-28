@@ -35,6 +35,10 @@ function tableConfig(ajaxUrl, selector){
             data: function (d) {
                 d.status = $('#status_db').val();
                 d.range = $('#range').val();
+                d.wideFilter = $('#wideFilter').val();
+                d.highFilter = $('#highFilter').val();
+                d.categoryFilter = $('#categoryFilter').val();
+                d.brandFilter = $('#brandFilter').val();
                 d.searchById = $('#searchById').val();
             }
         },
@@ -49,6 +53,18 @@ function tableConfig(ajaxUrl, selector){
         $(`${selector}`).DataTable().ajax.reload();
     });
     $('#range').change(function(event) {
+        $(`${selector}`).DataTable().ajax.reload();
+    });
+    $('#wideFilter').change(function(event) {
+        $(`${selector}`).DataTable().ajax.reload();
+    });
+    $('#highFilter').change(function(event) {
+        $(`${selector}`).DataTable().ajax.reload();
+    });
+    $('#categoryFilter').change(function(event) {
+        $(`${selector}`).DataTable().ajax.reload();
+    });
+    $('#brandFilter').change(function(event) {
         $(`${selector}`).DataTable().ajax.reload();
     });
     $(document).on('click', '.btn-select-customer', function(){

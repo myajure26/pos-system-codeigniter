@@ -50,6 +50,44 @@
                                 <input type="text" class="form-control" placeholder="Selecciona una fecha" id="range">
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-3 mb-4">
+                                <label class="form-label">Ancho</label>
+                                <select class="form-select" id="wideFilter">
+                                    <option value="">Seleccione el ancho del caucho</option>
+                                    <?php foreach($wide as $row)
+                                        echo '<option value="'.$row->id_ancho_caucho.'">'.$row->ancho_numero.'</option>';
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-4">
+                                <label class="form-label">Alto</label>
+                                <select class="form-control" id="highFilter">
+                                    <option value="">Seleccione el alto del caucho</option>
+                                    <?php foreach($high as $row)
+                                        echo '<option value="'.$row->id_alto_caucho.'">'.$row->alto_numero.'</option>';
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-4">
+                                <label class="form-label">Categoría</label>
+                                <select class="form-select" id="categoryFilter">
+                                    <option value="">Seleccione le categoría</option>
+                                    <?php foreach($categories as $row)
+                                        echo '<option value="'.$row->identificacion.'">'.$row->categoria.'</option>';
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-4">
+                                <label class="form-label">Marca</label>
+                                <select class="form-control" id="brandFilter">
+                                    <option value="">Seleccione la marca</option>
+                                    <?php foreach($brands as $row)
+                                        echo '<option value="'.$row->identificacion.'">'.$row->marca.'</option>';
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
                         <table class="table datatable text-nowrap table-striped nowrap w-100 dt-responsive">
                             <thead>
                                 <tr>

@@ -150,6 +150,21 @@ class ProductController extends BaseController
 				if($request->status != ''){
 					$builder->where('productos.estado', $request->status);
 				}
+				if($request->wideFilter != ''){
+					$builder->where('productos.id_ancho_caucho', $request->wideFilter);
+				}
+				
+				if($request->highFilter != ''){
+					$builder->where('productos.id_alto_caucho', $request->highFilter);
+				}
+				
+				if($request->categoryFilter != ''){
+					$builder->where('productos.categoria', $request->categoryFilter);
+				}
+				
+				if($request->brandFilter != ''){
+					$builder->where('productos.marca', $request->brandFilter);
+				}
 		
 			})
 			->toJson();

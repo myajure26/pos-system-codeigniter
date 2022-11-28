@@ -54,6 +54,26 @@ class ReportController extends BaseController
 
 				return '<div class="mt-sm-1 d-block"><a href="javascript:void(0)" class="badge bg-soft-success text-dark p-2 px-3">'.$row->cant_producto.'</a></div>';
 			})
+			->filter(function ($builder, $request) {
+		
+
+				if($request->wideFilter != ''){
+					$builder->where('productos.id_ancho_caucho', $request->wideFilter);
+				}
+				
+				if($request->highFilter != ''){
+					$builder->where('productos.id_alto_caucho', $request->highFilter);
+				}
+				
+				if($request->categoryFilter != ''){
+					$builder->where('productos.categoria', $request->categoryFilter);
+				}
+				
+				if($request->brandFilter != ''){
+					$builder->where('productos.marca', $request->brandFilter);
+				}
+		
+			})
 			->toJson();
 	}
 
