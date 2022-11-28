@@ -713,7 +713,7 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align: center; line-height:15px; margin-left: 50px'>
 					
 					<br>
-					<strong style='font-size: 20px'>DIGENCA</strong>
+					<strong style='font-size: 20px'>$this->businessName</strong>
 					
 					<br>
 
@@ -726,10 +726,10 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align:right; line-height:15px;'>
 					
 					<br>
-					<strong>RIF:</strong> J-285346256
+					<strong>RIF:</strong> $this->businessIdentification
 
 					<br>
-					<strong>Dirección:</strong> Av. Venezuela con calle 37
+					<strong>Dirección:</strong> $this->businessAddress
 
 				</div>
 
@@ -740,10 +740,10 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
 					
 					<br>
-					<strong>Teléfono:</strong> 02512736478
+					<strong>Teléfono:</strong> $this->businessPhone
 					
 					<br>
-					digencacom@example.com
+					
 
 				</div>
 				
@@ -930,7 +930,7 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align: center; line-height:15px; margin-left: 50px'>
 					
 					<br>
-					<strong style='font-size: 20px'>DIGENCA</strong>
+					<strong style='font-size: 20px'>$this->businessName</strong>
 					
 					<br>
 
@@ -943,10 +943,10 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align:right; line-height:15px;'>
 					
 					<br>
-					<strong>RIF:</strong> J-285346256
+					<strong>RIF:</strong> $this->businessIdentification
 
 					<br>
-					<strong>Dirección:</strong> Av. Venezuela con calle 37
+					<strong>Dirección:</strong> $this->businessAddress
 
 				</div>
 
@@ -957,10 +957,10 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
 					
 					<br>
-					<strong>Teléfono:</strong> 02512736478
+					<strong>Teléfono:</strong> $this->businessPhone
 					
 					<br>
-					digencacom@example.com
+					
 
 				</div>
 				
@@ -1162,7 +1162,7 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align: center; line-height:15px; margin-left: 50px'>
 					
 					<br>
-					<strong style='font-size: 20px'>DIGENCA</strong>
+					<strong style='font-size: 20px'>$this->businessName</strong>
 					
 					<br>
 
@@ -1175,10 +1175,10 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align:right; line-height:15px;'>
 					
 					<br>
-					<strong>RIF:</strong> J-285346256
+					<strong>RIF:</strong> $this->businessIdentification
 
 					<br>
-					<strong>Dirección:</strong> Av. Venezuela con calle 37
+					<strong>Dirección:</strong> $this->businessAddress
 
 				</div>
 
@@ -1189,10 +1189,10 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
 					
 					<br>
-					<strong>Teléfono:</strong> 02512736478
+					<strong>Teléfono:</strong> $this->businessPhone
 					
 					<br>
-					digencacom@example.com
+					
 
 				</div>
 				
@@ -1448,7 +1448,7 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align: center; line-height:15px; margin-left: 50px'>
 					
 					<br>
-					<strong style='font-size: 20px'>DIGENCA</strong>
+					<strong style='font-size: 20px'>$this->businessName</strong>
 					
 					<br>
 
@@ -1461,10 +1461,10 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align:right; line-height:15px;'>
 					
 					<br>
-					<strong>RIF:</strong> J-285346256
+					<strong>RIF:</strong> $this->businessIdentification
 
 					<br>
-					<strong>Dirección:</strong> Av. Venezuela con calle 37
+					<strong>Dirección:</strong> $this->businessAddress
 
 				</div>
 
@@ -1475,10 +1475,10 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
 					
 					<br>
-					<strong>Teléfono:</strong> 02512736478
+					<strong>Teléfono:</strong> $this->businessPhone
 					
 					<br>
-					digencacom@example.com
+					
 
 				</div>
 				
@@ -1686,7 +1686,7 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align: center; line-height:15px; margin-left: 50px'>
 					
 					<br>
-					<strong style='font-size: 20px'>DIGENCA</strong>
+					<strong style='font-size: 20px'>$this->businessName</strong>
 					
 					<br>
 
@@ -1699,10 +1699,10 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align:right; line-height:15px;'>
 					
 					<br>
-					<strong>RIF:</strong> J-285346256
+					<strong>RIF:</strong> $this->businessIdentification
 
 					<br>
-					<strong>Dirección:</strong> Av. Venezuela con calle 37
+					<strong>Dirección:</strong> $this->businessAddress
 
 				</div>
 
@@ -1713,10 +1713,10 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
 					
 					<br>
-					<strong>Teléfono:</strong> 02512736478
+					<strong>Teléfono:</strong> $this->businessPhone
 					
 					<br>
-					digencacom@example.com
+					
 
 				</div>
 				
@@ -1949,7 +1949,7 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align: center; line-height:15px; margin-left: 50px'>
 					
 					<br>
-					<strong style='font-size: 20px'>DIGENCA</strong>
+					<strong style='font-size: 20px'>$this->businessName</strong>
 					
 					<br>
 
@@ -1962,10 +1962,10 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align:right; line-height:15px;'>
 					
 					<br>
-					<strong>RIF:</strong> J-285346256
+					<strong>RIF:</strong> $this->businessIdentification
 
 					<br>
-					<strong>Dirección:</strong> Av. Venezuela con calle 37
+					<strong>Dirección:</strong> $this->businessAddress
 
 				</div>
 
@@ -1976,10 +1976,10 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
 					
 					<br>
-					<strong>Teléfono:</strong> 02512736478
+					<strong>Teléfono:</strong> $this->businessPhone
 					
 					<br>
-					digencacom@example.com
+					
 
 				</div>
 				
@@ -2118,7 +2118,7 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align: center; line-height:15px; margin-left: 50px'>
 					
 					<br>
-					<strong style='font-size: 20px'>DIGENCA</strong>
+					<strong style='font-size: 20px'>$this->businessName</strong>
 					
 					<br>
 
@@ -2131,10 +2131,10 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align:right; line-height:15px;'>
 					
 					<br>
-					<strong>RIF:</strong> J-285346256
+					<strong>RIF:</strong> $this->businessIdentification
 
 					<br>
-					<strong>Dirección:</strong> Av. Venezuela con calle 37
+					<strong>Dirección:</strong> $this->businessAddress
 
 				</div>
 
@@ -2145,10 +2145,10 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
 					
 					<br>
-					<strong>Teléfono:</strong> 02512736478
+					<strong>Teléfono:</strong> $this->businessPhone
 					
 					<br>
-					digencacom@example.com
+					
 
 				</div>
 				
@@ -2287,7 +2287,7 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align: center; line-height:15px; margin-left: 50px'>
 					
 					<br>
-					<strong style='font-size: 20px'>DIGENCA</strong>
+					<strong style='font-size: 20px'>$this->businessName</strong>
 					
 					<br>
 
@@ -2300,10 +2300,10 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align:right; line-height:15px;'>
 					
 					<br>
-					<strong>RIF:</strong> J-285346256
+					<strong>RIF:</strong> $this->businessIdentification
 
 					<br>
-					<strong>Dirección:</strong> Av. Venezuela con calle 37
+					<strong>Dirección:</strong> $this->businessAddress
 
 				</div>
 
@@ -2314,10 +2314,10 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
 					
 					<br>
-					<strong>Teléfono:</strong> 02512736478
+					<strong>Teléfono:</strong> $this->businessPhone
 					
 					<br>
-					digencacom@example.com
+					
 
 				</div>
 				
@@ -2456,7 +2456,7 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align: center; line-height:15px; margin-left: 50px'>
 					
 					<br>
-					<strong style='font-size: 20px'>DIGENCA</strong>
+					<strong style='font-size: 20px'>$this->businessName</strong>
 					
 					<br>
 
@@ -2469,10 +2469,10 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align:right; line-height:15px;'>
 					
 					<br>
-					<strong>RIF:</strong> J-285346256
+					<strong>RIF:</strong> $this->businessIdentification
 
 					<br>
-					<strong>Dirección:</strong> Av. Venezuela con calle 37
+					<strong>Dirección:</strong> $this->businessAddress
 
 				</div>
 
@@ -2483,10 +2483,10 @@ class ReportController extends BaseController
 				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
 					
 					<br>
-					<strong>Teléfono:</strong> 02512736478
+					<strong>Teléfono:</strong> $this->businessPhone
 					
 					<br>
-					digencacom@example.com
+					
 
 				</div>
 				

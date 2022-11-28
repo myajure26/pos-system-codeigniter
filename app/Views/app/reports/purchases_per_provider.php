@@ -113,10 +113,10 @@
                                     <div style='font-size:14px; text-align:right; line-height:23px;'>
                                         
                                         <br>
-                                        <strong>RIF:</strong> J-285346256
+                                        <strong>RIF:</strong> <?=$businessIdentification?>
 
                                         <br>
-                                        <strong>Dirección:</strong> Av. Venezuela con calle 37
+                                        <strong>Dirección:</strong> <?=$businessAddress?>
 
                                     </div>
 
@@ -127,10 +127,10 @@
                                     <div style='font-size:14px; text-align:right; line-height:23px; margin-left: 50px'>
                                         
                                         <br>
-                                        <strong>Teléfono:</strong> 02512736478
+                                        <strong>Teléfono:</strong> <?=$businessPhone?>
                                         
                                         <br>
-                                        digencacom@example.com
+                                        
 
                                     </div>
                                     

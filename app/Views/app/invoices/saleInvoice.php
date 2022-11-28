@@ -29,10 +29,10 @@
 				<div style="font-size:12px; text-align:right; line-height:15px;">
 					
 					<br>
-					<strong>RIF:</strong> J-285346256
+					<strong>RIF:</strong> <?=$businessIdentification?>
 
 					<br>
-					<strong>Dirección:</strong> Av. Venezuela con calle 37
+					<strong>Dirección:</strong> <?=$businessAddress?>
 
 				</div>
 
@@ -46,7 +46,7 @@
 					Teléfono: 04121546367
 					
 					<br>
-					digencacom@example.com
+					
 
 				</div>
 				

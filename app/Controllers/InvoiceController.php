@@ -34,7 +34,11 @@ class InvoiceController extends BaseController
 
         $data = [
             "id"    => $id,
-            "venta" => $venta
+            "venta" => $venta,
+            "businessName" 			=> $this->businessName,
+            "businessIdentification"=> $this->businessIdentification,
+            "businessAddress" 		=> $this->businessAddress,
+            "businessPhone" 		=> $this->businessPhone
         ];
 
         // return view('app/invoices/saleInvoice', $data);

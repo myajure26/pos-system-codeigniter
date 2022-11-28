@@ -272,7 +272,11 @@ class App extends BaseController
 		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 3){
 			
 			$data = [
-				"title" => "Reportes de compras por proveedor - $this->system"
+				"title" => "Reportes de compras por proveedor - $this->system",
+				"businessName" 			=> $this->businessName,
+				"businessIdentification"=> $this->businessIdentification,
+				"businessAddress" 		=> $this->businessAddress,
+				"businessPhone" 		=> $this->businessPhone
 			];
 			return view('app/reports/purchases_per_provider', $data);
 		
@@ -288,7 +292,11 @@ class App extends BaseController
 		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 3){
 			
 			$data = [
-				"title" => "Reportes de los mejores proveedores - $this->system"
+				"title" => "Reportes de los mejores proveedores - $this->system",
+				"businessName" 			=> $this->businessName,
+				"businessIdentification"=> $this->businessIdentification,
+				"businessAddress" 		=> $this->businessAddress,
+				"businessPhone" 		=> $this->businessPhone
 			];
 			return view('app/reports/best_providers', $data);
 		
@@ -320,7 +328,11 @@ class App extends BaseController
 		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 2){
 			
 			$data = [
-				"title" => "Reportes de ventas por cliente - $this->system"
+				"title" 				=> "Reportes de ventas por cliente - $this->system",
+				"businessName" 			=> $this->businessName,
+				"businessIdentification"=> $this->businessIdentification,
+				"businessAddress" 		=> $this->businessAddress,
+				"businessPhone" 		=> $this->businessPhone
 			];
 			return view('app/reports/sales_per_customer', $data);
 		
@@ -336,7 +348,11 @@ class App extends BaseController
 		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 2){
 			
 			$data = [
-				"title" => "Reportes de ventas por producto - $this->system"
+				"title" => "Reportes de ventas por producto - $this->system",
+				"businessName" 			=> $this->businessName,
+				"businessIdentification"=> $this->businessIdentification,
+				"businessAddress" 		=> $this->businessAddress,
+				"businessPhone" 		=> $this->businessPhone
 			];
 			return view('app/reports/sales_per_product', $data);
 		
@@ -352,7 +368,11 @@ class App extends BaseController
 		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 2){
 			
 			$data = [
-				"title" => "Reportes de productos más vendidos - $this->system"
+				"title" => "Reportes de productos más vendidos - $this->system",
+				"businessName" 			=> $this->businessName,
+				"businessIdentification"=> $this->businessIdentification,
+				"businessAddress" 		=> $this->businessAddress,
+				"businessPhone" 		=> $this->businessPhone
 			];
 			return view('app/reports/most_selled_products', $data);
 		
@@ -368,7 +388,11 @@ class App extends BaseController
 		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 2){
 			
 			$data = [
-				"title" => "Reportes de productos menos vendidos - $this->system"
+				"title" => "Reportes de productos menos vendidos - $this->system",
+				"businessName" 			=> $this->businessName,
+				"businessIdentification"=> $this->businessIdentification,
+				"businessAddress" 		=> $this->businessAddress,
+				"businessPhone" 		=> $this->businessPhone
 			];
 			return view('app/reports/less_sold_products', $data);
 		
@@ -384,7 +408,11 @@ class App extends BaseController
 		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 2){
 			
 			$data = [
-				"title" => "Reportes de mejores clientes - $this->system"
+				"title" => "Reportes de mejores clientes - $this->system",
+				"businessName" 			=> $this->businessName,
+				"businessIdentification"=> $this->businessIdentification,
+				"businessAddress" 		=> $this->businessAddress,
+				"businessPhone" 		=> $this->businessPhone
 			];
 			return view('app/reports/best_customers', $data);
 		
@@ -400,7 +428,7 @@ class App extends BaseController
 		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 2){
 			
 			$data = [
-				"title" => "Reportes de toma de decisión - $this->system"
+				"title" => "Reportes de toma de decisión - $this->system",
 			];
 			return view('app/reports/general_sale_reports', $data);
 		
