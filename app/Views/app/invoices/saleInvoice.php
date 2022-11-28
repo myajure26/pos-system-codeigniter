@@ -99,9 +99,9 @@
 
 		<tr>
 		
-            <td style="border-bottom: 1px solid #666; background-color:white; width:260px; text-align:center; padding: 5px">Producto</td>
+            <td style="border-bottom: 1px solid #666; background-color:white; width:260px; text-align:center; padding: 5px">Descripción</td>
             <td style="border-bottom: 1px solid #666; background-color:white; width:80px; text-align:center; padding: 5px">Cantidad</td>
-            <td style="border-bottom: 1px solid #666; background-color:white; width:150px; text-align:center; padding: 5px">Precio Unitario</td>
+            <td style="border-bottom: 1px solid #666; background-color:white; width:150px; text-align:center; padding: 5px">Precio unitario</td>
             <td style="border-bottom: 1px solid #666; background-color:white; width:150px; text-align:center; padding: 5px">Total</td>
 
 		</tr>
@@ -113,7 +113,7 @@
         ?>
         <tr>
 		
-            <td style="border-bottom: 0px solid #666; background-color:white; width:260px; text-align:center; padding: 5px"><?=$row->producto?></td>
+            <td style="border-bottom: 0px solid #666; background-color:white; width:260px; text-align:center; padding: 5px"><?=$row->producto?> <?=$row->ancho_numero?>/<?=$row->alto_numero?> <?=$row->categoria?> Marca <?=$row->marca?></td>
             <td style="border-bottom: 0px solid #666; background-color:white; width:80px; text-align:center; padding: 5px"><?=$row->cantidad?></td>
             <td style="border-bottom: 0px solid #666; background-color:white; width:150px; text-align:center; padding: 5px"><?=number_format($row->precio * $row->tasa, 2)?></td>
             <td style="border-bottom: 0px solid #666; background-color:white; width:150px; text-align:center; padding: 5px">

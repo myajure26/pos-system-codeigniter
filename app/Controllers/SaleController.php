@@ -126,13 +126,19 @@ class SaleController extends BaseController
 		$db      	= \Config\Database::connect();
 		$products 	= $db
 						->table('productos')
-						->select('productos.codigo, nombre, marcas.marca, categorias.categoria, monedas.simbolo, precio, cant_producto')
+						->select('productos.codigo, nombre, ancho_caucho.ancho_numero, alto_caucho.alto_numero, marcas.marca, categorias.categoria, precio, cant_producto')
 						->join('marcas', 'marcas.identificacion = productos.marca')
 						->join('categorias', 'categorias.identificacion = productos.categoria')
-						->join('monedas', 'monedas.identificacion = productos.categoria')
+						->join('ancho_caucho', 'ancho_caucho.id_ancho_caucho = productos.id_ancho_caucho')
+						->join('alto_caucho', 'alto_caucho.id_alto_caucho = productos.id_alto_caucho')
 						->where('productos.estado', 1);
 				
 		return DataTable::of($products)
+			->hide('ancho_numero')
+			->hide('alto_numero')
+			->edit('nombre', function($row){
+				return "$row->nombre $row->ancho_numero/$row->alto_numero";
+			})
 			->edit('cant_producto', function($row){
 								
 				if($row->cant_producto < 5){
@@ -147,9 +153,8 @@ class SaleController extends BaseController
 			})
 			->edit('precio', function($row){
 				$price = number_format($row->precio, 2);
-				return $row->simbolo . $price;
+				return $this->symbol . $price;
 			})
-			->hide('simbolo')
 			->add('Seleccionar', function($row){
 				return '<div class="btn-list"> 
 							<button type="button" class="btn-select-sale-product btn btn-sm btn-primary waves-effect" data-id="'.$row->codigo.'" data-type="products">

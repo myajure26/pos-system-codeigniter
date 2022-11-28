@@ -184,8 +184,8 @@
                                     <th>Seleccionar</th>
                                     <th>Código</th>
                                     <th>Nombre</th>
-                                    <th>Marca</th>
                                     <th>Categoría</th>
+                                    <th>Marca</th>
                                 </tr>
                             </tr>
                         </thead>
