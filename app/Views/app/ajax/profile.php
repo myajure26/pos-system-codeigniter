@@ -51,12 +51,6 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label class="form-label">Correo electrónico</label>
-                                        <input type="email" class="form-control" id="viewEmail" name="email" value="<?= $user->correo?>" disabled required >
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
                                         <label class="form-label">Privilegio</label>
                                         <select class="form-select viewDisabled" id="viewPrivilege" value="<?= $user->privilegio?>" disabled required>
                                             <?php foreach($privileges as $row)
@@ -84,7 +78,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="mb-3">
+                                    <div class="mb-0">
                                         <img src="<?php
                                         if($user->foto != NULL && $user->foto != ''){
                                             echo $user->foto;

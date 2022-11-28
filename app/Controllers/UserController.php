@@ -110,7 +110,6 @@ class UserController extends BaseController
 		$userData = [
 			"identificacion" 		=> $this->request->getPost('identification'),
 			"nombre" 				=> $this->request->getPost('name'),
-			"correo" 				=> $this->request->getPost('email'),
 			"clave" 				=> $password,
 			"privilegio" 			=> $this->request->getPost('privilege'),
 			"foto" 					=> NULL
@@ -260,7 +259,6 @@ class UserController extends BaseController
 		$userData = [
 			"identificacion"=> $identification,
 			"nombre" 		=> $this->request->getPost('name'),
-			"correo" 		=> $this->request->getPost('email'),
 			"clave" 		=> $password,
 			"privilegio" 	=> $this->request->getPost('privilege'),
 			"foto" 			=> $this->request->getPost('viewPhotoPreview')
@@ -337,7 +335,6 @@ class UserController extends BaseController
 		$userData = [
 			"identificacion"=> $identification,
 			"nombre" 		=> $this->request->getPost('name'),
-			"correo" 		=> $this->request->getPost('email'),
 			"clave" 		=> $password,
 			"foto" 			=> $this->request->getPost('viewPhotoPreview')
 		];

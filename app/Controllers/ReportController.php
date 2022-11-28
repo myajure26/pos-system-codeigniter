@@ -37,6 +37,11 @@ class ReportController extends BaseController
 		$ReportModel = new ReportModel();
 				
 		return DataTable::of($ReportModel->getInventory())
+			->hide('ancho_numero')
+			->hide('alto_numero')
+			->edit('nombre', function($row){
+				return "$row->nombre $row->ancho_numero/$row->alto_numero";
+			})
 			->edit('cant_producto', function($row){
 							
 				if($row->cant_producto <= 5){

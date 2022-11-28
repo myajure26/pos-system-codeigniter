@@ -103,12 +103,6 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label">Correo electrónico</label>
-                                <input type="email" class="form-control" id="email" placeholder="Introduce el correo electrónico" name="email" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
                                 <label class="form-label">Privilegio</label>
                                 <select class="form-select" name="privilege" required>
                                     <option value="">Seleccione el perfil</option>
@@ -129,7 +123,7 @@
                                     <div class="invalid-feedback"></div>
                                 </div>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-0">
                                 <label class="form-label">Seleccione una foto de perfil</label>
                                 <input class="form-control photo" type="file" name="photo"> 
                             </div>
@@ -181,12 +175,6 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label">Correo electrónico</label>
-                                <input type="email" class="form-control" id="viewEmail" placeholder="Introduce el correo electrónico" name="email" disabled required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
                                 <label class="form-label">Privilegio</label>
                                 <select class="form-select" name="privilege" id="viewPrivilege" disabled required>
                                     <option value="">Seleccione el perfil</option>
@@ -209,7 +197,7 @@
                                     <div class="invalid-feedback"></div>
                                 </div>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-0">
                                 <label class="form-label">Seleccione una foto de perfil</label>
                                 <input type="hidden" name="viewPhotoPreview" id="viewPhotoPreview" value="">
                                 <input class="form-control photo" type="file" name="photo" disabled>

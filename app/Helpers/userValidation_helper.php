@@ -22,15 +22,6 @@ function createUserValidation()
 				'regex_match' => 'Para el nombre sólo se permiten carácteres alfabéticos.'
 			]
 		],
-		'email' => [
-			'label' => 'email',
-			'rules' => 'required|valid_email|is_unique[usuarios.correo]',
-			'errors' => [
-				'required' => 'El correo electrónico es requerido',
-				'valid_email' => 'Por favor, introduce un correo electrónico válido',
-				'is_unique' => 'El correo electrónico ya se encuentra registrado en la base de datos'
-			]
-		],
 		'password' => [
 			'label' => 'password',
 			'rules' => 'required|min_length[8]',
@@ -88,15 +79,6 @@ function updateUserValidation()
 				'min_length' => 'La contraseña debe contener más de 8 carácteres'
 			]
 		],
-		'email' => [
-			'label' => 'email',
-			'rules' => 'required|valid_email|is_unique[usuarios.correo,identificacion,{identification}]',
-			'errors' => [
-				'required' => 'El correo electrónico es requerido.',
-				'valid_email' => 'Por favor, introduce un correo electrónico válido',
-				'is_unique' => 'El correo electrónico ya se encuentra registrado en la base de datos'
-			]
-		],
 		'privilege' => [
 			'label' => 'privilege',
 			'rules' => 'required',
@@ -133,15 +115,6 @@ function updateCurrentUserValidation()
 			'rules' => 'permit_empty|min_length[8]',
 			'errors' => [
 				'min_length' => 'La contraseña debe contener más de 8 carácteres'
-			]
-		],
-		'email' => [
-			'label' => 'email',
-			'rules' => 'required|valid_email|is_unique[usuarios.correo,identificacion,{identification}]',
-			'errors' => [
-				'required' => 'El correo electrónico es requerido.',
-				'valid_email' => 'Por favor, introduce un correo electrónico válido',
-				'is_unique' => 'El correo electrónico ya se encuentra registrado en la base de datos'
 			]
 		],
 		'photo' => [

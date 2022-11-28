@@ -25,47 +25,52 @@
         <!-- end page title -->
 
         <div class="row">
-            <div class="col-xl-3 col-md-6">
+            <div class="col-md-12">
                 <div class="card">
-                    <div class="card-body">
-                        <span class="text-muted mb-3 lh-1 d-block text-truncate">Ventas del día</span>
-                        <h4 class="mb-3">
-                            $<span class="counter-value" data-target="865.2">0</span>k
-                        </h4>
+                    <div class="card-header">
+                        <h4 class="card-title mb-0">Ventas del mes en curso</h4>
                     </div>
-                </div>
+                    <div class="card-body">
+                        <div id="spline_area" class="apex-charts"></div>                      
+                    </div>
+                </div><!--end card-->
             </div>
-            <div class="col-xl-3 col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <span class="text-muted mb-3 lh-1 d-block text-truncate">Ventas de los últimos 7 días</span>
-                        <h4 class="mb-3">
-                            $<span class="counter-value" data-target="865.2">0</span>k
-                        </h4>
-                    </div>
-                </div>
-            </div> 
-            <div class="col-xl-3 col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <span class="text-muted mb-3 lh-1 d-block text-truncate">Compras del día</span>
-                        <h4 class="mb-3">
-                            $<span class="counter-value" data-target="865.2">0</span>k
-                        </h4>
-                    </div>
-                </div>
-            </div> 
-            <div class="col-xl-3 col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <span class="text-muted mb-3 lh-1 d-block text-truncate">Compras de los últimos 7 días</span>
-                        <h4 class="mb-3">
-                            $<span class="counter-value" data-target="865.2">0</span>k
-                        </h4>
-                    </div>
-                </div>
-            </div>  
         </div> <!-- end row -->
     </div> <!-- container-fluid -->
 </div>
 <!-- End Page-content -->
+
+<script>
+    var data = <?=json_encode($chart)?>;
+
+    var options = {
+        series: [],
+        chart: {
+            height: 350,
+            type: 'area'
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'smooth'
+        },
+        xaxis: {
+            type: 'dateFormat',
+            categories: [],
+        },
+        tooltip: {
+            x: {
+            format: 'dd/MM/yy HH:mm'
+            },
+        },
+        noData: {
+            text: 'Esperando a que selecciones un rango de fecha'
+        }
+    }
+
+    var chart = new ApexCharts(document.querySelector("#spline_area"), options);
+    chart.render();
+
+    generalSales(data);
+</script>

@@ -125,6 +125,7 @@
                     <!--- Sidemenu -->
                     <div id="sidebar-menu">
                         <!-- Left Menu Start -->
+
                         <ul class="metismenu list-unstyled" id="side-menu">
                             <li class="menu-title" data-key="t-menu">Panel de control</li>
                             <li>
@@ -133,6 +134,7 @@
                                     <span data-key="t-dashboard">Inicio</span>
                                 </a>
                             </li>
+                            <?php if($privilege == 1 || $privilege == 2):?>
                             <li>
                                 <a href="<?=base_url('#control_center')?>">
                                     <i data-feather="tool"></i>
@@ -182,14 +184,15 @@
                                             <span data-key="t-sales">Mejores clientes</span>
                                         </a>
                                     </li>
-                                    <li>
+                                    <!-- <li>
                                         <a href="<?=base_url('#general_sale_reports')?>">
                                             <span data-key="t-sales">Reportes de toma de decisión</span>
                                         </a>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </li>
-
+                            <?php endif;?>
+                            <?php if($privilege == 1 || $privilege == 3):?>
                             <li class="menu-title" data-key="t-menu">Administrar compras</li>
                             <li>
                                 <a href="<?=base_url('#newPurchase')?>">
@@ -218,11 +221,11 @@
                                             <span data-key="t-sales">Mejores proveedores</span>
                                         </a>
                                     </li>
-                                    <li>
+                                    <!-- <li>
                                         <a href="<?=base_url('#general_purchase_reports')?>">
                                             <span data-key="t-purchases">Reportes de toma de decisión</span>
                                         </a>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </li>
 
@@ -263,7 +266,8 @@
                                     <span data-key="t-brand">Ancho caucho</span>
                                 </a>
                             </li>
-
+                            <?php endif;?>
+                            <?php if($privilege == 1 || $privilege == 2):?>
                             <li class="menu-title" data-key="t-menu">Administrar usuarios</li>
                             <li>
                                 <a href="<?=base_url('#customers')?>">
@@ -271,12 +275,16 @@
                                     <span data-key="t-customers">Clientes</span>
                                 </a>
                             </li>
+                            <?php endif;?>
+                            <?php if($privilege == 1 || $privilege == 3):?>
                             <li>
                                 <a href="<?=base_url('#providers')?>">
                                     <i data-feather="user-check"></i>
                                     <span data-key="t-providers">Proveedores</span>
                                 </a>
                             </li>
+                            <?php endif;?>
+                            <?php if($privilege == 1):?>
                             <li>
                                 <a href="<?=base_url('#users')?>">
                                     <i data-feather="user-plus"></i>
@@ -328,6 +336,7 @@
                                             <span data-key="t-audit">Auditoría</span>
                                         </a>
                                     </li>
+                                    <?php endif;?>
                                 </ul>
                             </li>
                         </ul>

@@ -15,12 +15,13 @@ class App extends BaseController
 			return view('app/signin', $data);
 
 		}else{
-			
+
 			$data = [
 				"title" => $this->system, 
 				"system" => $this->system,
 				"name" => $this->session->get('name'),
-				"photo" => $this->session->get('photo')
+				"photo" => $this->session->get('photo'),
+				"privilege" => $this->session->get('privilege')
 			];
 			return view('app/dashboard', $data);
 
@@ -29,43 +30,38 @@ class App extends BaseController
 
 	}
 
-	public function recover()
-	{
-		if(!$this->session->has('name')){
-			
-			$data = [
-				"title" => "Recuperar contraseña - $this->system", 
-				"system" => $this->system
-			];
-			return view('app/recover', $data);
-
-		}else{
-			
-			return redirect()->to(base_url('#dashboard'));
-
-		}
-
-	}
-
 	public function dashboard()
 	{
 		if($this->session->has('name')){
-			
+			$db     = \Config\Database::connect();
+
+			$where = "MONTH(ventas.creado_en) = MONTH(CURRENT_DATE)";
+			$chart = $db
+				->table('ventas')
+				->select("FORMAT(SUM((detalle_ventas.precio*detalle_ventas.cantidad)+((detalle_ventas.precio*detalle_ventas.cantidad)*impuestos.porcentaje)/100), 2) as total, DATE_FORMAT(ventas.creado_en, '%Y-%m-%d') as fecha")
+				->join('detalle_ventas', 'detalle_ventas.venta = ventas.identificacion')
+				->join('impuestos', 'impuestos.identificacion = ventas.impuesto')
+				->where($where)
+				->where('ventas.estado', 1)
+				->groupBy('fecha')
+				->get()->getResult();
+
 			$data = [
-				"title" => "Inicio - $this->system"
+				"title" => "Inicio - $this->system",
+				"chart" => $chart
 			];
 			return view('app/ajax/dashboard', $data);
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
 
 	public function audits()
 	{
-		if($this->session->has('name')){
+		if($this->session->get('privilege') == 1){
 
 			$data = [
 				"title" => "Auditoría - $this->system"
@@ -74,14 +70,14 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
 
 	public function control_center()
 	{
-		if($this->session->has('name')){
+		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 2){
 
 			$db      	= \Config\Database::connect();
 			$coins 		= $db
@@ -99,14 +95,14 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
 
 	public function newSale()
 	{
-		if($this->session->has('name')){
+		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 2){
 
 			$db      	= \Config\Database::connect();
 			
@@ -146,14 +142,14 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
 
 	public function sales()
 	{
-		if($this->session->has('name')){
+		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 2){
 
 			$db      	= \Config\Database::connect();
 			$taxes 			= $db
@@ -188,14 +184,14 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
 
 	public function newPurchase()
 	{
-		if($this->session->has('name')){
+		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 3){
 
 			$db      	= \Config\Database::connect();
 			$coins 		= $db
@@ -220,14 +216,14 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
 
 	public function purchases()
 	{
-		if($this->session->has('name')){
+		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 3){
 
 			$db      	= \Config\Database::connect();
 			$coins 		= $db
@@ -250,14 +246,14 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
 
 	public function inventory()
 	{
-		if($this->session->has('name')){
+		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 3){
 			
 			$data = [
 				"title" => "Inventario - $this->system"
@@ -266,14 +262,14 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
 
 	public function purchases_per_provider()
 	{
-		if($this->session->has('name')){
+		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 3){
 			
 			$data = [
 				"title" => "Reportes de compras por proveedor - $this->system"
@@ -282,14 +278,14 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
 
 	public function best_providers()
 	{
-		if($this->session->has('name')){
+		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 3){
 			
 			$data = [
 				"title" => "Reportes de los mejores proveedores - $this->system"
@@ -298,14 +294,14 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
 
 	public function general_purchase_reports()
 	{
-		if($this->session->has('name')){
+		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 3){
 			
 			$data = [
 				"title" => "Reportes de toma de decisión - $this->system"
@@ -314,14 +310,14 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
 
 	public function sales_per_customer()
 	{
-		if($this->session->has('name')){
+		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 2){
 			
 			$data = [
 				"title" => "Reportes de ventas por cliente - $this->system"
@@ -330,14 +326,14 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
 
 	public function sales_per_product()
 	{
-		if($this->session->has('name')){
+		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 2){
 			
 			$data = [
 				"title" => "Reportes de ventas por producto - $this->system"
@@ -346,14 +342,14 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
 
 	public function most_selled_products()
 	{
-		if($this->session->has('name')){
+		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 2){
 			
 			$data = [
 				"title" => "Reportes de productos más vendidos - $this->system"
@@ -362,14 +358,14 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
 
 	public function less_sold_products()
 	{
-		if($this->session->has('name')){
+		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 2){
 			
 			$data = [
 				"title" => "Reportes de productos menos vendidos - $this->system"
@@ -378,14 +374,14 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
 
 	public function best_customers()
 	{
-		if($this->session->has('name')){
+		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 2){
 			
 			$data = [
 				"title" => "Reportes de mejores clientes - $this->system"
@@ -394,14 +390,14 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
 
 	public function general_sale_reports()
 	{
-		if($this->session->has('name')){
+		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 2){
 			
 			$data = [
 				"title" => "Reportes de toma de decisión - $this->system"
@@ -410,14 +406,14 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
 
 	public function products()
 	{
-		if($this->session->has('name')){
+		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 3){
 
 			$db      	= \Config\Database::connect();
 			$brands 	= $db
@@ -457,14 +453,14 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
 
 	public function categories()
 	{
-		if($this->session->has('name')){
+		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 3){
 			
 			$data = [
 				"title" => "Categorías - $this->system"
@@ -473,14 +469,14 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
 
 	public function brands()
 	{
-		if($this->session->has('name')){
+		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 3){
 			
 			$data = [
 				"title" => "Marcas - $this->system"
@@ -489,14 +485,14 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
 
 	public function high_rubber()
 	{
-		if($this->session->has('name')){
+		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 3){
 			
 			$data = [
 				"title" => "Alto caucho - $this->system"
@@ -505,14 +501,14 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
 
 	public function wide_rubber()
 	{
-		if($this->session->has('name')){
+		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 3){
 			
 			$data = [
 				"title" => "Ancho caucho - $this->system"
@@ -521,14 +517,14 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
 
 	public function customers()
 	{
-		if($this->session->has('name')){
+		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 2){
 			$data = [
 				"title" => "Clientes - $this->system"
 			];
@@ -536,14 +532,14 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
 
 	public function providers()
 	{
-		if($this->session->has('name')){
+		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 3){
 			
 			$data = [
 				"title" => "Proveedores - $this->system"
@@ -552,14 +548,14 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
 
 	public function users()
 	{
-		if($this->session->has('name')){
+		if($this->session->get('privilege') == 1){
 
 			$db      	= \Config\Database::connect();
 			$privileges = $db
@@ -577,14 +573,14 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
 
 	public function coins()
 	{
-		if($this->session->has('name')){
+		if($this->session->get('privilege') == 1){
 		
 			$data = [
 				"title" => "Monedas - $this->system"
@@ -593,14 +589,14 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
 
 	public function taxes()
 	{
-		if($this->session->has('name')){
+		if($this->session->get('privilege') == 1){
 		
 			$data = [
 				"title" => "Impuestos - $this->system"
@@ -609,14 +605,14 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
 
 	public function document_type()
 	{
-		if($this->session->has('name')){
+		if($this->session->get('privilege') == 1){
 		
 			$data = [
 				"title" => "Tipos de documento - $this->system"
@@ -625,14 +621,14 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
 
 	public function payment_method()
 	{
-		if($this->session->has('name')){
+		if($this->session->get('privilege') == 1){
 		
 			$data = [
 				"title" => "Métodos de pago - $this->system"
@@ -641,23 +637,7 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
-		
-		}
-	}
-
-	public function privileges()
-	{
-		if($this->session->has('name')){
-		
-			$data = [
-				"title" => "Privilegios - $this->system"
-			];
-			return view('app/ajax/privileges', $data);
-		
-		}else{
-
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
@@ -690,14 +670,14 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
 	
 	public function settings()
 	{
-		if($this->session->has('name')){
+		if($this->session->get('privilege') == 1){
 
 			$db      	= \Config\Database::connect();
 			$coins 		= $db
@@ -725,7 +705,7 @@ class App extends BaseController
 		
 		}else{
 
-			return redirect()->to(base_url());
+			return "<script>window.location.href='".base_url()."'</script>";
 		
 		}
 	}
@@ -733,7 +713,7 @@ class App extends BaseController
 	public function logout()
 	{
 		$this->session->destroy();
-		return redirect()->to(base_url());
+		return "<script>window.location.href='".base_url()."'</script>";
 	}
 
 }

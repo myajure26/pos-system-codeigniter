@@ -45,7 +45,7 @@
                         <table class="table-report">
                             <tr>
 
-                                <td style='background-color:white; width:400px'>
+                                <td style='background-color:white; width:500px'>
                                     
                                     <div style='font-size:14px; text-align:left; line-height:15px; margin-left: 20px'>
                                         

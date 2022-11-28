@@ -42,8 +42,8 @@
                                     <tr>
                                         <th>Código</th>
                                         <th>Nombre</th>
-                                        <th>Marca</th>
                                         <th>Categoría</th>
+                                        <th>Marca</th>
                                         <th>Stock</th>
                                     </tr>
                                 </tr>

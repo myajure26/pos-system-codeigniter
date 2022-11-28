@@ -242,28 +242,7 @@ $(document).ready(function(){
 
     });
 
-    const generalPurchases = (data) => {
 
-        const compras = [];
-        const fechas = [];
-
-        data.forEach(element => {
-            compras.push(element.total);
-            fechas.push(element.fecha);
-        });
-
-        // Actualizar la gráfica
-        chart.updateOptions({
-            series: [{
-                name: 'Compras',
-                data: compras,
-                color: '#5156be'
-            }],
-            xaxis: {
-              categories: fechas
-            }
-        });
-    }
 
     const generalProviders = (data) => {
 
@@ -299,28 +278,7 @@ $(document).ready(function(){
         });
     }
 
-    const generalSales= (data) => {
 
-        const ventas = [];
-        const fechas = [];
-
-        data.forEach(element => {
-            ventas.push(element.total);
-            fechas.push(element.fecha);
-        });
-
-        // Actualizar la gráfica
-        chart.updateOptions({
-            series: [{
-                name: 'Ventas',
-                data: ventas,
-                color: '#5156be'
-            }],
-            xaxis: {
-              categories: fechas
-            }
-        });
-    }
 
     const generalProducts = (data) => {
 
@@ -358,3 +316,48 @@ $(document).ready(function(){
 
 });
 
+const generalSales= (data) => {
+
+    const ventas = [];
+    const fechas = [];
+
+    data.forEach(element => {
+        ventas.push(element.total);
+        fechas.push(element.fecha);
+    });
+
+    // Actualizar la gráfica
+    chart.updateOptions({
+        series: [{
+            name: 'Total ventas $',
+            data: ventas,
+            color: '#5156be'
+        }],
+        xaxis: {
+          categories: fechas
+        }
+    });
+}
+
+const generalPurchases = (data) => {
+
+    const compras = [];
+    const fechas = [];
+
+    data.forEach(element => {
+        compras.push(element.total);
+        fechas.push(element.fecha);
+    });
+
+    // Actualizar la gráfica
+    chart2.updateOptions({
+        series: [{
+            name: 'Compras',
+            data: compras,
+            color: '#5156be'
+        }],
+        xaxis: {
+          categories: fechas
+        }
+    });
+}
