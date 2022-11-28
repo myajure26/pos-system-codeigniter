@@ -15,13 +15,13 @@
 
 </head>
 <body>
+	<h1 style="text-align:center">Factura</h1>
     <table>
 		
 		<tr>
 			
 			<td style="width:150px;">
-                
-                <h2 style="font-size: 20px">Digenca, C.A.</h2>
+				<img src="<?=base_url('assets/images/brands/logo_digenca.jpg')?>" width="150px">
             </td>
 
 			<td style="background-color:white; width:210px">
@@ -43,7 +43,7 @@
 				<div style="font-size:12px; text-align:right; line-height:15px; margin-left: 50px">
 					
 					<br>
-					Teléfono: 04121546367
+					<strong>Teléfono:</strong> 04121546367
 					
 					<br>
 					
@@ -66,14 +66,17 @@
 		
 			<td style="background-color:white; width:390px; padding: 5px;">
 
-				<p><strong>Cliente:</strong>: <?= $venta[0]->clienteNom?></p>
+				<p><strong>Cliente:</strong> <?= $venta[0]->clienteNom?></p>
                 <p><strong>Cédula/RIF:</strong> <?= $venta[0]->clienteId?></p>
+                <p><strong>Dirección:</strong> <?= $venta[0]->direccion?></p>
+
 
 			</td>
 
 			<td style="background-color:white; width:150px; text-align:right; padding: 5px;">
 			
-				Fecha: <?= $venta[0]->creado_en?></p>
+				<strong>Fecha:</strong> <?= date("d-m-Y", strtotime($venta[0]->creado_en))?><br>
+				<strong>Hora:</strong> <?= date("H:i:s", strtotime($venta[0]->creado_en))?>
 
 			</td>
 
@@ -81,8 +84,9 @@
 		<tr>
 		
 			<td style="background-color:white; width:540px; padding: 5px;"> 
-                <p><strong>Moneda:</strong> <?= $venta[0]->moneda?></p>
-                <!-- <p><strong>Tasa:</strong> <?= $venta[0]->tasa?></p> -->
+                <p><strong>Moneda de facturación:</strong> <?= $venta[0]->moneda?></p>
+                <p><strong>Moneda de cambio:</strong> <?= $coin->moneda?></p>
+                <p><strong>Tasa:</strong> <?= $venta[0]->tasa?></p>
             </td>
 
             <td style="background-color:white; width:150px; text-align:right; padding: 5px;">
@@ -98,7 +102,7 @@
     <table style="font-size:12px; padding:5px 10px;">
 
 		<tr>
-		
+			<td style="border-bottom: 1px solid #666; background-color:white; width:25px; text-align:center; padding: 5px">Código</td>
             <td style="border-bottom: 1px solid #666; background-color:white; width:260px; text-align:center; padding: 5px">Descripción</td>
             <td style="border-bottom: 1px solid #666; background-color:white; width:80px; text-align:center; padding: 5px">Cantidad</td>
             <td style="border-bottom: 1px solid #666; background-color:white; width:150px; text-align:center; padding: 5px">Precio unitario</td>
@@ -112,7 +116,7 @@
         foreach ($venta as $row):
         ?>
         <tr>
-		
+			<td style="border-bottom: 0px solid #666; background-color:white; width:25px; text-align:center; padding: 5px"><?=$row->codigo?></td>
             <td style="border-bottom: 0px solid #666; background-color:white; width:260px; text-align:center; padding: 5px"><?=$row->producto?> <?=$row->ancho_numero?>/<?=$row->alto_numero?> <?=$row->categoria?> Marca <?=$row->marca?></td>
             <td style="border-bottom: 0px solid #666; background-color:white; width:80px; text-align:center; padding: 5px"><?=$row->cantidad?></td>
             <td style="border-bottom: 0px solid #666; background-color:white; width:150px; text-align:center; padding: 5px"><?=number_format($row->precio * $row->tasa, 2)?></td>

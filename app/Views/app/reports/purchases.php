@@ -53,7 +53,7 @@
                             <thead>
                                 <tr>
                                     <tr>
-                                        <th>#</th>
+                                        <th>Número de compra</th>
                                         <th>Proveedor</th>
                                         <th>Fecha</th>
                                         <th>Referencia</th>

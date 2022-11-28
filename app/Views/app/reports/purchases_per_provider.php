@@ -194,7 +194,7 @@
                             <thead>
                                 <tr>
                                     <tr>
-                                        <th>Factura</th>
+                                        <th>Número de compra</th>
                                         <th>Referencia</th>
                                         <th>Fecha</th>
                                         <th>Usuario</th>

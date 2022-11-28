@@ -34,7 +34,6 @@
                     <div class="response"></div>
                     <div class="card-body">
                             <div class="tab-pane" id="addListCoin" role="tabpanel">
-                                <h5 class="font-size-14 mb-4 mt-2"><i class="mdi mdi-arrow-right text-primary me-1"></i> Agregar los precios de las monedas</h5>
                                 <form class="custom-form" action="<?=base_url('settings/update')?>" method="POST">
                                     <div class="row">  
                                         <div class="col-md-6">
