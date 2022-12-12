@@ -518,6 +518,22 @@ class App extends BaseController
 		}
 	}
 
+	public function assign_products()
+	{
+		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 3){
+			
+			$data = [
+				"title" => "Asignar productos al proveedor - $this->system"
+			];
+			return view('app/ajax/assign_products', $data);
+		
+		}else{
+
+			return "<script>window.location.href='".base_url()."'</script>";
+		
+		}
+	}
+
 	public function categories()
 	{
 		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 3){

@@ -811,6 +811,7 @@ class ReportController extends BaseController
 			<td style='font-weight:bold; border:1px solid #eee;'>FECHA</td>		
 		</tr>");
 
+			$totalCompra = 0;
 			foreach ($getPurchaseReportExcel as $row => $item){
 
 
@@ -834,6 +835,7 @@ class ReportController extends BaseController
 					echo utf8_decode($item2->codigo."<br>");
 					$total = $total + ($item2->cantidad * $item2->precio);
 				}
+				$totalCompra += $total;
 
 				echo utf8_decode("</td><td style='border:1px solid #eee;'>");
 
@@ -862,8 +864,24 @@ class ReportController extends BaseController
 					<td style='border:1px solid #eee;'>".number_format($total, 2)."</td>
 					<td style='border:1px solid #eee;'>".$item->fecha."</td>		
 						</tr>");
+			
+			
 		}
 
+		echo utf8_decode("</td>	
+			<td style='border:1px solid #eee;'></td>
+			<td style='border:1px solid #eee;'></td>
+			<td style='border:1px solid #eee;'></td>
+			<td style='border:1px solid #eee;'></td>
+			<td style='border:1px solid #eee;'></td>
+			<td style='border:1px solid #eee;'></td>
+			<td style='border:1px solid #eee;'></td>
+			<td style='border:1px solid #eee;'></td>
+			<td style='border:1px solid #eee;'></td>
+			<td style='border:1px solid #eee;'></td>
+			<td style='border:1px solid #eee;'>Total</td>
+			<td style='border:1px solid #eee;'>".number_format($totalCompra, 2)."</td>	
+			</tr>");
 
 			echo "</table>";
 
@@ -1380,6 +1398,7 @@ class ReportController extends BaseController
 					<td style='border:1px solid #eee;'></td>
 					<td style='border:1px solid #eee;'></td>
 					<td style='border:1px solid #eee;'></td>
+					<td style='border:1px solid #eee;'>Total</td>
 					<td style='border:1px solid #eee;'>".number_format($grandSubTotal, 2)."</td>
 					<td style='border:1px solid #eee;'>".number_format($grandTax, 2)."</td>
 					<td style='border:1px solid #eee;'>".number_format($grandTotal, 2)."</td>
@@ -1880,6 +1899,7 @@ class ReportController extends BaseController
 
 		}
 		echo utf8_decode("<tr>
+					<td style='border:1px solid #eee;'></td>
 					<td style='border:1px solid #eee;'></td>
 					<td style='border:1px solid #eee;'></td>
 					<td style='border:1px solid #eee;'></td>

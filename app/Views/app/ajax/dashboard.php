@@ -29,6 +29,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title mb-0">Ventas del mes en curso</h4>
+                        <p class="card-title-desc"><strong>Fecha de hoy: </strong>  <?= date('d-m-Y') ?></p>
                     </div>
                     <div class="card-body">
                         <div id="spline_area" class="apex-charts"></div>                      

@@ -237,10 +237,22 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="<?=base_url('#products')?>">
-                                    <i data-feather="shopping-cart"></i>
-                                    <span data-key="t-products">Productos</span>
+                                <a href="javascript: void(0);" class="has-arrow">
+                                    <i data-feather="pie-chart"></i>
+                                    <span data-key="t-reports">Administrar productos</span>
                                 </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li>
+                                        <a href="<?=base_url('#products')?>">
+                                            <span data-key="t-products">Productos</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?=base_url('#assign_products')?>">
+                                            <span data-key="t-products">Asignar productos</span>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
                             <li>
                                 <a href="<?=base_url('#categories')?>">

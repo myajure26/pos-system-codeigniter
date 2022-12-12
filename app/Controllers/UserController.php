@@ -226,10 +226,10 @@ class UserController extends BaseController
 
 		$UserModel = new UserModel();
 		$user = $UserModel->getUserById(['identificacion' => $identification]);
+		
 		if(!$user){
 			return false;
 		}
-
 		return json_encode($user);
 	}
 

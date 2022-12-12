@@ -170,6 +170,61 @@ class ProductController extends BaseController
 			->toJson();
 	}
 
+	public function getProductsToAssing()
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$db      	= \Config\Database::connect();
+		$products 	= $db
+						->table('productos')
+						->select('productos.codigo, nombre, ancho_caucho.ancho_numero, alto_caucho.alto_numero, marcas.marca, categorias.categoria')
+						->join('ancho_caucho', 'ancho_caucho.id_ancho_caucho = productos.id_ancho_caucho')
+						->join('alto_caucho', 'alto_caucho.id_alto_caucho = productos.id_alto_caucho')
+						->join('marcas', 'marcas.identificacion = productos.marca')
+						->join('categorias', 'categorias.identificacion = productos.categoria')
+						->where('productos.estado', 1);
+				
+		return DataTable::of($products)
+			->hide('ancho_numero')
+			->hide('alto_numero')
+			->edit('nombre', function($row){
+				return "$row->nombre $row->ancho_numero/$row->alto_numero";
+			})
+			->add('Seleccionar', function($row){
+				return '<div class="btn-list"> 
+							<button type="button" class="btn-select-product-to-assing btn btn-sm btn-primary waves-effect" data-id="'.$row->codigo.'" data-type="products">
+                                <i class="fas fa-check"></i>
+                            </button>
+                        </div>';
+			}, 'first') 
+			->toJson();
+	}
+
+	public function getProvidersToAssing()
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$db      	= \Config\Database::connect();
+		$providers 	= $db
+						->table('proveedores')
+						->select('identificacion, nombre, telefono, direccion')
+						->where('estado', 1);
+				
+		return DataTable::of($providers)
+			->add('Seleccionar', function($row){
+				return '<div class="btn-list"> 
+							<button type="button" class="btn-select-provider-to-assing btn btn-sm btn-primary waves-effect" data-id="'.$row->identificacion.'" data-type="providers">
+                                <i class="fas fa-check"></i>
+                            </button>
+                        </div>';
+			}, 'first') 
+			->toJson();
+	}
+
 	public function getProductById($code)
 	{
 		if(!$this->session->has('name')){

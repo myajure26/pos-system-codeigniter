@@ -121,14 +121,14 @@ $(document).ready(function() {
             },
             success: function (data) {
                 
-                if( type === 'saveCustomerSale' ){
-                    $('#name, #phone, #address').attr('disabled', 'disabled');
-                    $('.saveCustomer').removeClass('saveCustomer').addClass('addCustomer').attr('type', 'button');
-                    $('.addCustomer i').removeClass('fas fa-user-check').addClass('fas fa-user-plus');
-                    $('#customerNext').slideDown();
-                    $('#hiddenCustomer').val(formdata.get('identification'));
+                // if( type === 'saveCustomerSale' ){
+                //     $('#name, #phone, #address').attr('disabled', 'disabled');
+                //     $('.saveCustomer').removeClass('saveCustomer').addClass('addCustomer').attr('type', 'button');
+                //     $('.addCustomer i').removeClass('fas fa-user-check').addClass('fas fa-user-plus');
+                //     $('#customerNext').slideDown();
+                //     $('#hiddenCustomer').val(formdata.get('identification'));
 
-                }
+                // }
 
                 response.html(data);
             },
@@ -377,6 +377,10 @@ $(document).ready(function() {
         $('#phone').attr('disabled', 'disabled');
         $('#address').attr('disabled', 'disabled');
         
+        $('.saveCustomer, .addCustomer').removeClass('saveCustomer').addClass('addCustomer').attr('type', 'submit');
+        $('.addCustomer i').removeClass('fas fa-user-check').addClass('fas fa-user-plus');
+
+
         const letter = $('.letter').val();
         const numIdentification = $('.identification').val();
         const identification = letter + '-' + numIdentification;
@@ -555,6 +559,45 @@ $(document).ready(function() {
             }
         });
         return false;
+    });
+
+    // Seleccionar el producto para asignar
+    $(document).on('click', '.btn-select-product-to-assing', function(){
+        const code = $(this).closest('tr').find('td:eq(1)').text();
+        const name = $(this).closest('tr').find('td:eq(2)').text();
+        const category = $(this).closest('tr').find('td:eq(3)').text();
+        const brand = $(this).closest('tr').find('td:eq(4)').text();
+
+        if($('#'+code).length > 0){
+            Swal.fire({
+                icon: 'info',
+                title: 'Alerta',
+                text: 'Ya has ingresado el producto a la compra',
+            });
+            return false;
+        }
+
+        $('#list').append(`
+            <tr id="${code}">
+                <td>${code}</td>
+                <td>${name}</td>
+                <td>${category}</td>
+                <td>${brand}</td>
+                <td>
+                    <div class="btn-list"> 
+                        <button type="button" class="removeProduct btn btn-sm btn-danger waves-effect d-block mx-auto" data-id="${code}">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        `);
+    });
+
+    $(document).on('click', '.btn-select-provider-to-assing', function(){
+        $('#providerInput').val($(this).closest('tr').find('td:eq(2)').text());
+        $('#provider, #viewProvider').val($(this).closest('tr').find('td:eq(1)').text());
+        $('#searchProviderModal').modal('hide');
     });
 
 });
