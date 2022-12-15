@@ -72,4 +72,51 @@ class ProductModel extends Model
 				->update();
 		return $query;
 	}
+
+	public function getProductsAssign($id)
+	{
+		$db = \Config\Database::connect();
+		$db = $db
+			->table('producto_proveedor')
+			->select('productos.codigo, productos.nombre, ancho_caucho.ancho_numero, alto_caucho.alto_numero, categorias.categoria, marcas.marca')
+			->join('proveedores', 'proveedores.identificacion = producto_proveedor.ci_rif_proveedor')
+			->join('productos', 'productos.codigo = producto_proveedor.cod_producto')
+			->join('ancho_caucho', 'ancho_caucho.id_ancho_caucho = productos.id_ancho_caucho')
+			->join('alto_caucho', 'alto_caucho.id_alto_caucho = productos.id_alto_caucho')
+			->join('marcas', 'marcas.identificacion = productos.marca')
+			->join('categorias', 'categorias.identificacion = productos.categoria')
+			->where('productos.estado', 1)
+			->where('producto_proveedor.ci_rif_proveedor', $id)
+			->get()->getResult();
+		return $db;
+	}
+
+	public function verifyProviderAssignInfo($provider, $product)
+	{
+		$db = \Config\Database::connect();
+		$db = $db
+			->table('producto_proveedor')
+			->select()
+			->where('ci_rif_proveedor', $provider)
+			->where('cod_producto', $product)
+			->get()->getResult();
+		return $db;
+	}
+
+	public function setProviderAssignInfo($data)
+	{
+		$db = \Config\Database::connect();
+		$db = $db
+			->table('producto_proveedor')
+			->insert($data);
+		return $db;
+	}
+
+	public function deleteProviderAssignInfo($provider, $product)
+	{
+		$db = \Config\Database::connect();
+		$db = $db
+			->query('DELETE FROM producto_proveedor WHERE cod_producto = "' . $product . '" AND ci_rif_proveedor = "'.$provider.'"');
+		return $db;
+	}
 }

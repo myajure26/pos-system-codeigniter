@@ -155,8 +155,11 @@ $routes->group('payment_method', static function ($routes) {
 $routes->group('products', static function ($routes) {
     $routes->post('create', 'ProductController::createProduct');
     $routes->get('get', 'ProductController::getProducts');
-    $routes->get('getProductsToAssing', 'ProductController::getProductsToAssing');
-    $routes->get('getProvidersToAssing', 'ProductController::getProvidersToAssing');
+    $routes->get('getProductsToAssign', 'ProductController::getProductsToAssign');
+    $routes->get('getProvidersToAssign', 'ProductController::getProvidersToAssign');
+    $routes->get('getProviderAssignInfo/(:any)', 'ProductController::getProviderAssignInfo/$1');
+    $routes->post('setProviderAssignInfo', 'ProductController::setProviderAssignInfo');
+    $routes->post('deleteProviderAssignInfo', 'ProductController::deleteProviderAssignInfo');
     $routes->get('getById/(:any)', 'ProductController::getProductById/$1');
     $routes->post('update', 'ProductController::updateProduct');
     $routes->post('delete', 'ProductController::deleteProduct');

@@ -170,7 +170,7 @@ class ProductController extends BaseController
 			->toJson();
 	}
 
-	public function getProductsToAssing()
+	public function getProductsToAssign()
 	{
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
@@ -194,7 +194,7 @@ class ProductController extends BaseController
 			})
 			->add('Seleccionar', function($row){
 				return '<div class="btn-list"> 
-							<button type="button" class="btn-select-product-to-assing btn btn-sm btn-primary waves-effect" data-id="'.$row->codigo.'" data-type="products">
+							<button type="button" class="btn-select-product-to-assign btn btn-sm btn-primary waves-effect" data-id="'.$row->codigo.'" data-type="products">
                                 <i class="fas fa-check"></i>
                             </button>
                         </div>';
@@ -202,7 +202,7 @@ class ProductController extends BaseController
 			->toJson();
 	}
 
-	public function getProvidersToAssing()
+	public function getProvidersToAssign()
 	{
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
@@ -217,7 +217,7 @@ class ProductController extends BaseController
 		return DataTable::of($providers)
 			->add('Seleccionar', function($row){
 				return '<div class="btn-list"> 
-							<button type="button" class="btn-select-provider-to-assing btn btn-sm btn-primary waves-effect" data-id="'.$row->identificacion.'" data-type="providers">
+							<button type="button" class="btn-select-provider-to-assign btn btn-sm btn-primary waves-effect" data-id="'.$row->identificacion.'" data-type="providers">
                                 <i class="fas fa-check"></i>
                             </button>
                         </div>';
@@ -361,4 +361,69 @@ class ProductController extends BaseController
 		$this->successMessage['text'] 		= "El producto ha sido recuperado";
 		return sweetAlert($this->successMessage);
 	}
+
+	public function getProviderAssignInfo($id)
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$ProductModel = new ProductModel();
+		$getProducts = $ProductModel->getProductsAssign($id);
+
+		echo json_encode($getProducts);
+	}
+
+	public function setProviderAssignInfo()
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$provider = $this->request->getPost('provider');
+		$product = $this->request->getPost('product');
+
+		
+		$setProviderAssignInfo = new ProductModel();
+		$verifyProviderAssignInfo = $setProviderAssignInfo->verifyProviderAssignInfo($provider, $product);
+
+		if( $verifyProviderAssignInfo ){
+			return false;
+		}
+
+		$setProviderAssignInfo = $setProviderAssignInfo->setProviderAssignInfo([
+																"ci_rif_proveedor" => $provider,
+																"cod_producto"  => $product
+															]);
+		if( !$setProviderAssignInfo ){
+			return false;
+		}
+
+		//PARA LA AUDITORÍA
+		$auditUserId = $this->session->get('identification');
+		$this->auditContent['usuario'] 		= $auditUserId;
+		$this->auditContent['accion'] 		= "Asignar producto";
+		$this->auditContent['descripcion'] 	= "Se ha asignado el producto con código " . $product . " al proveedor ". $provider;
+		$AuditModel = new AuditModel();
+		$AuditModel->createAudit($this->auditContent);
+	}
+
+	public function deleteProviderAssignInfo()
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+		
+		$provider = $this->request->getPost('provider');
+		$product = $this->request->getPost('product');
+
+		$deleteProviderAssignInfo = new ProductModel();
+		$deleteProviderAssignInfo = $deleteProviderAssignInfo->deleteProviderAssignInfo($provider, $product);
+
+		if( !$deleteProviderAssignInfo ){
+			return false;
+		}
+
+	}
+
 }

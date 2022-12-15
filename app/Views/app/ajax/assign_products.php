@@ -151,6 +151,6 @@
 
 
 <script>
-    tableConfig('/products/getProvidersToAssing', '.getProviders');
-    tableConfig('/products/getProductsToAssing', '.getProducts');
+    tableConfig('/products/getProvidersToAssign', '.getProviders');
+    tableConfig('/products/getProductsToAssign', '.getProducts');
 </script>
