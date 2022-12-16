@@ -64,11 +64,13 @@ class ProductController extends BaseController
 									'id_alto_caucho' 	=> $this->request->getPost('high'),
 									'marca' 			=> $this->request->getPost('brand'),
 									'categoria' 		=> $this->request->getPost('category'),
-									'precio' 			=> $price
+									'precio' 			=> $price,
+									'stock_maximo' 		=> $this->request->getPost('maxStock'),
+									'stock_minimo' 		=> $this->request->getPost('minStock')
 								]);
 
 		if(!$product){
-			$this->errorMessage['text'] = "Error al guardar el producto en la base de datos";
+			$this->errorMessage['text'] = "El producto ya existe";
 			return sweetAlert($this->errorMessage);
 		}
 
@@ -278,7 +280,9 @@ class ProductController extends BaseController
 									'id_alto_caucho' 	=> $this->request->getPost('high'),
 									'marca' 			=> $this->request->getPost('brand'),
 									'categoria' 		=> $this->request->getPost('category'),
-									'precio' 			=> $price
+									'precio' 			=> $price,
+									'stock_maximo' 		=> $this->request->getPost('maxStock'),
+									'stock_minimo' 		=> $this->request->getPost('minStock')
 								], $code);
 
 		if(!$product){

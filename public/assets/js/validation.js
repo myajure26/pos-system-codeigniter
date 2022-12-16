@@ -301,3 +301,29 @@ $(document).on('input', '.number', function(){
     feedback.hide();
 
 });
+
+$(document).on('input', '.stock', function(){
+    
+    let patternInput = new RegExp('^[0-9]*$');
+    let feedback =  $(this).parent().children('.invalid-feedback');
+    
+    if($(this).val().length > 5){
+        $(this).val($(this).val().slice(0,5));
+        $(this).addClass('is-invalid');
+        feedback.text('El número no debe contener más de 5 carácteres');
+        feedback.show();
+        return false;
+    }
+
+    if( !$(this).val().match(patternInput) || $(this).val() == ''){
+        $(this).addClass('is-invalid');
+        feedback.text('El número no debe ir vacío ni contener carácteres especiales o letras');
+        feedback.show();
+        return false;
+
+    }
+
+    $(this).removeClass('is-invalid');
+    feedback.hide();
+
+});

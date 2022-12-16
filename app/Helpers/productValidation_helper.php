@@ -50,7 +50,24 @@ function createProductValidation()
 				'required' => 'El precio es requerido',
 				'max_length' => 'El precio no debe contener más de 15 carácteres'
 			]
-		]
+		],
+		'maxStock' => [
+			'label' => 'price',
+			'rules' => 'required|regex_match[/^[0-9]{0,5}$/u]|',
+			'errors' => [
+				'required' => 'El stock máximo es requerido',
+				'regex_match' => 'El stock máximo no debe contener más de 5 carácteres'
+			]
+		],
+		'minStock' => [
+			'label' => 'price',
+			'rules' => 'required|regex_match[/^[0-9]{0,5}$/u]|',
+			'errors' => [
+				'required' => 'El stock mínimo es requerido',
+				'regex_match' => 'El stock mínimo no debe contener más de 5 carácteres'
+			]
+		]	
+			
 	];
 
 	return $product;
@@ -114,7 +131,23 @@ function updateProductValidation()
 				'required' => 'El precio es requerido',
 				'max_length' => 'El precio no debe contener más de 15 carácteres'
 			]
-		]
+		],
+		'maxStock' => [
+			'label' => 'price',
+			'rules' => 'required|regex_match[/^[0-9]{0,5}$/u]|',
+			'errors' => [
+				'required' => 'El stock máximo es requerido',
+				'regex_match' => 'El stock máximo no debe contener más de 5 carácteres'
+			]
+		],
+		'minStock' => [
+			'label' => 'price',
+			'rules' => 'required|regex_match[/^[0-9]{0,5}$/u]|',
+			'errors' => [
+				'required' => 'El stock mínimo es requerido',
+				'regex_match' => 'El stock mínimo no debe contener más de 5 carácteres'
+			]
+		]	
 	];
 
 	return $updateProduct;

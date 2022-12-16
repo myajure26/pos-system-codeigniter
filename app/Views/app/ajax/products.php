@@ -1,4 +1,4 @@
-<script>
+ <script>
     document.title = "<?= $title ?>";
 </script>
 <div class="page-content">
@@ -192,6 +192,18 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label">Stock máximo</label>
+                                <input type="number" class="form-control stock" placeholder="Introduce el stock máximo del producto" name="maxStock" required>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="col-md-6">
+                            <label class="form-label">Stock mínimo</label>
+                                <input type="number" class="form-control stock" placeholder="Introduce el stock mínimo del producto" name="minStock" required>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -295,6 +307,18 @@
                         </div>
                     </div>
                     <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label">Stock máximo</label>
+                                <input type="number" class="form-control stock" name="maxStock" id="viewMaxStock" placeholder="Introduce el stock máximo del producto" disabled required>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="col-md-6">
+                            <label class="form-label">Stock mínimo</label>
+                                <input type="number" class="form-control stock" name="minStock" id="viewMinStock" placeholder="Introduce el stock mínimo del producto" disabled required>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Fecha de creación</label>
@@ -336,6 +360,8 @@
         $('#viewCoin').val(data[0].moneda);
         $('#viewPrice').val(data[0].precio);
         $('#viewTax').val(data[0].impuesto);
+        $('#viewMaxStock').val(data[0].stock_maximo);
+        $('#viewMinStock').val(data[0].stock_minimo);
         $('#viewCreated').val(data[0].creado_en);
         $('#viewUpdated').val(data[0].actualizado_en);
     }

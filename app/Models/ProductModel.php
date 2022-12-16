@@ -12,7 +12,7 @@ class ProductModel extends Model
 	protected $returnType           = 'array';
 	protected $useSoftDeletes       = true;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["codigo", "nombre", "id_ancho_caucho", "id_alto_caucho", "marca", "categoria", "precio", "impuesto", "estado", "actualizado_en", "creado_en"];
+	protected $allowedFields        = ["codigo", "nombre", "id_ancho_caucho", "id_alto_caucho", "marca", "categoria", "precio", "stock_maximo", "stock_minimo", "estado", "actualizado_en", "creado_en"];
 
 	// Dates
 	protected $useTimestamps        = true;
@@ -22,11 +22,36 @@ class ProductModel extends Model
 
 	public function createProduct($data)
 	{
+		$query = $this
+				->select()
+				->where('nombre', $data['nombre'])
+				->where('id_ancho_caucho', $data['id_ancho_caucho'])
+				->where('id_alto_caucho', $data['id_alto_caucho'])
+				->where('marca', $data['marca'])
+				->where('categoria', $data['categoria'])
+				->get()->getResult();
+
+		if( $query ){
+			return false;
+		}
+
 		if($this->save($data)){
 			return true;
 		}
 		
 		return false;
+	}
+
+	public function verifyProduct($product)
+	{
+		$db = \Config\Database::connect();
+		$db = $db
+			->table('producto_proveedor')
+			->select()
+			->where('ci_rif_proveedor', $provider)
+			->where('cod_producto', $product)
+			->get()->getResult();
+		return $db;
 	}
 
 	public function getProducts()
