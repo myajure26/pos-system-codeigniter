@@ -561,79 +561,7 @@ $(document).ready(function() {
         return false;
     });
 
-    // Seleccionar el producto para asignar
-    $(document).on('click', '.btn-select-product-to-assign', function(){
-        const code = $(this).closest('tr').find('td:eq(1)').text();
-        const name = $(this).closest('tr').find('td:eq(2)').text();
-        const category = $(this).closest('tr').find('td:eq(3)').text();
-        const brand = $(this).closest('tr').find('td:eq(4)').text();
-
-        const provider = $("#provider").val();
-        const data = new FormData();
-        data.append('provider', provider);
-        data.append('product', code);
-
-        $.ajax({
-            url: url + '/products/setProviderAssignInfo',
-            method: "POST",
-            data: data,
-            cache: false,
-            contentType: false,
-            processData: false,
-            beforeSend: function() {
-                Swal.fire({
-                    icon: 'info',
-                    title: '<strong>Procesando...</strong>',
-                    text: 'Por favor, espera unos segundos',
-                    showConfirmButton: false,
-                    didOpen: function() {
-                        Swal.showLoading();
-                    }
-                });
-            },
-            success: function (data) {
-
-                if($('#'+code).length > 0){
-                    Swal.fire({
-                        icon: 'info',
-                        title: 'Alerta',
-                        text: 'Ya el producto se encuentra asignado',
-                    });
-                    return false;
-                }
-
-                $('#list').append(`
-                    <tr id="${code}">
-                        <td>${code}</td>
-                        <td>${name}</td>
-                        <td>${category}</td>
-                        <td>${brand}</td>
-                        <td>
-                            <div class="btn-list"> 
-                                <button type="button" class="removeAssignProduct btn btn-sm btn-danger waves-effect d-block mx-auto" data-id="${code}">
-                                    <i class="far fa-trash-alt"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                `);
-
-                Swal.close();
-            },
-            error: function () {
-
-                Swal.fire({
-                title: 'Error',
-                text: 'El producto ya se encuentra registrado',
-                icon: 'error'
-                });
-
-            }
-        });
-
-        
-    });
-
+    // * Seleccionar proveedor para asignar
     $(document).on('click', '.btn-select-provider-to-assign', function(){
         $('#providerInput').val($(this).closest('tr').find('td:eq(2)').text());
         $('#provider, #viewProvider').val($(this).closest('tr').find('td:eq(1)').text());
@@ -698,6 +626,79 @@ $(document).ready(function() {
 
 
         $('#searchProviderModal').modal('hide');
+    });
+
+    // * Seleccionar el producto para asignar
+    $(document).on('click', '.btn-select-product-to-assign', function(){
+        const code = $(this).closest('tr').find('td:eq(1)').text();
+        const name = $(this).closest('tr').find('td:eq(2)').text();
+        const category = $(this).closest('tr').find('td:eq(3)').text();
+        const brand = $(this).closest('tr').find('td:eq(4)').text();
+
+        const provider = $("#provider").val();
+        const data = new FormData();
+        data.append('provider', provider);
+        data.append('product', code);
+
+        $.ajax({
+            url: url + '/products/setProviderAssignInfo',
+            method: "POST",
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function() {
+                Swal.fire({
+                    icon: 'info',
+                    title: '<strong>Procesando...</strong>',
+                    text: 'Por favor, espera unos segundos',
+                    showConfirmButton: false,
+                    didOpen: function() {
+                        Swal.showLoading();
+                    }
+                });
+            },
+            success: function (data) {
+
+                if($('#'+code).length > 0){
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Alerta',
+                        text: 'Ya el producto se encuentra asignado',
+                    });
+                    return false;
+                }
+
+                $('#list').append(`
+                    <tr id="${code}">
+                        <td>${code}</td>
+                        <td>${name}</td>
+                        <td>${category}</td>
+                        <td>${brand}</td>
+                        <td>
+                            <div class="btn-list"> 
+                                <button type="button" class="removeAssignProduct btn btn-sm btn-danger waves-effect d-block mx-auto" data-id="${code}">
+                                    <i class="far fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `);
+
+                Swal.close();
+            },
+            error: function () {
+
+                Swal.fire({
+                title: 'Error',
+                text: 'Ha ocurrido un error inesperado',
+                icon: 'error'
+                });
+
+            }
+        });
+
+        
     });
 
     //Eliminar producto de la lista
