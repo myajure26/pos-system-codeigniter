@@ -195,6 +195,12 @@
                             <?php if($privilege == 1 || $privilege == 3):?>
                             <li class="menu-title" data-key="t-menu">Administrar compras</li>
                             <li>
+                                <a href="<?=base_url('#newOrder')?>">
+                                    <i data-feather="file-text"></i>
+                                    <span data-key="t-newOrder">Nuevo pedido</span>
+                                </a>
+                            </li>
+                            <li>
                                 <a href="<?=base_url('#newPurchase')?>">
                                     <i data-feather="plus"></i>
                                     <span data-key="t-newPurchase">Nueva compra</span>
@@ -209,6 +215,11 @@
                                     <li>
                                         <a href="<?=base_url('#purchases')?>">
                                             <span data-key="t-purchases">Compras generales</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?=base_url('#orders')?>">
+                                            <span data-key="t-purchases">Pedidos generales</span>
                                         </a>
                                     </li>
                                     <li>

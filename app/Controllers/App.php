@@ -191,6 +191,68 @@ class App extends BaseController
 		}
 	}
 
+	public function newOrder()
+	{
+		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 3){
+
+			$db      	= \Config\Database::connect();
+			$coins 		= $db
+							->table('monedas')
+							->select('identificacion, moneda, simbolo')
+							->where('estado', 1)
+							->get()
+							->getResult();
+			$receipt 	= $db
+							->table('tipo_documento')
+							->select('identificacion, nombre')
+							->where('estado', 1)
+							->get()
+							->getResult();
+
+			$data = [
+				"title" 	=> "Registrar nuevo pedido - $this->system",
+				"coins"		=> $coins,
+				"receipt"	=> $receipt
+			];
+			return view('app/ajax/newOrder', $data);
+		
+		}else{
+
+			return "<script>window.location.href='".base_url()."'</script>";
+		
+		}
+	}
+
+	public function orders()
+	{
+		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 3){
+
+			$db      	= \Config\Database::connect();
+			$coins 		= $db
+							->table('monedas')
+							->select('identificacion, moneda, simbolo')
+							->get()
+							->getResult();
+			$receipt 	= $db
+							->table('tipo_documento')
+							->select('identificacion, nombre')
+							->get()
+							->getResult();
+			
+			$data = [
+				"title" => "Pedidos - $this->system",
+				"receipt" 	=> $receipt,
+				"coins"		=> $coins
+			];
+			return view('app/reports/orders', $data);
+		
+		}else{
+
+			return "<script>window.location.href='".base_url()."'</script>";
+		
+		}
+	}
+
 	public function newPurchase()
 	{
 		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 3){

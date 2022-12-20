@@ -240,6 +240,8 @@ $(document).ready(function() {
                 return viewSale(data);
             case 'purchases':
                 return viewPurchase(data);
+            case 'orders':
+                    return viewOrder(data);
             case 'coinPrices':
                return viewCoinPrices(data);
         }
@@ -749,5 +751,149 @@ $(document).ready(function() {
         });
 
     });
+
+    // * PEDIDOS
+
+    //Eliminar producto de la lista de pedidos
+    $(document).on('click', '.removeProductOrder', function(){
+        
+        const tr = $(this).closest('tr');
+        const order = $(this).attr('data-id');
+        const product = $(this).attr('product');
+
+        if( $('#list tr').length == 1 ){
+            Swal.fire({
+                title: 'Alerta',
+                text: 'El pedido no puede quedar sin productos',
+                icon: 'warning'
+            });
+            return false;
+        }
+
+        const data = new FormData();
+        
+        data.append('product', product);
+        data.append('order', order);
+
+        Swal.fire({
+           
+            title: '¿Está seguro de eliminar el producto con código #'+product+'?',
+            text: 'Si no está seguro, puede cancelar la operación',
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonColor: '#D33',
+            confirmButtonText: 'Sí',
+            cancelButtonText: 'Cancelar'
+ 
+         }).then((result) => {
+             if(result.value){
+
+                $.ajax({
+                    url: url + '/orders/deleteProductOrder',
+                    method: "POST",
+                    data: data,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function() {
+                        Swal.fire({
+                            icon: 'info',
+                            title: '<strong>Procesando...</strong>',
+                            text: 'Por favor, espera unos segundos',
+                            showConfirmButton: false,
+                            didOpen: function() {
+                                Swal.showLoading();
+                            }
+                        });
+                    },
+                    success: function (data) {
+                        
+                        tr.remove();
+                        Swal.close();
+
+                    },
+                    error: function () {
+
+                        Swal.fire({
+                        title: 'Alerta',
+                        text: 'Ha ocurrido un error al eliminar el producto',
+                        icon: 'error'
+                        });
+
+                    }
+                });
+            }
+        });
+
+    });
+
+    //Aceptar pedido
+    $(document).on('click', '.acceptOrder', function(){
+
+        const order = $(this).attr('data-id');
+        const response = $('.response');
+
+        const data = new FormData();
+        data.append('order', order);
+
+        Swal.fire({
+           
+            title: '¿Está seguro de aceptar el pedido con identificación #'+order+'?',
+            text: 'Si no está seguro, puede cancelar la operación',
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonColor: '#D33',
+            confirmButtonText: 'Sí',
+            cancelButtonText: 'Cancelar'
+ 
+         }).then((result) => {
+             if(result.value){
+
+                $.ajax({
+                    url: url + '/orders/acceptOrder',
+                    method: "POST",
+                    data: data,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function() {
+                        Swal.fire({
+                            icon: 'info',
+                            title: '<strong>Procesando...</strong>',
+                            text: 'Por favor, espera unos segundos',
+                            showConfirmButton: false,
+                            didOpen: function() {
+                                Swal.showLoading();
+                            }
+                        });
+                    },
+                    success: function (data) {
+                        
+                        if(data == 'empty'){
+                            Swal.fire({
+                                title: 'Alerta',
+                                text: 'El pedido está vacio',
+                                icon: 'error'
+                            });
+                            return false;
+                        }
+
+                        response.html(data);
+
+                    },
+                    error: function (error) {
+
+                        Swal.fire({
+                            title: 'Alerta',
+                            text: 'Ha ocurrido un error al aceptar el pedido',
+                            icon: 'error'
+                        });
+
+                    }
+                });
+            }
+        });
+    });
+
 
 });

@@ -46,6 +46,18 @@ $routes->group('sales', static function ($routes) {
     $routes->post('delete', 'SaleController::deleteSale');
 });
 
+// ? ORDERS MODULE
+$routes->group('orders', static function ($routes) {
+    $routes->post('create', 'OrderController::createOrder');
+    $routes->get('get', 'OrderController::getOrders');
+    $routes->get('getById/(:num)', 'OrderController::getOrderById/$1');
+    $routes->get('getProviders', 'OrderController::getProviders');
+    $routes->get('getProducts', 'OrderController::getProducts');
+    $routes->post('acceptOrder', 'OrderController::acceptOrder');
+    $routes->post('update', 'OrderController::updateOrder');
+    $routes->post('delete', 'OrderController::deleteOrder');
+    $routes->post('deleteProductOrder', 'OrderController::deleteProductOrder');
+});
 
 // ? PURCHASES MODULE
 $routes->group('purchases', static function ($routes) {
@@ -236,6 +248,7 @@ $routes->get('reports/best_customers', 'ReportController::getBestCustomersReport
 // ? INVOICES
 $routes->group('invoice', static function ($routes) {
     $routes->get('sale/(:num).pdf', 'InvoiceController::saleInvoice/$1');
+    $routes->get('order/(:num).pdf', 'InvoiceController::orderInvoice/$1');
 });
 
 /*

@@ -9,13 +9,13 @@
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center
                     justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">Nueva compra</h4>
+                    <h4 class="mb-sm-0 font-size-18">Nuevo pedido</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript:
                                     void(0);">Administrar compras</a></li>
-                            <li class="breadcrumb-item active">Nueva compra</li>
+                            <li class="breadcrumb-item active">Nuevo pedido</li>
                         </ol>
                     </div>
 
@@ -28,23 +28,17 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Registrar nueva compra</h4>
-                        <p class="card-title-desc">En este módulo solamente podrás registrar nuevas compras</p>
+                        <h4 class="card-title">Registrar nuevo pedido</h4>
+                        <p class="card-title-desc">En este módulo solamente podrás registrar nuevos pedidos</p>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div>
-                                    <form class="custom-form" action="<?=base_url('purchases/create')?>" method="POST">
+                                    <form class="custom-form" action="<?=base_url('orders/create')?>" method="POST">
                                         <div class="response"></div>
                                         <div class="row">                       
-                                            <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <label class="form-label" for="date">Fecha de la compra</label>
-                                                    <input type="date" class="form-control" id="date" name="date" max="<?= date('Y-m-d')?>" required> 
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="mb-3">
                                                     <label class="form-label" for="provider">Proveedor</label>
                                                     <div class="input-group">
@@ -69,15 +63,6 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <label class="form-label" for="reference">Número de referencia</label>
-                                                    <input type="number" class="form-control ref" id="reference" placeholder="Ingresa el número de referencia" name="reference" required>
-                                                    <div class="invalid-feedback"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label" for="coin">Moneda</label>
@@ -187,6 +172,8 @@
                                     <th>Nombre</th>
                                     <th>Categoría</th>
                                     <th>Marca</th>
+                                    <th>Stock</th>
+                                    <th>Stock máximo</th>
                                 </tr>
                             </tr>
                         </thead>
@@ -201,7 +188,7 @@
 </div><!-- /.modal -->
 
 <script>
-    tableConfig('/purchases/getProviders', '.getProviders');
+    tableConfig('/orders/getProviders', '.getProviders');
 
     $(".price").priceFormat({
         prefix: ''

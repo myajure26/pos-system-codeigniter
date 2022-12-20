@@ -15,6 +15,11 @@ $(document).ready(function(){
             window.open(url + '/invoice/sale/' + id + '.pdf', '_blank');
         }
 
+        if(type === 'orders'){
+            
+            window.open(url + '/invoice/order/' + id + '.pdf', '_blank');
+        }
+
     });
 
     // Seleccionar al proveedor
@@ -28,6 +33,9 @@ $(document).ready(function(){
     $(document).on('click', '.btn-select-product', function(){
         const code = $(this).closest('tr').find('td:eq(1)').text();
         const name = $(this).closest('tr').find('td:eq(2)').text();
+        const stock = Number($(this).closest('tr').find('td:eq(5)').text());
+        const maxStock = Number($(this).closest('tr').find('td:eq(6)').text());
+        const max = maxStock - stock;
 
         if($('#'+code).length > 0){
             Swal.fire({
@@ -44,7 +52,7 @@ $(document).ready(function(){
             <tr id="${code}">
                 <td><input type="hidden" name="productCode[]" value="${code}">${code}</td>
                 <td>${name}</td>
-                <td><input type="number" class="form-control form-control-sm productQuantity" name="productQuantity[]" value="1" min="1" required></td>
+                <td><input type="number" class="form-control form-control-sm productQuantity" max=${max} name="productQuantity[]" value="1" min="1" required></td>
                 <td><input type="text" class="form-control form-control-sm price productPrice" name="productPrice[]" value="0.00" required maxlength="10"></td>
                 <td class="text-center"><input type="text" class="form-control form-control-sm price totalPriceProduct" value="${totalProduct}" readonly required></td>
                 <td>
@@ -70,11 +78,19 @@ $(document).ready(function(){
     
     //Calcular al ingresar la cantidad o el precio del producto tanto en venta como en compra
     $(document).on('input', '.productPrice, .productQuantity', function(e){
-    
-
 
         let quantity = $(this).closest('tr').find('.productQuantity').val();
         let price = $(this).closest('tr').find('.productPrice').val();
+        const max = $(this).closest('tr').find('.productQuantity').attr('max');
+
+        // TODO:: HACER LA VALIDACIÓN DE STOCK MÁXIMO POR LOS PEDIDOS QUE YA HAY PENDIENTES
+        if( quantity > max ){
+            Swal.fire({
+                title: 'warning',
+                text: `La cantidad supera el stock máximo (${max})`,
+                icon: 'error'
+            });
+        }
         
         //Quitar las comas y puntos
         price = price.replace(/,/g, "");

@@ -62,4 +62,48 @@ class InvoiceController extends BaseController
         $dompdf->stream();
 
     }
+
+    public function orderInvoice($id)
+    {
+
+        if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+        $db     = \Config\Database::connect();
+		$order = $db
+                ->table('pedido')
+				->select('pedido.id_pedido, id_detalle_pedido, ci_rif_proveedor, proveedores.nombre as proveedor_nombre, proveedores.direccion, id_tipo_documento, monedas.moneda, monedas.simbolo, pedido.actualizado_en, pedido.creado_en, detalle_pedido.cod_producto, ancho_caucho.ancho_numero, alto_caucho.alto_numero, categorias.categoria, marcas.marca, detalle_pedido.cant_producto, detalle_pedido.precio_producto, productos.nombre, usuarios.nombre as usuario, pedido.estado_pedido')
+				->join('detalle_pedido', 'detalle_pedido.id_pedido = pedido.id_pedido')
+				->join('productos', 'productos.codigo = detalle_pedido.cod_producto')
+				->join('ancho_caucho', 'ancho_caucho.id_ancho_caucho = productos.id_ancho_caucho')
+				->join('alto_caucho', 'alto_caucho.id_alto_caucho = productos.id_alto_caucho')
+				->join('marcas', 'marcas.identificacion = productos.marca')
+				->join('categorias', 'categorias.identificacion = productos.categoria')
+				->join('monedas', 'monedas.identificacion = pedido.id_moneda')
+				->join('proveedores', 'proveedores.identificacion = pedido.ci_rif_proveedor')
+				->join('usuarios', 'usuarios.identificacion = pedido.ci_usuario')
+                ->where('pedido.id_pedido', $id)
+		        ->get()->getResult();
+
+        $data = [
+            "id"    => $id,
+            "order" => $order,
+            "businessName" 			=> $this->businessName,
+            "businessIdentification"=> $this->businessIdentification,
+            "businessAddress" 		=> $this->businessAddress,
+            "businessPhone" 		=> $this->businessPhone
+        ];
+
+        $options = new Options();
+        $options->set('isRemoteEnabled', true);
+
+        $dompdf = new Dompdf($options);
+        $html = view('app/invoices/orderInvoice', $data);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('letter');
+        $dompdf->render();
+        $dompdf->stream();
+
+    }
 }

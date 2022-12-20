@@ -40,6 +40,7 @@ function tableConfig(ajaxUrl, selector){
                 d.categoryFilter = $('#categoryFilter').val();
                 d.brandFilter = $('#brandFilter').val();
                 d.searchById = $('#searchById').val();
+                d.provider = $('#provider').val();
             }
         },
         search: 1000,
@@ -83,6 +84,20 @@ function tableConfig(ajaxUrl, selector){
         if(!$.fn.dataTable.isDataTable( '.datatable' )){
             
             tableConfig('/purchases_per_provider', '.datatable');
+        }
+        $(`${selector}`).DataTable().ajax.reload();
+    });
+
+    $(document).on('click', '.btn-select-provider-assign-order', function(){
+        if(!$.fn.dataTable.isDataTable( '.getProducts' )){
+            tableConfig('/orders/getProducts', '.getProducts');
+        }
+        $(`${selector}`).DataTable().ajax.reload();
+    });
+
+    $(document).on('click', '.btn-select-provider-assign-purchase', function(){
+        if(!$.fn.dataTable.isDataTable( '.getProducts' )){
+            tableConfig('/purchases/getProducts', '.getProducts');
         }
         $(`${selector}`).DataTable().ajax.reload();
     });

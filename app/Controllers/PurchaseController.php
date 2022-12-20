@@ -128,7 +128,7 @@ class PurchaseController extends BaseController
 		return DataTable::of($providers)
 			->add('Seleccionar', function($row){
 				return '<div class="btn-list"> 
-							<button type="button" class="btn-select-provider btn btn-sm btn-primary waves-effect" data-id="'.$row->identificacion.'" data-type="providers">
+							<button type="button" class="btn-select-provider btn-select-provider-assign-purchase btn btn-sm btn-primary waves-effect" data-id="'.$row->identificacion.'" data-type="providers">
                                 <i class="fas fa-check"></i>
                             </button>
                         </div>';
@@ -142,15 +142,17 @@ class PurchaseController extends BaseController
 			return redirect()->to(base_url());
 		}
 
-		$db      	= \Config\Database::connect();
-		$products 	= $db
-						->table('productos')
-						->select('productos.codigo, nombre, ancho_caucho.ancho_numero, alto_caucho.alto_numero, marcas.marca, categorias.categoria')
-						->join('ancho_caucho', 'ancho_caucho.id_ancho_caucho = productos.id_ancho_caucho')
-						->join('alto_caucho', 'alto_caucho.id_alto_caucho = productos.id_alto_caucho')
-						->join('marcas', 'marcas.identificacion = productos.marca')
-						->join('categorias', 'categorias.identificacion = productos.categoria')
-						->where('productos.estado', 1);
+		$db = \Config\Database::connect();
+		$products = $db
+			->table('producto_proveedor')
+			->select('productos.codigo, productos.nombre, ancho_caucho.ancho_numero, alto_caucho.alto_numero, categorias.categoria, marcas.marca')
+			->join('proveedores', 'proveedores.identificacion = producto_proveedor.ci_rif_proveedor')
+			->join('productos', 'productos.codigo = producto_proveedor.cod_producto')
+			->join('ancho_caucho', 'ancho_caucho.id_ancho_caucho = productos.id_ancho_caucho')
+			->join('alto_caucho', 'alto_caucho.id_alto_caucho = productos.id_alto_caucho')
+			->join('marcas', 'marcas.identificacion = productos.marca')
+			->join('categorias', 'categorias.identificacion = productos.categoria')
+			->where('productos.estado', 1);
 				
 		return DataTable::of($products)
 			->hide('ancho_numero')
@@ -164,7 +166,14 @@ class PurchaseController extends BaseController
                                 <i class="fas fa-check"></i>
                             </button>
                         </div>';
-			}, 'first') 
+			}, 'first')
+			->filter(function ($builder, $request) {
+
+				if($request->provider != ''){
+					$builder->where('producto_proveedor.ci_rif_proveedor', $request->provider);
+				}
+		
+			})
 			->toJson();
 	}
 

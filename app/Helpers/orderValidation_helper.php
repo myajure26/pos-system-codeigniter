@@ -1,8 +1,8 @@
 <?php 
 
-function createPurchaseValidation()
+function createOrderValidation()
 {
-	$purchase = [
+	$order = [
 		'provider' => [
 			'label' => 'provider',
 			'rules' => 'required|alpha_numeric_punct|is_not_unique[proveedores.identificacion]',
@@ -57,27 +57,18 @@ function createPurchaseValidation()
 		
 	];
 
-	return $purchase;
+	return $order;
 }
 
-function updatePurchaseValidation()
+function updateOrderValidation()
 {
-	$updatePurchase = [
+	$updateOrder = [
 		'identification' => [
 			'label' => 'identification',
-			'rules' => 'required|is_not_unique[compras.identificacion]',
+			'rules' => 'required|is_not_unique[pedido.id_pedido]',
 			'errors' => [
-				'required' => 'La identificación de la compra es requerida',
-				'is_not_unique' => 'La identificación de la compra no existe'
-			]
-		],
-		'provider' => [
-			'label' => 'provider',
-			'rules' => 'required|alpha_numeric_punct|is_not_unique[proveedores.codigo]',
-			'errors' => [
-				'required' => 'El proveedor es requerido',
-				'alpha_numeric_punct' => 'Ingresa un proveedor válido',
-				'is_not_unique' => 'El proveedor no existe'
+				'required' => 'La identificación del pedido es requerida',
+				'is_not_unique' => 'La identificación del pedido no existe'
 			]
 		],
 		'receipt' => [
@@ -95,6 +86,14 @@ function updatePurchaseValidation()
 				'required' => 'La moneda es requerida',
 				'numeric' => 'Ingresa una moneda válida',
 				'is_not_unique' => 'La moneda no existe'
+			]
+		],
+		'orderId.*' => [
+			'label' => 'orderId',
+			'rules' => 'required|is_not_unique[detalle_pedido.id_detalle_pedido]',
+			'errors' => [
+				'required' => 'La identificación del detalle de pedido es requerida',
+				'is_not_unique' => 'El detalle de pedido {value} no existe'
 			]
 		],
 		'productCode.*' => [
@@ -125,5 +124,5 @@ function updatePurchaseValidation()
 		
 	];
 
-	return $updatePurchase;
+	return $updateOrder;
 }
