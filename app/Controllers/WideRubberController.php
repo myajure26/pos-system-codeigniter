@@ -142,6 +142,9 @@ class WideRubberController extends BaseController
 			return false;
 		}
 
+		$wide[0]['creado_en'] = date('d-m-Y H:i:s', strtotime($wide[0]['creado_en']));
+		$wide[0]['actualizado_en'] = date('d-m-Y H:i:s', strtotime($wide[0]['actualizado_en']));
+
 		return json_encode($wide);
 	}
 

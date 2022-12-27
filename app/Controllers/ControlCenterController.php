@@ -106,6 +106,9 @@ class ControlCenterController extends BaseController
 
 				return '<div class="mt-sm-1 d-block"><a href="javascript:void(0)" class="badge bg-soft-success text-success p-2 px-3">Activado</a></div>';
 			})
+			->edit('creado_en', function($row){
+				return date('d-m-Y H:i:s', strtotime($row->creado_en));
+			})
 			->add('Acciones', function($row){
 				if($row->estado == 1){
 					return '<div class="btn-list"> 
@@ -161,6 +164,9 @@ class ControlCenterController extends BaseController
 			return false;
 		}
 
+		$coinPrices[0]['creado_en'] = date('d-m-Y H:i:s', strtotime($coinPrices[0]['creado_en']));
+		$coinPrices[0]['actualizado_en'] = date('d-m-Y H:i:s', strtotime($coinPrices[0]['actualizado_en']));
+
 		return json_encode($coinPrices);
 	}
 
@@ -189,8 +195,8 @@ class ControlCenterController extends BaseController
 				
 		// ? Comprobar las fechas, ya que si es diferente a la actual no se pueden actualizar
 		$date = $this->request->getPost('date');
-		$date = date('Y-m-d', strtotime($date));
-		$today = date('Y-m-d');
+		$date = date('d-m-Y', strtotime($date));
+		$today = date('d-m-Y');
 
 		if($date != $today) {
 			$this->errorMessage['text'] = "Ya el precio no se puede actualizar, prueba creando uno nuevo";

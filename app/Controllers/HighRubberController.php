@@ -142,6 +142,9 @@ class HighRubberController extends BaseController
 			return false;
 		}
 
+		$high[0]['creado_en'] = date('d-m-Y H:i:s', strtotime($high[0]['creado_en']));
+		$high[0]['actualizado_en'] = date('d-m-Y H:i:s', strtotime($high[0]['actualizado_en']));
+
 		return json_encode($high);
 	}
 

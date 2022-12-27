@@ -142,6 +142,9 @@ class BrandController extends BaseController
 			return false;
 		}
 
+		$brand[0]['creado_en'] = date('d-m-Y H:i:s', strtotime($brand[0]['creado_en']));
+		$brand[0]['actualizado_en'] = date('d-m-Y H:i:s', strtotime($brand[0]['actualizado_en']));
+
 		return json_encode($brand);
 	}
 

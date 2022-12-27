@@ -222,7 +222,7 @@ class OrderController extends BaseController
 				return '<div class="mt-sm-1 d-block"><a href="javascript:void(0)" class="badge bg-soft-success text-success p-2 px-3">Procesado</a></div>';
 			})
 			->edit('fecha', function($row){
-				return date('m-d-Y H:i:s', strtotime($row->fecha));
+				return date('m-d-Y', strtotime($row->fecha));
 			})
 			->add('total', function($row){
 				$db      	= \Config\Database::connect();

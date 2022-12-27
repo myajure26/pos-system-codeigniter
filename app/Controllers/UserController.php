@@ -64,7 +64,7 @@ class UserController extends BaseController
 			"privilege" 			=> $user[0]["privilegio"],
 			"photo" 				=> $user[0]["foto"]
 		];
-		$date = date("Y-m-d H:i:s");
+		$date = date("d-m-Y H:i:s");
 		$UserModel->updateUser(["ultima_sesion" => $date], $identification);
 
 
@@ -230,6 +230,11 @@ class UserController extends BaseController
 		if(!$user){
 			return false;
 		}
+
+		$user[0]['creado_en'] = date('d-m-Y H:i:s', strtotime($user[0]['creado_en']));
+		$user[0]['actualizado_en'] = date('d-m-Y H:i:s', strtotime($user[0]['actualizado_en']));
+		$user[0]['ultima_sesion'] = date('d-m-Y H:i:s', strtotime($user[0]['ultima_sesion']));
+
 		return json_encode($user);
 	}
 

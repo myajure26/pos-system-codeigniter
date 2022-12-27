@@ -154,6 +154,9 @@ class CustomerController extends BaseController
 			return false;
 		}
 
+		$customer[0]['creado_en'] = date('d-m-Y H:i:s', strtotime($customer[0]['creado_en']));
+		$customer[0]['actualizado_en'] = date('d-m-Y H:i:s', strtotime($customer[0]['actualizado_en']));
+
 		return json_encode($customer);
 	}
 

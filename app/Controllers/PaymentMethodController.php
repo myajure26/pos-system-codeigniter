@@ -130,6 +130,9 @@ class PaymentMethodController extends BaseController
 			return false;
 		}
 
+		$paymentMethod[0]['creado_en'] = date('d-m-Y H:i:s', strtotime($paymentMethod[0]['creado_en']));
+		$paymentMethod[0]['actualizado_en'] = date('d-m-Y H:i:s', strtotime($paymentMethod[0]['actualizado_en']));
+
 		return json_encode($paymentMethod);
 	}
 

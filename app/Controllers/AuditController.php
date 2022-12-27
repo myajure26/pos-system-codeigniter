@@ -34,6 +34,9 @@ class AuditController extends BaseController
 		$AuditModel = new AuditModel();
 				
 		return DataTable::of($AuditModel->getAudits())
+			->edit('creado_en', function($row){
+				return date('d-m-Y H:i:s', strtotime($row->creado_en));
+			})
 			->filter(function ($builder, $request) {
 					
 				if($request->range != ''){

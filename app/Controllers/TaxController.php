@@ -132,6 +132,9 @@ class TaxController extends BaseController
 			return false;
 		}
 
+		$tax[0]['creado_en'] = date('d-m-Y H:i:s', strtotime($tax[0]['creado_en']));
+		$tax[0]['actualizado_en'] = date('d-m-Y H:i:s', strtotime($tax[0]['actualizado_en']));
+
 		return json_encode($tax);
 	}
 

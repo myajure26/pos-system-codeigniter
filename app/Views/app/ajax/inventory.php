@@ -4,10 +4,6 @@
 <div class="page-content">
     <div class="container-fluid">
 
-        <button class="float-btn waves-effect" data-bs-toggle="modal" data-bs-target="#createModal" >
-          <span>+</span>
-        </button>
-
         <!-- start page title -->
         <div class="row">
             <div class="col-12">

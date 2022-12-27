@@ -180,6 +180,9 @@ class SaleController extends BaseController
 			->hide('simbolo')
 			->hide('impuesto')
 			->hide('tasa')
+			->edit('fecha', function($row){
+				return date('d-m-Y', strtotime($row->fecha));
+			})
 			->edit('estado', function($row){
 						
 				if($row->estado == 0){
@@ -263,6 +266,9 @@ class SaleController extends BaseController
 		if(!$sale){
 			return false;
 		}
+
+		$sale[0]['creado_en'] = date('d-m-Y H:i:s', strtotime($sale[0]['creado_en']));
+		$sale[0]['actualizado_en'] = date('d-m-Y H:i:s', strtotime($sale[0]['actualizado_en']));
 
 		return json_encode($sale);
 	}

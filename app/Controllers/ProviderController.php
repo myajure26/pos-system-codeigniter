@@ -147,6 +147,9 @@ class ProviderController extends BaseController
 			return false;
 		}
 
+		$provider[0]['creado_en'] = date('d-m-Y H:i:s', strtotime($provider[0]['creado_en']));
+		$provider[0]['actualizado_en'] = date('d-m-Y H:i:s', strtotime($provider[0]['actualizado_en']));
+
 		return json_encode($provider);
 	}
 

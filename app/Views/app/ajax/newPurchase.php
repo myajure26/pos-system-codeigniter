@@ -41,7 +41,7 @@
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label" for="date">Fecha de la compra</label>
-                                                    <input type="date" class="form-control" id="date" name="date" max="<?= date('Y-m-d')?>" required> 
+                                                    <input type="date" class="form-control" id="date" name="date" max="<?= date('d-m-Y')?>" required> 
                                                 </div>
                                             </div>
                                             <div class="col-md-6">

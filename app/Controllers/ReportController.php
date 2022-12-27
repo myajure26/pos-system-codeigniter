@@ -219,7 +219,7 @@ class ReportController extends BaseController
 			->hide('direcCliente')
 			->hide('idCliente')
 			->edit('fecha', function($row){
-				return date('Y-m-d', strtotime($row->fecha));
+				return date('d-m-Y', strtotime($row->fecha));
 			})
 			->add('productos', function($row){
 				$products = '';
@@ -340,7 +340,7 @@ class ReportController extends BaseController
 			->hide('categoria')
 			->hide('marca')
 			->edit('fecha', function($row){
-				return date('Y-m-d', strtotime($row->fecha));
+				return date('d-m-Y', strtotime($row->fecha));
 			})
 			->edit('precio', function($row){
 				return number_format($row->precio, 2);
@@ -1560,7 +1560,7 @@ class ReportController extends BaseController
 
 			echo utf8_decode("<tr>
 						<td style='border:1px solid #eee;'>".$item->identificacion."</td>
-						<td style='border:1px solid #eee;'>".date('Y-m-d', strtotime($item->fecha))."</td>
+						<td style='border:1px solid #eee;'>".date('d-m-Y', strtotime($item->fecha))."</td>
 						<td style='border:1px solid #eee;'>".$item->usuario."</td>
 						<td style='border:1px solid #eee;'>".$item->metodo_pago."</td>
 						<td style='border:1px solid #eee;'>".$item->impuesto."</td>
@@ -1839,7 +1839,7 @@ class ReportController extends BaseController
 
 			echo utf8_decode("<tr>
 						<td style='border:1px solid #eee;'>".$item->identificacion."</td>
-						<td style='border:1px solid #eee;'>".date('Y-m-d', strtotime($item->fecha))."</td> 
+						<td style='border:1px solid #eee;'>".date('d-m-Y', strtotime($item->fecha))."</td> 
 						<td style='border:1px solid #eee;'>".$item->cantidad."</td>
 						<td style='border:1px solid #eee;'>".number_format($item->precio, 2)."</td>
 						<td style='border:1px solid #eee;'>".number_format($item->total, 2)."</td>
@@ -2128,12 +2128,12 @@ class ReportController extends BaseController
 		}
 
 
-		// header("Pragma: public");
-		// header("Expires: 0");
-		// header("Content-type: application/x-msdownload");
-		// header("Content-Disposition: attachment; filename=$name");
-		// header("Pragma: no-cache");
-		// header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+		header("Pragma: public");
+		header("Expires: 0");
+		header("Content-type: application/x-msdownload");
+		header("Content-Disposition: attachment; filename=$name");
+		header("Pragma: no-cache");
+		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 
 		echo utf8_decode("
 		
@@ -2309,7 +2309,7 @@ class ReportController extends BaseController
 
 			echo utf8_decode("<tr>
 						<td style='border:1px solid #eee;'>".$item->identificacion."</td>
-						<td style='border:1px solid #eee;'>".date('Y-m-d', strtotime($item->fecha))."</td>
+						<td style='border:1px solid #eee;'>".date('d-m-Y', strtotime($item->fecha))."</td>
 						<td style='border:1px solid #eee;'>".$item->usuario."</td>
 						<td style='border:1px solid #eee;'>");
 			

@@ -132,6 +132,9 @@ class CoinController extends BaseController
 			return false;
 		}
 
+		$coin[0]['creado_en'] = date('d-m-Y H:i:s', strtotime($coin[0]['creado_en']));
+		$coin[0]['actualizado_en'] = date('d-m-Y H:i:s', strtotime($coin[0]['actualizado_en']));
+
 		return json_encode($coin);
 	}
 
