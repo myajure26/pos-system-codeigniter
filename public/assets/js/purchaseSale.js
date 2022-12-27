@@ -146,9 +146,7 @@ $(document).ready(function(){
                     title: 'Alerta',
                     text: 'Se ha llegado al stock mínimo',
                 });
-                return false;
             }
-            console.log('aqui');
         }
 
         if( Number(quantity) > Number(max) ){
@@ -232,7 +230,7 @@ $(document).ready(function(){
             return false;
         }
 
-        if(stock == 0){
+        if(stock <= minStock){
             Swal.fire({
                 icon: 'info',
                 title: 'Alerta',

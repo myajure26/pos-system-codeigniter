@@ -12,8 +12,8 @@ class ReportModel extends Model
         
 		$db = $db
             ->table('productos')
-			->select('codigo, nombre, ancho_caucho.ancho_numero, alto_caucho.alto_numero, categorias.categoria, marcas.marca, cant_producto')
-			->join('ancho_caucho', 'ancho_caucho.id_ancho_caucho = productos.id_ancho_caucho, stock_minimo, stock_maximo')
+			->select('codigo, nombre, ancho_caucho.ancho_numero, alto_caucho.alto_numero, categorias.categoria, marcas.marca, cant_producto, stock_minimo, stock_maximo')
+			->join('ancho_caucho', 'ancho_caucho.id_ancho_caucho = productos.id_ancho_caucho')
 			->join('alto_caucho', 'alto_caucho.id_alto_caucho = productos.id_alto_caucho')
 			->join('marcas', 'marcas.identificacion = productos.marca')
 			->join('categorias', 'categorias.identificacion = productos.categoria');

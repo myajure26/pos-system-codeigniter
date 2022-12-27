@@ -42,13 +42,19 @@ class ReportController extends BaseController
 			->edit('nombre', function($row){
 				return "$row->nombre $row->ancho_numero/$row->alto_numero";
 			})
+			->edit('stock_minimo', function($row){
+				return '<div class="mt-sm-1 d-block"><a href="javascript:void(0)" class="badge bg-soft-danger text-dark p-2 px-3">'.$row->stock_minimo.'</a></div>';
+			})
+			->edit('stock_maximo', function($row){
+				return '<div class="mt-sm-1 d-block"><a href="javascript:void(0)" class="badge bg-soft-warning text-dark p-2 px-3">'.$row->stock_maximo.'</a></div>';
+			})
 			->edit('cant_producto', function($row){
 							
 				if($row->cant_producto <= $row->stock_minimo){
 					return '<div class="mt-sm-1 d-block"><a href="javascript:void(0)" class="badge bg-soft-danger text-dark p-2 px-3">'.$row->cant_producto.'</a></div>';
 				}
 				
-				if($row->cant_producto <= 15){
+				if($row->cant_producto <= ($row->stock_minimo + 10)){
 					return '<div class="mt-sm-1 d-block"><a href="javascript:void(0)" class="badge bg-soft-warning text-dark p-2 px-3">'.$row->cant_producto.'</a></div>';
 				}
 
