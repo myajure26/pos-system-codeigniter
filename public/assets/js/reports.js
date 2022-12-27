@@ -33,6 +33,16 @@ $(document).ready(function(){
             
         }
 
+        if (type === 'general_order_reports'){
+            
+            if(range){
+                window.open(url + '/reports/order/' + range, '_blank');
+            }else{
+                window.open(url + '/reports/order', '_blank');
+            }
+            
+        }
+
         if (type === 'sales_per_customer'){
             const customer = $('#searchById').val();
             if(range){
@@ -49,6 +59,18 @@ $(document).ready(function(){
                 window.open(url + '/reports/sales_per_product/' + product + '/' + range, '_blank');
             }else{
                 window.open(url + '/reports/sales_per_product/' + product, '_blank');
+            }
+
+        }
+
+        if (type === 'sales_per_payment_method'){
+            const paymentMethod = $('#payment-method option:selected').val();
+            const coin = $('#coin option:selected').val();
+
+            if(range){
+                window.open(url + '/reports/sales_per_payment_method/' + paymentMethod + '/' + coin + '/' + range, '_blank');
+            }else{
+                window.open(url + '/reports/sales_per_payment_method/' + paymentMethod + '/' + coin, '_blank');
             }
 
         }
@@ -149,6 +171,25 @@ $(document).ready(function(){
         $('#phone-report').text($(this).closest('tr').find('td:eq(4)').text());
 
         $('#btn-report').slideDown();
+    });
+
+    // * Seleccionar método de pago y moneda
+    $(document).on('change', '#coin, #payment-method', function(){
+
+        if($('#coin option:selected').val() != '' && $('#payment-method option:selected').val() != ''){
+         
+            $('.table-report').show();
+            $('#payment-method-report').text($('#payment-method option:selected').text());
+            $('#coin-report').text($('#coin option:selected').text());
+
+            $('#btn-report').slideDown();
+            return;
+        }
+
+        $('.table-report').hide();
+        $('#btn-report').slideUp();
+        return;
+
     });
 
     // * Guardar el rango cada vez que se seleccione

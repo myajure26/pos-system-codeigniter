@@ -565,6 +565,9 @@ $(document).ready(function() {
 
     // * Seleccionar proveedor para asignar
     $(document).on('click', '.btn-select-provider-to-assign', function(){
+        $('#list tr').each(function(){
+            $(this).remove();
+        });
         $('#providerInput').val($(this).closest('tr').find('td:eq(2)').text());
         $('#provider, #viewProvider').val($(this).closest('tr').find('td:eq(1)').text());
 
@@ -632,6 +635,7 @@ $(document).ready(function() {
 
     // * Seleccionar el producto para asignar
     $(document).on('click', '.btn-select-product-to-assign', function(){
+
         const code = $(this).closest('tr').find('td:eq(1)').text();
         const name = $(this).closest('tr').find('td:eq(2)').text();
         const category = $(this).closest('tr').find('td:eq(3)').text();
@@ -869,15 +873,6 @@ $(document).ready(function() {
                     },
                     success: function (data) {
                         
-                        if(data == 'empty'){
-                            Swal.fire({
-                                title: 'Alerta',
-                                text: 'El pedido está vacio',
-                                icon: 'error'
-                            });
-                            return false;
-                        }
-
                         response.html(data);
 
                     },

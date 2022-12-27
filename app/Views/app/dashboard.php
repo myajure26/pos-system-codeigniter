@@ -170,6 +170,11 @@
                                         </a>
                                     </li>
                                     <li>
+                                        <a href="<?=base_url('#sales_per_payment_method')?>">
+                                            <span data-key="t-sales">Ventas por método de pago</span>
+                                        </a>
+                                    </li>
+                                    <li>
                                         <a href="<?=base_url('#most_selled_products')?>">
                                             <span data-key="t-sales">Productos más vendidos</span>
                                         </a>
@@ -198,12 +203,6 @@
                                 <a href="<?=base_url('#newOrder')?>">
                                     <i data-feather="file-text"></i>
                                     <span data-key="t-newOrder">Nuevo pedido</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="<?=base_url('#newPurchase')?>">
-                                    <i data-feather="plus"></i>
-                                    <span data-key="t-newPurchase">Nueva compra</span>
                                 </a>
                             </li>
                             <li>
@@ -240,13 +239,7 @@
                                 </ul>
                             </li>
 
-                            <li class="menu-title" data-key="t-menu">Administrar inventario</li>
-                            <li>
-                                <a href="<?=base_url('#inventory')?>">
-                                    <i data-feather="database"></i>
-                                    <span data-key="t-inventory">Almacén</span>
-                                </a>
-                            </li>
+                            <li class="menu-title" data-key="t-menu">Administrar inventario</li>    
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow">
                                     <i data-feather="pie-chart"></i>
@@ -266,6 +259,12 @@
                                 </ul>
                             </li>
                             <li>
+                                <a href="<?=base_url('#inventory')?>">
+                                    <i data-feather="database"></i>
+                                    <span data-key="t-inventory">Almacén</span>
+                                </a>
+                            </li>
+                            <li>
                                 <a href="<?=base_url('#categories')?>">
                                     <i data-feather="tag"></i>
                                     <span data-key="t-categories">Categorías</span>
@@ -278,15 +277,15 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="<?=base_url('#high_rubber')?>">
-                                    <i data-feather="sliders"></i>
-                                    <span data-key="t-brand">Alto caucho</span>
-                                </a>
-                            </li>
-                            <li>
                                 <a href="<?=base_url('#wide_rubber')?>">
                                     <i data-feather="globe"></i>
                                     <span data-key="t-brand">Ancho caucho</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?=base_url('#high_rubber')?>">
+                                    <i data-feather="sliders"></i>
+                                    <span data-key="t-brand">Alto caucho</span>
                                 </a>
                             </li>
                             <?php endif;?>

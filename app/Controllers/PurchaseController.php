@@ -27,156 +27,6 @@ class PurchaseController extends BaseController
 		"descripcion"	=> ""
 	];
 
-	public function createPurchase()
-	{
-		helper('purchaseValidation');
-
-		if(!$this->session->has('name')){
-			return redirect()->to(base_url());
-		}
-
-		if(!$this->validate(createPurchaseValidation())){
-
-			//Mostrar errores de validación
-			$errors = $this->validator->getErrors();
-			foreach ($errors as $error) {
-				$this->errorMessage['text'] = esc($error);
-				return sweetAlert($this->errorMessage);
-			}
-
-		}
-
-		$purchase = [
-			"proveedor" 	=> $this->request->getPost('provider'),
-			"usuario" 		=> $this->session->get('identification'),
-			"fecha" 		=> $this->request->getPost('date'),
-			"tipo_documento"=> $this->request->getPost('receipt'),
-			"referencia" => $this->request->getPost('reference'),
-			"moneda" 		=> $this->request->getPost('coin')
-		];
-
-		if(strtotime($purchase['fecha']) > strtotime(date('Y-m-d'))){
-			$this->errorMessage['text'] = "La fecha de la compra no puede ser mayor a la fecha actual";
-			return sweetAlert($this->errorMessage);
-		}
-
-		$productCode = $this->request->getPost('productCode');
-		$productQuantity = $this->request->getPost('productQuantity');
-		$productPrice = $this->request->getPost('productPrice');
-
-		$purchaseDetails = [];
-
-		for($i = 0; $i < count($productCode); $i++){
-
-			$price = str_replace(',', '', $productPrice[$i]);
-			$price = floatval($price);
-
-			if($productQuantity[$i] <= 0){
-				$this->errorMessage['text'] = "La cantidad tiene que ser mayor a 0, por favor revisa la fila #$productCode[$i]";
-				return sweetAlert($this->errorMessage);
-			}
-
-			if($price <= 0){
-				$this->errorMessage['text'] = "El precio tiene que ser mayor a 0, por favor revisa la fila #$productCode[$i]";
-				return sweetAlert($this->errorMessage);
-			}
-
-			$data = [
-				"producto"	=> $productCode[$i],
-				"cantidad"	=> $productQuantity[$i],
-				"precio"	=> $price
-			];
-
-			array_push($purchaseDetails, $data);
-
-		}
-		
-		$PurchaseModel = new PurchaseModel();
-		$purchase = $PurchaseModel->createPurchase($purchase, $purchaseDetails);
-
-		if(!$purchase){
-			$this->errorMessage['text'] = "Error al registrar la compra, intenta nuevamente.";
-			return sweetAlert($this->errorMessage);
-		}
-
-		//PARA LA AUDITORÍA
-		$auditUserId = $this->session->get('identification');
-		$this->auditContent['usuario'] 		= $auditUserId;
-		$this->auditContent['accion'] 		= "Crear compra";
-		$this->auditContent['descripcion'] 	= "Se ha creado la compra con identificacion " . $purchase . " exitosamente.";
-		$AuditModel = new AuditModel();
-		$AuditModel->createAudit($this->auditContent);
-		
-		//SWEET ALERT
-		$this->successMessage['alert'] 		= "clean";
-		$this->successMessage['text'] 		= "La compra se ha registrado correctamente";
-		return sweetAlert($this->successMessage);
-	}
-
-	public function getProviders()
-	{
-		if(!$this->session->has('name')){
-			return redirect()->to(base_url());
-		}
-
-		$db      	= \Config\Database::connect();
-		$providers 	= $db
-						->table('proveedores')
-						->select('identificacion, nombre, telefono, direccion')
-						->where('estado', 1);
-				
-		return DataTable::of($providers)
-			->add('Seleccionar', function($row){
-				return '<div class="btn-list"> 
-							<button type="button" class="btn-select-provider btn-select-provider-assign-purchase btn btn-sm btn-primary waves-effect" data-id="'.$row->identificacion.'" data-type="providers">
-                                <i class="fas fa-check"></i>
-                            </button>
-                        </div>';
-			}, 'first') 
-			->toJson();
-	}
-
-	public function getProducts()
-	{
-		if(!$this->session->has('name')){
-			return redirect()->to(base_url());
-		}
-
-		$db = \Config\Database::connect();
-		$products = $db
-			->table('producto_proveedor')
-			->select('productos.codigo, productos.nombre, ancho_caucho.ancho_numero, alto_caucho.alto_numero, categorias.categoria, marcas.marca')
-			->join('proveedores', 'proveedores.identificacion = producto_proveedor.ci_rif_proveedor')
-			->join('productos', 'productos.codigo = producto_proveedor.cod_producto')
-			->join('ancho_caucho', 'ancho_caucho.id_ancho_caucho = productos.id_ancho_caucho')
-			->join('alto_caucho', 'alto_caucho.id_alto_caucho = productos.id_alto_caucho')
-			->join('marcas', 'marcas.identificacion = productos.marca')
-			->join('categorias', 'categorias.identificacion = productos.categoria')
-			->where('productos.estado', 1);
-				
-		return DataTable::of($products)
-			->hide('ancho_numero')
-			->hide('alto_numero')
-			->edit('nombre', function($row){
-				return "$row->nombre $row->ancho_numero/$row->alto_numero";
-			})
-			->add('Seleccionar', function($row){
-				return '<div class="btn-list"> 
-							<button type="button" class="btn-select-product btn btn-sm btn-primary waves-effect" data-id="'.$row->codigo.'" data-type="products">
-                                <i class="fas fa-check"></i>
-                            </button>
-                        </div>';
-			}, 'first')
-			->filter(function ($builder, $request) {
-
-				if($request->provider != ''){
-					$builder->where('producto_proveedor.ci_rif_proveedor', $request->provider);
-				}
-		
-			})
-			->toJson();
-	}
-
 	public function getPurchases()
 	{
 		if(!$this->session->has('name')){
@@ -208,22 +58,12 @@ class PurchaseController extends BaseController
 				
 			})
 			->add('Acciones', function($row){
-				if($row->estado == 1){
-					return '<div class="btn-list"> 
-								<button type="button" class="btnView btn btn-sm btn-primary waves-effect" data-id="'.$row->identificacion.'" data-type="purchases" data-bs-toggle="modal" data-bs-target="#viewModal">
-									<i class="far fa-eye"></i>
-								</button>
-								<button type="button" class="btnDelete btn btn-sm btn-danger waves-effect" data-id="'.$row->identificacion.'" data-type="purchases">
-									<i class="fas fa-times"></i>
-								</button>
-							</div>';
-				}
-
 				return '<div class="btn-list"> 
-							<button type="button" class="btnView btn btn-sm btn-primary waves-effect" data-id="'.$row->identificacion.'" data-type="purchases" data-bs-toggle="modal" data-bs-target="#viewModal">
-								<i class="far fa-eye"></i>
-							</button>
-						</div>';
+								<button type="button" class="btnPrint btn btn-sm btn-primary waves-effect" data-id="'.$row->identificacion.'" data-type="purchases"> 
+									<i class="fa fa-print"></i>
+								</button> 
+							</div>';
+
 
 			}, 'last') 
 			->filter(function ($builder, $request) {
@@ -241,58 +81,9 @@ class PurchaseController extends BaseController
 					}
 					
 				}
-
-				if($request->status != ''){
-					$builder->where('compras.estado', $request->status);
-				}
 		
 			})
 			->toJson();
-	}
-
-	public function getPurchaseById($identification)
-	{
-		if(!$this->session->has('name')){
-			return redirect()->to(base_url());
-		}
-
-		$PurchaseModel = new PurchaseModel();
-		$purchase = $PurchaseModel->getPurchaseById(['compras.identificacion' => $identification]);
-		if(!$purchase){
-			return false;
-		}
-
-		return json_encode($purchase);
-	}
-
-	public function deletePurchase()
-	{
-		if(!$this->session->has('name')){
-			return redirect()->to(base_url());
-		}
-
-		$identification = $this->request->getPost('identification');
-
-		$PurchaseModel = new PurchaseModel();
-		$deletePurchase = $PurchaseModel->deletePurchase($identification);
-
-		if(!$deletePurchase){
-			$this->errorMessage['text'] = "La compra no existe";
-			return sweetAlert($this->errorMessage);
-		}
-
-		//PARA LA AUDITORÍA
-		$auditUserId = $this->session->get('identification');
-		$this->auditContent['usuario'] 		= $auditUserId;
-		$this->auditContent['accion'] 		= "Eliminar compra";
-		$this->auditContent['descripcion'] 	= "Se ha eliminado la compra con identificación #" . $identification . " exitosamente.";
-		$AuditModel = new AuditModel();
-		$AuditModel->createAudit($this->auditContent);
-		
-		//SWEET ALERT
-		$this->successMessage['alert'] 		= "clean";
-		$this->successMessage['text'] 		= "La compra ha sido anulada";
-		return sweetAlert($this->successMessage);
 	}
 
 }

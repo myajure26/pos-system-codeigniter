@@ -49,6 +49,7 @@ $routes->group('sales', static function ($routes) {
 // ? ORDERS MODULE
 $routes->group('orders', static function ($routes) {
     $routes->post('create', 'OrderController::createOrder');
+    $routes->get('verifyProviderOrder/(:any)', 'OrderController::verifyProviderOrder/$1');
     $routes->get('get', 'OrderController::getOrders');
     $routes->get('getById/(:num)', 'OrderController::getOrderById/$1');
     $routes->get('getProviders', 'OrderController::getProviders');
@@ -61,12 +62,7 @@ $routes->group('orders', static function ($routes) {
 
 // ? PURCHASES MODULE
 $routes->group('purchases', static function ($routes) {
-    $routes->post('create', 'PurchaseController::createPurchase');
     $routes->get('get', 'PurchaseController::getPurchases');
-    $routes->get('getById/(:num)', 'PurchaseController::getPurchaseById/$1');
-    $routes->get('getProviders', 'PurchaseController::getProviders');
-    $routes->get('getProducts', 'PurchaseController::getProducts');
-    $routes->post('delete', 'PurchaseController::deletePurchase');
 });
 
 // ? USERS MODULE
@@ -218,6 +214,7 @@ $routes->get('best_providers', 'ReportController::getBestProviders');
 $routes->post('general_sale_reports', 'ReportController::getGeneralSaleReports');
 $routes->get('sales_per_customer', 'ReportController::getSalesPerCustomer');
 $routes->get('sales_per_product', 'ReportController::getSalesPerProduct');
+$routes->get('sales_per_payment_method', 'ReportController::getSalesPerPaymentMethod');
 $routes->get('most_selled_products', 'ReportController::getMostSelledProducts');
 $routes->get('less_sold_products', 'ReportController::getLessSoldProducts');
 $routes->get('best_customers', 'ReportController::getBestCustomers');
@@ -234,10 +231,15 @@ $routes->get('reports/purchases_per_provider/(:any)', 'ReportController::getPurc
 $routes->get('reports/best_providers/(:any)', 'ReportController::getBestProvidersReportExcel/$1');
 $routes->get('reports/best_providers', 'ReportController::getBestProvidersReportExcel');
 
+$routes->get('reports/order', 'ReportController::getOrderReportExcel');
+$routes->get('reports/order/(:any)', 'ReportController::getOrderReportExcel/$1');
+
 $routes->get('reports/sale', 'ReportController::getSaleReportExcel');
 $routes->get('reports/sale/(:any)', 'ReportController::getSaleReportExcel/$1');
 $routes->get('reports/sales_per_customer/(:any)', 'ReportController::getSalePerCustomerReportExcel/$1/$2');
 $routes->get('reports/sales_per_product/(:any)', 'ReportController::getSalePerProductReportExcel/$1/$2');
+$routes->get('reports/sales_per_payment_method/(:any)', 'ReportController::getSalePerPaymentMethodReportExcel/$1/$2/$3');
+// $routes->get('reports/sales_per_payment_method/(:any)', 'ReportController::getSalePerPaymentMethodReportExcel/$1/$2/$3');
 $routes->get('reports/most_selled_products/(:any)', 'ReportController::getMostSelledProductsReportExcel/$1');
 $routes->get('reports/most_selled_products', 'ReportController::getMostSelledProductsReportExcel');
 $routes->get('reports/less_sold_products/(:any)', 'ReportController::getLessSoldProductsReportExcel/$1');
@@ -247,8 +249,9 @@ $routes->get('reports/best_customers', 'ReportController::getBestCustomersReport
 
 // ? INVOICES
 $routes->group('invoice', static function ($routes) {
-    $routes->get('sale/(:num).pdf', 'InvoiceController::saleInvoice/$1');
-    $routes->get('order/(:num).pdf', 'InvoiceController::orderInvoice/$1');
+    $routes->get('sale/(:any).pdf', 'InvoiceController::saleInvoice/$1');
+    $routes->get('order/(:any).pdf', 'InvoiceController::orderInvoice/$1');
+    $routes->get('purchase/(:any).pdf', 'InvoiceController::purchaseInvoice/$1');
 });
 
 /*

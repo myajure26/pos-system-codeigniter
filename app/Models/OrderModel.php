@@ -49,6 +49,16 @@ class OrderModel extends Model
 		return $orderId;
 	}
 
+	public function verifyProviderOrder($id)
+	{
+		$query = $this
+			->select()
+			->where('ci_rif_proveedor', $id)
+			->where('estado_pedido', 2)
+			->get()->getResult();
+		return $query;
+	}
+
 	public function getOrders()
 	{
 		$query = $this
@@ -93,10 +103,6 @@ class OrderModel extends Model
 				->select('producto, cantidad')
 				->where('compra', $db->insertID())
 				->get()->getResult();
-		
-		if( empty($stock) ){
-			return "empty";
-		}
 		
 		foreach($stock as $row){
 			$db->query("UPDATE productos SET cant_producto = cant_producto + $row->cantidad  WHERE codigo = '$row->producto'");

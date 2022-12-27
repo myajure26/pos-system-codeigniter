@@ -457,6 +457,43 @@ class App extends BaseController
 		}
 	}
 
+	public function sales_per_payment_method()
+	{
+		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 2){
+
+			$db      	= \Config\Database::connect();
+			
+			$paymentMethod 	= $db
+							->table('metodo_pago')
+							->select('id_metodo_pago, nombre')
+							->where('estado_metodo_pago', 1)
+							->get()
+							->getResult();
+			$coins 		= $db
+							->table('monedas')
+							->select('identificacion, moneda, simbolo')
+							->where('estado', 1)
+							->get()
+							->getResult();
+			
+			$data = [
+				"title" 				=> "Reportes de ventas por método de pago - $this->system",
+				"businessName" 			=> $this->businessName,
+				"businessIdentification"=> $this->businessIdentification,
+				"businessAddress" 		=> $this->businessAddress,
+				"businessPhone" 		=> $this->businessPhone,
+				"paymentMethod"			=> $paymentMethod,
+				"coins"					=> $coins
+			];
+			return view('app/reports/sales_per_payment_method', $data);
+		
+		}else{
+
+			return "<script>window.location.href='".base_url()."'</script>";
+		
+		}
+	}
+
 	public function most_selled_products()
 	{
 		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 2){

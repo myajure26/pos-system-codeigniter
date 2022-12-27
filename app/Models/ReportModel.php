@@ -13,7 +13,7 @@ class ReportModel extends Model
 		$db = $db
             ->table('productos')
 			->select('codigo, nombre, ancho_caucho.ancho_numero, alto_caucho.alto_numero, categorias.categoria, marcas.marca, cant_producto')
-			->join('ancho_caucho', 'ancho_caucho.id_ancho_caucho = productos.id_ancho_caucho')
+			->join('ancho_caucho', 'ancho_caucho.id_ancho_caucho = productos.id_ancho_caucho, stock_minimo, stock_maximo')
 			->join('alto_caucho', 'alto_caucho.id_alto_caucho = productos.id_alto_caucho')
 			->join('marcas', 'marcas.identificacion = productos.marca')
 			->join('categorias', 'categorias.identificacion = productos.categoria');
@@ -25,10 +25,9 @@ class ReportModel extends Model
         
 		$db = $db
             ->table('compras')
-			->select('compras.identificacion, referencia, fecha, proveedores.nombre, proveedores.identificacion as idProveedor, proveedores.direccion, proveedores.telefono, usuario')
+			->select('compras.identificacion, DATE_FORMAT(compras.creado_en, "%d-%m-%Y") as fecha, proveedores.nombre, proveedores.identificacion as idProveedor, proveedores.direccion, proveedores.telefono, usuario')
 			->join('detalle_compra', 'detalle_compra.compra = compras.identificacion')
 			->join('proveedores', 'proveedores.identificacion = compras.proveedor')
-			->where('compras.estado', 1)
 			->groupBy('compras.identificacion');
 		return $db;
 	}
@@ -41,7 +40,6 @@ class ReportModel extends Model
 			->select('proveedores.identificacion, proveedores.nombre, proveedores.telefono, proveedores.direccion, SUM(detalle_compra.cantidad) as cantidad, SUM(detalle_compra.cantidad*detalle_compra.precio) as total')
 			->join('compras', 'compras.identificacion = detalle_compra.compra')
 			->join('proveedores', 'proveedores.identificacion = compras.proveedor')
-			->where('compras.estado', 1)
 			->groupBy('proveedores.identificacion')
 			->orderBy('cantidad', 'DESC')
 			->limit(10);
@@ -77,6 +75,23 @@ class ReportModel extends Model
 			->join('categorias', 'categorias.identificacion = productos.categoria')
 			->where('ventas.estado', 1)
 			->orderBy('ventas.identificacion');
+		return $db;
+	}
+
+	public function getSalesPerPaymentMethod()
+	{
+        $db = \Config\Database::connect();
+		$db = $db
+            ->table('ventas')
+			->select('ventas.identificacion, ventas.creado_en as fecha, usuario, clientes.identificacion as cliente, impuestos.porcentaje as impuesto, SUM(detalle_ventas.cantidad*detalle_ventas.precio) as total, tasa, metodo_pago.nombre as metodo_pago, monedas.moneda as moneda')
+			->join('detalle_ventas', 'detalle_ventas.venta = ventas.identificacion')
+			->join('clientes', 'clientes.identificacion = ventas.cliente')
+			->join('impuestos', 'impuestos.identificacion = ventas.impuesto')
+			->join('metodo_pago', 'metodo_pago.id_metodo_pago = ventas.id_metodo_pago')
+			->join('monedas', 'monedas.identificacion = ventas.moneda')
+			->where('ventas.estado', 1)
+			->orderBy('ventas.identificacion', 'DESC')
+			->groupBy('ventas.identificacion');
 		return $db;
 	}
 
@@ -238,11 +253,10 @@ class ReportModel extends Model
         $db = \Config\Database::connect();
 		$db = $db
             ->table('compras')
-			->select('compras.identificacion as idCompra, referencia, fecha, usuario, proveedores.identificacion, proveedores.nombre, tipo_documento.nombre as tipo_documento, monedas.moneda')
+			->select('compras.identificacion as idCompra, DATE_FORMAT(compras.creado_en, "%d-%m-%Y") as fecha, usuario, proveedores.identificacion, proveedores.nombre, tipo_documento.nombre as tipo_documento, monedas.moneda')
 			->join('tipo_documento', 'tipo_documento.identificacion = compras.tipo_documento')
 			->join('monedas', 'monedas.identificacion = compras.moneda')
 			->join('proveedores', 'proveedores.identificacion = compras.proveedor')
-			->where('compras.estado', 1)
 			->orderBy('fecha', 'ASC');
 		return $db;
 	}
@@ -259,6 +273,36 @@ class ReportModel extends Model
 			->join('marcas', 'marcas.identificacion = productos.marca')
 			->join('categorias', 'categorias.identificacion = productos.categoria')
 			->where('compra', $id)
+			->get()->getResult();
+		return $db;
+	}
+
+	public function getOrderReportExcel()
+	{
+        $db = \Config\Database::connect();
+		$db = $db
+            ->table('pedido')
+			->select('pedido.id_pedido, DATE_FORMAT(pedido.creado_en, "%d-%m-%Y") as fecha, ci_usuario, proveedores.identificacion, proveedores.nombre, monedas.moneda, estado_pedido')
+			->join('tipo_documento', 'tipo_documento.identificacion = pedido.id_tipo_documento')
+			->join('monedas', 'monedas.identificacion = pedido.id_moneda')
+			->join('proveedores', 'proveedores.identificacion = pedido.ci_rif_proveedor')
+			->orderBy('fecha', 'ASC')
+			->orderBy('id_pedido', 'ASC');
+		return $db;
+	}
+
+	public function getOrderDetailReportExcel($id)
+	{
+        $db = \Config\Database::connect();
+		$db = $db
+            ->table('detalle_pedido')
+			->select('productos.codigo as codigo, productos.nombre as nombreProducto, ancho_caucho.ancho_numero, alto_caucho.alto_numero, categorias.categoria, marcas.marca, detalle_pedido.cant_producto as cantidad, detalle_pedido.precio_producto as precio')
+			->join('productos', 'productos.codigo = detalle_pedido.cod_producto')
+			->join('ancho_caucho', 'ancho_caucho.id_ancho_caucho = productos.id_ancho_caucho')
+			->join('alto_caucho', 'alto_caucho.id_alto_caucho = productos.id_alto_caucho')
+			->join('marcas', 'marcas.identificacion = productos.marca')
+			->join('categorias', 'categorias.identificacion = productos.categoria')
+			->where('id_pedido', $id)
 			->get()->getResult();
 		return $db;
 	}

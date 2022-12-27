@@ -126,7 +126,7 @@ class SaleController extends BaseController
 		$db      	= \Config\Database::connect();
 		$products 	= $db
 						->table('productos')
-						->select('productos.codigo, nombre, ancho_caucho.ancho_numero, alto_caucho.alto_numero, marcas.marca, categorias.categoria, precio, cant_producto')
+						->select('productos.codigo, nombre, ancho_caucho.ancho_numero, alto_caucho.alto_numero, marcas.marca, categorias.categoria, precio, cant_producto, stock_minimo')
 						->join('marcas', 'marcas.identificacion = productos.marca')
 						->join('categorias', 'categorias.identificacion = productos.categoria')
 						->join('ancho_caucho', 'ancho_caucho.id_ancho_caucho = productos.id_ancho_caucho')
@@ -154,6 +154,9 @@ class SaleController extends BaseController
 			->edit('precio', function($row){
 				$price = number_format($row->precio, 2);
 				return $this->symbol . $price;
+			})
+			->edit('stock_minimo', function($row){
+				return '<div class="mt-sm-1 d-block"><a href="javascript:void(0)" class="badge bg-soft-danger text-dark p-2 px-3">'.$row->stock_minimo.'</a></div>';
 			})
 			->add('Seleccionar', function($row){
 				return '<div class="btn-list"> 
@@ -195,9 +198,8 @@ class SaleController extends BaseController
 
 				// Calcular el impuesto
 				$total = (($db[0]['total'] * $row->impuesto) / 100) + $db[0]['total'];
-				$total = $total * $row->tasa;
 				$total = number_format($total, 2);
-				return "$row->simbolo $total";
+				return $total;
 				
 			})
 			->add('Acciones', function($row){

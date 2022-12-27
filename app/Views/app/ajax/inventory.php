@@ -83,6 +83,8 @@
                                         <th>Categoría</th>
                                         <th>Marca</th>
                                         <th>Stock</th>
+                                        <th>Stock mínimo</th>
+                                        <th>Stock máximo</th>
                                     </tr>
                                 </tr>
                             </thead>

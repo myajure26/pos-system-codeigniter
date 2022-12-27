@@ -44,7 +44,7 @@ class ReportController extends BaseController
 			})
 			->edit('cant_producto', function($row){
 							
-				if($row->cant_producto <= 5){
+				if($row->cant_producto <= $row->stock_minimo){
 					return '<div class="mt-sm-1 d-block"><a href="javascript:void(0)" class="badge bg-soft-danger text-dark p-2 px-3">'.$row->cant_producto.'</a></div>';
 				}
 				
@@ -363,6 +363,60 @@ class ReportController extends BaseController
 				if($request->searchById != ''){
 
 					$builder->where('detalle_ventas.producto', $request->searchById);
+
+				}
+		
+			})
+			->toJson();
+	}
+
+	public function getSalesPerPaymentMethod()
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$ReportModel = new ReportModel();
+				
+		return DataTable::of($ReportModel->getSalesPerPaymentMethod())
+			->edit('fecha', function($row){
+				return date('d-m-Y', strtotime($row->fecha));
+			})
+			->hide('impuesto')
+			->hide('tasa')
+			->hide('metodo_pago')
+			->hide('moneda')
+			->edit('total', function($row){
+
+				$tax = ($row->total * $row->impuesto)/100;
+				$total = $row->total + $tax;
+
+				$total = $total * $row->tasa;
+
+				return number_format($total, 2);
+				
+
+			})
+			->filter(function ($builder, $request) {
+        
+				if($request->range != ''){
+
+					if(!empty(explode(' a ', $request->range)[1])){
+						$from = explode(' a ', $request->range)[0];
+						$to = explode(' a ', $request->range)[1];
+						$where = "DATE_FORMAT(ventas.creado_en, '%Y-%m-%d') BETWEEN '$from' AND '$to'";
+						$builder->where($where);
+					}else{
+						$where = "DATE_FORMAT(ventas.creado_en, '%Y-%m-%d') = '$request->range'";
+						$builder->where($where);
+					}
+					
+				}
+
+				if($request->paymentMethod != '' && $request->coin != ''){
+
+					$builder->where('ventas.id_metodo_pago', $request->paymentMethod);
+					$builder->where('ventas.moneda', $request->coin);
 
 				}
 		
@@ -796,34 +850,26 @@ class ReportController extends BaseController
 		echo utf8_decode("<table border='0'> 
 
 		<tr> 
+			<td style='font-weight:bold; border:1px solid #eee;'>FECHA</td>		
 			<td style='font-weight:bold; border:1px solid #eee;'>NÚMERO DE COMPRA</td>
-			<td style='font-weight:bold; border:1px solid #eee;'>REFERENCIA</td> 
 			<td style='font-weight:bold; border:1px solid #eee;'>IDENTIFICACIÓN PROVEEDOR</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>NOMBRE PROVEEDOR</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>USUARIO</td>
-			<td style='font-weight:bold; border:1px solid #eee;'>TIPO DE DOCUMENTO</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>MONEDA</td>
-			<td style='font-weight:bold; border:1px solid #eee;'>CÓDIGO</td>	
-			<td style='font-weight:bold; border:1px solid #eee;'>PRODUCTO</td>	
-			<td style='font-weight:bold; border:1px solid #eee;'>CANTIDAD</td>
-			<td style='font-weight:bold; border:1px solid #eee;'>PRECIO UNITARIO</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>TOTAL</td>			
-			<td style='font-weight:bold; border:1px solid #eee;'>FECHA</td>		
 		</tr>");
 
-			$totalCompra = 0;
+			$totalPurchase = 0;
 			foreach ($getPurchaseReportExcel as $row => $item){
 
 
 				echo utf8_decode("<tr>
+							<td style='border:1px solid #eee;'>".$item->fecha."</td>	
 							<td style='border:1px solid #eee;'>".$item->idCompra."</td>
-							<td style='border:1px solid #eee;'>".$item->referencia."</td> 
 							<td style='border:1px solid #eee;'>".$item->identificacion."</td>
 							<td style='border:1px solid #eee;'>".$item->nombre."</td>
 							<td style='border:1px solid #eee;'>".$item->usuario."</td>
-							<td style='border:1px solid #eee;'>".$item->tipo_documento."</td>
-							<td style='border:1px solid #eee;'>".$item->moneda."</td>
-							<td style='border:1px solid #eee;'>");
+							<td style='border:1px solid #eee;'>".$item->moneda."</td>");
 
 
 				$getPurchaseDetailReportExcel = $ReportModel->getPurchaseDetailReportExcel($item->idCompra);
@@ -832,37 +878,226 @@ class ReportController extends BaseController
 
 				foreach ($getPurchaseDetailReportExcel as $row2 => $item2){
 
-					echo utf8_decode($item2->codigo."<br>");
 					$total = $total + ($item2->cantidad * $item2->precio);
 				}
-				$totalCompra += $total;
-
-				echo utf8_decode("</td><td style='border:1px solid #eee;'>");
-
-				foreach ($getPurchaseDetailReportExcel as $row2 => $item2){
-
-						echo utf8_decode("$item2->nombreProducto $item2->ancho_numero/$item2->alto_numero $item2->categoria Marca $item2->marca<br>");
-				}
-
-				echo utf8_decode("</td><td style='border:1px solid #eee;'>");
-
-				foreach ($getPurchaseDetailReportExcel as $row2 => $item2){
-
-						echo utf8_decode($item2->cantidad."<br>");
-
-				}
-
-				echo utf8_decode("</td><td style='border:1px solid #eee;'>");
-
-				foreach ($getPurchaseDetailReportExcel as $row2 => $item2){
-
-					echo utf8_decode($item2->precio."<br>");
-
-				}
+				$totalPurchase += $total;
 
 			echo utf8_decode("</td>	
 					<td style='border:1px solid #eee;'>".number_format($total, 2)."</td>
-					<td style='border:1px solid #eee;'>".$item->fecha."</td>		
+						
+						</tr>");
+			
+			
+		}
+
+		echo utf8_decode("</td>	
+			<td style='border:1px solid #eee;'></td>
+			<td style='border:1px solid #eee;'></td>
+			<td style='border:1px solid #eee;'></td>
+			<td style='border:1px solid #eee;'></td>
+			<td style='border:1px solid #eee;'></td>
+			<td style='border:1px solid #eee;'>Total</td>
+			<td style='border:1px solid #eee;'>".number_format($totalPurchase, 2)."</td>	
+			</tr>");
+
+			echo "</table>";
+
+	}
+
+	public function getOrderReportExcel($range = NULL)
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$ReportModel = new ReportModel();
+		$getOrderReportExcel = $ReportModel->getOrderReportExcel();
+
+		$name = "reporte-pedidos.xls";
+		$nameHeader = "Todos los pedidos realizados en el sistema";
+
+		if ( $range != NULL && $range != ''){
+			
+			if(!empty(explode('a', $range)[1])){
+				$from = explode('a', $range)[0];
+				$to = explode('a', $range)[1];
+				$where = "DATE_FORMAT(pedido.creado_en, '%Y-%m-%d') BETWEEN '$from' AND '$to'";
+				$getOrderReportExcel = $getOrderReportExcel->where($where);
+				$name = "reporte-pedidos-$from-$to.xls";
+				$nameHeader = "Desde $from hasta $to";
+			}else{
+				$where = "DATE_FORMAT(pedido.creado_en, '%Y-%m-%d') = '$range'";
+				$getOrderReportExcel = $getOrderReportExcel->where($where);
+				$name = "reporte-pedidos-$range.xls";
+				$nameHeader = "Del día $range";
+			}
+
+		}
+
+		$getOrderReportExcel = $getOrderReportExcel->get()->getResult();
+
+		if(!$getOrderReportExcel){
+			return "Error";
+		}
+
+		header("Pragma: public");
+		header("Expires: 0");
+		header("Content-type: application/x-msdownload");
+		header("Content-Disposition: attachment; filename=$name");
+		header("Pragma: no-cache");
+		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+
+		echo utf8_decode("
+		
+		<table>
+			<tr>
+
+				<td style='background-color:white; width:350px'>
+					
+					<div style='font-size:12px; text-align:left; line-height:15px; margin-left: 20px'>
+						
+						<br>
+						<strong style='font-size: 22px'>Reporte general de pedidos</strong>
+						<br>
+						<strong>$nameHeader</strong>
+
+					</div>
+
+				</td>
+
+				<td style='width:150px;'>
+					
+				</td>
+
+				<td style='background-color:white; width:140px'>
+
+				
+					
+				</td>
+
+				<td style='background-color:white; width:140px'>
+
+					<div style='font-size:12px; text-align:right; margin-left: 50px'>
+						<br>
+						<strong style='font-size: 18px'>Generado:</strong>
+						<br>
+						". date('d-m-Y H:i') . "
+
+					</div>
+					
+				</td>
+
+			</tr>
+		</table>
+		
+		");
+
+		echo utf8_decode("
+		
+		<table>
+		
+		<tr>
+			
+			<td style='width:150px; margin-left: 20px'>
+				<div style='font-size:12px; text-align: center; line-height:15px; margin-left: 50px'>
+					
+					<br>
+					<strong style='font-size: 20px'>$this->businessName</strong>
+					
+					<br>
+
+				</div>
+
+            </td>
+
+			<td style='background-color:white; width:210px'>
+				
+				<div style='font-size:12px; text-align:right; line-height:15px;'>
+					
+					<br>
+					<strong>RIF:</strong> $this->businessIdentification
+
+					<br>
+					<strong>Dirección:</strong> $this->businessAddress
+
+				</div>
+
+			</td>
+
+			<td style='background-color:white; width:140px'>
+
+				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
+					
+					<br>
+					<strong>Teléfono:</strong> $this->businessPhone
+					
+					<br>
+					
+
+				</div>
+				
+			</td>
+
+		</tr>
+
+	</table>
+
+		");
+		
+		echo "<br>";
+
+		echo utf8_decode("<table border='0'> 
+
+		<tr> 
+			<td style='font-weight:bold; border:1px solid #eee;'>FECHA</td>		
+			<td style='font-weight:bold; border:1px solid #eee;'>NÚMERO DE COMPRA</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>IDENTIFICACIÓN PROVEEDOR</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>NOMBRE PROVEEDOR</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>USUARIO</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>ESTADO</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>MONEDA</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>TOTAL</td>			
+		</tr>");
+
+			$totalPurchase = 0;
+			foreach ($getOrderReportExcel as $row => $item){
+
+				switch($item->estado_pedido){
+					case 0:
+						$estado = 'Anulado';
+						break;
+					case 1:
+						$estado = 'Aprobado';
+						break;
+					case 2:
+						$estado = 'Pendiente';
+						break;
+				}
+
+
+				echo utf8_decode("<tr>
+							<td style='border:1px solid #eee;'>".$item->fecha."</td>	
+							<td style='border:1px solid #eee;'>".$item->id_pedido."</td>
+							<td style='border:1px solid #eee;'>".$item->identificacion."</td>
+							<td style='border:1px solid #eee;'>".$item->nombre."</td>
+							<td style='border:1px solid #eee;'>".$estado."</td>
+							<td style='border:1px solid #eee;'>".$item->ci_usuario."</td>
+							<td style='border:1px solid #eee;'>".$item->moneda."</td>");
+
+
+				$getOrderDetailReportExcel = $ReportModel->getOrderDetailReportExcel($item->id_pedido);
+
+				$total = 0;
+
+				foreach ($getOrderDetailReportExcel as $row2 => $item2){
+
+					$total = $total + ($item2->cantidad * $item2->precio);
+				}
+				$totalPurchase += $total;
+
+			echo utf8_decode("</td>	
+					<td style='border:1px solid #eee;'>".number_format($total, 2)."</td>
+						
 						</tr>");
 			
 			
@@ -875,12 +1110,8 @@ class ReportController extends BaseController
 			<td style='border:1px solid #eee;'></td>
 			<td style='border:1px solid #eee;'></td>
 			<td style='border:1px solid #eee;'></td>
-			<td style='border:1px solid #eee;'></td>
-			<td style='border:1px solid #eee;'></td>
-			<td style='border:1px solid #eee;'></td>
-			<td style='border:1px solid #eee;'></td>
 			<td style='border:1px solid #eee;'>Total</td>
-			<td style='border:1px solid #eee;'>".number_format($totalCompra, 2)."</td>	
+			<td style='border:1px solid #eee;'>".number_format($totalPurchase, 2)."</td>	
 			</tr>");
 
 			echo "</table>";
@@ -922,7 +1153,6 @@ class ReportController extends BaseController
 		if(!$getSaleReportExcel){
 			return "Error";
 		}
-
 
 		header("Pragma: public");
 		header("Expires: 0");
@@ -1032,38 +1262,29 @@ class ReportController extends BaseController
 		echo utf8_decode("<table border='0'> 
 
 		<tr> 
+			<td style='font-weight:bold; border:1px solid #eee;'>FECHA</td>		
 			<td style='font-weight:bold; border:1px solid #eee;'>FACTURA</td> 
 			<td style='font-weight:bold; border:1px solid #eee;'>IDENTIFICACIÓN DEL CLIENTE</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>NOMBRE DEL CLIENTE</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>VENDEDOR</td>
-			<td style='font-weight:bold; border:1px solid #eee;'>TIPO DE DOCUMENTO</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>MÉTODO DE PAGO</td>
-			<td style='font-weight:bold; border:1px solid #eee;'>MONEDA</td>
-			<td style='font-weight:bold; border:1px solid #eee;'>TASA</td>
-			<td style='font-weight:bold; border:1px solid #eee;'>IMPUESTO</td>
-			<td style='font-weight:bold; border:1px solid #eee;'>CÓDIGO</td>	
-			<td style='font-weight:bold; border:1px solid #eee;'>PRODUCTO</td>	
-			<td style='font-weight:bold; border:1px solid #eee;'>CANTIDAD</td>
-			<td style='font-weight:bold; border:1px solid #eee;'>PRECIO UNITARIO</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>IMPUESTO</td>	
 			<td style='font-weight:bold; border:1px solid #eee;'>SUBTOTAL</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>IMPUESTO</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>TOTAL</td>			
-			<td style='font-weight:bold; border:1px solid #eee;'>FECHA</td>		
 		</tr>");
 
+		$grandTotal = 0;
 			foreach ($getSaleReportExcel as $row => $item){
 
 
 				echo utf8_decode("<tr>
+							<td style='border:1px solid #eee;'>".date('d-m-Y', strtotime($item->fecha))."</td>		
 							<td style='border:1px solid #eee;'>".$item->identificacion."</td> 
 							<td style='border:1px solid #eee;'>".$item->cliente."</td>
 							<td style='border:1px solid #eee;'>".$item->nombre."</td>
 							<td style='border:1px solid #eee;'>".$item->usuario."</td>
-							<td style='border:1px solid #eee;'>".$item->tipo_documento."</td>
 							<td style='border:1px solid #eee;'>".$item->metodo_pago."</td>
-							<td style='border:1px solid #eee;'>".$item->moneda."</td>
-							<td style='border:1px solid #eee;'>".$item->tasa."</td>
-							<td style='border:1px solid #eee;'>".$item->impuesto."</td>
 							<td style='border:1px solid #eee;'>");
 
 
@@ -1073,45 +1294,35 @@ class ReportController extends BaseController
 
 				foreach ($getSaleDetailReportExcel as $row2 => $item2){
 
-					echo utf8_decode($item2->codigo."<br>");
-
 					$subtotal = $subtotal + ($item2->cantidad * $item2->precio);
 				}
 
-				echo utf8_decode("</td><td style='border:1px solid #eee;'>");
-
-				foreach ($getSaleDetailReportExcel as $row2 => $item2){
-
-						echo utf8_decode("$item2->nombreProducto $item2->ancho_numero/$item2->alto_numero $item2->categoria Marca $item2->marca<br>");
-				}
-
-				echo utf8_decode("</td><td style='border:1px solid #eee;'>");
-
-				foreach ($getSaleDetailReportExcel as $row2 => $item2){
-
-						echo utf8_decode($item2->cantidad."<br>");
-
-				}
-
-				echo utf8_decode("</td><td style='border:1px solid #eee;'>");
-
-				foreach ($getSaleDetailReportExcel as $row2 => $item2){
-
-					echo utf8_decode($item2->precio."<br>");
-
-				}
-
-				$subtotal = $subtotal * $item->tasa;
 				$tax = ($subtotal * $item->impuesto) / 100;
 				$total = $subtotal + $tax;
+				$grandTotal += $total;
 
 			echo utf8_decode("</td>	
 					<td style='border:1px solid #eee;'>".number_format($subtotal, 2)."</td>
 					<td style='border:1px solid #eee;'>".number_format($tax, 2)."</td>
 					<td style='border:1px solid #eee;'>".number_format($total, 2)."</td>
-					<td style='border:1px solid #eee;'>".date('Y-m-d', strtotime($item->fecha))."</td>		
 						</tr>");
 		}
+
+		echo utf8_decode("
+
+		<tr> 
+			<td style='font-weight:regular; border:1px solid #eee;'></td>
+			<td style='font-weight:regular; border:1px solid #eee;'></td>		
+			<td style='font-weight:regular; border:1px solid #eee;'></td>		
+			<td style='font-weight:regular; border:1px solid #eee;'></td>		
+			<td style='font-weight:regular; border:1px solid #eee;'></td>		
+			<td style='font-weight:regular; border:1px solid #eee;'></td>		
+			<td style='font-weight:regular; border:1px solid #eee;'></td>		
+			<td style='font-weight:regular; border:1px solid #eee;'></td>		
+			<td style='font-weight:regular; border:1px solid #eee;'>Total</td>		
+			<td style='font-weight:regular; border:1px solid #eee;'>".number_format($grandTotal, 2)."</td>		
+					
+		</tr>");
 
 
 			echo "</table>";
@@ -1644,6 +1855,234 @@ class ReportController extends BaseController
 		echo "</table>";
 	}
 
+	public function getSalePerPaymentMethodReportExcel($paymentMethod, $coin, $range = NULL)
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+		$ReportModel = new ReportModel();
+		$ReportModel = $ReportModel->getSalesPerPaymentMethod();
+
+		$ReportModel = $ReportModel->where('ventas.id_metodo_pago', $paymentMethod);
+		$ReportModel = $ReportModel->where('ventas.moneda', $coin);
+
+		$name = "reporte-ventas-por-metodo-pago.xls";
+		$nameHeader = "Todas las ventas por método de pago";
+
+		if ( $range != NULL ){
+			
+			if(!empty(explode('a', $range)[1])){
+				$from = explode('a', $range)[0];
+				$to = explode('a', $range)[1];
+				$where = "DATE_FORMAT(ventas.creado_en, '%Y-%m-%d') BETWEEN '$from' AND '$to'";
+				$ReportModel = $ReportModel->where($where);
+				$name = "reporte-ventas-por-metodo-pago-$from-$to.xls";
+				$nameHeader = "Desde $from hasta $to";
+			}else{
+				$where = "DATE_FORMAT(ventas.creado_en, '%Y-%m-%d') = '$range'";
+				$ReportModel = $ReportModel->where($where);
+				$name = "reporte-ventas-por-metodo-pago-$range.xls";
+				$nameHeader = "Del día $range";
+			}
+
+		}
+
+		$ReportModel = $ReportModel->get()->getResult();
+		
+		if(!$ReportModel){
+			return "Error";
+		}
+
+		header("Pragma: public");
+		header("Expires: 0");
+		header("Content-type: application/x-msdownload");
+		header("Content-Disposition: attachment; filename=$name");
+		header("Pragma: no-cache");
+		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+
+		echo utf8_decode("
+		
+		<table>
+			<tr>
+
+				<td style='background-color:white; width:350px'>
+					
+					<div style='font-size:12px; text-align:left; line-height:15px; margin-left: 20px'>
+						
+						<br>
+						<strong style='font-size: 22px'>Reporte de ventas por método de pago</strong>
+						<br>
+						<strong>$nameHeader</strong>
+
+					</div>
+
+				</td>
+
+				<td style='width:150px;'>
+					
+				</td>
+
+				<td style='background-color:white; width:140px'>
+
+				
+					
+				</td>
+
+				<td style='background-color:white; width:140px'>
+
+					<div style='font-size:12px; text-align:right; margin-left: 50px'>
+						<br>
+						<strong style='font-size: 18px'>Generado:</strong>
+						<br>
+						". date('d-m-Y H:i') . "
+
+					</div>
+					
+				</td>
+
+			</tr>
+		</table>
+		
+		");
+
+		echo utf8_decode("
+		
+		<table>
+		
+		<tr>
+			
+			<td style='width:150px; margin-left: 20px'>
+				<div style='font-size:12px; text-align: center; line-height:15px; margin-left: 50px'>
+					
+					<br>
+					<strong style='font-size: 20px'>$this->businessName</strong>
+					
+					<br>
+
+				</div>
+
+            </td>
+
+			<td style='background-color:white; width:210px'>
+				
+				<div style='font-size:12px; text-align:right; line-height:15px;'>
+					
+					<br>
+					<strong>RIF:</strong> $this->businessIdentification
+
+					<br>
+					<strong>Dirección:</strong> $this->businessAddress
+
+				</div>
+
+			</td>
+
+			<td style='background-color:white; width:140px'>
+
+				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
+					
+					<br>
+					<strong>Teléfono:</strong> $this->businessPhone
+					
+					<br>
+					
+
+				</div>
+				
+			</td>
+
+		</tr>
+
+	</table>
+
+		");
+
+	echo utf8_decode("
+		
+		<table>
+		
+		<tr>
+			
+			<td style='width:150px; margin-left: 20px'>
+				<div style='font-size:12px; text-align: center; line-height:15px; margin-left: 50px'>
+
+				</div>
+
+            </td>
+
+			<td style='background-color:white; width:210px'>
+				
+				<div style='font-size:12px; text-align:right; line-height:15px;'>
+				
+					<br>
+					<strong>Método de pago:</strong> ".$ReportModel[0]->metodo_pago."
+					<br>
+
+				</div>
+
+			</td>
+
+			<td style='background-color:white; width:140px'>
+
+				<div style='font-size:12px; text-align:right; line-height:15px; margin-left: 50px'>
+					
+					<br>
+					<strong>Moneda:</strong> ".$ReportModel[0]->moneda."
+					<br>
+
+				</div>
+				
+			</td>
+
+		</tr>
+
+	</table>
+
+		");
+		
+		echo "<br>";
+
+		echo utf8_decode("<table border='0'> 
+
+		<tr> 
+			<td style='font-weight:bold; border:1px solid #eee;'>FACTURA</td> 
+			<td style='font-weight:bold; border:1px solid #eee;'>FECHA</td>		
+			<td style='font-weight:bold; border:1px solid #eee;'>USUARIO</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>Cliente</td>
+			<td style='font-weight:bold; border:1px solid #eee;'>TOTAL</td>			
+		</tr>");
+
+		$total = 0;
+
+		foreach ($ReportModel as $row => $item){
+
+			$subtotal = (($item->total * $item->impuesto) / 100) + $item->total;
+
+			echo utf8_decode("<tr>
+						<td style='border:1px solid #eee;'>".$item->identificacion."</td>
+						<td style='border:1px solid #eee;'>".date('d-m-Y', strtotime($item->fecha))."</td> 
+						<td style='border:1px solid #eee;'>".$item->usuario."</td>
+						<td style='border:1px solid #eee;'>".$item->cliente."</td>
+						<td style='border:1px solid #eee;'>".number_format($subtotal, 2)."</td>
+						</tr>");
+
+			
+			$total += $subtotal;
+
+		}
+
+		echo utf8_decode("<tr>
+						<td style='border:1px solid #eee;'></td>
+						<td style='border:1px solid #eee;'></td>
+						<td style='border:1px solid #eee;'></td>
+						<td style='border:1px solid #eee; text-align: right'>Total</td>
+						<td style='border:1px solid #eee;'>".number_format($total, 2)."</td>
+						</tr>");
+		
+		echo "</table>";
+	}
+
 	public function getPurchasePerProviderReportExcel($provider, $range = NULL)
 	{
 		if(!$this->session->has('name')){
@@ -1683,12 +2122,12 @@ class ReportController extends BaseController
 		}
 
 
-		header("Pragma: public");
-		header("Expires: 0");
-		header("Content-type: application/x-msdownload");
-		header("Content-Disposition: attachment; filename=$name");
-		header("Pragma: no-cache");
-		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+		// header("Pragma: public");
+		// header("Expires: 0");
+		// header("Content-type: application/x-msdownload");
+		// header("Content-Disposition: attachment; filename=$name");
+		// header("Pragma: no-cache");
+		// header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 
 		echo utf8_decode("
 		
@@ -1846,7 +2285,6 @@ class ReportController extends BaseController
 
 		<tr> 
 			<td style='font-weight:bold; border:1px solid #eee; width: 50px;'>NÚMERO DE COMPRA</td>
-			<td style='font-weight:bold; border:1px solid #eee; width: 50px;'>REFERENCIA</td> 
 			<td style='font-weight:bold; border:1px solid #eee;'>FECHA</td>		
 			<td style='font-weight:bold; border:1px solid #eee;'>USUARIO</td>
 			<td style='font-weight:bold; border:1px solid #eee;'>PRODUCTOS</td>
@@ -1855,15 +2293,16 @@ class ReportController extends BaseController
 			<td style='font-weight:bold; border:1px solid #eee;'>TOTAL</td>			
 		</tr>");
 
+		
 		$total = 0;
 		foreach ($ReportModel as $row => $item){
 			$detail = new ReportModel();
 			$detail = $detail->getPurchaseDetailReportExcel($item->identificacion);
-			$totalCompra = 0;
+			
+			$totalPurchase = 0;
 
 			echo utf8_decode("<tr>
 						<td style='border:1px solid #eee;'>".$item->identificacion."</td>
-						<td style='border:1px solid #eee;'>".$item->referencia."</td>
 						<td style='border:1px solid #eee;'>".date('Y-m-d', strtotime($item->fecha))."</td>
 						<td style='border:1px solid #eee;'>".$item->usuario."</td>
 						<td style='border:1px solid #eee;'>");
@@ -1871,9 +2310,10 @@ class ReportController extends BaseController
 
 			foreach($detail as $row){
 				echo utf8_decode("<br> $row->nombreProducto $row->ancho_numero/$row->alto_numero $row->categoria Marca $row->marca <br>");
-				$totalCompra += $row->precio * $row->cantidad;
-				$total += $totalCompra;
+				$totalPurchase += $row->precio * $row->cantidad;
 			}
+			
+			$total += $totalPurchase;
 
 			echo utf8_decode("</td>");
 			echo utf8_decode("<td style='border:1px solid #eee;'>");
@@ -1893,13 +2333,12 @@ class ReportController extends BaseController
 			echo utf8_decode("</td>");
 
 			echo utf8_decode("
-				<td style='border:1px solid #eee;'>".number_format($totalCompra, 2)."</td>
+				<td style='border:1px solid #eee;'>".number_format($totalPurchase, 2)."</td>
 			</tr>
 			");
 
 		}
 		echo utf8_decode("<tr>
-					<td style='border:1px solid #eee;'></td>
 					<td style='border:1px solid #eee;'></td>
 					<td style='border:1px solid #eee;'></td>
 					<td style='border:1px solid #eee;'></td>
@@ -1949,12 +2388,12 @@ class ReportController extends BaseController
 		}
 
 
-		header("Pragma: public");
-		header("Expires: 0");
-		header("Content-type: application/x-msdownload");
-		header("Content-Disposition: attachment; filename=$name");
-		header("Pragma: no-cache");
-		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+		// header("Pragma: public");
+		// header("Expires: 0");
+		// header("Content-type: application/x-msdownload");
+		// header("Content-Disposition: attachment; filename=$name");
+		// header("Pragma: no-cache");
+		// header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 
 		echo utf8_decode("
 		
@@ -2065,6 +2504,8 @@ class ReportController extends BaseController
 			<td style='font-weight:bold; border:1px solid #eee;'>TOTAL PAGADO</td>		
 		</tr>");
 
+		$total = 0;
+
 		foreach ($ReportModel as $row => $item){
 
 
@@ -2075,7 +2516,16 @@ class ReportController extends BaseController
 						<td style='border:1px solid #eee;'>".$item->direccion."</td>
 						<td style='border:1px solid #eee;'>".$item->cantidad."</td>
 						<td style='border:1px solid #eee;'>".number_format($item->total, 2)."</td></tr>");
+			$total += $item->total;
 		}
+
+		echo utf8_decode("<tr>
+						<td style='border:1px solid #eee;'></td>
+						<td style='border:1px solid #eee;'></td>
+						<td style='border:1px solid #eee;'></td>
+						<td style='border:1px solid #eee;'></td>
+						<td style='border:1px solid #eee;'>Total</td>
+						<td style='border:1px solid #eee;'>".number_format($total, 2)."</td></tr>");
 
 		
 		echo "</table>";

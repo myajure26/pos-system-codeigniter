@@ -40,6 +40,8 @@ function tableConfig(ajaxUrl, selector){
                 d.categoryFilter = $('#categoryFilter').val();
                 d.brandFilter = $('#brandFilter').val();
                 d.searchById = $('#searchById').val();
+                d.paymentMethod = $('#payment-method').val();
+                d.coin = $('#coin').val();
                 d.provider = $('#provider').val();
             }
         },
@@ -88,12 +90,12 @@ function tableConfig(ajaxUrl, selector){
         $(`${selector}`).DataTable().ajax.reload();
     });
 
-    $(document).on('click', '.btn-select-provider-assign-order', function(){
-        if(!$.fn.dataTable.isDataTable( '.getProducts' )){
-            tableConfig('/orders/getProducts', '.getProducts');
-        }
-        $(`${selector}`).DataTable().ajax.reload();
-    });
+    // $(document).on('click', '.btn-select-provider', function(){
+    //     if(!$.fn.dataTable.isDataTable( '.getProducts' )){
+    //         tableConfig('/orders/getProducts', '.getProducts');
+    //     }
+    //     $(`${selector}`).DataTable().ajax.reload();
+    // });
 
     $(document).on('click', '.btn-select-provider-assign-purchase', function(){
         if(!$.fn.dataTable.isDataTable( '.getProducts' )){

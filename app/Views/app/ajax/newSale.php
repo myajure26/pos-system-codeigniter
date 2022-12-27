@@ -151,28 +151,43 @@
                                                         </thead>
                                                         <tbody id="list">
                                                         </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <th style="width:150px; text-align: right" colspan="4">Subtotal</th>
+                                                                <th style="width:150px"><input type="text" class="form-control form-control-sm price tfootSubtotal" required disabled></th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th style="width:150px; text-align: right" colspan="4">Impuesto</th>
+                                                                <th style="width:150px"><input type="text" class="form-control form-control-sm price tfootTax" required disabled></th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th style="width:150px; text-align: right" colspan="4">Total</th>
+                                                                <th style="width:150px"><input type="text" class="form-control form-control-sm price tfootTotal" required disabled></th>
+                                                            </tr>
+                                                        </tfoot>
                                                     </table>
                                                 </div>
                                                 <div class="row">
-                                                <div class="col-md-4 mt-2 d-block mx-auto">
-                                                    <div class="input-group">
-                                                        <div class="input-group-text border-primary">Subtotal</div>
-                                                        <input type="text" class="form-control border-primary subtotal" readonly value="0.00">
+                                                    <h5 class="font-size-14 mb-3 mt-2"><i class="mdi mdi-arrow-right text-primary me-1"></i>Total incluyendo la conversión de moneda</h5>
+                                                    <div class="col-md-4 mt-2 d-block mx-auto">
+                                                        <div class="input-group">
+                                                            <div class="input-group-text border-primary">Subtotal</div>
+                                                            <input type="text" class="form-control border-primary subtotal" readonly value="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 mt-2 d-block mx-auto">
+                                                        <div class="input-group">
+                                                            <div class="input-group-text border-primary">Impuesto</div>
+                                                            <input type="text" class="form-control border-primary tax" readonly value="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 mt-2 d-block mx-auto">
+                                                        <div class="input-group">
+                                                            <div class="input-group-text border-primary">Total</div>
+                                                            <input type="text" class="form-control border-primary total" readonly value="0.00">
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4 mt-2 d-block mx-auto">
-                                                    <div class="input-group">
-                                                        <div class="input-group-text border-primary">Impuesto</div>
-                                                        <input type="text" class="form-control border-primary tax" readonly value="0.00">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 mt-2 d-block mx-auto">
-                                                    <div class="input-group">
-                                                        <div class="input-group-text border-primary">Total</div>
-                                                        <input type="text" class="form-control border-primary total" readonly value="0.00">
-                                                    </div>
-                                                </div>
-                                            </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="table-responsive">
@@ -187,6 +202,7 @@
                                                                     <th>Categoría</th>
                                                                     <th>Precio</th>
                                                                     <th>Stock</th>
+                                                                    <th>Stock mínimo</th>
                                                                 </tr>
                                                             </tr>
                                                         </thead>
@@ -266,6 +282,7 @@
                                                 </div>
                                             </div>
                                             <div class="row">
+                                                <h5 class="font-size-14 mb-3 mt-2"><i class="mdi mdi-arrow-right text-primary me-1"></i>Total incluyendo la conversión de moneda</h5>
                                                 <div class="col-md-4 mt-2 d-block mx-auto">
                                                     <div class="input-group">
                                                         <div class="input-group-text border-primary">Subtotal</div>

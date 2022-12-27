@@ -9,13 +9,13 @@
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center
                     justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">Reportes de compras por proveedor</h4>
+                    <h4 class="mb-sm-0 font-size-18">Reportes de ventas por método de pago</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript:
-                                    void(0);">Administrar compras</a></li>
-                            <li class="breadcrumb-item active">Reportes de compras por proveedor</li>
+                                    void(0);">Administrar ventas</a></li>
+                            <li class="breadcrumb-item active">Reportes de ventas por método de pago</li>
                         </ol>
                     </div>
 
@@ -28,38 +28,51 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Administrar compras</h4>
-                        <p class="card-title-desc">En este módulo podrás ver todas las compras realizadas por proveedor.</p>
+                        <h4 class="card-title">Administrar ventas</h4>
+                        <p class="card-title-desc">En este módulo podrás ver todas las ventas realizadas por método de pago.</p>
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="mt-2 mb-4 col-md-6">
-                                <label class="form-label">Proveedor</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="searchById" placeholder="Por favor, busque al proveedor" readonly required>
-                                    <div class="input-group-btn">
-                                        <button type="button" class="btn btn-primary waves-effect" data-bs-toggle="modal" data-bs-target="#searchProviderModal"><i class="fas fa-search"></i></button>
-                                    </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Método de pago</label>
+                                    <select class="form-select" name="paymentMethod" id="payment-method" required>
+                                        <option value="">Seleccione el método de pago</option>
+                                        <?php foreach($paymentMethod as $row)
+                                            echo '<option value="'.$row->id_metodo_pago.'">'.$row->nombre.'</option>';
+                                        ?>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="mt-2 mb-4 col-md-6">
-                                <label class="form-label">Rango de fecha</label>
-                                <input type="text" class="form-control range" placeholder="Selecciona una fecha" id="range" data-type="purchases_per_provider">
-                            </div>
-                            <div class="col-md-6 mt-2 mb-4 d-block mx-auto">
-                                <button class="btn btn-success w-100" id="btn-report" style="display: none">Generar reporte de compras por proveedor</button>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="coin">Moneda</label>
+                                    <select class="form-select" name="coin" id="coin" required>
+                                        <option value="">Seleccione la moneda</option>
+                                        <?php foreach($coins as $row)
+                                            echo '<option value="'.$row->identificacion.'">'.$row->moneda.'</option>';
+                                        ?>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-
+                        <div class="row">
+                            <div class="mt-2 mb-4 col-md-6">
+                                <input type="text" class="form-control range" placeholder="Selecciona una fecha" id="range" data-type="sales_per_payment_method">
+                            </div>
+                            <div class="col-md-6 mt-2 mb-4 d-block mx-auto">
+                                <button class="btn btn-success w-100" id="btn-report" style="display: none">Generar reporte por método de pago</button>
+                            </div>
+                        </div>
                         <table class="table-report" style="display: none">
                             <tr>
 
-                                <td style='background-color:white; width:400px'>
+                                <td style='background-color:white; width:350px'>
                                     
                                     <div style='font-size:14px; text-align:left; line-height:15px; margin-left: 20px'>
                                         
                                         <br><br>
-                                        <strong style='font-size: 23px'>Reporte de compras por proveedor</strong>
+                                        <strong style='font-size: 23px'>Reporte de ventas por método de pago</strong>
                                         <br><br>
                                         <p class="report-date"></p>
 
@@ -145,14 +158,6 @@
                             <tr>
                                 
                                 <td style='width:350px; margin-left: 20px'>
-                                    <div style='font-size:14px; text-align:center; line-height:15px; margin-left: 20px'>
-                                        
-                                        <br><br>
-                                        <strong style='font-size: 23px'>Proveedor</strong>                                   
-
-                                        <br><br>
-
-                                    </div>
 
                                 </td>
 
@@ -161,10 +166,8 @@
                                     <div style='font-size:14px; text-align:right; line-height:23px;'>
                                         
                                         <br>
-                                        <strong>Identificación:</strong> <span id="identification-report"></span>
-
+                                        <strong>Método de pago:</strong> <span id="payment-method-report"></span>
                                         <br>
-                                        <strong>Nombre:</strong> <span id="name-report"></span></td>
 
                                     </div>
 
@@ -175,10 +178,8 @@
                                     <div style='font-size:14px; text-align:right; line-height:23px; margin-left: 50px'>
                                         
                                         <br>
-                                        <strong>Teléfono:</strong> <span id="phone-report"></span>
-
+                                        <strong>Moneda:</strong> <span id="coin-report"></span>
                                         <br>
-                                        <strong>Dirección:</strong> <span id="address-report"></span></td>
 
                                     </div>
                                     
@@ -189,18 +190,15 @@
                         </table>
                         <br>
                         <hr>
-
                         <table class="table datatable text-nowrap table-striped nowrap w-100 dt-responsive">
                             <thead>
                                 <tr>
                                     <tr>
-                                        <th>Número de compra</th>
+                                        <th>Factura</th>
                                         <th>Fecha</th>
                                         <th>Usuario</th>
-                                        <th>Productos</th>
-                                        <th>Cantidad</th>
-                                        <th>Precio producto</th>
-                                        <th>Total compra</th>
+                                        <th>Cliente</th>
+                                        <th>Total</th>
                                     </tr>
                                 </tr>
                             </thead>
@@ -213,41 +211,18 @@
 </div>
 <!-- End Page-content -->
 
-<!-- provider modal -->
-<div class="modal fade" id="searchProviderModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel">Selecciona el proveedor</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="table-responsive">
-                    <table class="table getProvider text-nowrap table-striped nowrap w-100 responsive">
-                        <thead>
-                            <tr>
-                                <tr>
-                                    <th>Seleccionar</th>
-                                    <th>Cédula/Rif</th>
-                                    <th>Nombre</th>
-                                    <th>Dirección</th>
-                                    <th>Teléfono</th>
-                                </tr>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Cerrar</button>
-            </div>        
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
 <script>
-    tableConfig('/purchases_provider', '.getProvider');
+
+    $(document).on('change', '#coin, #payment-method', function(){
+
+        if($('#coin option:selected').val() != '' && $('#payment-method option:selected').val() != ''){
+            if(!$.fn.dataTable.isDataTable( '.datatable' )){
+                tableConfig('/sales_per_payment_method', '.datatable');
+            }
+            $('.datatable').DataTable().ajax.reload();
+        }
+    });
 
     $("#range").flatpickr({
         locale: 'es',

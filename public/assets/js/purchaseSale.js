@@ -20,13 +20,68 @@ $(document).ready(function(){
             window.open(url + '/invoice/order/' + id + '.pdf', '_blank');
         }
 
+        if(type === 'purchases'){
+            
+            window.open(url + '/invoice/purchase/' + id + '.pdf', '_blank');
+        }
+
     });
 
     // Seleccionar al proveedor
     $(document).on('click', '.btn-select-provider', function(){
-        $('#providerInput').val($(this).closest('tr').find('td:eq(2)').text());
-        $('#provider, #viewProvider').val($(this).closest('tr').find('td:eq(1)').text());
-        $('#searchProviderModal').modal('hide');
+
+        const provider = $(this).closest('tr').find('td:eq(1)').text();
+        const providerName = $(this).closest('tr').find('td:eq(2)').text();
+
+        $.ajax({
+            url: url + '/orders/verifyProviderOrder/' + provider,
+            method: "GET",
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            beforeSend: function() {
+                Swal.fire({
+                    icon: 'info',
+                    title: '<strong>Procesando...</strong>',
+                    text: 'Por favor, espera unos segundos',
+                    showConfirmButton: false,
+                    didOpen: function() {
+                        Swal.showLoading();
+                    }
+                });
+            },
+            success: function (data) {
+
+                if( data ){
+                    $('#providerInput').val(providerName);
+                    $('#provider, #viewProvider').val(provider);
+                    $('#searchProviderModal').modal('hide');
+                    
+                    Swal.close();
+                    if(!$.fn.dataTable.isDataTable( '.getProducts' )){
+                        tableConfig('/orders/getProducts', '.getProducts');
+                    }
+                    $('.getProducts').DataTable().ajax.reload();
+                    return;
+                }
+                
+                Swal.fire({
+                    title: 'Error',
+                    text: 'El proveedor ya tiene un pedido abierto',
+                    icon: 'warning'
+                });
+
+            },
+            error: function (error) {
+                Swal.fire({
+                title: 'Error',
+                text: 'El proveedor ya tiene un pedido abierto',
+                icon: 'warning'
+                });
+
+            }
+        });
     });
 
     // Seleccionar el producto en la compra
@@ -81,15 +136,30 @@ $(document).ready(function(){
 
         let quantity = $(this).closest('tr').find('.productQuantity').val();
         let price = $(this).closest('tr').find('.productPrice').val();
-        const max = $(this).closest('tr').find('.productQuantity').attr('max');
+        let max = $(this).closest('tr').find('.productQuantity').attr('max');
+        let type = $(this).closest('tr').find('.productQuantity').attr('data-type');
+        
+        if( type == 'sale' ){
+            if( Number(quantity) == Number(max)  ){
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Alerta',
+                    text: 'Se ha llegado al stock mínimo',
+                });
+                return false;
+            }
+            console.log('aqui');
+        }
 
-        // TODO:: HACER LA VALIDACIÓN DE STOCK MÁXIMO POR LOS PEDIDOS QUE YA HAY PENDIENTES
-        if( quantity > max ){
+        if( Number(quantity) > Number(max) ){
             Swal.fire({
-                title: 'warning',
+                title: 'Alerta',
                 text: `La cantidad supera el stock máximo (${max})`,
-                icon: 'error'
+                icon: 'info'
             });
+            $(this).closest('tr').find('.productQuantity').addClass('is-invalid');
+            $('#productsNext').slideUp();
+            return false;
         }
         
         //Quitar las comas y puntos
@@ -103,7 +173,6 @@ $(document).ready(function(){
         // ? Validar solamente números enteros
         if( !Number.isInteger(quantity) ){
             $(this).closest('tr').find('.productQuantity').addClass('is-invalid');
-            console.log(Number.isInteger(quantity) + quantity);
             return false;
         }
         
@@ -151,6 +220,7 @@ $(document).ready(function(){
         const code = $(this).closest('tr').find('td:eq(1)').text();
         const name = $(this).closest('tr').find('td:eq(2)').text();
         let stock = Number($(this).closest('tr').find('td:eq(6)').text());
+        let minStock = Number($(this).closest('tr').find('td:eq(7)').text());
         let price = $(this).closest('tr').find('td:eq(5)').text();
 
         if($('#'+code).length > 0){
@@ -184,7 +254,7 @@ $(document).ready(function(){
                     <input type="hidden" name="productStock[]" value="${stock}">
                     <input type="hidden" name="productCode[]" value="${code}">${code}</td>
                 <td>${name}</td>
-                <td><input type="number" class="form-control form-control-sm productQuantity" name="productQuantity[]" value="1" min="1" max="${stock}" required data-type="sale" ></td>
+                <td><input type="number" class="form-control form-control-sm productQuantity" name="productQuantity[]" value="1" min="1" max="${stock - minStock}" required data-type="sale" ></td>
                 <td><input type="text" class="form-control form-control-sm price productPrice" name="productPrice[]" value="${price}" required maxlength="10" readonly></td>
                 <td class="text-center"><input type="text" class="form-control form-control-sm price totalPriceProduct" value="${totalProduct}" readonly required></td>
                 <td>
@@ -297,6 +367,10 @@ const totalSaleCount = () => {
     $('.subtotal').val(subtotal);
     $('.tax').val(tax);
     $('.total').val(total);
+    $('.tfootSubtotal').val(subtotal);
+    $('.tfootTax').val(tax);
+    $('.tfootTotal').val(total);
+    
 
 }
 

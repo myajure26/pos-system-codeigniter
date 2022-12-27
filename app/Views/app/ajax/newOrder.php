@@ -179,6 +179,7 @@
                         </thead>
                     </table>
                 </div>
+                <span class="badge bg-soft-info text-dark mt-3 p-2 px-3">* El stock incluye la cantidad de productos que están en pedidos pendientes</span>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Cerrar</button>

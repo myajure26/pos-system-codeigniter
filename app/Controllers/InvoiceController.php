@@ -73,7 +73,7 @@ class InvoiceController extends BaseController
         $db     = \Config\Database::connect();
 		$order = $db
                 ->table('pedido')
-				->select('pedido.id_pedido, id_detalle_pedido, ci_rif_proveedor, proveedores.nombre as proveedor_nombre, proveedores.direccion, id_tipo_documento, monedas.moneda, monedas.simbolo, pedido.actualizado_en, pedido.creado_en, detalle_pedido.cod_producto, ancho_caucho.ancho_numero, alto_caucho.alto_numero, categorias.categoria, marcas.marca, detalle_pedido.cant_producto, detalle_pedido.precio_producto, productos.nombre, usuarios.nombre as usuario, pedido.estado_pedido')
+				->select('pedido.id_pedido, ci_rif_proveedor, proveedores.nombre as proveedor_nombre, proveedores.direccion, monedas.moneda, monedas.simbolo, pedido.creado_en, detalle_pedido.cod_producto, ancho_caucho.ancho_numero, alto_caucho.alto_numero, categorias.categoria, marcas.marca, detalle_pedido.cant_producto, detalle_pedido.precio_producto, productos.nombre, usuarios.nombre as usuario, pedido.estado_pedido')
 				->join('detalle_pedido', 'detalle_pedido.id_pedido = pedido.id_pedido')
 				->join('productos', 'productos.codigo = detalle_pedido.cod_producto')
 				->join('ancho_caucho', 'ancho_caucho.id_ancho_caucho = productos.id_ancho_caucho')
@@ -100,6 +100,50 @@ class InvoiceController extends BaseController
 
         $dompdf = new Dompdf($options);
         $html = view('app/invoices/orderInvoice', $data);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('letter');
+        $dompdf->render();
+        $dompdf->stream();
+
+    }
+
+    public function purchaseInvoice($id)
+    {
+
+        if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+
+        $db     = \Config\Database::connect();
+		$purchase = $db
+                ->table('compras')
+				->select('compras.identificacion, proveedores.identificacion as ci_rif_proveedor, proveedores.nombre as proveedor_nombre, proveedores.direccion, monedas.moneda, monedas.simbolo, compras.actualizado_en, compras.creado_en, detalle_compra.producto as cod_producto, ancho_caucho.ancho_numero, alto_caucho.alto_numero, categorias.categoria, marcas.marca, detalle_compra.cantidad as cant_producto, detalle_compra.precio as precio_producto, productos.nombre, usuarios.nombre as usuario')
+				->join('detalle_compra', 'detalle_compra.compra = compras.identificacion')
+				->join('productos', 'productos.codigo = detalle_compra.producto')
+				->join('ancho_caucho', 'ancho_caucho.id_ancho_caucho = productos.id_ancho_caucho')
+				->join('alto_caucho', 'alto_caucho.id_alto_caucho = productos.id_alto_caucho')
+				->join('marcas', 'marcas.identificacion = productos.marca')
+				->join('categorias', 'categorias.identificacion = productos.categoria')
+				->join('monedas', 'monedas.identificacion = compras.moneda')
+				->join('proveedores', 'proveedores.identificacion = compras.proveedor')
+				->join('usuarios', 'usuarios.identificacion = compras.usuario')
+                ->where('compras.identificacion', $id)
+		        ->get()->getResult();
+
+        $data = [
+            "id"    => $id,
+            "purchase" => $purchase,
+            "businessName" 			=> $this->businessName,
+            "businessIdentification"=> $this->businessIdentification,
+            "businessAddress" 		=> $this->businessAddress,
+            "businessPhone" 		=> $this->businessPhone
+        ];
+
+        $options = new Options();
+        $options->set('isRemoteEnabled', true);
+
+        $dompdf = new Dompdf($options);
+        $html = view('app/invoices/purchaseInvoice', $data);
         $dompdf->loadHtml($html);
         $dompdf->setPaper('letter');
         $dompdf->render();

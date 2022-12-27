@@ -106,6 +106,23 @@ class OrderController extends BaseController
 		return sweetAlert($this->successMessage);
 	}
 
+	public function verifyProviderOrder($provider)
+	{
+		if(!$this->session->has('name')){
+			return redirect()->to(base_url());
+		}
+		
+		$OrderModel = new OrderModel();
+		$verify = $OrderModel->verifyProviderOrder($provider);
+
+		if( $verify ){
+			return json_encode(false);
+		}
+
+		return json_encode(true);
+
+	}
+
 	public function getProviders()
 	{
 		if(!$this->session->has('name')){
@@ -146,12 +163,24 @@ class OrderController extends BaseController
 			->join('marcas', 'marcas.identificacion = productos.marca')
 			->join('categorias', 'categorias.identificacion = productos.categoria')
 			->where('productos.estado', 1);
+
+		
 				
 		return DataTable::of($products)
 			->hide('ancho_numero')
 			->hide('alto_numero')
 			->edit('nombre', function($row){
 				return "$row->nombre $row->ancho_numero/$row->alto_numero";
+			})
+			->edit('cantidad', function($row){
+				$db = \Config\Database::connect();
+				$productOrder = $db
+				->table('pedido')
+				->select('SUM(cant_producto) as cantidad')
+				->join('detalle_pedido', 'detalle_pedido.id_pedido = pedido.id_pedido')
+				->where('estado_pedido', 2);
+				$productOrder = $productOrder->where('detalle_pedido.cod_producto', $row->codigo)->get()->getResult();
+				return $row->cantidad + $productOrder[0]->cantidad;
 			})
 			->add('Seleccionar', function($row){
 				return '<div class="btn-list"> 
@@ -289,12 +318,6 @@ class OrderController extends BaseController
 
 		$acceptOrder = new OrderModel();
 		$acceptOrder = $acceptOrder->acceptOrder($order);
-
-		if( $acceptOrder == 'empty' ){
-
-			return 'empty';
-
-		}
 
 		if( !$acceptOrder ){
 
