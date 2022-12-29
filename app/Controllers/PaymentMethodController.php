@@ -30,6 +30,7 @@ class PaymentMethodController extends BaseController
 	public function createPaymentMethod()
 	{
 		helper('paymentMethodValidation');
+		helper('generateCode');
 
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
@@ -50,6 +51,7 @@ class PaymentMethodController extends BaseController
 
 		$PaymentMethodModel = new PaymentMethodModel();
 		$paymentMethod = $PaymentMethodModel->createPaymentMethod([
+									'id_metodo_pago' => generateCode('MP', 'metodo_pago', 'id_metodo_pago'),
 									'nombre' => $name
 								]);
 

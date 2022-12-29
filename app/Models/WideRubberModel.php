@@ -8,13 +8,11 @@ class WideRubberModel extends Model
 {
 	protected $DBGroup              = 'default';
 	protected $table                = 'ancho_caucho';
-	protected $primaryKey           = 'id_ancho_caucho';
-	protected $useAutoIncrement     = true;
 	protected $insertID             = 0;
 	protected $returnType           = 'array';
 	protected $useSoftDeletes       = true;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["ancho_numero", "estado_ancho_caucho", "actualizado_en", "creado_en"];
+	protected $allowedFields        = ["id_ancho_caucho", "ancho_numero", "estado_ancho_caucho", "actualizado_en", "creado_en"];
 
 	// Dates
 	protected $useTimestamps        = true;

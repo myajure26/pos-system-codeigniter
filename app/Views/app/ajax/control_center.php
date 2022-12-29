@@ -69,7 +69,7 @@
                                     <thead>
                                         <tr>
                                             <tr>
-                                                <th>#</th>
+                                                <th>Identificación</th>
                                                 <th>Moneda principal</th>
                                                 <th>Moneda secundaria</th>
                                                 <th>Precio</th>

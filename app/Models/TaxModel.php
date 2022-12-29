@@ -8,13 +8,11 @@ class TaxModel extends Model
 {
 	protected $DBGroup              = 'default';
 	protected $table                = 'impuestos';
-	protected $primaryKey           = 'identificacion';
-	protected $useAutoIncrement     = true;
 	protected $insertID             = 0;
 	protected $returnType           = 'array';
 	protected $useSoftDeletes       = true;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["impuesto", "porcentaje", "estado", "actualizado_en", "creado_en"];
+	protected $allowedFields        = ["identificacion", "impuesto", "porcentaje", "estado", "actualizado_en", "creado_en"];
 
 	// Dates
 	protected $useTimestamps        = true;

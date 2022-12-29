@@ -30,6 +30,7 @@ class CoinController extends BaseController
 	public function createCoin()
 	{
 		helper('coinValidation');
+		helper('generateCode');
 
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
@@ -51,6 +52,7 @@ class CoinController extends BaseController
 
 		$CoinModel = new CoinModel();
 		$coin = $CoinModel->createCoin([
+									'identificacion' => generateCode('M', 'monedas', 'identificacion'),
 									'moneda' => $name,
 									'simbolo' => $symbol
 								]);

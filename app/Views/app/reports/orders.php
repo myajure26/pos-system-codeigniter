@@ -54,7 +54,7 @@
                             <thead>
                                 <tr>
                                     <tr>
-                                        <th>Número de compra</th>
+                                        <th>Orden de compra</th>
                                         <th>Proveedor</th>
                                         <th>Fecha</th>
                                         <th>Estado</th>

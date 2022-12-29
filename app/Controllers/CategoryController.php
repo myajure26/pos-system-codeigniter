@@ -30,6 +30,7 @@ class CategoryController extends BaseController
 	public function createCategory()
 	{
 		helper('categoryValidation');
+		helper('generateCode');
 
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
@@ -49,7 +50,10 @@ class CategoryController extends BaseController
 		$name = $this->request->getPost('name');
 
 		$CategoryModel = new CategoryModel();
-		$category = $CategoryModel->createCategory(['categoria' => $name]);
+		$category = $CategoryModel->createCategory([
+												'identificacion'	=> generateCode('CT', 'categorias', 'identificacion'),
+												'categoria' 		=> $name
+											]);
 
 		if(!$category){
 			$this->errorMessage['text'] = "Error al guardar la categoría en la base de datos";

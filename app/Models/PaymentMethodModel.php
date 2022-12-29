@@ -8,13 +8,11 @@ class PaymentMethodModel extends Model
 {
 	protected $DBGroup              = 'default';
 	protected $table                = 'metodo_pago';
-	protected $primaryKey           = 'id_metodo_pago';
-	protected $useAutoIncrement     = true;
 	protected $insertID             = 0;
 	protected $returnType           = 'array';
 	protected $useSoftDeletes       = true;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["nombre", "estado_metodo_pago", "actualizado_en", "creado_en"];
+	protected $allowedFields        = ["id_metodo_pago", "nombre", "estado_metodo_pago", "actualizado_en", "creado_en"];
 
 	// Dates
 	protected $useTimestamps        = true;

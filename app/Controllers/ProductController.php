@@ -30,6 +30,7 @@ class ProductController extends BaseController
 	public function createProduct()
 	{
 		helper('ProductValidation');
+		helper('generateCode');
 
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
@@ -58,7 +59,7 @@ class ProductController extends BaseController
 
 		$ProductModel = new ProductModel();
 		$product = $ProductModel->createProduct([
-									'codigo' 			=> $this->request->getPost('code'),
+									'codigo' 			=> generateCode('P', 'productos', 'codigo'),
 									'nombre' 			=> $this->request->getPost('name'),
 									'id_ancho_caucho' 	=> $this->request->getPost('wide'),
 									'id_alto_caucho' 	=> $this->request->getPost('high'),
@@ -181,7 +182,7 @@ class ProductController extends BaseController
 		$db      	= \Config\Database::connect();
 		$products 	= $db
 						->table('productos')
-						->select('productos.codigo, nombre, ancho_caucho.ancho_numero, alto_caucho.alto_numero, marcas.marca, categorias.categoria')
+						->select('productos.codigo, nombre, ancho_caucho.ancho_numero, alto_caucho.alto_numero, categorias.categoria, marcas.marca')
 						->join('ancho_caucho', 'ancho_caucho.id_ancho_caucho = productos.id_ancho_caucho')
 						->join('alto_caucho', 'alto_caucho.id_alto_caucho = productos.id_alto_caucho')
 						->join('marcas', 'marcas.identificacion = productos.marca')

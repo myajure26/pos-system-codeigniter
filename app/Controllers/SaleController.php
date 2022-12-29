@@ -30,6 +30,7 @@ class SaleController extends BaseController
 	public function createSale()
 	{
 		helper('saleValidation');
+		helper('generateCode');
 
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
@@ -47,6 +48,7 @@ class SaleController extends BaseController
 		}
 
 		$sale = [
+			"identificacion"=> generateCode('V', 'ventas', 'identificacion'),
 			"cliente" 		=> $this->request->getPost('customer'),
 			"usuario" 		=> $this->session->get('identification'),
 			"tipo_documento"=> $this->request->getPost('receipt'),
@@ -85,9 +87,9 @@ class SaleController extends BaseController
 			}
 
 			$data = [
-				"producto"	=> $productCode[$i],
-				"cantidad"	=> $productQuantity[$i],
-				"precio"	=> $price
+				"producto"		=> $productCode[$i],
+				"cantidad"		=> $productQuantity[$i],
+				"precio"		=> $price
 			];
 
 			array_push($saleDetails, $data);

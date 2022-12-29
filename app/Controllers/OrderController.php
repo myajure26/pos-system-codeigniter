@@ -30,6 +30,7 @@ class OrderController extends BaseController
 	public function createOrder()
 	{
 		helper('orderValidation');
+		helper('generateCode');
 
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
@@ -47,6 +48,7 @@ class OrderController extends BaseController
 		}
 
 		$order = [
+			"id_pedido" 		=> generateCode('O', 'pedido', 'id_pedido'),
 			"ci_rif_proveedor" 	=> $this->request->getPost('provider'),
 			"ci_usuario" 		=> $this->session->get('identification'),
 			"id_tipo_documento" => $this->request->getPost('receipt'),
@@ -442,7 +444,7 @@ class OrderController extends BaseController
 		
 		//SWEET ALERT
 		$this->successMessage['alert'] 		= "clean";
-		$this->successMessage['text'] 		= "El pedido se ha registrado correctamente";
+		$this->successMessage['text'] 		= "El pedido se ha actualizado correctamente";
 		return sweetAlert($this->successMessage);
 	}
 

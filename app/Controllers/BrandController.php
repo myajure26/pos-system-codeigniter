@@ -30,6 +30,7 @@ class BrandController extends BaseController
 	public function createBrand()
 	{
 		helper('brandValidation');
+		helper('generateCode');
 
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
@@ -49,7 +50,10 @@ class BrandController extends BaseController
 		$name = $this->request->getPost('name');
 
 		$BrandModel = new BrandModel();
-		$brand = $BrandModel->createBrand(['marca' => $name]);
+		$brand = $BrandModel->createBrand([
+										'identificacion'=> generateCode('MR', 'marcas', 'identificacion'),
+										'marca' 		=> $name
+									]);
 
 		if(!$brand){
 			$this->errorMessage['text'] = "Error al guardar la marca en la base de datos";

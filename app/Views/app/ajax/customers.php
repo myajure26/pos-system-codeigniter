@@ -54,7 +54,7 @@
                             <thead>
                                 <tr>
                                     <tr>
-                                        <th>Cédula/Rif</th>
+                                        <th>Identificación</th>
                                         <th>Nombre</th>
                                         <th>Teléfono</th>
                                         <th>Estado</th>

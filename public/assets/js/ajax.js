@@ -814,6 +814,7 @@ $(document).ready(function() {
                     success: function (data) {
                         
                         tr.remove();
+                        totalCount();
                         Swal.close();
 
                     },

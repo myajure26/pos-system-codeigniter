@@ -30,6 +30,7 @@ class DocumentTypeController extends BaseController
 	public function createDocumentType()
 	{
 		helper('documentTypeValidation');
+		helper('generateCode');
 
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
@@ -49,7 +50,10 @@ class DocumentTypeController extends BaseController
 		$name = $this->request->getPost('name');
 
 		$DocumentTypeModel = new DocumentTypeModel();
-		$documentType = $DocumentTypeModel->createDocumentType(['nombre' => $name]);
+		$documentType = $DocumentTypeModel->createDocumentType([
+															'identificacion' => generateCode('TD', 'tipo_documento', 'identificacion'),
+															'nombre' => $name
+														]);
 
 		if(!$documentType){
 			$this->errorMessage['text'] = "Error al guardar en la base de datos";

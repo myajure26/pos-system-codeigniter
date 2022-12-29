@@ -8,13 +8,12 @@ class OrderModel extends Model
 {
 	protected $DBGroup              = 'default';
 	protected $table                = 'pedido';
-	protected $primaryKey           = 'id_pedido';
 	protected $useAutoIncrement     = true;
 	protected $insertID             = 0;
 	protected $returnType           = 'array';
 	protected $useSoftDeletes       = true;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["ci_rif_proveedor", "ci_usuario", "id_tipo_documento", "id_moneda", "estado_pedido", "actualizado_en", "creado_en"];
+	protected $allowedFields        = ["id_pedido","ci_rif_proveedor", "ci_usuario", "id_tipo_documento", "id_moneda", "estado_pedido", "actualizado_en", "creado_en"];
 
 	// Dates
 	protected $useTimestamps        = true;
@@ -31,7 +30,7 @@ class OrderModel extends Model
 		$db->table('pedido')->insert($order);
 		
 		//Obtener ID del pedido
-		$orderId = $db->insertID();
+		$orderId = $order['id_pedido'];
 
 		//Insertar el ID al arreglo
 		for($i = 0; $i < count($orderDetails); $i++){
@@ -90,25 +89,29 @@ class OrderModel extends Model
 
 	public function acceptOrder($id)
 	{
+		helper('generateCode');
 		$db = \Config\Database::connect();
 		$db->transStart();
 
+		$purchaseCode = generateCode('CM', 'compras', 'identificacion');
 		
-		$db->query("INSERT INTO `compras`(`proveedor`, `usuario`, `tipo_documento`, `moneda`, `id_pedido`) SELECT ci_rif_proveedor, ci_usuario, id_tipo_documento, id_moneda, id_pedido from pedido where id_pedido = $id");
+		$db->query("INSERT INTO `compras`(`proveedor`, `usuario`, `tipo_documento`, `moneda`, `id_pedido`) SELECT ci_rif_proveedor, ci_usuario, id_tipo_documento, id_moneda, id_pedido from pedido where id_pedido = '$id'");
 		
-		$db->query("INSERT INTO `detalle_compra`(`producto`, `cantidad`, `precio`, `compra`) SELECT cod_producto, cant_producto, precio_producto, ". $db->insertID() ." from detalle_pedido where id_pedido = $id");
+		$db->query("UPDATE compras SET identificacion = '$purchaseCode' WHERE id_pedido = '$id'");
+
+		$db->query("INSERT INTO `detalle_compra`(`producto`, `cantidad`, `precio`, `compra`) SELECT cod_producto, cant_producto, precio_producto, '$purchaseCode' from detalle_pedido where id_pedido = '$id'");
 
 		$stock = $db
 				->table('detalle_compra')
 				->select('producto, cantidad')
-				->where('compra', $db->insertID())
+				->where('compra', $purchaseCode)
 				->get()->getResult();
 		
 		foreach($stock as $row){
 			$db->query("UPDATE productos SET cant_producto = cant_producto + $row->cantidad  WHERE codigo = '$row->producto'");
 		}
 
-		$db->query("UPDATE pedido SET estado_pedido = 1 WHERE id_pedido = $id");
+		$db->query("UPDATE pedido SET estado_pedido = 1 WHERE id_pedido = '$id'");
 		
 		$db->transComplete();
 

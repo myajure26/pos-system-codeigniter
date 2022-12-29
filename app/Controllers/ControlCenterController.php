@@ -29,6 +29,7 @@ class ControlCenterController extends BaseController
 	public function createCoinPrice()
 	{
 		helper('controlCenterValidation');
+		helper('generateCode');
 
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
@@ -65,6 +66,7 @@ class ControlCenterController extends BaseController
 
 		$ControlCenterModel = new ControlCenterModel();
 		$createCoinPrice = $ControlCenterModel->createCoinPrice([
+														"identificacion" 	=> generateCode('PM', 'precio_monedas', 'identificacion'),
 														"moneda_principal" 	=> $this->principalCoin,
 														"moneda_secundaria" => $secondaryCoin,
 														"precio" 			=> $price,

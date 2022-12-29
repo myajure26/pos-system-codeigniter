@@ -30,6 +30,7 @@ class HighRubberController extends BaseController
 	public function createHighRubber()
 	{
 		helper('highRubberValidation');
+		helper('generateCode');
 
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
@@ -49,7 +50,10 @@ class HighRubberController extends BaseController
 		$highNumber = $this->request->getPost('highNumber');
 
 		$HighRubberModel = new HighRubberModel();
-		$high = $HighRubberModel->createHighRubber(['alto_numero' => $highNumber]);
+		$high = $HighRubberModel->createHighRubber([
+												'id_alto_caucho'=> generateCode('ALC', 'alto_caucho', 'id_alto_caucho'),
+												'alto_numero' => $highNumber
+											]);
 
 		if(!$high){
 			$this->errorMessage['text'] = "Error al guardar el registro";

@@ -39,7 +39,7 @@
                             <thead>
                                 <tr>
                                     <tr>
-                                        <th>#</th>
+                                        <th>Identificación</th>
                                         <th>Usuario</th>
                                         <th>Módulo</th>
                                         <th>Acción</th>

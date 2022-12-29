@@ -30,6 +30,7 @@ class TaxController extends BaseController
 	public function createTax()
 	{
 		helper('taxValidation');
+		helper('generateCode');
 
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
@@ -51,6 +52,7 @@ class TaxController extends BaseController
 
 		$TaxModel = new TaxModel();
 		$tax = $TaxModel->createTax([
+									'identificacion' => generateCode('IM', 'impuestos', 'identificacion'),
 									'impuesto' => $name,
 									'porcentaje' => $percentage
 								]);

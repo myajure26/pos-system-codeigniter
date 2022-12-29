@@ -8,13 +8,11 @@ class ControlCenterModel extends Model
 {
 	protected $DBGroup              = 'default';
 	protected $table                = 'precio_monedas';
-	protected $primaryKey           = 'identificacion';
-	protected $useAutoIncrement     = true;
 	protected $insertID             = 0;
 	protected $returnType           = 'array';
 	protected $useSoftDeletes       = true;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["moneda_principal", "moneda_secundaria", "precio", "estado", "actualizado_en", "creado_en"];
+	protected $allowedFields        = ["identificacion", "moneda_principal", "moneda_secundaria", "precio", "estado", "actualizado_en", "creado_en"];
 
 	// Dates
 	protected $useTimestamps        = true;
@@ -24,9 +22,11 @@ class ControlCenterModel extends Model
 
 	public function createCoinPrice($data)
 	{
-		return $this
-			->table('precio_monedas')
-			->insert($data);
+		if($this->save($data)){
+			return true;
+		}
+		
+		return false;
 
 	}
 

@@ -8,13 +8,12 @@ class PurchaseModel extends Model
 {
 	protected $DBGroup              = 'default';
 	protected $table                = 'compras';
-	protected $primaryKey           = 'id';
 	protected $useAutoIncrement     = true;
 	protected $insertID             = 0;
 	protected $returnType           = 'array';
 	protected $useSoftDeletes       = true;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["proveedor", "usuario", "tipo_documento", "moneda", "actualizado_en", "creado_en"];
+	protected $allowedFields        = ["identificacion", "proveedor", "usuario", "tipo_documento", "moneda", "actualizado_en", "creado_en"];
 
 	// Dates
 	protected $useTimestamps        = true;

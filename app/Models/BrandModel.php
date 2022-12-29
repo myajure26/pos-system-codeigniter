@@ -8,13 +8,11 @@ class BrandModel extends Model
 {
 	protected $DBGroup              = 'default';
 	protected $table                = 'marcas';
-	protected $primaryKey           = 'identificacion';
-	protected $useAutoIncrement     = true;
 	protected $insertID             = 0;
 	protected $returnType           = 'array';
 	protected $useSoftDeletes       = true;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["marca", "estado", "actualizado_en", "creado_en"];
+	protected $allowedFields        = ["identificacion", "marca", "estado", "actualizado_en", "creado_en"];
 
 	// Dates
 	protected $useTimestamps        = true;

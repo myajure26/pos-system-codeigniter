@@ -54,7 +54,7 @@
                             <thead>
                                 <tr>
                                     <tr>
-                                        <th>Cédula</th>
+                                        <th>Identificación</th>
                                         <th>Nombre</th>
                                         <th>Privilegio</th>
                                         <th>Foto</th>

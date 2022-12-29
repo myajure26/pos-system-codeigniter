@@ -54,7 +54,7 @@
                             <thead>
                                 <tr>
                                     <tr>
-                                        <th>#</th>
+                                        <th>Identificación</th>
                                         <th>Medida</th>
                                         <th>Estado</th>
                                         <th>Acciones</th>

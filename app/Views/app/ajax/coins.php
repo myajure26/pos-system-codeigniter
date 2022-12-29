@@ -48,7 +48,7 @@
                             <thead>
                                 <tr>
                                     <tr>
-                                        <th>#</th>
+                                        <th>Identificación</th>
                                         <th>Nombre</th>
                                         <th>Símbolo</th>
                                         <th>Estado</th>

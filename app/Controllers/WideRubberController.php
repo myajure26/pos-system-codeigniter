@@ -30,6 +30,7 @@ class WideRubberController extends BaseController
 	public function createWideRubber()
 	{
 		helper('wideRubberValidation');
+		helper('generateCode');
 
 		if(!$this->session->has('name')){
 			return redirect()->to(base_url());
@@ -49,7 +50,10 @@ class WideRubberController extends BaseController
 		$wideNumber = $this->request->getPost('wideNumber');
 
 		$WideRubberModel = new WideRubberModel();
-		$wide = $WideRubberModel->createWideRubber(['ancho_numero' => $wideNumber]);
+		$wide = $WideRubberModel->createWideRubber([
+												'id_ancho_caucho'=> generateCode('ANC', 'ancho_caucho', 'id_ancho_caucho'),
+												'ancho_numero' 	=> $wideNumber
+											]);
 
 		if(!$wide){
 			$this->errorMessage['text'] = "Error al guardar el registro";

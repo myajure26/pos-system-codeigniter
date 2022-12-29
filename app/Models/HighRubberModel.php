@@ -8,13 +8,11 @@ class HighRubberModel extends Model
 {
 	protected $DBGroup              = 'default';
 	protected $table                = 'alto_caucho';
-	protected $primaryKey           = 'id_alto_caucho';
-	protected $useAutoIncrement     = true;
 	protected $insertID             = 0;
 	protected $returnType           = 'array';
 	protected $useSoftDeletes       = true;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["alto_numero", "estado_alto_caucho", "actualizado_en", "creado_en"];
+	protected $allowedFields        = ["id_alto_caucho", "alto_numero", "estado_alto_caucho", "actualizado_en", "creado_en"];
 
 	// Dates
 	protected $useTimestamps        = true;

@@ -40,9 +40,9 @@ $routes->post('/settings/update', 'AuditController::settingsUpdate');
 $routes->group('sales', static function ($routes) {
     $routes->post('create', 'SaleController::createSale');
     $routes->get('get', 'SaleController::getSales');
-    $routes->get('getById/(:num)', 'SaleController::getSaleById/$1');
+    $routes->get('getById/(:any)', 'SaleController::getSaleById/$1');
     $routes->get('getProducts', 'SaleController::getProducts');
-    $routes->get('getRate/(:num)', 'SaleController::getRate/$1');
+    $routes->get('getRate/(:any)', 'SaleController::getRate/$1');
     $routes->post('delete', 'SaleController::deleteSale');
 });
 
@@ -51,7 +51,7 @@ $routes->group('orders', static function ($routes) {
     $routes->post('create', 'OrderController::createOrder');
     $routes->get('verifyProviderOrder/(:any)', 'OrderController::verifyProviderOrder/$1');
     $routes->get('get', 'OrderController::getOrders');
-    $routes->get('getById/(:num)', 'OrderController::getOrderById/$1');
+    $routes->get('getById/(:any)', 'OrderController::getOrderById/$1');
     $routes->get('getProviders', 'OrderController::getProviders');
     $routes->get('getProducts', 'OrderController::getProducts');
     $routes->post('acceptOrder', 'OrderController::acceptOrder');
@@ -70,7 +70,7 @@ $routes->group('users', static function ($routes) {
     $routes->post('signin', 'UserController::signin');
     $routes->post('create', 'UserController::createUser');
     $routes->get('get', 'UserController::getUsers');
-    $routes->get('getById/(:num)', 'UserController::getUserById/$1');
+    $routes->get('getById/(:any)', 'UserController::getUserById/$1');
     $routes->post('update', 'UserController::updateUser');
     $routes->post('updateCurrentUser', 'UserController::updateCurrentUser');
     $routes->post('delete', 'UserController::deleteUser');
@@ -81,7 +81,7 @@ $routes->group('users', static function ($routes) {
 $routes->group('categories', static function ($routes) {
     $routes->post('create', 'CategoryController::createCategory');
     $routes->get('get', 'CategoryController::getCategories');
-    $routes->get('getById/(:num)', 'CategoryController::getCategoryById/$1');
+    $routes->get('getById/(:any)', 'CategoryController::getCategoryById/$1');
     $routes->post('update', 'CategoryController::updateCategory');
     $routes->post('delete', 'CategoryController::deleteCategory');
     $routes->post('recover', 'CategoryController::recoverCategory');
@@ -91,7 +91,7 @@ $routes->group('categories', static function ($routes) {
 $routes->group('brands', static function ($routes) {
     $routes->post('create', 'BrandController::createBrand');
     $routes->get('get', 'BrandController::getBrands');
-    $routes->get('getById/(:num)', 'BrandController::getBrandById/$1');
+    $routes->get('getById/(:any)', 'BrandController::getBrandById/$1');
     $routes->post('update', 'BrandController::updateBrand');
     $routes->post('delete', 'BrandController::deleteBrand');
     $routes->post('recover', 'BrandController::recoverBrand');
@@ -101,7 +101,7 @@ $routes->group('brands', static function ($routes) {
 $routes->group('highRubber', static function ($routes) {
     $routes->post('create', 'HighRubberController::createHighRubber');
     $routes->get('get', 'HighRubberController::getHighRubbers');
-    $routes->get('getById/(:num)', 'HighRubberController::getHighRubberById/$1');
+    $routes->get('getById/(:any)', 'HighRubberController::getHighRubberById/$1');
     $routes->post('update', 'HighRubberController::updateHighRubber');
     $routes->post('delete', 'HighRubberController::deleteHighRubber');
     $routes->post('recover', 'HighRubberController::recoverHighRubber');
@@ -112,7 +112,7 @@ $routes->group('highRubber', static function ($routes) {
 $routes->group('wideRubber', static function ($routes) {
     $routes->post('create', 'WideRubberController::createWideRubber');
     $routes->get('get', 'WideRubberController::getWideRubbers');
-    $routes->get('getById/(:num)', 'WideRubberController::getWideRubberById/$1');
+    $routes->get('getById/(:any)', 'WideRubberController::getWideRubberById/$1');
     $routes->post('update', 'WideRubberController::updateWideRubber');
     $routes->post('delete', 'WideRubberController::deleteWideRubber');
     $routes->post('recover', 'WideRubberController::recoverWideRubber');
@@ -123,7 +123,7 @@ $routes->group('wideRubber', static function ($routes) {
 $routes->group('coins', static function ($routes) {
     $routes->post('create', 'CoinController::createCoin');
     $routes->get('get', 'CoinController::getCoins');
-    $routes->get('getById/(:num)', 'CoinController::getCoinById/$1');
+    $routes->get('getById/(:any)', 'CoinController::getCoinById/$1');
     $routes->post('update', 'CoinController::updateCoin');
     $routes->post('delete', 'CoinController::deleteCoin');
     $routes->post('recover', 'CoinController::recoverCoin');
@@ -133,7 +133,7 @@ $routes->group('coins', static function ($routes) {
 $routes->group('taxes', static function ($routes) {
     $routes->post('create', 'TaxController::createTax');
     $routes->get('get', 'TaxController::getTaxes');
-    $routes->get('getById/(:num)', 'TaxController::getTaxById/$1');
+    $routes->get('getById/(:any)', 'TaxController::getTaxById/$1');
     $routes->post('update', 'TaxController::updateTax');
     $routes->post('delete', 'TaxController::deleteTax');
     $routes->post('recover', 'TaxController::recoverTax');
@@ -143,7 +143,7 @@ $routes->group('taxes', static function ($routes) {
 $routes->group('document_type', static function ($routes) {
     $routes->post('create', 'DocumentTypeController::createDocumentType');
     $routes->get('get', 'DocumentTypeController::getDocumentsType');
-    $routes->get('getById/(:num)', 'DocumentTypeController::getDocumentTypeById/$1');
+    $routes->get('getById/(:any)', 'DocumentTypeController::getDocumentTypeById/$1');
     $routes->post('update', 'DocumentTypeController::updateDocumentType');
     $routes->post('delete', 'DocumentTypeController::deleteDocumentType');
     $routes->post('recover', 'DocumentTypeController::recoverDocumentType');
@@ -153,7 +153,7 @@ $routes->group('document_type', static function ($routes) {
 $routes->group('payment_method', static function ($routes) {
     $routes->post('create', 'PaymentMethodController::createPaymentMethod');
     $routes->get('get', 'PaymentMethodController::getPaymentMethods');
-    $routes->get('getById/(:num)', 'PaymentMethodController::getPaymentMethodById/$1');
+    $routes->get('getById/(:any)', 'PaymentMethodController::getPaymentMethodById/$1');
     $routes->post('update', 'PaymentMethodController::updatePaymentMethod');
     $routes->post('delete', 'PaymentMethodController::deletePaymentMethod');
     $routes->post('recover', 'PaymentMethodController::recoverPaymentMethod');
@@ -198,7 +198,7 @@ $routes->group('customers', static function ($routes) {
 $routes->group('coinPrices', static function ($routes) {
     $routes->post('createCoinPrice', 'ControlCenterController::createCoinPrice');
     $routes->get('getCoinPrices', 'ControlCenterController::getCoinPrices');
-    $routes->get('getById/(:num)', 'ControlCenterController::getCoinPriceById/$1');
+    $routes->get('getById/(:any)', 'ControlCenterController::getCoinPriceById/$1');
     $routes->post('update', 'ControlCenterController::updateCoinPrice');
     $routes->post('delete', 'ControlCenterController::deleteCoinPrice');
     $routes->post('recover', 'ControlCenterController::recoverCoinPrice');
