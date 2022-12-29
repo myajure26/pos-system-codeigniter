@@ -15,10 +15,12 @@ class InvoiceController extends BaseController
 			return redirect()->to(base_url());
 		}
 
+        // TODO:: Arreglar para trabajar con más monedas
+
         $db     = \Config\Database::connect();
 		$venta 	= $db
 				->table('ventas')
-				->select('ventas.identificacion as idVenta, clientes.identificacion as clienteId, clientes.nombre as clienteNom, clientes.direccion, tasa, impuestos.impuesto, impuestos.porcentaje, monedas.moneda, monedas.simbolo, ventas.actualizado_en, ventas.creado_en, detalle_ventas.identificacion as idDetalleVenta, productos.nombre as producto, cantidad, detalle_ventas.precio, productos.codigo, alto_caucho.alto_numero, ancho_caucho.ancho_numero, categorias.categoria, marcas.marca, usuarios.nombre as vendedor, ventas.estado')
+				->select('ventas.identificacion as idVenta, clientes.identificacion as clienteId, clientes.nombre as clienteNom, clientes.direccion, tasa, impuestos.impuesto, impuestos.porcentaje, monedas.identificacion as idMoneda, monedas.moneda, monedas.simbolo, ventas.actualizado_en, ventas.creado_en, detalle_ventas.identificacion as idDetalleVenta, productos.nombre as producto, cantidad, detalle_ventas.precio, productos.codigo, alto_caucho.alto_numero, ancho_caucho.ancho_numero, categorias.categoria, marcas.marca, usuarios.nombre as vendedor, ventas.estado')
 				->join('detalle_ventas', 'detalle_ventas.venta = ventas.identificacion')
 				->join('productos', 'productos.codigo = detalle_ventas.producto')
 				->join('clientes', 'clientes.identificacion = ventas.cliente')
@@ -31,11 +33,11 @@ class InvoiceController extends BaseController
 				->join('monedas', 'monedas.identificacion = ventas.moneda')
 				->where('ventas.identificacion', $id)
                 ->get()->getResult();
+        
         $coin = $db
                 ->table('monedas')
                 ->select('moneda')
-                ->where('identificacion', $this->principalCoin)
-                ->where('estado', 1)
+                ->where('identificacion', $this->nationalCoin)
                 ->get()
                 ->getResult();
 
@@ -46,7 +48,10 @@ class InvoiceController extends BaseController
             "businessName" 			=> $this->businessName,
             "businessIdentification"=> $this->businessIdentification,
             "businessAddress" 		=> $this->businessAddress,
-            "businessPhone" 		=> $this->businessPhone
+            "businessPhone" 		=> $this->businessPhone,
+            "nationalCoinSymbol"    => $this->nationalCoinSymbol,
+            "nationalCoin"          => $this->nationalCoin,
+            "symbol"                => $this->symbol,
         ];
 
         // return view('app/invoices/saleInvoice', $data);

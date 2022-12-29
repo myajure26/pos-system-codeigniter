@@ -451,11 +451,6 @@ $(document).ready(function() {
         totalSaleCount();
         const identification = $(this).val();
 
-        if(identification == $(this).attr('principalCoin')){
-            $('#rate').val('1.00');
-            return false;
-        }
-        
         if(identification === '') return false;
         
         $.ajax({
@@ -514,6 +509,12 @@ $(document).ready(function() {
 
             }
         });
+
+        if(identification == $(this).attr('principalCoin')){
+            $('#rate').val('1.00');
+            return false;
+        }
+        
     });
 
     // AJAX FORM

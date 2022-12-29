@@ -36,6 +36,14 @@ function settingValidation()
 				'is_not_unique' => 'La moneda no se encuentra registrada'
 			]
 		],
+		'nationalCoin' => [
+			'label' => 'nationalCoin',
+			'rules' => 'required|is_not_unique[monedas.identificacion]',
+			'errors' => [
+				'required' => 'La moneda es requerida',
+				'is_not_unique' => 'La moneda no se encuentra registrada'
+			]
+		],
 		'address' => [
 			'label' => 'address',
 			'rules' => 'required|regex_match[/^[a-z0-9ñáéíóúüA-ZÑÁÉÍÓÚÜ .,-]*$/u]',

@@ -84,6 +84,8 @@ class AuditController extends BaseController
 		$db = $db->table('configuracion');
 		$db->where('nom_configuracion', 'sistema_nombre')->set('valor_configuracion', $this->request->getPost('systemName'))->update();
 		$db->where('nom_configuracion', 'moneda_principal')->set('valor_configuracion', $this->request->getPost('principalCoin'))->update();
+		$db->where('nom_configuracion', 'moneda_nacional')->set('valor_configuracion', $this->request->getPost('nationalCoin'))->update();
+
 		$db->where('nom_configuracion', 'empresa_nombre')->set('valor_configuracion', $this->request->getPost('name'))->update();
 		$db->where('nom_configuracion', 'empresa_rif')->set('valor_configuracion', $this->request->getPost('identification'))->update();
 		$db->where('nom_configuracion', 'empresa_direccion')->set('valor_configuracion', $this->request->getPost('address'))->update();

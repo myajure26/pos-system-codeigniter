@@ -43,10 +43,20 @@
                                                 <div class="invalid-feedback"></div>
                                             </div>
                                         </div>                     
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
                                             <div class="mb-3">
                                                 <label class="form-label" for="principal-coin">Moneda principal</label>
                                                 <select class="form-select" name="principalCoin" id="principal-coin" required>
+                                                    <?php foreach($coins as $row)
+                                                        echo '<option value="'.$row->identificacion.'">'.$row->moneda.'</option>';
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="national-coin">Moneda nacional</label>
+                                                <select class="form-select" name="nationalCoin" id="national-coin" required>
                                                     <?php foreach($coins as $row)
                                                         echo '<option value="'.$row->identificacion.'">'.$row->moneda.'</option>';
                                                     ?>
@@ -114,8 +124,11 @@
     let id = '<?=$identification?>';
     let address = '<?=$address?>';
     let coin = <?=$principalCoin?>;
+    let nationalCoin = <?=$nationalCoin?>;
+
     $('#letter').val(id.split('-')[0]);
     $('#identification').val(id.split('-')[1]);
     $('#address').val(address);
     $('#principal-coin').val(coin);
+    $('#national-coin').val(nationalCoin);
 </script>

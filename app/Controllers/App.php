@@ -105,7 +105,33 @@ class App extends BaseController
 	{
 		if($this->session->get('privilege') == 1 || $this->session->get('privilege') == 2){
 
-			$db      	= \Config\Database::connect();
+			$db = \Config\Database::connect();
+
+			if( $this->nationalCoin != $this->principalCoin ){
+
+				//TODO:: Hacer totalmente configurable si se va a trabajar con una moneda solamente o múltiples, pero para después
+			
+				$todayPrices = $db
+						->table('precio_monedas')
+						->select()
+						->where('moneda_secundaria', $this->nationalCoin)
+						->where("DATE_FORMAT(creado_en, '%Y-%m-%d') = CURDATE()")
+						->orderBy('creado_en', 'DESC')->get()->getResult();
+				
+				if( !$todayPrices ){
+
+					$alert = [
+						"alert" => "simple",
+						"type" => "warning",
+						"title" => "¡Alerta!",
+						"text" => "No se han actualizado los precios de las monedas requeridos para la facturación"
+					];
+
+					return sweetAlert($alert);
+
+				}
+			}
+
 			
 			$taxes 			= $db
 							->table('impuestos')
@@ -870,6 +896,7 @@ class App extends BaseController
 				"coins" 		=> $coins,
 				"systemName" 	=> $this->system,
 				"principalCoin" => $this->principalCoin,
+				"nationalCoin" 	=> $this->nationalCoin,
 				"name" 			=> $this->businessName,
 				"identification"=> $this->businessIdentification,
 				"address" 		=> $this->businessAddress,

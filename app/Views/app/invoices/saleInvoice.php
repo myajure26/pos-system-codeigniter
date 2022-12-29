@@ -84,9 +84,7 @@
 		<tr>
 		
 			<td style="background-color:white; width:540px; padding: 5px;"> 
-                <p><strong>Moneda de facturación:</strong> <?= $venta[0]->moneda?></p>
-                <p><strong>Moneda de cambio:</strong> <?= $coin->moneda?></p>
-                <p><strong>Tasa:</strong> <?= $venta[0]->tasa?></p>
+                <p><strong>Tasa de cambio:</strong> <?= $venta[0]->tasa?></p>
             </td>
 
             <td style="background-color:white; width:150px; text-align:right; padding: 5px;">
@@ -103,88 +101,79 @@
 
 		<tr>
 			<td style="border-bottom: 1px solid #666; background-color:white; width:25px; text-align:center; padding: 5px">Código</td>
-            <td style="border-bottom: 1px solid #666; background-color:white; width:260px; text-align:center; padding: 5px">Descripción</td>
-            <td style="border-bottom: 1px solid #666; background-color:white; width:80px; text-align:center; padding: 5px">Cantidad</td>
-            <td style="border-bottom: 1px solid #666; background-color:white; width:150px; text-align:center; padding: 5px">Precio unitario</td>
-            <td style="border-bottom: 1px solid #666; background-color:white; width:150px; text-align:center; padding: 5px">Total</td>
+            <td style="border-bottom: 1px solid #666; background-color:white; width:150px; text-align:center; padding: 5px">Descripción</td>
+            <td style="border-bottom: 1px solid #666; background-color:white; width:50px; text-align:center; padding: 5px">Cantidad</td>
+            <td style="border-bottom: 1px solid #666; background-color:white; width:100px; text-align:center; padding: 5px">Precio <?=$nationalCoinSymbol?></td>
+            <td style="border-bottom: 1px solid #666; background-color:white; width:100px; text-align:center; padding: 5px">Monto <?=$nationalCoinSymbol?></td>
+            <td style="border-bottom: 1px solid #666; background-color:white; width:100px; text-align:center; padding: 5px">Precio divisa</td>
+            <td style="border-bottom: 1px solid #666; background-color:white; width:100px; text-align:center; padding: 5px">Monto divisa</td>
 
 		</tr>
         
         <?php 
         
-        $subtotal = 0;
+        $subtotalNationalCoin = 0;
+        $subtotalPrincipalCoin = 0;
         foreach ($venta as $row):
+
+            if($row->idMoneda == $nationalCoin){
+                $coinSymbol = $symbol;
+            }else{
+                $coinSymbol = $row->simbolo;
+            }
         ?>
         <tr>
 			<td style="border-bottom: 0px solid #666; background-color:white; width:25px; text-align:center; padding: 5px"><?=$row->codigo?></td>
-            <td style="border-bottom: 0px solid #666; background-color:white; width:260px; text-align:center; padding: 5px"><?=$row->producto?> <?=$row->ancho_numero?>/<?=$row->alto_numero?> <?=$row->categoria?> Marca <?=$row->marca?></td>
-            <td style="border-bottom: 0px solid #666; background-color:white; width:80px; text-align:center; padding: 5px"><?=$row->cantidad?></td>
-            <td style="border-bottom: 0px solid #666; background-color:white; width:150px; text-align:center; padding: 5px"><?=number_format($row->precio * $row->tasa, 2)?></td>
-            <td style="border-bottom: 0px solid #666; background-color:white; width:150px; text-align:center; padding: 5px">
+            <td style="border-bottom: 0px solid #666; background-color:white; width:150px; text-align:center; padding: 5px"><?=$row->producto?> <?=$row->ancho_numero?>/<?=$row->alto_numero?> <?=$row->categoria?> Marca <?=$row->marca?></td>
+            <td style="border-bottom: 0px solid #666; background-color:white; width:50px; text-align:center; padding: 5px"><?=$row->cantidad?></td>
+            <td style="border-bottom: 0px solid #666; background-color:white; width:100px; text-align:center; padding: 5px"><?=$nationalCoinSymbol . " " . number_format($row->precio * $row->tasa, 2)?></td>
+            <td style="border-bottom: 0px solid #666; background-color:white; width:100px; text-align:center; padding: 5px">
                 <?php
                     $total = ($row->cantidad * $row->precio) * $row->tasa;
-                    $subtotal = $subtotal + $total;
-                    echo number_format($total, 2);
+                    $subtotalNationalCoin += $total;
+                    echo $nationalCoinSymbol . " " . number_format($total, 2);
+                ?>
+            </td>
+            <td style="border-bottom: 0px solid #666; background-color:white; width:100px; text-align:center; padding: 5px"><?=$coinSymbol . " " . number_format($row->precio, 2)?></td>
+            <td style="border-bottom: 0px solid #666; background-color:white; width:100px; text-align:center; padding: 5px">
+                <?php
+                    $total = ($row->cantidad * $row->precio);
+                    $subtotalPrincipalCoin += $total;
+                    echo $coinSymbol . " " .  number_format($total, 2);
                 ?>
             </td>
 
 		</tr>
 
         <?php endforeach; ?>
-
-	</table>
-
-    <table style="font-size:12px; padding:5px 10px; margin-left: 70px; margin-top: 30px;">
-
-		
 		
 		<tr>
-		
-			<td style="border-right: 1px solid #666; color:#333; background-color:white; width:240px; text-align:center; padding: 5px"></td>
-
-			<td style="border: 1px solid #666;  background-color:white; width:150px; text-align:center; padding: 5px">
-				<strong>Subtotal</strong>
-			</td>
-
-			<td style="border: 1px solid #666; color:#333; background-color:white; width:200px; text-align:center; padding: 5px">
-                <?= $row->simbolo . ' ' . number_format($subtotal, 2); ?>
-			</td>
-
+			<td style="background-color:white; width:25px; text-align:center; padding: 5px"></td>
+            <td style="background-color:white; width:150px; text-align:center; padding: 5px"></td>
+            <td style="background-color:white; width:50px; text-align:center; padding: 5px"></td>
+            <td style="border: 1px solid #666; background-color:white; width:100px; text-align:center; padding: 5px;">Subtotal</td>
+            <td style="border: 1px solid #666; background-color:white; width:100px; text-align:center; padding: 5px;"><?= $nationalCoinSymbol . " " . number_format($subtotalNationalCoin, 2)?></td>
+            <td style="border: 1px solid #666; background-color:white; width:100px; text-align:center; padding: 5px;">Subtotal</td>
+            <td style="border: 1px solid #666; background-color:white; width:100px; text-align:center; padding: 5px;"><?= $coinSymbol . " " . number_format($subtotalPrincipalCoin, 2)?></td>
 		</tr>
-
 		<tr>
-
-			<td style="border-right: 1px solid #666; color:#333; background-color:white; width:240px; text-align:center; padding: 5px""></td>
-
-			<td style="border: 1px solid #666; background-color:white; width:150px; text-align:center; padding: 5px"">
-				<strong><?=$venta[0]->impuesto?></strong>
-			</td>
-		
-			<td style="border: 1px solid #666; color:#333; background-color:white; width:200px; text-align:center; padding: 5px"">
-                <?php 
-                    $tax = ($subtotal * $venta[0]->porcentaje)/100;
-                    echo $row->simbolo . ' ' . number_format($tax, 2);
-					$total = number_format($subtotal + $tax , 2);
-                ?>
-			</td>
-
+			<td style="background-color:white; width:25px; text-align:center; padding: 5px"></td>
+            <td style="background-color:white; width:150px; text-align:center; padding: 5px"></td>
+            <td style="background-color:white; width:50px; text-align:center; padding: 5px"></td>
+            <td style="border: 1px solid #666; background-color:white; width:100px; text-align:center; padding: 5px">IVA</td>
+            <td style="border: 1px solid #666; background-color:white; width:100px; text-align:center; padding: 5px"><?= $nationalCoinSymbol . " " . number_format(($subtotalNationalCoin * $venta[0]->porcentaje)/100, 2)?></td>
+            <td style="border: 1px solid #666; background-color:white; width:100px; text-align:center; padding: 5px">IVA</td>
+            <td style="border: 1px solid #666; background-color:white; width:100px; text-align:center; padding: 5px"><?= $coinSymbol . " " . number_format(($subtotalPrincipalCoin * $venta[0]->porcentaje)/100, 2)?></td>
 		</tr>
-
 		<tr>
-		
-			<td style="border-right: 1px solid #666; color:#333; background-color:white; width:240px; text-align:center; padding: 5px""></td>
-
-			<td style="border: 1px solid #666; background-color:white; width:150px; text-align:center; padding: 5px"">
-				<strong>Total</strong>
-			</td>
-			
-			<td style="border: 1px solid #666; color:#333; background-color:white; width:200px; text-align:center; padding: 5px"">
-
-                <?= $row->simbolo . ' ' . $total?>
-			</td>
-
+			<td style="background-color:white; width:25px; text-align:center; padding: 5px"></td>
+            <td style="background-color:white; width:150px; text-align:center; padding: 5px"></td>
+            <td style="background-color:white; width:50px; text-align:center; padding: 5px"></td>
+            <td style="border: 1px solid #666; background-color:white; width:100px; text-align:center; padding: 5px">Total</td>
+            <td style="border: 1px solid #666; background-color:white; width:100px; text-align:center; padding: 5px"><?= $nationalCoinSymbol . " " . number_format((($subtotalNationalCoin * $venta[0]->porcentaje)/100)+$subtotalNationalCoin, 2)?></td>
+            <td style="border: 1px solid #666; background-color:white; width:100px; text-align:center; padding: 5px">Total</td>
+            <td style="border: 1px solid #666; background-color:white; width:100px; text-align:center; padding: 5px"><?= $coinSymbol . " " . number_format((($subtotalPrincipalCoin * $venta[0]->porcentaje)/100)+$subtotalPrincipalCoin, 2)?></td>
 		</tr>
-
 
 	</table>
 
