@@ -30,19 +30,17 @@ function createSaleValidation()
 		],
 		'paymentMethod' => [
 			'label' => 'paymentMethod',
-			'rules' => 'required|numeric|is_not_unique[metodo_pago.id_metodo_pago]',
+			'rules' => 'required|is_not_unique[metodo_pago.id_metodo_pago]',
 			'errors' => [
 				'required' => 'El método de pago es requerido',
-				'numeric' => 'Ingresa un método de pago válido',
 				'is_not_unique' => 'El método de pago no existe'
 			]
 		],
 		'coin' => [
 			'label' => 'coin',
-			'rules' => 'required|numeric|is_not_unique[monedas.identificacion]',
+			'rules' => 'required|is_not_unique[monedas.identificacion]',
 			'errors' => [
 				'required' => 'La moneda es requerida',
-				'numeric' => 'Ingresa una moneda válida',
 				'is_not_unique' => 'La moneda no existe'
 			]
 		],

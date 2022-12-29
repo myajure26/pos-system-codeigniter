@@ -229,6 +229,6 @@
         mode: 'range',
         maxDate: 'today'
     });
-    var coin = <?=$principalCoin?>;
+    var coin = '<?=$principalCoin?>';
     $('#principal-coin').val(coin);
 </script>

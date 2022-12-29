@@ -339,6 +339,8 @@ class ReportController extends BaseController
 			->hide('producto')
 			->hide('categoria')
 			->hide('marca')
+			->hide('alto_numero')
+			->hide('ancho_numero')
 			->edit('fecha', function($row){
 				return date('d-m-Y', strtotime($row->fecha));
 			})
@@ -392,12 +394,16 @@ class ReportController extends BaseController
 			->hide('tasa')
 			->hide('metodo_pago')
 			->hide('moneda')
+			->hide('idMoneda')
 			->edit('total', function($row){
 
 				$tax = ($row->total * $row->impuesto)/100;
 				$total = $row->total + $tax;
 
-				$total = $total * $row->tasa;
+				// Todo:: No sé si se coloca con la tasa o no, nota para preguntar
+				if( $row->idMoneda != $this->principalCoin ){
+					$total = $total * $row->tasa;
+				}
 
 				return number_format($total, 2);
 				
@@ -2064,6 +2070,10 @@ class ReportController extends BaseController
 		foreach ($ReportModel as $row => $item){
 
 			$subtotal = (($item->total * $item->impuesto) / 100) + $item->total;
+
+			if( $coin != $this->principalCoin ){
+				$subtotal = $subtotal * $item->tasa;
+			}
 
 			echo utf8_decode("<tr>
 						<td style='border:1px solid #eee;'>".$item->identificacion."</td>

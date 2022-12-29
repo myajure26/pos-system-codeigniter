@@ -101,7 +101,7 @@
     <table style="font-size:12px; padding:5px 10px;">
 
 		<tr>
-			<td style="border-bottom: 1px solid #666; background-color:white; width:25px; text-align:center; padding: 5px">Código</td>
+			<td style="border-bottom: 1px solid #666; background-color:white; width:50px; text-align:center; padding: 5px">Código</td>
             <td style="border-bottom: 1px solid #666; background-color:white; width:260px; text-align:center; padding: 5px">Descripción</td>
             <td style="border-bottom: 1px solid #666; background-color:white; width:80px; text-align:center; padding: 5px">Cantidad</td>
             <td style="border-bottom: 1px solid #666; background-color:white; width:150px; text-align:center; padding: 5px">Precio unitario</td>
@@ -115,7 +115,7 @@
         foreach ($purchase as $row):
         ?>
         <tr>
-			<td style="border-bottom: 0px solid #666; background-color:white; width:25px; text-align:center; padding: 5px"><?=$row->cod_producto?></td>
+			<td style="border-bottom: 0px solid #666; background-color:white; width:50px; text-align:center; padding: 5px"><?=$row->cod_producto?></td>
             <td style="border-bottom: 0px solid #666; background-color:white; width:260px; text-align:center; padding: 5px"><?=$row->nombre?> <?=$row->ancho_numero?>/<?=$row->alto_numero?> <?=$row->categoria?> Marca <?=$row->marca?></td>
             <td style="border-bottom: 0px solid #666; background-color:white; width:80px; text-align:center; padding: 5px"><?=$row->cant_producto?></td>
             <td style="border-bottom: 0px solid #666; background-color:white; width:150px; text-align:center; padding: 5px"><?=number_format($row->precio_producto, 2)?></td>

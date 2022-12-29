@@ -121,10 +121,10 @@
 </div>
 <!-- End Page-content -->
 <script>
-    let id = '<?=$identification?>';
-    let address = '<?=$address?>';
-    let coin = <?=$principalCoin?>;
-    let nationalCoin = <?=$nationalCoin?>;
+    var id = '<?=$identification?>';
+    var address = '<?=$address?>';
+    var coin = '<?=$principalCoin?>';
+    var nationalCoin = '<?=$nationalCoin?>';
 
     $('#letter').val(id.split('-')[0]);
     $('#identification').val(id.split('-')[1]);

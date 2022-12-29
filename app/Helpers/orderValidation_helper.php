@@ -22,10 +22,9 @@ function createOrderValidation()
 		],
 		'coin' => [
 			'label' => 'coin',
-			'rules' => 'required|numeric|is_not_unique[monedas.identificacion]',
+			'rules' => 'required|is_not_unique[monedas.identificacion]',
 			'errors' => [
 				'required' => 'La moneda es requerida',
-				'numeric' => 'Ingresa una moneda válida',
 				'is_not_unique' => 'La moneda no existe'
 			]
 		],
@@ -81,10 +80,9 @@ function updateOrderValidation()
 		],
 		'coin' => [
 			'label' => 'coin',
-			'rules' => 'required|numeric|is_not_unique[monedas.identificacion]',
+			'rules' => 'required|is_not_unique[monedas.identificacion]',
 			'errors' => [
 				'required' => 'La moneda es requerida',
-				'numeric' => 'Ingresa una moneda válida',
 				'is_not_unique' => 'La moneda no existe'
 			]
 		],

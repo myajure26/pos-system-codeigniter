@@ -97,10 +97,10 @@
 	</table>
     <hr>
     <br>
-    <table style="font-size:12px; padding:5px 10px;">
+    <table style="font-size:12px; padding:5px 0px;">
 
 		<tr>
-			<td style="border-bottom: 1px solid #666; background-color:white; width:25px; text-align:center; padding: 5px">Código</td>
+			<td style="border-bottom: 1px solid #666; background-color:white; width:50px; text-align:center; padding: 5px">Código</td>
             <td style="border-bottom: 1px solid #666; background-color:white; width:150px; text-align:center; padding: 5px">Descripción</td>
             <td style="border-bottom: 1px solid #666; background-color:white; width:50px; text-align:center; padding: 5px">Cantidad</td>
             <td style="border-bottom: 1px solid #666; background-color:white; width:100px; text-align:center; padding: 5px">Precio <?=$nationalCoinSymbol?></td>
@@ -123,7 +123,7 @@
             }
         ?>
         <tr>
-			<td style="border-bottom: 0px solid #666; background-color:white; width:25px; text-align:center; padding: 5px"><?=$row->codigo?></td>
+			<td style="border-bottom: 0px solid #666; background-color:white; width:50px; text-align:center; padding: 5px"><?=$row->codigo?></td>
             <td style="border-bottom: 0px solid #666; background-color:white; width:150px; text-align:center; padding: 5px"><?=$row->producto?> <?=$row->ancho_numero?>/<?=$row->alto_numero?> <?=$row->categoria?> Marca <?=$row->marca?></td>
             <td style="border-bottom: 0px solid #666; background-color:white; width:50px; text-align:center; padding: 5px"><?=$row->cantidad?></td>
             <td style="border-bottom: 0px solid #666; background-color:white; width:100px; text-align:center; padding: 5px"><?=$nationalCoinSymbol . " " . number_format($row->precio * $row->tasa, 2)?></td>

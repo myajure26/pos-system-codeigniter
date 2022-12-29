@@ -83,7 +83,7 @@ class ReportModel extends Model
         $db = \Config\Database::connect();
 		$db = $db
             ->table('ventas')
-			->select('ventas.identificacion, ventas.creado_en as fecha, usuario, clientes.identificacion as cliente, impuestos.porcentaje as impuesto, SUM(detalle_ventas.cantidad*detalle_ventas.precio) as total, tasa, metodo_pago.nombre as metodo_pago, monedas.moneda as moneda')
+			->select('ventas.identificacion, ventas.creado_en as fecha, usuario, clientes.identificacion as cliente, impuestos.porcentaje as impuesto, SUM(detalle_ventas.cantidad*detalle_ventas.precio) as total, tasa, metodo_pago.nombre as metodo_pago, monedas.identificacion as idMoneda, monedas.moneda as moneda')
 			->join('detalle_ventas', 'detalle_ventas.venta = ventas.identificacion')
 			->join('clientes', 'clientes.identificacion = ventas.cliente')
 			->join('impuestos', 'impuestos.identificacion = ventas.impuesto')
