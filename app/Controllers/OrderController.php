@@ -77,6 +77,7 @@ class OrderController extends BaseController
 			}
 
 			$data = [
+				"id_detalle_pedido" => generateCode('DP', 'detalle_pedido', 'id_detalle_pedido'),
 				"cod_producto"		=> $productCode[$i],
 				"cant_producto"		=> $productQuantity[$i],
 				"precio_producto"	=> $price
