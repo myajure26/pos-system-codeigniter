@@ -132,6 +132,17 @@ class App extends BaseController
 				}
 			}
 
+			if( $this->nationalCoin == '' || $this->principalCoin == '' ){
+		
+					$alert = [
+						"alert" => "simple",
+						"type" => "warning",
+						"title" => "¡Alerta!",
+						"text" => "No ha configurado las monedas"
+					];
+
+					return sweetAlert($alert);
+			}
 			
 			$taxes 			= $db
 							->table('impuestos')
@@ -148,6 +159,7 @@ class App extends BaseController
 			$coins 		= $db
 							->table('monedas')
 							->select('identificacion, moneda, simbolo')
+							->where("identificacion =  '$this->principalCoin' OR identificacion = '$this->nationalCoin'")
 							->where('estado', 1)
 							->get()
 							->getResult();

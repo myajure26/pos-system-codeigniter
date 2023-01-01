@@ -102,10 +102,7 @@ class SaleModel extends Model
 		
 	}
 
-	public function getLastId()
-	{
-		return $this->insertID();
-	}
+	
 
 
 	public function deleteSale($identification)

@@ -69,7 +69,7 @@ class OrderModel extends Model
 	public function getOrderById($data)
 	{
 		$query = $this
-				->select('pedido.id_pedido, id_detalle_pedido, ci_rif_proveedor, proveedores.nombre as proveedor_nombre, id_tipo_documento, pedido.id_moneda, pedido.actualizado_en, pedido.creado_en, detalle_pedido.cod_producto, ancho_caucho.ancho_numero, alto_caucho.alto_numero, categorias.categoria, marcas.marca, detalle_pedido.cant_producto, detalle_pedido.precio_producto, productos.nombre, usuarios.nombre as usuario, pedido.estado_pedido')
+				->select('pedido.id_pedido, ci_rif_proveedor, proveedores.nombre as proveedor_nombre, id_tipo_documento, pedido.id_moneda, pedido.actualizado_en, pedido.creado_en, detalle_pedido.cod_producto, ancho_caucho.ancho_numero, alto_caucho.alto_numero, categorias.categoria, marcas.marca, detalle_pedido.cant_producto, detalle_pedido.precio_producto, productos.nombre, productos.cant_producto as stock_producto, productos.stock_maximo, usuarios.nombre as usuario, pedido.estado_pedido')
 				->join('detalle_pedido', 'detalle_pedido.id_pedido = pedido.id_pedido')
 				->join('productos', 'productos.codigo = detalle_pedido.cod_producto')
 				->join('ancho_caucho', 'ancho_caucho.id_ancho_caucho = productos.id_ancho_caucho')
@@ -82,10 +82,7 @@ class OrderModel extends Model
 		return $query->get()->getResultArray();
 	}
 
-	public function getLastId()
-	{
-		return $this->insertID();
-	}
+
 
 	public function acceptOrder($id)
 	{
@@ -135,7 +132,8 @@ class OrderModel extends Model
 		
 		$db
 			->table('detalle_pedido')
-			->updateBatch($orderDetails, 'id_detalle_pedido');
+			->where('id_pedido', $identification)
+			->updateBatch($orderDetails, 'cod_producto');
 		
 
 		$db->transComplete();

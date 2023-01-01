@@ -108,8 +108,16 @@ class BaseController extends Controller
 			$this->session->set(['system' 					=> $systemName[0]->valor_configuracion]);
 			$this->session->set(['principalCoin' 			=> $principalCoin[0]->valor_configuracion]);
 			$this->session->set(['nationalCoin' 			=> $nationalCoin[0]->valor_configuracion]);
-			$this->session->set(['symbol' 					=> $pCoinSymbol[0]->simbolo]);
-			$this->session->set(['nationalCoinSymbol' 		=> $nCoinSymbol[0]->simbolo]);
+			
+			
+			if($pCoinSymbol){
+				$this->session->set(['symbol' 					=> $pCoinSymbol[0]->simbolo]);
+			}
+			
+			if($nCoinSymbol){
+				$this->session->set(['nationalCoinSymbol' 		=> $nCoinSymbol[0]->simbolo]);
+			}
+
 			$this->session->set(['businessName' 			=> $businessName[0]->valor_configuracion]);
 			$this->session->set(['businessIdentification' 	=> $businessIdentification[0]->valor_configuracion]);
 			$this->session->set(['businessAddress' 			=> $businessAddress[0]->valor_configuracion]);

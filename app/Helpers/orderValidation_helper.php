@@ -86,14 +86,6 @@ function updateOrderValidation()
 				'is_not_unique' => 'La moneda no existe'
 			]
 		],
-		'orderId.*' => [
-			'label' => 'orderId',
-			'rules' => 'required|is_not_unique[detalle_pedido.id_detalle_pedido]',
-			'errors' => [
-				'required' => 'La identificación del detalle de pedido es requerida',
-				'is_not_unique' => 'El detalle de pedido {value} no existe'
-			]
-		],
 		'productCode.*' => [
 			'label' => 'productCode',
 			'rules' => 'required|alpha_numeric_punct|is_not_unique[productos.codigo]',

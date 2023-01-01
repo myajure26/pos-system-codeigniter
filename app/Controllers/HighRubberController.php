@@ -49,11 +49,13 @@ class HighRubberController extends BaseController
 
 		$highNumber = $this->request->getPost('highNumber');
 
+		$data = [
+			'id_alto_caucho'=> generateCode('ALC', 'alto_caucho', 'id_alto_caucho'),
+			'alto_numero' => $highNumber
+		];
+
 		$HighRubberModel = new HighRubberModel();
-		$high = $HighRubberModel->createHighRubber([
-												'id_alto_caucho'=> generateCode('ALC', 'alto_caucho', 'id_alto_caucho'),
-												'alto_numero' => $highNumber
-											]);
+		$high = $HighRubberModel->createHighRubber($data);
 
 		if(!$high){
 			$this->errorMessage['text'] = "Error al guardar el registro";
@@ -64,7 +66,7 @@ class HighRubberController extends BaseController
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
 		$this->auditContent['accion'] 		= "Crear alto caucho";
-		$this->auditContent['descripcion'] 	= "Se ha creado la medida con identificación #" . $HighRubberModel->getLastId() . " exitosamente.";
+		$this->auditContent['descripcion'] 	= "Se ha creado la medida con identificación #" . $data['id_alto_caucho'] . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		

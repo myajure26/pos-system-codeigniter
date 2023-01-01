@@ -50,12 +50,14 @@ class TaxController extends BaseController
 		$name = $this->request->getPost('name');
 		$percentage = $this->request->getPost('percentage');
 
+		$data = [
+			'identificacion' => generateCode('IM', 'impuestos', 'identificacion'),
+			'impuesto' => $name,
+			'porcentaje' => $percentage
+		];
+
 		$TaxModel = new TaxModel();
-		$tax = $TaxModel->createTax([
-									'identificacion' => generateCode('IM', 'impuestos', 'identificacion'),
-									'impuesto' => $name,
-									'porcentaje' => $percentage
-								]);
+		$tax = $TaxModel->createTax($data);
 
 		if(!$tax){
 			$this->errorMessage['text'] = "Error al guardar el impuesto en la base de datos";
@@ -66,7 +68,7 @@ class TaxController extends BaseController
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
 		$this->auditContent['accion'] 		= "Crear impuesto";
-		$this->auditContent['descripcion'] 	= "Se ha creado el impuesto con identificación #" . $TaxModel->getLastId() . " exitosamente.";
+		$this->auditContent['descripcion'] 	= "Se ha creado el impuesto con identificación #" . $data['identificacion'] . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		

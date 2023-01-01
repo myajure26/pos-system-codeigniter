@@ -49,11 +49,13 @@ class WideRubberController extends BaseController
 
 		$wideNumber = $this->request->getPost('wideNumber');
 
+		$data = [
+			'id_ancho_caucho'=> generateCode('ANC', 'ancho_caucho', 'id_ancho_caucho'),
+			'ancho_numero' 	=> $wideNumber
+		];
+
 		$WideRubberModel = new WideRubberModel();
-		$wide = $WideRubberModel->createWideRubber([
-												'id_ancho_caucho'=> generateCode('ANC', 'ancho_caucho', 'id_ancho_caucho'),
-												'ancho_numero' 	=> $wideNumber
-											]);
+		$wide = $WideRubberModel->createWideRubber($data);
 
 		if(!$wide){
 			$this->errorMessage['text'] = "Error al guardar el registro";
@@ -64,7 +66,7 @@ class WideRubberController extends BaseController
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
 		$this->auditContent['accion'] 		= "Crear ancho caucho";
-		$this->auditContent['descripcion'] 	= "Se ha creado la medida con identificación #" . $WideRubberModel->getLastId() . " exitosamente.";
+		$this->auditContent['descripcion'] 	= "Se ha creado la medida con identificación #" . $data['id_ancho_caucho'] . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		

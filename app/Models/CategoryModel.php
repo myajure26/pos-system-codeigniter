@@ -43,10 +43,7 @@ class CategoryModel extends Model
 		return $query->get()->getResultArray();
 	}
 
-	public function getLastId()
-	{
-		return $this->insertID();
-	}
+	
 
 	public function updateCategory($name, $identification)
 	{

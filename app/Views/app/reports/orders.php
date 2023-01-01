@@ -234,6 +234,8 @@
         // Para los productos
         data.forEach(element => {
 
+            max = element.stock_maximo - element.stock;
+
             // Tenemos que quitarle los decimales para que el plugin haga su trabajo
             element.precio_producto = element.precio_producto.replace('.', "");
 
@@ -242,13 +244,12 @@
             $('#list').append(`
                 <tr id="${element.cod_producto}">
                     <td>
-                        <input type="hidden" value="${element.id_detalle_pedido}" name="orderId[]">
                         <input type="hidden" value="${element.cod_producto}" name="productCode[]">
                         ${element.cod_producto}
                     </td>
                     <td>${element.nombre} ${element.ancho_numero}/${element.alto_numero} ${element.categoria} Marca ${element.marca}</td>
                     <td>
-                        <input type="number" class="form-control form-control-sm productQuantity" value="${element.cant_producto}" name="productQuantity[]" disabled>
+                        <input type="number" class="form-control form-control-sm productQuantity" value="${element.cant_producto}" name="productQuantity[]" max=${max} disabled>
                     </td>
                     <td><input type="text" class="form-control form-control-sm price productPrice" value="${element.precio_producto}" name="productPrice[]" disabled></td>
                     <td class="text-center"><input type="text" class="form-control form-control-sm price totalPriceProduct viewDisabled" value="${totalProduct}" disabled></td>

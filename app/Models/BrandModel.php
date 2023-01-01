@@ -42,10 +42,7 @@ class BrandModel extends Model
 		return $query->get()->getResultArray();
 	}
 
-	public function getLastId()
-	{
-		return $this->insertID();
-	}
+	
 
 	public function updateBrand($name, $identification)
 	{

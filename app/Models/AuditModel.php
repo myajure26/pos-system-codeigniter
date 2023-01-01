@@ -8,18 +8,27 @@ class AuditModel extends Model
 {
 	protected $DBGroup              = 'default';
 	protected $table                = 'auditoria';
-	protected $primaryKey           = 'identificacion';
-	protected $useAutoIncrement     = true;
 	protected $insertID             = 0;
 	protected $returnType           = 'array';
 	protected $useSoftDelete        = false;
 	protected $protectFields        = true;
-	protected $allowedFields        = ["usuario", "modulo", "accion", "descripcion", "creado_en"];
+	protected $allowedFields        = ["identificacion", "usuario", "modulo", "accion", "descripcion", "creado_en"];
 
 	public function createAudit($data)
 	{
+		helper('generateCode');
+
+		$data = [
+			"identificacion" => generateCode('AU', 'auditoria', 'identificacion'),
+			"usuario"		=> $data['usuario'],
+			"modulo"		=> $data['modulo'],
+			"accion"		=> $data['accion'],
+			"descripcion"	=> $data['descripcion']
+		];	
+		
 		$query = $this
-				->insert($data);
+				->save($data);
+		
 		return $query;
 	}
 

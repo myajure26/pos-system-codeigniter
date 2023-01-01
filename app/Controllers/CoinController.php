@@ -50,12 +50,14 @@ class CoinController extends BaseController
 		$name = $this->request->getPost('name');
 		$symbol = $this->request->getPost('symbol');
 
+		$data = [
+			'identificacion' => generateCode('M', 'monedas', 'identificacion'),
+			'moneda' => $name,
+			'simbolo' => $symbol
+		];
+
 		$CoinModel = new CoinModel();
-		$coin = $CoinModel->createCoin([
-									'identificacion' => generateCode('M', 'monedas', 'identificacion'),
-									'moneda' => $name,
-									'simbolo' => $symbol
-								]);
+		$coin = $CoinModel->createCoin($data);
 
 		if(!$coin){
 			$this->errorMessage['text'] = "Error al guardar la moneda en la base de datos";
@@ -66,7 +68,7 @@ class CoinController extends BaseController
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
 		$this->auditContent['accion'] 		= "Crear moneda";
-		$this->auditContent['descripcion'] 	= "Se ha creado la moneda con identificación #" . $CoinModel->getLastId() . " exitosamente.";
+		$this->auditContent['descripcion'] 	= "Se ha creado la moneda con identificación #" . $data['identificacion'] . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		

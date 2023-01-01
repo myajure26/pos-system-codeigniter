@@ -49,11 +49,13 @@ class PaymentMethodController extends BaseController
 
 		$name = $this->request->getPost('name');
 
+		$data = [
+			'id_metodo_pago' => generateCode('MP', 'metodo_pago', 'id_metodo_pago'),
+			'nombre' => $name
+		];
+
 		$PaymentMethodModel = new PaymentMethodModel();
-		$paymentMethod = $PaymentMethodModel->createPaymentMethod([
-									'id_metodo_pago' => generateCode('MP', 'metodo_pago', 'id_metodo_pago'),
-									'nombre' => $name
-								]);
+		$paymentMethod = $PaymentMethodModel->createPaymentMethod($data);
 
 		if(!$paymentMethod){
 			$this->errorMessage['text'] = "Error al guardar el método de pago en la base de datos";
@@ -64,7 +66,7 @@ class PaymentMethodController extends BaseController
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
 		$this->auditContent['accion'] 		= "Crear método de pago";
-		$this->auditContent['descripcion'] 	= "Se ha creado la método de pago con identificación #" . $PaymentMethodModel->getLastId() . " exitosamente.";
+		$this->auditContent['descripcion'] 	= "Se ha creado la método de pago con identificación #" . $data['id_metodo_pago'] . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		

@@ -41,11 +41,7 @@ class CoinModel extends Model
 		$query = $this->where($data);
 		return $query->get()->getResultArray();
 	}
-
-	public function getLastId()
-	{
-		return $this->insertID();
-	}
+	
 
 	public function updateCoin($data, $identification)
 	{

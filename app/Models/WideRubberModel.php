@@ -42,10 +42,7 @@ class WideRubberModel extends Model
 		return $query->get()->getResultArray();
 	}
 
-	public function getLastId()
-	{
-		return $this->insertID();
-	}
+	
 
 	public function updateWideRubber($value, $identification)
 	{

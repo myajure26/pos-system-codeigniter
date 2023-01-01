@@ -49,11 +49,13 @@ class DocumentTypeController extends BaseController
 
 		$name = $this->request->getPost('name');
 
+		$data = [
+			'identificacion' => generateCode('TD', 'tipo_documento', 'identificacion'),
+			'nombre' => $name
+		];
+
 		$DocumentTypeModel = new DocumentTypeModel();
-		$documentType = $DocumentTypeModel->createDocumentType([
-															'identificacion' => generateCode('TD', 'tipo_documento', 'identificacion'),
-															'nombre' => $name
-														]);
+		$documentType = $DocumentTypeModel->createDocumentType($data);
 
 		if(!$documentType){
 			$this->errorMessage['text'] = "Error al guardar en la base de datos";
@@ -64,7 +66,7 @@ class DocumentTypeController extends BaseController
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
 		$this->auditContent['accion'] 		= "Crear tipo de documento";
-		$this->auditContent['descripcion'] 	= "Se ha creado el tipo de documento con identificación #" . $DocumentTypeModel->getLastId() . " exitosamente.";
+		$this->auditContent['descripcion'] 	= "Se ha creado el tipo de documento con identificación #" . $data['identificacion'] . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		

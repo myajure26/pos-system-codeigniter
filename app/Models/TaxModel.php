@@ -42,10 +42,7 @@ class TaxModel extends Model
 		return $query->get()->getResultArray();
 	}
 
-	public function getLastId()
-	{
-		return $this->insertID();
-	}
+	
 
 	public function updateTax($data, $identification)
 	{

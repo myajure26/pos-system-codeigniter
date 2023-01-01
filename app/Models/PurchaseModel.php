@@ -30,9 +30,6 @@ class PurchaseModel extends Model
 		return $query;
 	}
 
-	public function getLastId()
-	{
-		return $this->insertID();
-	}
+	
 
 }

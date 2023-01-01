@@ -64,13 +64,15 @@ class ControlCenterController extends BaseController
 			return sweetAlert($this->errorMessage);
 		}
 
+		$data = [
+			"identificacion" 	=> generateCode('PM', 'precio_monedas', 'identificacion'),
+			"moneda_principal" 	=> $this->principalCoin,
+			"moneda_secundaria" => $secondaryCoin,
+			"precio" 			=> $price,
+		];
+
 		$ControlCenterModel = new ControlCenterModel();
-		$createCoinPrice = $ControlCenterModel->createCoinPrice([
-														"identificacion" 	=> generateCode('PM', 'precio_monedas', 'identificacion'),
-														"moneda_principal" 	=> $this->principalCoin,
-														"moneda_secundaria" => $secondaryCoin,
-														"precio" 			=> $price,
-													]);
+		$createCoinPrice = $ControlCenterModel->createCoinPrice($data);
 		if(!$createCoinPrice){
 			$this->errorMessage['text'] = "Error al guardar los datos";
 			return sweetAlert($this->errorMessage);
@@ -80,7 +82,7 @@ class ControlCenterController extends BaseController
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
 		$this->auditContent['accion'] 		= "Establecer precio monedas";
-		$this->auditContent['descripcion'] 	= "Se ha establecido precio de moneda con identificación # " . $ControlCenterModel->getLastId() . " exitosamente";
+		$this->auditContent['descripcion'] 	= "Se ha establecido precio de moneda con identificación # " . $data['identificacion'] . " exitosamente";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		

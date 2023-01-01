@@ -49,11 +49,13 @@ class BrandController extends BaseController
 
 		$name = $this->request->getPost('name');
 
+		$data = [
+			'identificacion'=> generateCode('MR', 'marcas', 'identificacion'),
+			'marca' 		=> $name
+		];
+
 		$BrandModel = new BrandModel();
-		$brand = $BrandModel->createBrand([
-										'identificacion'=> generateCode('MR', 'marcas', 'identificacion'),
-										'marca' 		=> $name
-									]);
+		$brand = $BrandModel->createBrand($data);
 
 		if(!$brand){
 			$this->errorMessage['text'] = "Error al guardar la marca en la base de datos";
@@ -64,7 +66,7 @@ class BrandController extends BaseController
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
 		$this->auditContent['accion'] 		= "Crear marca";
-		$this->auditContent['descripcion'] 	= "Se ha creado la marca con identificación #" . $BrandModel->getLastId() . " exitosamente.";
+		$this->auditContent['descripcion'] 	= "Se ha creado la marca con identificación #" . $data['identificacion'] . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		

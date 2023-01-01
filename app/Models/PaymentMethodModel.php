@@ -42,10 +42,7 @@ class PaymentMethodModel extends Model
 		return $query->get()->getResultArray();
 	}
 
-	public function getLastId()
-	{
-		return $this->insertID();
-	}
+	
 
 	public function updatePaymentMethod($data, $identification)
 	{

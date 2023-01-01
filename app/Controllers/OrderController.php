@@ -77,7 +77,6 @@ class OrderController extends BaseController
 			}
 
 			$data = [
-				"id_detalle_pedido" => generateCode('DP', 'detalle_pedido', 'id_detalle_pedido'),
 				"cod_producto"		=> $productCode[$i],
 				"cant_producto"		=> $productQuantity[$i],
 				"precio_producto"	=> $price
@@ -304,8 +303,31 @@ class OrderController extends BaseController
 
 		$OrderModel = new OrderModel();
 		$order = $OrderModel->getOrderById(['pedido.id_pedido' => $identification]);
+
+		$order[0]['creado_en'] = date('d-m-Y H:i:s', strtotime($order[0]['creado_en']));
+		$order[0]['actualizado_en'] = date('d-m-Y H:i:s', strtotime($order[0]['actualizado_en']));
+
 		if(!$order){
 			return false;
+		}
+
+		
+				
+		for ($i = 0; $i < count($order); $i++){
+
+
+			$db = \Config\Database::connect();
+				$productOrder = $db
+				->table('pedido')
+				->select('SUM(cant_producto) as cantidad')
+				->join('detalle_pedido', 'detalle_pedido.id_pedido = pedido.id_pedido')
+				->where('estado_pedido', 2)
+				->where('pedido.id_pedido !=', $order[$i]['id_pedido'])
+				->where('detalle_pedido.cod_producto', $order[$i]['cod_producto'])
+				->get()->getResult();
+			
+			$order[$i]['stock'] = $order[$i]['stock_producto'] + $productOrder[0]->cantidad;
+
 		}
 
 		return json_encode($order);
@@ -332,7 +354,7 @@ class OrderController extends BaseController
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
 		$this->auditContent['accion'] 		= "Aceptar pedido";
-		$this->auditContent['descripcion'] 	= "Se ha aceptado el pedido con identificacion " . $order . " exitosamente.";
+		$this->auditContent['descripcion'] 	= "Se ha aceptado el pedido con identificacion #" . $order . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
@@ -394,7 +416,6 @@ class OrderController extends BaseController
 			"id_moneda"			=> $this->request->getPost('coin')
 		];
 
-		$orderId = $this->request->getPost('orderId');
 		$productCode = $this->request->getPost('productCode');
 		$productQuantity = $this->request->getPost('productQuantity');
 		$productPrice = $this->request->getPost('productPrice');
@@ -417,7 +438,6 @@ class OrderController extends BaseController
 			}
 
 			$data = [
-				"id_detalle_pedido"	=> $orderId[$i],
 				"cod_producto"		=> $productCode[$i],
 				"cant_producto"		=> $productQuantity[$i],
 				"precio_producto"	=> $price

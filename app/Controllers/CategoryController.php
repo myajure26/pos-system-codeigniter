@@ -49,11 +49,13 @@ class CategoryController extends BaseController
 
 		$name = $this->request->getPost('name');
 
+		$data = [
+			'identificacion'	=> generateCode('CT', 'categorias', 'identificacion'),
+			'categoria' 		=> $name
+		];
+
 		$CategoryModel = new CategoryModel();
-		$category = $CategoryModel->createCategory([
-												'identificacion'	=> generateCode('CT', 'categorias', 'identificacion'),
-												'categoria' 		=> $name
-											]);
+		$category = $CategoryModel->createCategory($data);
 
 		if(!$category){
 			$this->errorMessage['text'] = "Error al guardar la categoría en la base de datos";
@@ -64,7 +66,7 @@ class CategoryController extends BaseController
 		$auditUserId = $this->session->get('identification');
 		$this->auditContent['usuario'] 		= $auditUserId;
 		$this->auditContent['accion'] 		= "Crear categoría";
-		$this->auditContent['descripcion'] 	= "Se ha creado la categoría con identificación #" . $CategoryModel->getLastId() . " exitosamente.";
+		$this->auditContent['descripcion'] 	= "Se ha creado la categoría con identificación #" . $data['identificacion'] . " exitosamente.";
 		$AuditModel = new AuditModel();
 		$AuditModel->createAudit($this->auditContent);
 		
